@@ -43,7 +43,7 @@ public class Lumpundform implements ApplicationListener {
 		
 		// Dibujar Héroe
 		batch.begin();
-		batch.draw(heroe.normal, (heroe.posicionX - (heroe.ancho / 2)), heroe.posicionY);
+		batch.draw((heroe.direccion == 1)?heroe.anormal:heroe.normal, (heroe.posicionX - (heroe.ancho / 2)), heroe.posicionY);
 		batch.end();
 		
 		if (Gdx.input.isTouched()) {
