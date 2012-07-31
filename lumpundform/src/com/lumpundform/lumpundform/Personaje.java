@@ -23,21 +23,22 @@ public class Personaje {
 		enMovimiento = false;
 		alto = 60;
 		ancho = 35;
-		velocidad = 50;
+		velocidad = 100;
 		texture = new Texture(Gdx.files.internal("samus_sprite_sheet.png"));
 		normal = new TextureRegion(texture, normalCoord[0] * ancho, normalCoord[1] * alto, ancho, alto);
 	}
 	
 	public void caminar(float delta) {
+		Gdx.app.debug("Velocidad", "Velocidad: " + velocidad);
 		if (enMovimiento && destinoX != posicionX) {
 			if (destinoX < posicionX) {
-				posicionX -= velocidad * delta;
+				posicionX -= velocidad;
 				if (posicionX < destinoX) {
 					posicionX = destinoX;
 					enMovimiento = false;
 				}
 			} else {
-				posicionX += velocidad * delta;
+				posicionX += velocidad;
 				if (posicionX > destinoX) {
 					posicionX = destinoX;
 					enMovimiento = false;

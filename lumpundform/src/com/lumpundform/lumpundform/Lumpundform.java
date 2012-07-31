@@ -1,5 +1,6 @@
 package com.lumpundform.lumpundform;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -16,17 +17,20 @@ public class Lumpundform implements ApplicationListener {
 	@Override
 	public void create() {
 		Texture.setEnforcePotImages(false);
+        
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
 		batch = new SpriteBatch();
 		heroe = new Personaje();
 		
 		// Cámara en Modo Ortográfico
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true);
+		camera.setToOrtho(false);
 	}
 
 	@Override
 	public void dispose() {
+		batch.dispose();
 	}
 
 	@Override
@@ -51,6 +55,7 @@ public class Lumpundform implements ApplicationListener {
 			heroe.enMovimiento = true;
 		}
 		
+		Gdx.app.debug("delta", "Delta: " + Gdx.graphics.getDeltaTime());
 		heroe.caminar(Gdx.graphics.getDeltaTime());
 	}
 
