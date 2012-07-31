@@ -23,7 +23,7 @@ public class Personaje {
 		enMovimiento = false;
 		alto = 60;
 		ancho = 35;
-		velocidad = 0.00000001f;
+		velocidad = 50;
 		texture = new Texture(Gdx.files.internal("samus_sprite_sheet.png"));
 		normal = new TextureRegion(texture, normalCoord[0] * ancho, normalCoord[1] * alto, ancho, alto);
 	}

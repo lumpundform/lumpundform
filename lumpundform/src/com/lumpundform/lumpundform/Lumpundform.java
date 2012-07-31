@@ -51,13 +51,7 @@ public class Lumpundform implements ApplicationListener {
 			heroe.enMovimiento = true;
 		}
 		
-		float deltaCounter = 0;
-		if (deltaCounter > 0.5) {
-			deltaCounter = 0;
-			heroe.caminar(deltaCounter);
-		} else {
-			deltaCounter += Gdx.graphics.getDeltaTime();
-		}
+		heroe.caminar(Gdx.graphics.getDeltaTime());
 	}
 
 	@Override
