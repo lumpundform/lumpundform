@@ -17,7 +17,8 @@ public class Lumpundform implements ApplicationListener {
 	@Override
 	public void create() {
 		Texture.setEnforcePotImages(false);
-        
+		
+		// TODO: cambiar el nivel del log para que no salgan todos los errores en consola
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
 		batch = new SpriteBatch();
@@ -35,18 +36,25 @@ public class Lumpundform implements ApplicationListener {
 
 	@Override
 	public void render() {
-		// Limpiar pantalla
+		// Limpiar pantalla y poner fondo azul cielo
+		Gdx.gl.glClearColor(0.26f, 0.82f, 0.82f, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
+		// Hacer que pantalla cuente pixeles de izquierda a derecha y de abajo a arriba
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		
-		// Dibujar Héroe
+		// Dibujar
 		batch.begin();
-		batch.draw((heroe.direccion == 1)?heroe.anormal:heroe.normal, (heroe.posicionX - (heroe.ancho / 2)), heroe.posicionY);
+		
+		// Héroe
+		heroe.dibujar(batch);
+		
 		batch.end();
 		
+		// Cuando se está tocando la pantalla
 		if (Gdx.input.isTouched()) {
+			// Alinear coordenadas del punto del toque con le dirección de la camara
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
@@ -55,7 +63,6 @@ public class Lumpundform implements ApplicationListener {
 			heroe.enMovimiento = true;
 		}
 		
-		Gdx.app.debug("delta", "Delta: " + Gdx.graphics.getDeltaTime());
 		heroe.caminar(Gdx.graphics.getDeltaTime());
 	}
 
