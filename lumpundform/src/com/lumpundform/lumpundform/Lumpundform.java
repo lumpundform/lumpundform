@@ -48,7 +48,7 @@ public class Lumpundform implements ApplicationListener {
 		batch.begin();
 		
 		// Héroe
-		heroe.dibujar(batch);
+		heroe.dibujar(batch, Gdx.graphics.getDeltaTime());
 		
 		batch.end();
 		
