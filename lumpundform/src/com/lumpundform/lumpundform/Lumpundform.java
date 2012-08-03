@@ -3,6 +3,7 @@ package com.lumpundform.lumpundform;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -60,6 +61,18 @@ public class Lumpundform implements ApplicationListener {
 			camera.unproject(touchPos);
 			
 			heroe.destinoX = touchPos.x;
+			heroe.enMovimiento = true;
+		}
+		
+		// Mueve al personaje a la izquierda (A) o derecha (D)
+		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
+			float velocidadDelta = (heroe.velocidad * Gdx.graphics.getDeltaTime());
+			if(Gdx.input.isKeyPressed(Keys.A)) {  
+				heroe.destinoX = heroe.posicionX - velocidadDelta;
+			}
+			if(Gdx.input.isKeyPressed(Keys.D)) {
+				heroe.destinoX = heroe.posicionX + velocidadDelta;
+			}
 			heroe.enMovimiento = true;
 		}
 		

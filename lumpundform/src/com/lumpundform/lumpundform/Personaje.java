@@ -16,7 +16,7 @@ public class Personaje {
 	public boolean enMovimiento;
 	public float destinoX;
 	public boolean direccionX; // false = izquierda, true = derecha
-	private float velocidad;
+	public float velocidad;
 	
 	// Textura
 	private Texture textura;
