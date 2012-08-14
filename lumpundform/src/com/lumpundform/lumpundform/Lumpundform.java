@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Lumpundform implements ApplicationListener {
 	private SpriteBatch batch;
-	private Personaje heroe;
+	private Heroe heroe;
 	private OrthographicCamera camera;
 	
 	@Override
@@ -23,7 +23,7 @@ public class Lumpundform implements ApplicationListener {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
 		batch = new SpriteBatch();
-		heroe = new Personaje();
+		heroe = new Heroe();
 		
 		// Cámara en Modo Ortográfico
 		camera = new OrthographicCamera();
@@ -61,7 +61,7 @@ public class Lumpundform implements ApplicationListener {
 			camera.unproject(touchPos);
 			
 			heroe.destinoX = touchPos.x;
-			heroe.enMovimiento = true;
+			heroe.estado = Personaje.MOVIMIENTO;
 		}
 		
 		// Mueve al personaje a la izquierda (A) o derecha (D)
@@ -73,7 +73,7 @@ public class Lumpundform implements ApplicationListener {
 			if(Gdx.input.isKeyPressed(Keys.D)) {
 				heroe.destinoX = heroe.posicionX + velocidadDelta;
 			}
-			heroe.enMovimiento = true;
+			heroe.estado = Personaje.MOVIMIENTO;
 		}
 		
 		heroe.caminar(Gdx.graphics.getDeltaTime());

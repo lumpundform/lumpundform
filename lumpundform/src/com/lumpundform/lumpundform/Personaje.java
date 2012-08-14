@@ -8,28 +8,39 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Personaje {
-	// Posición y Tamaño
+	// Valores Estáticos
+	public static final int 		DE_PIE = 0;
+	public static final int 		MOVIMIENTO = 1;
+	public static final int 		BRINCANDO = 2;
+	public static final int 		IZQUIERDA = 10;
+	public static final int 		DERECHA = 11;
+	public static final int 		ARRIBA = 20;
+	public static final int 		ABAJO = 21;
+	
+	protected static final int		COLUMNAS_CORRIENDO = 11; 
+	protected static final int		RENGLONES_CORRIENDO = 1;
+	
+	// Estado, Posición y Tamaño
+	public int estado;
+	public int direccionX;
+	public int direccionY;
 	public int ancho;
 	public int alto;
 	public float posicionX;
 	public float posicionY;
 
 	// Movimiento
-	public boolean enMovimiento;
 	public float destinoX;
-	public boolean direccionX; // false = izquierda, true = derecha
 	public float velocidad;
 	
 	// Textura
-	private Texture textura;
+	protected Texture textura;
 	public Sprite spriteNormal;
 	public Coordenada coordNormal;
-	private Texture texturaCorriendo;
-	private static final int		COLUMNAS_CORRIENDO = 11; 
-	private static final int		RENGLONES_CORRIENDO = 1;
-	private TextureRegion[] cuadrosCorriendo;
+	protected Texture texturaCorriendo;
+	protected TextureRegion[] cuadrosCorriendo;
 	public TextureRegion cuadroActual;
-	private Animation animacionCorriendo;
+	protected Animation animacionCorriendo;
 	public float tiempoEstado;
 	
 	/**
@@ -39,32 +50,6 @@ public class Personaje {
 	 * y quitar los valores específicos del héroe del constructor.
 	 */
 	public Personaje() {
-		ancho = 125;
-		alto = 150;
-		posicionX = 20 + (ancho / 2);
-		posicionY = 20;
-
-		enMovimiento = false;
-		destinoX = 0;
-		direccionX = true;
-		velocidad = 500;
-
-		textura = new Texture(Gdx.files.internal("samus_sprite_sheet_crop.png"));
-		coordNormal = new Coordenada(0, 0);
-		spriteNormal = new Sprite(textura, coordNormal.x * ancho, coordNormal.y * alto, ancho, alto);
-		spriteNormal.setPosition(posicionX, posicionY);
-		
-		texturaCorriendo = new Texture(Gdx.files.internal("samus_corriendo.png"));
-		TextureRegion[][] tmp = TextureRegion.split(texturaCorriendo, ancho, alto);
-		cuadrosCorriendo = new TextureRegion[COLUMNAS_CORRIENDO * RENGLONES_CORRIENDO];
-		int index = 0;
-		for (int i = 0; i < RENGLONES_CORRIENDO; i++) {
-            for (int j = 0; j < COLUMNAS_CORRIENDO; j++) {
-                    cuadrosCorriendo[index++] = tmp[i][j];
-            }
-		}
-		animacionCorriendo = new Animation(0.05f, cuadrosCorriendo);
-		tiempoEstado = 0f;
 	}
 	
 	/**
@@ -74,22 +59,25 @@ public class Personaje {
 	 * Gdx.graphics.getDeltaTime() dentro de render();
 	 */
 	public void caminar(float delta) {
-		if (enMovimiento && destinoX != posicionX) {
+		if (destinoX != posicionX) {
+			estado = MOVIMIENTO;
 			if (destinoX < posicionX) { // Se está moviendo hacia la izquierda
-				direccionX = false;
+				direccionX = IZQUIERDA;
 				posicionX -= velocidad * delta;
 				if (posicionX < destinoX) {
 					posicionX = destinoX;
-					enMovimiento = false;
+					estado = DE_PIE;
 				}
 			} else { // Se está moviendo hacia la derecha
-				direccionX = true;
+				direccionX = DERECHA;
 				posicionX += velocidad * delta;
 				if (posicionX > destinoX) {
 					posicionX = destinoX;
-					enMovimiento = false;
+					estado = DE_PIE;
 				}
 			}
+		} else {
+			estado = DE_PIE;
 		}
 		spriteNormal.setPosition(posicionX - (ancho / 2), posicionY);
 	}
@@ -103,14 +91,15 @@ public class Personaje {
 		cuadroActual = animacionCorriendo.getKeyFrame(tiempoEstado, true);
 		
 		boolean flip = false;
+		
 		// Si está caminando al revés, voltea el sprite
-		if (direccionX) {
+		if (direccionX == DERECHA) {
 			spriteNormal.flip(true, false);
 			cuadroActual.flip(true, false);
 			flip = true;
 		}
 		
-		if (enMovimiento) {
+		if (estado == MOVIMIENTO) {
 			batch.draw(cuadroActual, posicionX, posicionY);
 		} else {
 			spriteNormal.draw(batch);
@@ -121,5 +110,19 @@ public class Personaje {
 			spriteNormal.flip(true, false);
 			cuadroActual.flip(true, false);
 		}
+	}
+	
+	protected void initAnimacion() {
+		texturaCorriendo = new Texture(Gdx.files.internal("samus_corriendo.png"));
+		TextureRegion[][] tmp = TextureRegion.split(texturaCorriendo, ancho, alto);
+		cuadrosCorriendo = new TextureRegion[COLUMNAS_CORRIENDO * RENGLONES_CORRIENDO];
+		int index = 0;
+		for (int i = 0; i < RENGLONES_CORRIENDO; i++) {
+            for (int j = 0; j < COLUMNAS_CORRIENDO; j++) {
+                    cuadrosCorriendo[index++] = tmp[i][j];
+            }
+		}
+		animacionCorriendo = new Animation(0.05f, cuadrosCorriendo);
+		tiempoEstado = 0f;
 	}
 }
