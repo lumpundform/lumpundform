@@ -1,128 +1,145 @@
 package com.lumpundform.lumpundform;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Personaje {
+public class Personaje extends Actor {
 	// Valores Estáticos
-	public static final int 		DE_PIE = 0;
-	public static final int 		MOVIMIENTO = 1;
-	public static final int 		BRINCANDO = 2;
-	public static final int 		IZQUIERDA = 10;
-	public static final int 		DERECHA = 11;
-	public static final int 		ARRIBA = 20;
-	public static final int 		ABAJO = 21;
-	
-	protected static final int		COLUMNAS_CORRIENDO = 11; 
-	protected static final int		RENGLONES_CORRIENDO = 1;
-	
+	protected static final int DE_PIE = 0;
+	protected static final int MOVIMIENTO = 1;
+	protected static final int CAYENDO = 2;
+	protected static final int IZQUIERDA = 10;
+	protected static final int DERECHA = 11;
+	protected static final int ARRIBA = 20;
+	protected static final int ABAJO = 21;
+
+	// Animaciones
+	protected Map<String, String> nombreImagen;
+	protected Map<String, Integer> columnas;
+	protected Map<String, Integer> renglones;
+	protected Map<String, Animation> animacion;
+	private float tiempoTranscurrido;
+
 	// Estado, Posición y Tamaño
-	public int estado;
-	public int direccionX;
-	public int direccionY;
-	public int ancho;
-	public int alto;
-	public float posicionX;
-	public float posicionY;
+	protected int estado;
+	protected int direccionX;
+	protected int direccionY;
 
 	// Movimiento
-	public float destinoX;
-	public float velocidad;
-	
-	// Textura
-	protected Texture textura;
-	public Sprite spriteNormal;
-	public Coordenada coordNormal;
-	protected Texture texturaCorriendo;
-	protected TextureRegion[] cuadrosCorriendo;
-	public TextureRegion cuadroActual;
-	protected Animation animacionCorriendo;
-	public float tiempoEstado;
-	
+	protected float destinoX;
+	protected float velocidad;
+
 	/**
-	 * Inicializa la posición, el tamaño, el movimiento y la textura del personaje
-	 * 
-	 * TODO: hacer sobrecarga al constructor para poder pasarle diferente cantidad de atributos
-	 * y quitar los valores específicos del héroe del constructor.
+	 * Inicializa los valores generales de todos los personajes
 	 */
-	public Personaje() {
+	protected Personaje(String nombre) {
+		super(nombre);
+		
+		nombreImagen = new HashMap<String, String>();
+		columnas = new HashMap<String, Integer>();
+		renglones = new HashMap<String, Integer>();
+		animacion = new HashMap<String, Animation>();
+
+		tiempoTranscurrido = 0f;
 	}
-	
-	/**
-	 * Si el personaje está en movimiento, actualiza su posición de acuerdo a su velocidad
-	 * y al delta.
-	 * @param delta Tiempo transcurrido desde el último frame en milisegundos. Se puede obtener con
-	 * Gdx.graphics.getDeltaTime() dentro de render();
-	 */
-	public void caminar(float delta) {
-		if (destinoX != posicionX) {
+
+	@Override
+	public void draw(SpriteBatch batch, float alpha) {
+		boolean flip = false;
+
+		// Revisar de cual animación se va a agarrar el cuadro actual
+		String nombreAnimacion;
+		switch (estado) {
+		case DE_PIE:
+		default:
+			nombreAnimacion = "dePie";
+			tiempoTranscurrido = 0f; // Reinicia el tiempo transcurrido para que
+										// empiece las animaciones desde el
+										// principio
+			break;
+		case MOVIMIENTO:
+			nombreAnimacion = "corriendo";
+			break;
+		}
+		TextureRegion cuadroActual = animacion.get(nombreAnimacion)
+				.getKeyFrame(tiempoTranscurrido, true);
+
+		// Si está caminando al revés, voltea el sprite
+		if (direccionX == IZQUIERDA) {
+			cuadroActual.flip(true, false);
+			flip = true;
+		}
+
+		// Dibuja el cuadro actual
+		batch.draw(cuadroActual, x - (width / 2), y - (height / 2));
+
+		// Después de dibujarlo, lo vuelve a voltear si se volteó para dejarlo
+		// en posición normal
+		if (flip)
+			cuadroActual.flip(true, false);
+	}
+
+	@Override
+	public Actor hit(float x, float y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void act(float delta) {
+		tiempoTranscurrido += delta;
+		
+		if (destinoX != x) {
 			estado = MOVIMIENTO;
-			if (destinoX < posicionX) { // Se está moviendo hacia la izquierda
+			if (destinoX < x) { // Se está moviendo hacia la izquierda
 				direccionX = IZQUIERDA;
-				posicionX -= velocidad * delta;
-				if (posicionX < destinoX) {
-					posicionX = destinoX;
+				x -= velocidad * delta;
+				if (x < destinoX) {
+					x = destinoX;
 					estado = DE_PIE;
 				}
 			} else { // Se está moviendo hacia la derecha
 				direccionX = DERECHA;
-				posicionX += velocidad * delta;
-				if (posicionX > destinoX) {
-					posicionX = destinoX;
+				x += velocidad * delta;
+				if (x > destinoX) {
+					x = destinoX;
 					estado = DE_PIE;
 				}
 			}
 		} else {
 			estado = DE_PIE;
 		}
-		spriteNormal.setPosition(posicionX - (ancho / 2), posicionY);
 	}
 
 	/**
-	 * Dibuja el sprite del héroe en pantalla dependiendo la dirección que tenga
-	 * @param batch El batch en donde se va a dibujar
+	 * Inicializa la animación del personaje, con la imagen y datos
+	 * proporcionados.
+	 * 
+	 * @param tipoAnimacion
+	 *            Una cadena con el nombre del tipo de animación a realizar, con
+	 *            el que obtiene los valores de los diferentes Maps
+	 * @return La animación en si
 	 */
-	public void dibujar(SpriteBatch batch, float delta) {
-		tiempoEstado += delta;
-		cuadroActual = animacionCorriendo.getKeyFrame(tiempoEstado, true);
-		
-		boolean flip = false;
-		
-		// Si está caminando al revés, voltea el sprite
-		if (direccionX == DERECHA) {
-			spriteNormal.flip(true, false);
-			cuadroActual.flip(true, false);
-			flip = true;
-		}
-		
-		if (estado == MOVIMIENTO) {
-			batch.draw(cuadroActual, posicionX, posicionY);
-		} else {
-			spriteNormal.draw(batch);
-		}
-		
-		// Después de dibujarlo, lo vuelve a voltear si se volteó para dejarlo en posición normal
-		if (flip) {
-			spriteNormal.flip(true, false);
-			cuadroActual.flip(true, false);
-		}
-	}
-	
-	protected void initAnimacion() {
-		texturaCorriendo = new Texture(Gdx.files.internal("samus_corriendo.png"));
-		TextureRegion[][] tmp = TextureRegion.split(texturaCorriendo, ancho, alto);
-		cuadrosCorriendo = new TextureRegion[COLUMNAS_CORRIENDO * RENGLONES_CORRIENDO];
+	protected Animation initAnimacion(String tipoAnimacion) {
+		Texture texturaAnimacion = new Texture(Gdx.files.internal(nombreImagen
+				.get(tipoAnimacion)));
+		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion,
+				(int) width, (int) height);
+		TextureRegion[] cuadrosAnimacion = new TextureRegion[columnas
+				.get(tipoAnimacion) * renglones.get(tipoAnimacion)];
 		int index = 0;
-		for (int i = 0; i < RENGLONES_CORRIENDO; i++) {
-            for (int j = 0; j < COLUMNAS_CORRIENDO; j++) {
-                    cuadrosCorriendo[index++] = tmp[i][j];
-            }
+		for (int i = 0; i < renglones.get(tipoAnimacion); i++) {
+			for (int j = 0; j < columnas.get(tipoAnimacion); j++) {
+				cuadrosAnimacion[index++] = tmp[i][j];
+			}
 		}
-		animacionCorriendo = new Animation(0.05f, cuadrosCorriendo);
-		tiempoEstado = 0f;
+		return new Animation(0.05f, cuadrosAnimacion);
 	}
 }
