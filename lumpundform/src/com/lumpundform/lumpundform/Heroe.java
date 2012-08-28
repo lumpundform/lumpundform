@@ -27,10 +27,10 @@ public class Heroe extends Personaje {
 		animacion.put("dePie", initAnimacion("dePie"));
 		// Corriendo
 		nombreImagen.put("corriendo", "samus_corriendo.png");
-		columnas.put("corriendo", 11);
+		columnas.put("corriendo", 10);
 		renglones.put("corriendo", 1);
 		animacion.put("corriendo", initAnimacion("corriendo"));
-		// Saltando
+		// Cayendo
 		nombreImagen.put("cayendo", "samus_cayendo.png");
 		columnas.put("cayendo", 1);
 		renglones.put("cayendo", 1);

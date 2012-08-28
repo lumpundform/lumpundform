@@ -29,7 +29,7 @@ public class DetectorGestos implements GestureListener {
 
 	@Override
 	public boolean tap(int x, int y, int count) {
-		if (count >= 2) {
+		if (count >= 2 && (lu.heroe.y <= (20 + lu.heroe.height / 2))) {
 			// Alinear coordenadas del punto del toque con le dirección de la
 			// camara
 			Vector3 pos = alinearCoordenadas(x, y, lu.camara);
@@ -39,9 +39,12 @@ public class DetectorGestos implements GestureListener {
 			
 			lu.heroe.x = lu.heroe.destinoX = pos.x;
 			lu.heroe.y = pos.y;
-			lu.heroe.estado = Personaje.CAYENDO;
-			
-			lu.camara.translate(movDelta, 0);
+
+			if (lu.heroe.x > 400 && lu.camara.position.x >= 400 && lu.camara.position.x <= 2000) {
+				lu.camara.translate(movDelta, 0);
+				if (lu.camara.position.x > 2000) lu.camara.position.set(2000, 225, 0);
+				if (lu.camara.position.x < 400) lu.camara.position.set(400, 225, 0);
+			}
 		}
 		return false;
 	}

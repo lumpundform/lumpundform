@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
@@ -26,6 +27,7 @@ public class PantallaJuego implements Screen {
 	TileMapRenderer tileMapRenderer;
 
 	private Stage escenario;
+	private static final int[] layersList = { 0 };
 
 	public PantallaJuego(Lumpundform juego) {
 		// this.juego = juego;
@@ -43,12 +45,9 @@ public class PantallaJuego implements Screen {
 		escenario.setCamera(camara);
 
 		// Mapa
-		// mapa = TiledLoader.createMap(Gdx.files.internal("mapa_prueba.tmx"));
-		// atlas = new TileAtlas(mapa, Gdx.files.internal("/"));
-		// tileMapRenderer = new TileMapRenderer(mapa, atlas, 33, 33, 5, 5);
-
-		// Fondo
-		fondo = new Texture(Gdx.files.internal("fondo_bosque.jpg"));
+		mapa = TiledLoader.createMap(Gdx.files.internal("data/world/level1/level.tmx"));
+		atlas = new TileAtlas(mapa, Gdx.files.internal("data/packer"));
+		tileMapRenderer = new TileMapRenderer(mapa, atlas, 16, 16);
 
 		// Detectar gestos con DetectorGestos
 		Gdx.input.setInputProcessor(new InputMultiplexer(new GestureDetector(
@@ -59,17 +58,12 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		// Limpiar pantalla
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		// tileMapRenderer.render(camara);
-
-		batch.begin();
-		batch.disableBlending();
-		batch.draw(fondo, 0, 0);
-		batch.enableBlending();
-		batch.end();
+		
+		tileMapRenderer.render(camara);
 
 		// Mover cámara
-		if (heroe.x > 300) {
+		Gdx.app.log("Camara", "Posicion camara: " + camara.position.y);
+		if (heroe.x > 400 && camara.position.x >= 400 && camara.position.x <= 2000) {
 			if (heroe.estado == Personaje.MOVIMIENTO
 					&& heroe.direccionX == Personaje.IZQUIERDA) {
 				camara.translate(-heroe.velocidad * delta, 0);
@@ -77,6 +71,8 @@ public class PantallaJuego implements Screen {
 					&& heroe.direccionX == Personaje.DERECHA) {
 				camara.translate(heroe.velocidad * delta, 0);
 			}
+			if (camara.position.x > 2000) camara.position.set(2000, 225, 0);
+			if (camara.position.x < 400) camara.position.set(400, 225, 0);
 		}
 
 		if (Gdx.input.isTouched()) {

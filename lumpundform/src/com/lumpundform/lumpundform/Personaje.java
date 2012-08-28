@@ -54,6 +54,8 @@ public class Personaje extends Actor {
 	public void draw(SpriteBatch batch, float alpha) {
 		boolean flip = false;
 
+		if (estado == CAYENDO) Gdx.app.log("Estado", "Estado: " + estado);
+		
 		// Revisar de cual animación se va a agarrar el cuadro actual
 		String nombreAnimacion;
 		switch (estado) {
@@ -66,6 +68,9 @@ public class Personaje extends Actor {
 			break;
 		case MOVIMIENTO:
 			nombreAnimacion = "corriendo";
+			break;
+		case CAYENDO:
+			nombreAnimacion = "cayendo";
 			break;
 		}
 		TextureRegion cuadroActual = animacion.get(nombreAnimacion)
@@ -96,7 +101,14 @@ public class Personaje extends Actor {
 	public void act(float delta) {
 		tiempoTranscurrido += delta;
 		
-		if (destinoX != x) {
+		// Para caer
+		if (y > (20 + height / 2)) {
+			estado = CAYENDO;
+			y -= velocidad * delta;
+			if (y <= (20 + height / 2)) {
+				estado = DE_PIE;
+			}
+		} else if (destinoX != x) {
 			estado = MOVIMIENTO;
 			if (destinoX < x) { // Se está moviendo hacia la izquierda
 				direccionX = IZQUIERDA;
