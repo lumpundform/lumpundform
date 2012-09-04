@@ -1,18 +1,20 @@
 package com.lumpundform.lumpundform;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 public class Heroe extends Personaje {
 
 	/**
 	 * Inicializa la posición, el tamaño, el movimiento, las textura y las
 	 * animaciones del héroe.
 	 */
-	public Heroe(String nombre) {
-		super(nombre);
+	public Heroe(String nombre, World mundo) {
+		super(nombre, mundo);
 
-		width = 125;
-		height = 150;
+		width = 125.0f;
+		height = 150.0f;
 		x = 20 + (width / 2);
-		y = 20 + (height / 2);
+		y = 100 + (height / 2);
 
 		estado = DE_PIE;
 		destinoX = x;

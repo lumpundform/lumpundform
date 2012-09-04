@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Personaje extends Actor {
@@ -19,6 +25,11 @@ public class Personaje extends Actor {
 	protected static final int DERECHA = 11;
 	protected static final int ARRIBA = 20;
 	protected static final int ABAJO = 21;
+
+	protected static final float PIXELS_PER_METER = 60.0f;
+
+	private World mundo;
+	private Body cuerpo;
 
 	// Animaciones
 	protected Map<String, String> nombreImagen;
@@ -39,13 +50,15 @@ public class Personaje extends Actor {
 	/**
 	 * Inicializa los valores generales de todos los personajes
 	 */
-	protected Personaje(String nombre) {
+	protected Personaje(String nombre, World m) {
 		super(nombre);
-		
+		mundo = m;
 		nombreImagen = new HashMap<String, String>();
 		columnas = new HashMap<String, Integer>();
 		renglones = new HashMap<String, Integer>();
 		animacion = new HashMap<String, Animation>();
+
+		crearCuerpo();
 
 		tiempoTranscurrido = 0f;
 	}
@@ -54,8 +67,9 @@ public class Personaje extends Actor {
 	public void draw(SpriteBatch batch, float alpha) {
 		boolean flip = false;
 
-		if (estado == CAYENDO) Gdx.app.log("Estado", "Estado: " + estado);
-		
+		if (estado == CAYENDO)
+			Gdx.app.log("Estado", "Estado: " + estado);
+
 		// Revisar de cual animación se va a agarrar el cuadro actual
 		String nombreAnimacion;
 		switch (estado) {
@@ -81,10 +95,14 @@ public class Personaje extends Actor {
 			cuadroActual.flip(true, false);
 			flip = true;
 		}
+		
+		cuerpo.setTransform(x, y, 0.0f);
 
 		// Dibuja el cuadro actual
-		batch.draw(cuadroActual, x - (width / 2), y - (height / 2));
-
+		batch.draw(cuadroActual, cuerpo.getPosition().x
+				- (width / 2), cuerpo.getPosition().y
+				- (height / 2));
+		Gdx.app.log("X", "X: " + cuerpo.getPosition().x);
 		// Después de dibujarlo, lo vuelve a voltear si se volteó para dejarlo
 		// en posición normal
 		if (flip)
@@ -100,7 +118,7 @@ public class Personaje extends Actor {
 	@Override
 	public void act(float delta) {
 		tiempoTranscurrido += delta;
-		
+
 		// Para caer
 		if (y > (20 + height / 2)) {
 			estado = CAYENDO;
@@ -153,5 +171,39 @@ public class Personaje extends Actor {
 			}
 		}
 		return new Animation(0.05f, cuadrosAnimacion);
+	}
+
+	private void crearCuerpo() {
+		BodyDef cuerpoBodyDef = new BodyDef();
+		//TODO: hacer implemetnación para que el cuerpo sea dinámico
+		cuerpoBodyDef.type = BodyDef.BodyType.StaticBody;
+		cuerpoBodyDef.position.set(0, 0);
+
+		cuerpo = mundo.createBody(cuerpoBodyDef);
+
+		/**
+		 * Boxes are defined by their "half width" and "half height", hence the
+		 * 2 multiplier.
+		 */
+		PolygonShape jumperShape = new PolygonShape();
+		jumperShape.setAsBox(width / (2 * PIXELS_PER_METER), height
+				/ (2 * PIXELS_PER_METER));
+
+		/**
+		 * The character should not ever spin around on impact.
+		 */
+		cuerpo.setFixedRotation(true);
+
+		/**
+		 * The density of the jumper, 70, was found experimentally. Play with
+		 * the number and watch how the character moves faster or slower.
+		 * 
+		 * The linear damping was also found the same way.
+		 */
+		
+		cuerpo.createFixture(jumperShape, 1.0f);
+		jumperShape.dispose();
+		cuerpo.setLinearVelocity(new Vector2(0.0f, 0.0f));
+		cuerpo.setLinearDamping(5.0f);
 	}
 }
