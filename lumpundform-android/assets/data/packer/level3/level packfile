@@ -9,28 +9,28 @@ level
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 0
+  index: 1
 level
   rotate: false
   xy: 0, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: 4
 level
   rotate: false
   xy: 0, 68
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 2
+  index: 7
 level
   rotate: false
   xy: 0, 102
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
+  index: 10
 
 output1.png
 format: RGBA8888

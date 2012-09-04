@@ -1,45 +1,33 @@
 
-level.png
+lumpset.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-level
+ground
   rotate: false
   xy: 0, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 0
-level
-  rotate: false
-  xy: 0, 34
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
   index: 1
-level
+ground
   rotate: false
-  xy: 0, 68
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-level
-  rotate: false
-  xy: 0, 102
+  xy: 32, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
-
-output1.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-level
+ground
   rotate: false
-  xy: 0, 0
-  size: 32, 256
-  orig: 32, 256
+  xy: 64, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: 0
+ground
+  rotate: false
+  xy: 96, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2

@@ -2,6 +2,6 @@ lumpundform-android/bin/*
 lumpundform-desktop/bin/*
 lumpundform-desktop/*.log
 lumpundform/bin/*
-lumpundform-html/.gwt/*
+lumpundform-html/.gwt/*/**
 lumpundform-html/.war/*
 

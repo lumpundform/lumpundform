@@ -45,9 +45,9 @@ public class PantallaJuego implements Screen {
 		escenario.setCamera(camara);
 
 		// Mapa
-		mapa = TiledLoader.createMap(Gdx.files.internal("data/world/level1/level.tmx"));
+		mapa = TiledLoader.createMap(Gdx.files.internal("data/world/level3/level.tmx"));
 		atlas = new TileAtlas(mapa, Gdx.files.internal("data/packer"));
-		tileMapRenderer = new TileMapRenderer(mapa, atlas, 16, 16);
+		tileMapRenderer = new TileMapRenderer(mapa, atlas, 1, 1);
 
 		// Detectar gestos con DetectorGestos
 		Gdx.input.setInputProcessor(new InputMultiplexer(new GestureDetector(
