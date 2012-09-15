@@ -1,7 +1,7 @@
-lumpundform-android/bin/*
-lumpundform-desktop/bin/*
+lumpundform-android/bin/
+lumpundform-desktop/bin/
 lumpundform-desktop/*.log
-lumpundform/bin/*
-lumpundform-html/.gwt/*/**
-lumpundform-html/.war/*
+lumpundform/bin/
+lumpundform-html/.gwt/
+lumpundform-html/war/
 
