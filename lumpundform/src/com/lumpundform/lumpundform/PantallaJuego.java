@@ -46,15 +46,15 @@ public class PantallaJuego implements Screen {
 		camara.setToOrtho(false);
 
 		// Mapa
-		mapa = TiledLoader.createMap(Gdx.files.internal("data/world/level3/level.tmx"));
-		atlas = new TileAtlas(mapa, Gdx.files.internal("data/packer"));
-		tileMapRenderer = new TileMapRenderer(mapa, atlas, 1, 1);
+		mapa = TiledLoader.createMap(Gdx.files.internal("data/world/level1/level.tmx"));
+		atlas = new TileAtlas(mapa, Gdx.files.internal("data/packer/bosque/"));
+		tileMapRenderer = new TileMapRenderer(mapa, atlas, 64, 64);
 		
 		// load collision
 		
 		mundo = new World(new Vector2(0.0f, 0.0f), true);
 		
-		loadCollisions("data/packer/level.txt", mundo, 60.0f);
+		loadCollisions("data/packer/colision/level.txt", mundo, 60.0f);
 		
 		// Detectar gestos con DetectorGestos
 		Gdx.input.setInputProcessor(new InputMultiplexer(new GestureDetector(
