@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -101,6 +99,19 @@ public class Personaje extends Actor {
 		cuerpo.setTransform(x, y, 0.0f);
 		
 		Gdx.app.log("Posicion de X y Y", cuerpo.getPosition().x + " : " + cuerpo.getPosition().y );
+		PolygonShape shape = (PolygonShape) cuerpo.getFixtureList().get(0).getShape();
+		Vector2 vertice1 = new Vector2();
+		Vector2 vertice2 = new Vector2();
+		Vector2 vertice3 = new Vector2();
+		Vector2 vertice4 = new Vector2();
+		shape.getVertex(0, vertice1);
+		shape.getVertex(1, vertice2);
+		shape.getVertex(2, vertice3);
+		shape.getVertex(3, vertice4);
+		Gdx.app.log("Vector1",  vertice1 + "");
+		Gdx.app.log("Vector2",  vertice2 + "");
+		Gdx.app.log("Vector3",  vertice3 + "");
+		Gdx.app.log("Vector4",  vertice4 + "");
 
 		// Dibuja el cuadro actual
 		batch.draw(cuadroActual, cuerpo.getPosition().x
@@ -180,7 +191,7 @@ public class Personaje extends Actor {
 		BodyDef cuerpoBodyDef = new BodyDef();
 		//TODO: hacer implemetnación para que el cuerpo sea dinámico
 		cuerpoBodyDef.type = BodyDef.BodyType.DynamicBody;
-		cuerpoBodyDef.position.set(100.0f, 100.0f);
+		cuerpoBodyDef.position.set(500.0f, 500.0f);
 
 		cuerpo = mundo.createBody(cuerpoBodyDef);
 
@@ -211,6 +222,20 @@ public class Personaje extends Actor {
 		jumperShape.dispose();
 		cuerpo.setLinearVelocity(new Vector2(0.0f, 0.0f));
 		cuerpo.setLinearDamping(5.0f);
+
+		PolygonShape shape = (PolygonShape) cuerpo.getFixtureList().get(0).getShape();
+		Vector2 vertice1 = new Vector2();
+		Vector2 vertice2 = new Vector2();
+		Vector2 vertice3 = new Vector2();
+		Vector2 vertice4 = new Vector2();
+		shape.getVertex(0, vertice1);
+		shape.getVertex(1, vertice2);
+		shape.getVertex(2, vertice3);
+		shape.getVertex(3, vertice4);
+		Gdx.app.log("Vector1",  vertice1 + "");
+		Gdx.app.log("Vector2",  vertice2 + "");
+		Gdx.app.log("Vector3",  vertice3 + "");
+		Gdx.app.log("Vector4",  vertice4 + "");
 		
 	}
 }
