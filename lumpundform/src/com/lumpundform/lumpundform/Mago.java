@@ -7,6 +7,7 @@ public class Mago extends Personaje {
 	protected Mago(String nombre, World mundo) {
 		super(nombre, mundo);
 		// TODO Auto-generated constructor stub
+		// Comentario blah
 	}
 
 }
