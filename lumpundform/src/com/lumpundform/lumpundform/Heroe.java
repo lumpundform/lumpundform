@@ -9,10 +9,8 @@ public class Heroe extends Personaje {
 	 * animaciones del héroe.
 	 */
 	public Heroe(String nombre, World mundo) {
-		super(nombre, mundo);
+		super(nombre, mundo, 125.0f, 150.0f);
 
-		width = 125.0f;
-		height = 150.0f;
 		x = 20 + (width / 2);
 		y = 100 + (height / 2);
 

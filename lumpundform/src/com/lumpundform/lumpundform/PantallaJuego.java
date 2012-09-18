@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -35,8 +36,11 @@ public class PantallaJuego implements Screen {
 	TileAtlas atlas;
 	TileMapRenderer tileMapRenderer;
 	World mundo;
+	Box2DDebugRenderer debugRenderer;
 
 	private Stage escenario;
+	
+	public static final float PIXELS_PER_METER = 60.0f;
 
 	public PantallaJuego(Lumpundform juego) {
 		// this.juego = juego;
@@ -52,10 +56,10 @@ public class PantallaJuego implements Screen {
 		
 		// load collision
 		
-		mundo = new World(new Vector2(0.0f, 0.0f), true);
+		mundo = new World(new Vector2(0.0f, -10.0f), true);
 		
 		loadCollisions("data/packer/colision/level.txt", mundo, 60.0f);
-		
+		debugRenderer = new Box2DDebugRenderer();
 		// Detectar gestos con DetectorGestos
 		Gdx.input.setInputProcessor(new InputMultiplexer(new GestureDetector(
 				new DetectorGestos(this)), new ProcesadorEntrada(this)));
@@ -100,6 +104,11 @@ public class PantallaJuego implements Screen {
 
 		escenario.act(delta);
 		escenario.draw();
+		
+		debugRenderer.render(mundo, getCamera().combined.scale(
+				PIXELS_PER_METER,
+				PIXELS_PER_METER,
+				PIXELS_PER_METER));
 	}
 
 	@Override
@@ -384,5 +393,13 @@ public class PantallaJuego implements Screen {
 	 */
 	public int getWidth() {
 		return mapa.width * mapa.tileWidth;
+	}
+	
+	public OrthographicCamera getCamera() {
+		if (camara == null) {
+			throw new IllegalStateException(
+					"getCamera() called out of sequence");
+		}
+		return camara;
 	}
 }

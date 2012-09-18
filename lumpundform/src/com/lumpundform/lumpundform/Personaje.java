@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -25,8 +27,6 @@ public class Personaje extends Actor {
 	protected static final int DERECHA = 11;
 	protected static final int ARRIBA = 20;
 	protected static final int ABAJO = 21;
-
-	protected static final float PIXELS_PER_METER = 60.0f;
 
 	private World mundo;
 	private Body cuerpo;
@@ -50,9 +50,11 @@ public class Personaje extends Actor {
 	/**
 	 * Inicializa los valores generales de todos los personajes
 	 */
-	protected Personaje(String nombre, World m) {
+	protected Personaje(String nombre, World m, float w, float h) {
 		super(nombre);
 		mundo = m;
+		width = w;
+		height = h;
 		nombreImagen = new HashMap<String, String>();
 		columnas = new HashMap<String, Integer>();
 		renglones = new HashMap<String, Integer>();
@@ -97,12 +99,13 @@ public class Personaje extends Actor {
 		}
 		
 		cuerpo.setTransform(x, y, 0.0f);
+		
+		Gdx.app.log("Posicion de X y Y", cuerpo.getPosition().x + " : " + cuerpo.getPosition().y );
 
 		// Dibuja el cuadro actual
 		batch.draw(cuadroActual, cuerpo.getPosition().x
 				- (width / 2), cuerpo.getPosition().y
 				- (height / 2));
-		Gdx.app.log("X", "X: " + cuerpo.getPosition().x);
 		// Después de dibujarlo, lo vuelve a voltear si se volteó para dejarlo
 		// en posición normal
 		if (flip)
@@ -176,8 +179,8 @@ public class Personaje extends Actor {
 	private void crearCuerpo() {
 		BodyDef cuerpoBodyDef = new BodyDef();
 		//TODO: hacer implemetnación para que el cuerpo sea dinámico
-		cuerpoBodyDef.type = BodyDef.BodyType.StaticBody;
-		cuerpoBodyDef.position.set(0, 0);
+		cuerpoBodyDef.type = BodyDef.BodyType.DynamicBody;
+		cuerpoBodyDef.position.set(100.0f, 100.0f);
 
 		cuerpo = mundo.createBody(cuerpoBodyDef);
 
@@ -186,8 +189,7 @@ public class Personaje extends Actor {
 		 * 2 multiplier.
 		 */
 		PolygonShape jumperShape = new PolygonShape();
-		jumperShape.setAsBox(width / (2 * PIXELS_PER_METER), height
-				/ (2 * PIXELS_PER_METER));
+		jumperShape.setAsBox(width, height);
 
 		/**
 		 * The character should not ever spin around on impact.
@@ -200,10 +202,15 @@ public class Personaje extends Actor {
 		 * 
 		 * The linear damping was also found the same way.
 		 */
+		FixtureDef cuerpoFixtureDef = new FixtureDef();
+		cuerpoFixtureDef.shape = jumperShape;
+		cuerpoFixtureDef.density = 1.0f;
+		cuerpoFixtureDef.friction = 5.0f;
 		
-		cuerpo.createFixture(jumperShape, 1.0f);
+		cuerpo.createFixture(cuerpoFixtureDef);
 		jumperShape.dispose();
 		cuerpo.setLinearVelocity(new Vector2(0.0f, 0.0f));
 		cuerpo.setLinearDamping(5.0f);
+		
 	}
 }
