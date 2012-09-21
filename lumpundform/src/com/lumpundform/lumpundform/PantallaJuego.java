@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -81,7 +82,6 @@ public class PantallaJuego implements Screen {
 		tileMapRenderer.render(camara);
 
 		// Mover cámara
-		Gdx.app.log("Camara", "Posicion camara: " + camara.position.y);
 		if (heroe.x > 400 && camara.position.x >= 400 && camara.position.x <= 2000) {
 			if (heroe.estado == Personaje.MOVIMIENTO
 					&& heroe.direccionX == Personaje.IZQUIERDA) {
@@ -90,16 +90,23 @@ public class PantallaJuego implements Screen {
 					&& heroe.direccionX == Personaje.DERECHA) {
 				camara.translate(heroe.velocidad * delta, 0);
 			}
-			if (camara.position.x > 2000) camara.position.set(2000, 225, 0);
-			if (camara.position.x < 400) camara.position.set(400, 225, 0);
+			if (camara.position.x > 2000) camara.position.set(2000, camara.position.y, 0);
+			if (camara.position.x < 400) camara.position.set(400, camara.position.y, 0);
 		}
 
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
 			Vector3 pos = DetectorGestos.alinearCoordenadas(Gdx.input.getX(),
 					Gdx.input.getY(), camara);
 
-			heroe.destinoX = pos.x;
+			if (Gdx.input.isKeyPressed(Keys.D) || (pos.x > heroe.x) && !Gdx.input.isKeyPressed(Keys.A)) {
+				heroe.direccionX = Personaje.DERECHA;
+			} else {
+				heroe.direccionX = Personaje.IZQUIERDA;
+			}
+			heroe.destinoX = heroe.x;
 			heroe.estado = Personaje.MOVIMIENTO;
+		} else if (heroe.estado == Personaje.MOVIMIENTO) {
+			heroe.estado = Personaje.DE_PIE;
 		}
 
 		escenario.act(delta);

@@ -5,4 +5,5 @@ lumpundform-desktop/*.log
 lumpundform/bin/
 lumpundform-html/.gwt/
 lumpundform-html/war/
+lumpundform-html/gwt-unitCache/
 

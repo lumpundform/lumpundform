@@ -67,9 +67,6 @@ public class Personaje extends Actor {
 	public void draw(SpriteBatch batch, float alpha) {
 		boolean flip = false;
 
-		if (estado == CAYENDO)
-			Gdx.app.log("Estado", "Estado: " + estado);
-
 		// Revisar de cual animación se va a agarrar el cuadro actual
 		String nombreAnimacion;
 		switch (estado) {
@@ -96,26 +93,12 @@ public class Personaje extends Actor {
 			flip = true;
 		}
 		
-		cuerpo.setTransform(x, y, 0.0f);
-		
 		Gdx.app.log("Posicion de X y Y", cuerpo.getPosition().x + " : " + cuerpo.getPosition().y );
-		PolygonShape shape = (PolygonShape) cuerpo.getFixtureList().get(0).getShape();
-		Vector2 vertice1 = new Vector2();
-		Vector2 vertice2 = new Vector2();
-		Vector2 vertice3 = new Vector2();
-		Vector2 vertice4 = new Vector2();
-		shape.getVertex(0, vertice1);
-		shape.getVertex(1, vertice2);
-		shape.getVertex(2, vertice3);
-		shape.getVertex(3, vertice4);
-		Gdx.app.log("Vector1",  vertice1 + "");
-		Gdx.app.log("Vector2",  vertice2 + "");
-		Gdx.app.log("Vector3",  vertice3 + "");
-		Gdx.app.log("Vector4",  vertice4 + "");
+
 
 		// Dibuja el cuadro actual
-		batch.draw(cuadroActual, cuerpo.getPosition().x
-				- (width / 2), cuerpo.getPosition().y
+		batch.draw(cuadroActual, x
+				- (width / 2), y
 				- (height / 2));
 		// Después de dibujarlo, lo vuelve a voltear si se volteó para dejarlo
 		// en posición normal
@@ -132,9 +115,22 @@ public class Personaje extends Actor {
 	@Override
 	public void act(float delta) {
 		tiempoTranscurrido += delta;
+		
+		if (estado == MOVIMIENTO) {
+			if (destinoX == x) { // No tiene destino, solo dirección
+				float impulsoX = direccionX == IZQUIERDA ? -12.0f : 12.0f;
+				cuerpo.applyLinearImpulse(new Vector2(impulsoX, 0.0f),
+						new Vector2(width / (2 * PantallaJuego.PIXELS_PER_METER),
+								height / (2 * PantallaJuego.PIXELS_PER_METER)));
+				Gdx.app.log("asdf", "asdf");
+			}
+		}
+		
+		x = cuerpo.getPosition().x * PantallaJuego.PIXELS_PER_METER;
+		y = cuerpo.getPosition().y * PantallaJuego.PIXELS_PER_METER;
 
 		// Para caer
-		if (y > (20 + height / 2)) {
+		/*if (y > (20 + height / 2)) {
 			estado = CAYENDO;
 			y -= velocidad * delta;
 			if (y <= (20 + height / 2)) {
@@ -159,7 +155,7 @@ public class Personaje extends Actor {
 			}
 		} else {
 			estado = DE_PIE;
-		}
+		}*/
 	}
 
 	/**
@@ -191,7 +187,7 @@ public class Personaje extends Actor {
 		BodyDef cuerpoBodyDef = new BodyDef();
 		//TODO: hacer implemetnación para que el cuerpo sea dinámico
 		cuerpoBodyDef.type = BodyDef.BodyType.DynamicBody;
-		cuerpoBodyDef.position.set(500.0f, 500.0f);
+		cuerpoBodyDef.position.set(2.0f, 5.0f);
 
 		cuerpo = mundo.createBody(cuerpoBodyDef);
 
@@ -200,7 +196,8 @@ public class Personaje extends Actor {
 		 * 2 multiplier.
 		 */
 		PolygonShape jumperShape = new PolygonShape();
-		jumperShape.setAsBox(width, height);
+		jumperShape.setAsBox(width / (2 * PantallaJuego.PIXELS_PER_METER),
+				height / (2 * PantallaJuego.PIXELS_PER_METER));
 
 		/**
 		 * The character should not ever spin around on impact.
@@ -213,29 +210,11 @@ public class Personaje extends Actor {
 		 * 
 		 * The linear damping was also found the same way.
 		 */
-		FixtureDef cuerpoFixtureDef = new FixtureDef();
-		cuerpoFixtureDef.shape = jumperShape;
-		cuerpoFixtureDef.density = 1.0f;
-		cuerpoFixtureDef.friction = 5.0f;
 		
-		cuerpo.createFixture(cuerpoFixtureDef);
+		cuerpo.createFixture(jumperShape, 70.0f);
 		jumperShape.dispose();
-		cuerpo.setLinearVelocity(new Vector2(0.0f, 0.0f));
+		// cuerpo.setLinearVelocity(new Vector2(0.0f, 0.0f));
 		cuerpo.setLinearDamping(5.0f);
-
-		PolygonShape shape = (PolygonShape) cuerpo.getFixtureList().get(0).getShape();
-		Vector2 vertice1 = new Vector2();
-		Vector2 vertice2 = new Vector2();
-		Vector2 vertice3 = new Vector2();
-		Vector2 vertice4 = new Vector2();
-		shape.getVertex(0, vertice1);
-		shape.getVertex(1, vertice2);
-		shape.getVertex(2, vertice3);
-		shape.getVertex(3, vertice4);
-		Gdx.app.log("Vector1",  vertice1 + "");
-		Gdx.app.log("Vector2",  vertice2 + "");
-		Gdx.app.log("Vector3",  vertice3 + "");
-		Gdx.app.log("Vector4",  vertice4 + "");
 		
 	}
 }
