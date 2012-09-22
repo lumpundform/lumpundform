@@ -57,7 +57,7 @@ public class PantallaJuego implements Screen {
 		
 		// load collision
 		
-		mundo = new World(new Vector2(0.0f, -10.0f), true);
+		mundo = new World(new Vector2(0.0f, -20.0f), true);
 		
 		loadCollisions("data/packer/colision/level.txt", mundo, 60.0f);
 		debugRenderer = new Box2DDebugRenderer();
@@ -69,7 +69,7 @@ public class PantallaJuego implements Screen {
 		heroe = new Heroe("heroe", mundo);
 		
 		// Escenario
-		escenario = new Stage(2000, 720, false, batch);
+		escenario = new Stage(2000.0f, 720.0f, true, batch);
 		escenario.addActor(heroe);
 		escenario.setCamera(camara);
 	}
@@ -82,7 +82,21 @@ public class PantallaJuego implements Screen {
 		tileMapRenderer.render(camara);
 
 		// Mover cámara
-		if (heroe.x > 400 && camara.position.x >= 400 && camara.position.x <= 2000) {
+		camara.position.x = heroe.x;
+		camara.position.y = heroe.y;
+		if (camara.position.x < (0 + Gdx.graphics.getWidth() / 2)) {
+			camara.position.x = 0 + Gdx.graphics.getWidth() / 2;
+		} else if (camara.position.x > (escenario.width() - Gdx.graphics.getWidth() / 2)) {
+			camara.position.x = escenario.width() - Gdx.graphics.getWidth() / 2;
+		}
+		if (camara.position.y < (0 + Gdx.graphics.getHeight() / 2)) {
+			camara.position.y = 0 + Gdx.graphics.getHeight() / 2;
+		} else if (camara.position.y > (escenario.height() - Gdx.graphics.getHeight() / 2)) {
+			camara.position.y = escenario.height() - Gdx.graphics.getHeight() / 2;
+		}
+		
+		
+		/*if (heroe.x > 400 && camara.position.x >= 400 && camara.position.x <= 2000) {
 			if (heroe.estado == Personaje.MOVIMIENTO
 					&& heroe.direccionX == Personaje.IZQUIERDA) {
 				camara.translate(-heroe.velocidad * delta, 0);
@@ -92,9 +106,9 @@ public class PantallaJuego implements Screen {
 			}
 			if (camara.position.x > 2000) camara.position.set(2000, camara.position.y, 0);
 			if (camara.position.x < 400) camara.position.set(400, camara.position.y, 0);
-		}
+		} */
 
-		if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
+		if ((heroe.cuerpo.getLinearVelocity().y == 0) && Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
 			Vector3 pos = DetectorGestos.alinearCoordenadas(Gdx.input.getX(),
 					Gdx.input.getY(), camara);
 
@@ -111,11 +125,10 @@ public class PantallaJuego implements Screen {
 
 		escenario.act(delta);
 		escenario.draw();
+
+		mundo.step(1/60.0f, 6, 2);
 		
-		debugRenderer.render(mundo, getCamera().combined.scale(
-				PIXELS_PER_METER,
-				PIXELS_PER_METER,
-				PIXELS_PER_METER));
+		//debugRender();
 	}
 
 	@Override
@@ -408,5 +421,12 @@ public class PantallaJuego implements Screen {
 					"getCamera() called out of sequence");
 		}
 		return camara;
+	}
+	
+	private void debugRender() {
+		debugRenderer.render(mundo, getCamera().combined.scale(
+				PIXELS_PER_METER,
+				PIXELS_PER_METER,
+				PIXELS_PER_METER));
 	}
 }

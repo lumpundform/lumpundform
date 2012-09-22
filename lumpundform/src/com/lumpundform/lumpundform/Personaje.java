@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -27,7 +26,7 @@ public class Personaje extends Actor {
 	protected static final int ABAJO = 21;
 
 	private World mundo;
-	private Body cuerpo;
+	protected Body cuerpo;
 
 	// Animaciones
 	protected Map<String, String> nombreImagen;
@@ -92,8 +91,6 @@ public class Personaje extends Actor {
 			cuadroActual.flip(true, false);
 			flip = true;
 		}
-		
-		Gdx.app.log("Posicion de X y Y", cuerpo.getPosition().x + " : " + cuerpo.getPosition().y );
 
 
 		// Dibuja el cuadro actual
@@ -122,7 +119,6 @@ public class Personaje extends Actor {
 				cuerpo.applyLinearImpulse(new Vector2(impulsoX, 0.0f),
 						new Vector2(width / (2 * PantallaJuego.PIXELS_PER_METER),
 								height / (2 * PantallaJuego.PIXELS_PER_METER)));
-				Gdx.app.log("asdf", "asdf");
 			}
 		}
 		
@@ -185,9 +181,9 @@ public class Personaje extends Actor {
 
 	private void crearCuerpo() {
 		BodyDef cuerpoBodyDef = new BodyDef();
-		//TODO: hacer implemetnación para que el cuerpo sea dinámico
 		cuerpoBodyDef.type = BodyDef.BodyType.DynamicBody;
-		cuerpoBodyDef.position.set(2.0f, 5.0f);
+		cuerpoBodyDef.position.set(2.0f, 10.0f);
+		cuerpoBodyDef.angle = (float) Math.toRadians(0.0f);
 
 		cuerpo = mundo.createBody(cuerpoBodyDef);
 
@@ -195,8 +191,8 @@ public class Personaje extends Actor {
 		 * Boxes are defined by their "half width" and "half height", hence the
 		 * 2 multiplier.
 		 */
-		PolygonShape jumperShape = new PolygonShape();
-		jumperShape.setAsBox(width / (2 * PantallaJuego.PIXELS_PER_METER),
+		PolygonShape cuerpoShape = new PolygonShape();
+		cuerpoShape.setAsBox(width / (2 * PantallaJuego.PIXELS_PER_METER),
 				height / (2 * PantallaJuego.PIXELS_PER_METER));
 
 		/**
@@ -211,8 +207,8 @@ public class Personaje extends Actor {
 		 * The linear damping was also found the same way.
 		 */
 		
-		cuerpo.createFixture(jumperShape, 70.0f);
-		jumperShape.dispose();
+		cuerpo.createFixture(cuerpoShape, 3.0f);
+		cuerpoShape.dispose();
 		// cuerpo.setLinearVelocity(new Vector2(0.0f, 0.0f));
 		cuerpo.setLinearDamping(5.0f);
 		
