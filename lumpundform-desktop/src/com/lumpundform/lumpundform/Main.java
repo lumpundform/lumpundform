@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Lumpundform";
 		cfg.useGL20 = true;
-		cfg.width = 1366;
-		cfg.height = 720;
+		cfg.width = 800;
+		cfg.height = 600;
 		
 		new LwjglApplication(new Lumpundform(), cfg);
 	}

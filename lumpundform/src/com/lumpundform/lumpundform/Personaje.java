@@ -183,7 +183,7 @@ public class Personaje extends Actor {
 		BodyDef cuerpoBodyDef = new BodyDef();
 		cuerpoBodyDef.type = BodyDef.BodyType.DynamicBody;
 		cuerpoBodyDef.position.set(2.0f, 10.0f);
-		cuerpoBodyDef.angle = (float) Math.toRadians(0.0f);
+		cuerpoBodyDef.angle = (float) Math.toRadians(45.0f);
 
 		cuerpo = mundo.createBody(cuerpoBodyDef);
 

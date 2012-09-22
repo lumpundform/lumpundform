@@ -128,7 +128,7 @@ public class PantallaJuego implements Screen {
 
 		mundo.step(1/60.0f, 6, 2);
 		
-		//debugRender();
+		debugRender();
 	}
 
 	@Override
