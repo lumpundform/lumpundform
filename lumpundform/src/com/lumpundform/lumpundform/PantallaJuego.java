@@ -94,25 +94,15 @@ public class PantallaJuego implements Screen {
 		} else if (camara.position.y > (escenario.height() - Gdx.graphics.getHeight() / 2)) {
 			camara.position.y = escenario.height() - Gdx.graphics.getHeight() / 2;
 		}
-		
-		
-		/*if (heroe.x > 400 && camara.position.x >= 400 && camara.position.x <= 2000) {
-			if (heroe.estado == Personaje.MOVIMIENTO
-					&& heroe.direccionX == Personaje.IZQUIERDA) {
-				camara.translate(-heroe.velocidad * delta, 0);
-			} else if (heroe.estado == Personaje.MOVIMIENTO
-					&& heroe.direccionX == Personaje.DERECHA) {
-				camara.translate(heroe.velocidad * delta, 0);
-			}
-			if (camara.position.x > 2000) camara.position.set(2000, camara.position.y, 0);
-			if (camara.position.x < 400) camara.position.set(400, camara.position.y, 0);
-		} */
 
-		if ((heroe.cuerpo.getLinearVelocity().y == 0) && Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
+		if ((heroe.cuerpo.getLinearVelocity().y == 0) && Gdx.input.isTouched()
+				|| Gdx.input.isKeyPressed(Keys.A) || Gdx.input
+				.isKeyPressed(Keys.D)) {
 			Vector3 pos = DetectorGestos.alinearCoordenadas(Gdx.input.getX(),
 					Gdx.input.getY(), camara);
 
-			if (Gdx.input.isKeyPressed(Keys.D) || (pos.x > heroe.x) && !Gdx.input.isKeyPressed(Keys.A)) {
+			if (Gdx.input.isKeyPressed(Keys.D) || (pos.x > heroe.x) && !Gdx
+					.input.isKeyPressed(Keys.A)) {
 				heroe.direccionX = Personaje.DERECHA;
 			} else {
 				heroe.direccionX = Personaje.IZQUIERDA;
@@ -124,9 +114,9 @@ public class PantallaJuego implements Screen {
 		}
 
 		escenario.act(delta);
+		mundo.step(1/60.0f, 6, 2);
 		escenario.draw();
 
-		mundo.step(1/60.0f, 6, 2);
 		
 		debugRender();
 	}

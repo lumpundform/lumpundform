@@ -29,22 +29,16 @@ public class DetectorGestos implements GestureListener {
 
 	@Override
 	public boolean tap(int x, int y, int count) {
-		if (count >= 2 && (lu.heroe.y <= (20 + lu.heroe.height / 2))) {
-			// Alinear coordenadas del punto del toque con le dirección de la
+		if (count >= 2 && (lu.heroe.estado != Personaje.CAYENDO)) {
+			// Alinear coordenadas del punto del toque con la dirección de la
 			// camara
 			Vector3 pos = alinearCoordenadas(x, y, lu.camara);
-
-			boolean derecha = pos.x > lu.heroe.x ? true : false;
-			float movDelta = derecha ? pos.x - lu.heroe.x : -(lu.heroe.x - pos.x);
 			
-			lu.heroe.x = lu.heroe.destinoX = pos.x;
-			lu.heroe.y = pos.y;
-
-			if (lu.heroe.x > 400 && lu.camara.position.x >= 400 && lu.camara.position.x <= 2000) {
-				lu.camara.translate(movDelta, 0);
-				if (lu.camara.position.x > 2000) lu.camara.position.set(2000, 225, 0);
-				if (lu.camara.position.x < 400) lu.camara.position.set(400, 225, 0);
-			}
+			lu.heroe.cuerpo.setTransform(
+					new Vector2((pos.x / PantallaJuego.PIXELS_PER_METER),
+							(pos.y / PantallaJuego.PIXELS_PER_METER)), lu.heroe
+							.cuerpo.getAngle());
+			lu.heroe.estado = Personaje.CAYENDO;
 		}
 		return false;
 	}
