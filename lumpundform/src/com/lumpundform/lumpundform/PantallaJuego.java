@@ -113,8 +113,8 @@ public class PantallaJuego implements Screen {
 			heroe.estado = Personaje.DE_PIE;
 		}
 
-		escenario.act(delta);
 		mundo.step(1/60.0f, 6, 2);
+		escenario.act(delta);
 		escenario.draw();
 
 		

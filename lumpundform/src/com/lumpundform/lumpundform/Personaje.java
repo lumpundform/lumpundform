@@ -120,18 +120,13 @@ public class Personaje extends Actor {
 						new Vector2(width / (2 * PantallaJuego.PIXELS_PER_METER),
 								height / (2 * PantallaJuego.PIXELS_PER_METER)));
 			}
+		} else if (estado == CAYENDO) {
+			if (cuerpo.getLinearVelocity().y == 0)
+				estado = DE_PIE;
 		}
 		
 		// TODO: hacer una funcion para que convierta los datos de pixeles de
-		// escenario a metros de mundo y otra para que haga lo mismo que la
-		// condicion de aqui abajo.
-		
-		// Pone al cuerpo de pie cuanto no tiene velocidad en Y y su posición
-		// anterior a Y es mayor a su posición actual en Y
-		if (cuerpo.getLinearVelocity().y == 0 && (y > cuerpo.getPosition().y
-				* PantallaJuego.PIXELS_PER_METER)) {
-			estado = DE_PIE;
-		}
+		// escenario a metros de mundo
 		
 		x = cuerpo.getPosition().x * PantallaJuego.PIXELS_PER_METER;
 		y = cuerpo.getPosition().y * PantallaJuego.PIXELS_PER_METER;
