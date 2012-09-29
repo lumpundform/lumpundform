@@ -1,13 +1,11 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
 
 public class Mago extends Personaje {
 
-	protected Mago(String nombre, World mundo) {
-		super(nombre, mundo, 0.0f, 0.0f);
-		// TODO Auto-generated constructor stub
-		// Comentario blah
+	protected Mago(String nombre, Vector2 puntoOrigen) {
+		super(nombre, puntoOrigen);
 	}
 
 }

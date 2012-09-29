@@ -1,30 +1,11 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Input.Keys;
 
 public class ProcesadorEntrada implements InputProcessor {
-	private PantallaJuego lu;
-	
-	public ProcesadorEntrada(PantallaJuego lumpundform) {
-		lu = lumpundform;
-	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// Mueve al personaje a la izquierda (A) o derecha (D)
-		if (keycode == Keys.A || keycode == Keys.D) {
-			float velocidadDelta = (lu.heroe.velocidad * Gdx.graphics
-					.getDeltaTime());
-			if (keycode == Keys.A) {
-				lu.heroe.destinoX = lu.heroe.x - velocidadDelta;
-			}
-			if (keycode == Keys.D) {
-				lu.heroe.destinoX = lu.heroe.x + velocidadDelta;
-			}
-			lu.heroe.estado = Personaje.MOVIMIENTO;
-		}
 		return false;
 	}
 

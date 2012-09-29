@@ -1,26 +1,9 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 public class DetectorGestos implements GestureListener {
-	private PantallaJuego lu;
-	
-	public DetectorGestos(PantallaJuego lumpundform) {
-		lu = lumpundform;
-	}
-	
-	static public Vector3 alinearCoordenadas(int x, int y, Camera cam) {
-		// Alinear coordenadas del punto del toque con le dirección de la
-		// camara
-		Vector3 posicion = new Vector3();
-		posicion.set(x, y, 0);
-		cam.unproject(posicion);
-		
-		return posicion;
-	}
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer) {
@@ -29,17 +12,6 @@ public class DetectorGestos implements GestureListener {
 
 	@Override
 	public boolean tap(int x, int y, int count) {
-		if (count >= 2 && (lu.heroe.estado != Personaje.CAYENDO)) {
-			// Alinear coordenadas del punto del toque con la dirección de la
-			// camara
-			Vector3 pos = alinearCoordenadas(x, y, lu.camara);
-			
-			lu.heroe.cuerpo.setTransform(
-					new Vector2((pos.x / PantallaJuego.PIXELS_PER_METER),
-							(pos.y / PantallaJuego.PIXELS_PER_METER)), lu.heroe
-							.cuerpo.getAngle());
-			lu.heroe.estado = Personaje.CAYENDO;
-		}
 		return false;
 	}
 
