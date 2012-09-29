@@ -43,6 +43,7 @@ public class Personaje extends Actor {
 	// Movimiento
 	protected float destinoX;
 	protected float velocidad;
+	protected boolean cambio_direccion;
 
 	/**
 	 * Inicializa los valores generales de todos los personajes
@@ -114,15 +115,22 @@ public class Personaje extends Actor {
 		tiempoTranscurrido += delta;
 		
 		if (estado == MOVIMIENTO) {
+			if (cambio_direccion) {
+				detenerMovX();
+				cambio_direccion = false;
+			}
 			if (destinoX == x) { // No tiene destino, solo dirección
 				float impulsoX = direccionX == IZQUIERDA ? -12.0f : 12.0f;
+				
 				cuerpo.applyLinearImpulse(new Vector2(impulsoX, 0.0f),
-						new Vector2(width / (2 * PantallaJuego.PIXELS_PER_METER),
-								height / (2 * PantallaJuego.PIXELS_PER_METER)));
+						new Vector2(0,
+								0));
 			}
 		} else if (estado == CAYENDO) {
 			if (cuerpo.getLinearVelocity().y == 0)
 				estado = DE_PIE;
+		} else if (estado == DE_PIE) {
+			detenerMovX();
 		}
 		
 		// TODO: hacer una funcion para que convierta los datos de pixeles de
@@ -130,34 +138,10 @@ public class Personaje extends Actor {
 		
 		x = cuerpo.getPosition().x * PantallaJuego.PIXELS_PER_METER;
 		y = cuerpo.getPosition().y * PantallaJuego.PIXELS_PER_METER;
-
-		// Para caer
-		/*if (y > (20 + height / 2)) {
-			estado = CAYENDO;
-			y -= velocidad * delta;
-			if (y <= (20 + height / 2)) {
-				estado = DE_PIE;
-			}
-		} else if (destinoX != x) {
-			estado = MOVIMIENTO;
-			if (destinoX < x) { // Se está moviendo hacia la izquierda
-				direccionX = IZQUIERDA;
-				x -= velocidad * delta;
-				if (x < destinoX) {
-					x = destinoX;
-					estado = DE_PIE;
-				}
-			} else { // Se está moviendo hacia la derecha
-				direccionX = DERECHA;
-				x += velocidad * delta;
-				if (x > destinoX) {
-					x = destinoX;
-					estado = DE_PIE;
-				}
-			}
-		} else {
-			estado = DE_PIE;
-		}*/
+	}
+	
+	private void detenerMovX() {
+		cuerpo.setLinearVelocity(new Vector2(0, cuerpo.getLinearVelocity().y));
 	}
 
 	/**
@@ -188,8 +172,8 @@ public class Personaje extends Actor {
 	private void crearCuerpo() {
 		BodyDef cuerpoBodyDef = new BodyDef();
 		cuerpoBodyDef.type = BodyDef.BodyType.DynamicBody;
-		cuerpoBodyDef.position.set(2.0f, 10.0f);
-		cuerpoBodyDef.angle = (float) Math.toRadians(45.0f);
+		cuerpoBodyDef.position.set(2.0f, 5.0f);
+		cuerpoBodyDef.angle = (float) Math.toRadians(0.0f);
 
 		cuerpo = mundo.createBody(cuerpoBodyDef);
 
@@ -198,7 +182,7 @@ public class Personaje extends Actor {
 		 * 2 multiplier.
 		 */
 		PolygonShape cuerpoShape = new PolygonShape();
-		cuerpoShape.setAsBox(width / (2 * PantallaJuego.PIXELS_PER_METER),
+		cuerpoShape.setAsBox((width * 0.33f) / (2 * PantallaJuego.PIXELS_PER_METER),
 				height / (2 * PantallaJuego.PIXELS_PER_METER));
 
 		/**
@@ -213,7 +197,7 @@ public class Personaje extends Actor {
 		 * The linear damping was also found the same way.
 		 */
 		
-		cuerpo.createFixture(cuerpoShape, 3.0f);
+		cuerpo.createFixture(cuerpoShape, 8f);
 		cuerpoShape.dispose();
 		// cuerpo.setLinearVelocity(new Vector2(0.0f, 0.0f));
 		cuerpo.setLinearDamping(5.0f);

@@ -81,43 +81,16 @@ public class PantallaJuego implements Screen {
 		
 		tileMapRenderer.render(camara);
 
-		// Mover cámara
-		camara.position.x = heroe.x;
-		camara.position.y = heroe.y;
-		if (camara.position.x < (0 + Gdx.graphics.getWidth() / 2)) {
-			camara.position.x = 0 + Gdx.graphics.getWidth() / 2;
-		} else if (camara.position.x > (escenario.width() - Gdx.graphics.getWidth() / 2)) {
-			camara.position.x = escenario.width() - Gdx.graphics.getWidth() / 2;
-		}
-		if (camara.position.y < (0 + Gdx.graphics.getHeight() / 2)) {
-			camara.position.y = 0 + Gdx.graphics.getHeight() / 2;
-		} else if (camara.position.y > (escenario.height() - Gdx.graphics.getHeight() / 2)) {
-			camara.position.y = escenario.height() - Gdx.graphics.getHeight() / 2;
-		}
-
-		if ((heroe.cuerpo.getLinearVelocity().y == 0) && Gdx.input.isTouched()
-				|| Gdx.input.isKeyPressed(Keys.A) || Gdx.input
-				.isKeyPressed(Keys.D)) {
-			Vector3 pos = DetectorGestos.alinearCoordenadas(Gdx.input.getX(),
-					Gdx.input.getY(), camara);
-
-			if (Gdx.input.isKeyPressed(Keys.D) || (pos.x > heroe.x) && !Gdx
-					.input.isKeyPressed(Keys.A)) {
-				heroe.direccionX = Personaje.DERECHA;
-			} else {
-				heroe.direccionX = Personaje.IZQUIERDA;
-			}
-			heroe.destinoX = heroe.x;
-			heroe.estado = Personaje.MOVIMIENTO;
-		} else if (heroe.estado == Personaje.MOVIMIENTO) {
-			heroe.estado = Personaje.DE_PIE;
-		}
-
+		movimientoHeroe();
+		
 		mundo.step(1/60.0f, 6, 2);
+		
 		escenario.act(delta);
+		
+		centrarCamara();
+		
 		escenario.draw();
 
-		
 		debugRender();
 	}
 
@@ -155,6 +128,48 @@ public class PantallaJuego implements Screen {
 	public void dispose() {
 		batch.dispose();
 		escenario.dispose();
+	}
+	
+	private void centrarCamara() {
+		// Mover cámara
+		camara.position.x = heroe.x;
+		camara.position.y = heroe.y;
+		if (camara.position.x < (0 + Gdx.graphics.getWidth() / 2)) {
+			camara.position.x = 0 + Gdx.graphics.getWidth() / 2;
+		} else if (camara.position.x > (escenario.width() - Gdx.graphics.getWidth() / 2)) {
+			camara.position.x = escenario.width() - Gdx.graphics.getWidth() / 2;
+		}
+		if (camara.position.y < (0 + Gdx.graphics.getHeight() / 2)) {
+			camara.position.y = 0 + Gdx.graphics.getHeight() / 2;
+		} else if (camara.position.y > (escenario.height() - Gdx.graphics.getHeight() / 2)) {
+			camara.position.y = escenario.height() - Gdx.graphics.getHeight() / 2;
+		}
+	}
+	
+	private void movimientoHeroe() {
+		if ((heroe.cuerpo.getLinearVelocity().y == 0) && Gdx.input.isTouched()
+				|| Gdx.input.isKeyPressed(Keys.A) || Gdx.input
+				.isKeyPressed(Keys.D)) {
+			Vector3 pos = DetectorGestos.alinearCoordenadas(Gdx.input.getX(),
+					Gdx.input.getY(), camara);
+
+			if (Gdx.input.isKeyPressed(Keys.D) || (pos.x > heroe.x) && !Gdx
+					.input.isKeyPressed(Keys.A)) {
+				if (heroe.direccionX == Personaje.IZQUIERDA) {
+					heroe.cambio_direccion = true;
+				}
+				heroe.direccionX = Personaje.DERECHA;
+			} else {
+				if (heroe.direccionX == Personaje.DERECHA) {
+					heroe.cambio_direccion = true;
+				}
+				heroe.direccionX = Personaje.IZQUIERDA;
+			}
+			heroe.destinoX = heroe.x;
+			heroe.estado = Personaje.MOVIMIENTO;
+		} else if (heroe.estado == Personaje.MOVIMIENTO) {
+			heroe.estado = Personaje.DE_PIE;
+		}
 	}
 	
 
