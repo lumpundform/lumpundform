@@ -89,9 +89,9 @@ public abstract class ObjetoActor extends Actor {
 	 * @return La animación en si
 	 */
 	protected Animation initAnimacion(String tipoAnimacion) {
-		String spriteSheet = Datos.s(name).get("sprite_sheet");
-		int columnas = Datos.i("heroe").get("columnas_" + tipoAnimacion);
-		int renglones = Datos.i("heroe").get("renglones_" + tipoAnimacion);
+		String spriteSheet = D.s(name).get("sprite_sheet");
+		int columnas = D.i("heroe").get("columnas_" + tipoAnimacion);
+		int renglones = D.i("heroe").get("renglones_" + tipoAnimacion);
 		
 		Texture texturaAnimacion = new Texture(Gdx.files.internal(spriteSheet));
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion,

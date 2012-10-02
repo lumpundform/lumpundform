@@ -24,7 +24,7 @@ public class Personaje extends ObjetoActor {
 			flip = true;
 		}
 
-		batch.draw(cuadroActual, x - (width / 2), y - (height / 2));
+		batch.draw(cuadroActual, x, y);
 		
 		if (flip) cuadroActual.flip(true, false);
 	}

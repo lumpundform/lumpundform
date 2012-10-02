@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Sergio
  *
  */
-public class Datos {
+public class D {
 	/**
 	 * Regresa un Mapa de datos del objeto del nombre dado con todos los datos
 	 * tipo String que haya
@@ -42,17 +42,25 @@ public class Datos {
 	
 	@SuppressWarnings("rawtypes")
 	static private Map<String, Map> datosString() {
+		// Datos del Heroe
 		Map<String, String> datosHeroe = new HashMap<String, String>();
 		datosHeroe.put("sprite_sheet", "heroe_sprite_sheet.png");
 		
+		// Datos del escenario 1-01
+		Map<String, String> escenario101 = new HashMap<String, String>();
+		escenario101.put("archivo_tmx", "data/world/level1/level.tmx");
+		escenario101.put("atlas", "data/packer/bosque/");
+		
 		Map<String, Map> datos = new HashMap<String, Map>();
 		datos.put("heroe", datosHeroe);
+		datos.put("escenario101", escenario101);
 		
 		return datos;
 	}
 	
 	@SuppressWarnings("rawtypes")
 	static private Map<String, Map> datosInteger() {
+		// Datos del heroe
 		Map<String, Integer> datosHeroe = new HashMap<String, Integer>();
 		datosHeroe.put("columnas_detenido", 1);
 		datosHeroe.put("renglones_detenido", 1);

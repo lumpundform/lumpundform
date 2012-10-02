@@ -967,4 +967,12 @@
    <tile gid="8"/>
   </data>
  </layer>
+ <objectgroup name="origen" width="80" height="12">
+  <object name="origin" type="vector" gid="14" x="192" y="576">
+   <properties>
+    <property name="origenX" value="192"/>
+    <property name="origenY" value="576"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PantallaJuego implements Screen {
 	private OrthographicCamera camara;
 	private SpriteBatch batch;
-	private BaseEscenario escenario;
+	private EscenarioHelper escenario;
 	
 	public PantallaJuego() {
 		camara = new OrthographicCamera();
@@ -17,7 +17,8 @@ public class PantallaJuego implements Screen {
 
 		batch = new SpriteBatch();
 		
-		escenario = new BaseEscenario(batch, camara);
+		// TODO: hacer que se cargue dinamicamente el escenario
+		escenario = new EscenarioHelper(batch, camara, "escenario101");
 	}
 	
 	
