@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="80" height="12" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="level" tilewidth="64" tileheight="64">
-  <image source="level.png" width="256" height="1024"/>
+  <image source="../../packer/bosque/level.png" width="256" height="1024"/>
  </tileset>
  <layer name="Tile Layer 1" width="80" height="12">
   <data>
@@ -967,12 +967,12 @@
    <tile gid="8"/>
   </data>
  </layer>
- <objectgroup name="origen" width="80" height="12">
-  <object name="origin" type="vector" gid="14" x="192" y="576">
-   <properties>
-    <property name="origenX" value="192"/>
-    <property name="origenY" value="576"/>
-   </properties>
+ <objectgroup name="origenes" width="80" height="12">
+  <object name="heroe" type="vector" gid="14" x="192" y="576"/>
+ </objectgroup>
+ <objectgroup name="plataformas" width="80" height="12">
+  <object name="piso" x="0" y="768">
+   <polyline points="0,0 0,-192 1280,-192 1344,-128 4224,-128 4288,-192 4928,-192 5056,-320 5120,-320 5120,0 0,0"/>
   </object>
  </objectgroup>
 </map>
