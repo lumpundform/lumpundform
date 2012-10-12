@@ -42,7 +42,7 @@ public abstract class ObjetoActor extends Actor {
 		super(nombre);
 		
 		this.x = puntoOrigen.x;
-		this.y = puntoOrigen.y;
+		this.y = puntoOrigen.y + 120;
 		
 		animacion = new HashMap<String, Animation>();
 

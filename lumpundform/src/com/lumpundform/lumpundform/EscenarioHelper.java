@@ -10,6 +10,7 @@ public class EscenarioHelper {
 	private OrthographicCamera camara;
 	private TileMapRenderer renderer;
 	private EscenarioBase escenario;
+	private Heroe heroe;
 
 	public EscenarioHelper(SpriteBatch batch, OrthographicCamera cam, String nombre) {
 		camara = cam;
@@ -24,13 +25,12 @@ public class EscenarioHelper {
 		// Agregar las colisiones
 		escenario.piso = new Poligono(mh.cargarColisiones(camara, "piso"));
 		
-		Heroe heroe;
-		
 		heroe = new Heroe("heroe", mh.origenHeroe(camara));
-		
+		this.heroe = heroe;
 		if (heroe != null) {
 			escenario.addActor(heroe);
 		}
+		
 	}
 
 	public void actuarDibujar(float delta) {
@@ -44,7 +44,16 @@ public class EscenarioHelper {
 		// Dibujar líneas colisión
 		U.dibujarLineasColision(escenario.piso);
 		
-		Gdx.app.log("asdf", escenario.piso.estaColisionando(new Vector2(5, 5)) + "");
+		if(!escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y))){
+			heroe.y -= 1;
+			Gdx.app.log("heroe X : Y", heroe.x + " : " + heroe.y + "");
+			Gdx.app.log("colission con piso:", escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) + "");
+		} else {
+			heroe.x += 1;
+			Gdx.app.log("colission con piso:", escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) + "");
+		}
+		
+		//Gdx.app.log("asdf", escenario.piso.estaColisionando(new Vector2(5, 5)) + "");
 	}
 
 }
