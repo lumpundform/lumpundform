@@ -37,4 +37,13 @@ public class U {
 		}
 		sr.end();
 	}
+	
+	/**
+	 * Función atajo de Gdx.app.log
+	 * @param tag
+	 * @param mensaje
+	 */
+	static public void l(String tag, Object mensaje) {
+		Gdx.app.log(tag, mensaje + "");
+	}
 }

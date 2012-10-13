@@ -11,6 +11,11 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Clase que contiene funciones necesarias para cargar el mapa en el juego
+ * @author Sergio
+ *
+ */
 public class MapaHelper {
 	TiledMap mapa;
 	TileAtlas atlas;

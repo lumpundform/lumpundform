@@ -42,7 +42,7 @@ public abstract class ObjetoActor extends Actor {
 		super(nombre);
 		
 		this.x = puntoOrigen.x;
-		this.y = puntoOrigen.y + 120;
+		this.y = puntoOrigen.y + 30; // TODO: dejar el valor de y sin suma
 		
 		animacion = new HashMap<String, Animation>();
 

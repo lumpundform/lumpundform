@@ -1,6 +1,5 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
@@ -26,7 +25,6 @@ public class EscenarioHelper {
 		escenario.piso = new Poligono(mh.cargarColisiones(camara, "piso"));
 		
 		heroe = new Heroe("heroe", mh.origenHeroe(camara));
-		this.heroe = heroe;
 		if (heroe != null) {
 			escenario.addActor(heroe);
 		}
@@ -44,16 +42,15 @@ public class EscenarioHelper {
 		// Dibujar líneas colisión
 		U.dibujarLineasColision(escenario.piso);
 		
-		if(!escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y))){
-			heroe.y -= 1;
-			Gdx.app.log("heroe X : Y", heroe.x + " : " + heroe.y + "");
-			Gdx.app.log("colission con piso:", escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) + "");
+		// TODO: manejar esta lógica dentro de los actores, posiblemente dentro
+		// del método act()
+		if(escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) == "") {
+			heroe.y -= 3;
 		} else {
-			heroe.x += 1;
-			Gdx.app.log("colission con piso:", escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) + "");
+			if (escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) == "arriba")
+				heroe.y += 3;
+			heroe.x += 2;
 		}
-		
-		//Gdx.app.log("asdf", escenario.piso.estaColisionando(new Vector2(5, 5)) + "");
 	}
 
 }
