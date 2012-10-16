@@ -39,15 +39,15 @@ public class Personaje extends ObjetoActor {
 		case DETENIDO:
 		default:
 			nombreAnimacion = "detenido";
-			tiempoTranscurrido = 0f; // Reinicia el tiempo transcurrido para que
-									 // empiece las animaciones desde el
-									 // principio
 			break;
 		case MOVIMIENTO:
 			nombreAnimacion = "corriendo";
 			break;
 		case CAYENDO:
 			nombreAnimacion = "cayendo";
+			break;
+		case COLISIONANDO:
+			nombreAnimacion = "colisionando";
 			break;
 		}
 		return animacion.get(nombreAnimacion)

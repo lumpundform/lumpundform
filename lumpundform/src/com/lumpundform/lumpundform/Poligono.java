@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 public class Poligono {
 	public Vector2[] puntos;
 	
+	public Poligono() {}
+	
 	public Poligono(Vector2[] puntos) {
 		this.puntos = puntos;
 	}
@@ -46,7 +48,11 @@ public class Poligono {
 	}
 	
 	public boolean estaColisionando(Poligono poligono) {
-		// TODO: implementar colisión de dos polígonos
+		for (int i = 0; i < puntos.length; i++) {
+			if (poligono.estaColisionando(puntos[i]) != "") {
+				return true;
+			}
+		}
 		return false;
 	}
 }

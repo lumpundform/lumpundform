@@ -2,6 +2,7 @@ package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -25,17 +26,20 @@ public class U {
 		return voltearCoordenadas(camara, Gdx.input.getX(), Gdx.input.getY());
 	}
 	
-	static public void dibujarLineasColision(Poligono poligono) {
+	static public void dibujarLineasColision(Poligono poligono, Color color) {
 		Vector2[] puntos = poligono.puntos;
 		ShapeRenderer sr = new ShapeRenderer();
 		
 		sr.begin(ShapeType.Line);
-		sr.setColor(1, 1, 1, 1);
+		sr.setColor(color);
 		for (int i = 0; i < puntos.length; i++) {
 			int i2 = (i + 1 >= puntos.length) ? 0 : i + 1;
 			sr.line(puntos[i].x, puntos[i].y, puntos[i2].x, puntos[i2].y);
 		}
 		sr.end();
+	}
+	static public void dibujarLineasColision(Poligono poligono) {
+		dibujarLineasColision(poligono, Color.WHITE);
 	}
 	
 	/**
@@ -45,5 +49,9 @@ public class U {
 	 */
 	static public void l(String tag, Object mensaje) {
 		Gdx.app.log(tag, mensaje + "");
+	}
+	
+	static public void err(Exception e) {
+		l("Error", e.getMessage());
 	}
 }

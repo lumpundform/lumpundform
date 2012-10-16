@@ -20,6 +20,7 @@ public abstract class ObjetoActor extends Actor {
 	protected static final int DERECHA = 11;
 	protected static final int ARRIBA = 20;
 	protected static final int ABAJO = 21;
+	protected static final int COLISIONANDO = 30;
 
 	// Animaciones
 	protected Map<String, Animation> animacion;
@@ -34,6 +35,9 @@ public abstract class ObjetoActor extends Actor {
 	protected float destinoX;
 	protected float velocidad;
 	protected boolean cambio_direccion;
+	
+	// Colisión
+	protected Rectangulo hitbox;
 
 	/**
 	 * Inicializa los valores generales de todos los actores
@@ -42,14 +46,41 @@ public abstract class ObjetoActor extends Actor {
 		super(nombre);
 		
 		this.x = puntoOrigen.x;
-		this.y = puntoOrigen.y + 30; // TODO: dejar el valor de y sin suma
+		this.y = puntoOrigen.y;
 		
 		animacion = new HashMap<String, Animation>();
 
 		tiempoTranscurrido = 0f;
 	}
 	protected void cargarAnimaciones() {
-		animacion.put("detenido", initAnimacion("detenido"));
+		try {
+			animacion.put("detenido", initAnimacion("detenido"));
+			animacion.put("corriendo", initAnimacion("corriendo"));
+			animacion.put("colisionando", initAnimacion("colisionando"));
+		} catch (NullPointerException e) {
+			U.err(e);
+		}
+	}
+	
+	
+	
+	protected float getVelocidad(float delta) {
+		return delta * velocidad;
+	}
+	
+	
+	
+	protected void moverIzquierda(float delta) {
+		x -= getVelocidad(delta);
+	}
+	protected void moverDerecha(float delta) {
+		x += getVelocidad(delta);
+	}
+	
+	
+	
+	public Rectangulo getHitbox() {
+		return hitbox.posicionar(x + (width / 2), y + (height / 2));
 	}
 
 	
@@ -89,7 +120,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return La animación en si
 	 */
 	protected Animation initAnimacion(String tipoAnimacion) {
-		String spriteSheet = D.s(name).get("sprite_sheet");
+		String spriteSheet = D.s(name).get("sprite_sheet_" + tipoAnimacion);
 		int columnas = D.i("heroe").get("columnas_" + tipoAnimacion);
 		int renglones = D.i("heroe").get("renglones_" + tipoAnimacion);
 		
