@@ -1,8 +1,12 @@
 package com.lumpundform.lumpundform;
 
+import java.awt.Graphics;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -14,6 +18,9 @@ import com.badlogic.gdx.math.Vector3;
  *
  */
 public class U {
+	private static SpriteBatch sb = new SpriteBatch();
+	private static BitmapFont bmf = new BitmapFont(Gdx.files.internal("data/font/font.fnt"),
+			Gdx.files.internal("data/font/font.png"), false);
 
 	static public Vector3 voltearCoordenadas(Camera camara, int x, int y) {
 		Vector3 posicion = new Vector3(x, y, 0);
@@ -53,5 +60,13 @@ public class U {
 	
 	static public void err(Exception e) {
 		l("Error", e.getMessage());
+	}
+	
+	static public void ds(Object mensaje) {
+		CharSequence msg = mensaje + "";
+		sb.begin();
+		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
+		bmf.draw(sb, msg, 30, 500);
+		sb.end();
 	}
 }
