@@ -972,7 +972,7 @@
  </objectgroup>
  <objectgroup name="plataformas" width="80" height="12">
   <object name="piso" x="0" y="768">
-   <polyline points="0,0 0,-192 448,-192 640,-64 960,-192 4288,-192 4928,-192 5056,-320 5120,-320 5120,0 0,0"/>
+   <polyline points="0,0 0,-192 1280,-192 1344,-128 4224,-128 4288,-192 4928,-192 5056,-320 5120,-320 5120,0 0,0"/>
   </object>
  </objectgroup>
 </map>
