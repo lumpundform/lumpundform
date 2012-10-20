@@ -1,5 +1,6 @@
 package com.lumpundform.lumpundform;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class Humanoide extends Personaje {
@@ -33,9 +34,9 @@ public class Humanoide extends Personaje {
 	public void act(float delta) {
 		super.act(delta);
 		
-		if (x < 50) {
+		if (x <= 0) {
 			direccionX = DERECHA;
-		} else if (x > 400) {
+		} else if (x + width >= Gdx.graphics.getWidth()) {
 			direccionX = IZQUIERDA;
 		}
 		
@@ -44,6 +45,9 @@ public class Humanoide extends Personaje {
 		} else if (direccionX == DERECHA) {
 			moverDerecha(delta);
 		}
+		
+		if (x < 0) x = 0;
+		if ((x + width) > Gdx.graphics.getWidth()) x = Gdx.graphics.getWidth() - width;
 	}
 
 }

@@ -13,8 +13,6 @@ public class EscenarioHelper {
 	private OrthographicCamera camara;
 	private TileMapRenderer renderer;
 	private EscenarioBase escenario;
-	private Heroe heroe;
-	private Humanoide amigo;
 
 	public EscenarioHelper(SpriteBatch batch, OrthographicCamera cam, String nombre) {
 		camara = cam;
@@ -29,12 +27,19 @@ public class EscenarioHelper {
 		// Agregar las colisiones
 		escenario.piso = new Poligono(mh.cargarColisiones(camara, "piso"));
 		
-		heroe = new Heroe("heroe", mh.origenHeroe(camara));
-		amigo = new Humanoide("amigo", mh.origenHeroe(camara));
+		Vector2 origenHeroe = mh.origenHeroe(camara);
+		Heroe heroe = new Heroe("heroe", origenHeroe);
+		Humanoide amigo = new Humanoide("amigo", origenHeroe);
+		Humanoide amigo2 = new Humanoide("amigo", new Vector2(origenHeroe.x + 350, origenHeroe.y + 99));
+		Humanoide amigo3 = new Humanoide("amigo", new Vector2(origenHeroe.x + 250, origenHeroe.y + 201));
+		Humanoide amigo4 = new Humanoide("amigo", new Vector2(origenHeroe.x - 100, origenHeroe.y + 300));
 		
 		try {
 			escenario.addActor(heroe);
 			escenario.addActor(amigo);
+			escenario.addActor(amigo2);
+			escenario.addActor(amigo3);
+			escenario.addActor(amigo4);
 		} catch (NullPointerException e) {
 			U.err(e);
 		}
@@ -50,20 +55,11 @@ public class EscenarioHelper {
 		
 		// Dibujar y actuar de todos los actores del escenario
 		escenario.colisionActores();
+		escenario.colisionPiso();
 		escenario.act(delta);
 		escenario.draw();
 		
 		dibujarLineasColision();
-		
-		// TODO: manejar esta lógica dentro de los actores, posiblemente dentro
-		// del método act()
-		if(escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) == "") {
-			heroe.y -= 3;
-		} else {
-			if (escenario.piso.estaColisionando(new Vector2(heroe.x, heroe.y)) == "arriba")
-				heroe.y += 3;
-			//heroe.x += 2;
-		}
 	}
 	
 	/**
@@ -79,6 +75,10 @@ public class EscenarioHelper {
 		}
 
 		U.dibujarLineasColision(escenario.piso);
+	}
+	
+	public ObjetoActor getHeroe() {
+		return (ObjetoActor) escenario.findActor("heroe");
 	}
 
 }

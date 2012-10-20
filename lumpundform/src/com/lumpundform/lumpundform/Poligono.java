@@ -17,7 +17,7 @@ public class Poligono {
 	 * @param punto El punto a revisar para la colisión
 	 * @return true si hay colisión, false si no
 	 */
-	public String estaColisionando(Vector2 punto) {
+	public boolean estaColisionando(Vector2 punto) {
 		Linea izq = null;
 		Linea der = null;
 		Linea arr = null;
@@ -43,13 +43,13 @@ public class Poligono {
 			}
 		}
 		
-		if (arr == null || ab == null || der == null || izq == null) return "";
-		else return arr.direccionDiagonal();
+		if (arr == null || ab == null || der == null || izq == null) return false;
+		else return true;
 	}
 	
 	public boolean estaColisionando(Poligono poligono) {
 		for (int i = 0; i < puntos.length; i++) {
-			if (poligono.estaColisionando(puntos[i]) != "") {
+			if (poligono.estaColisionando(puntos[i])) {
 				return true;
 			}
 		}

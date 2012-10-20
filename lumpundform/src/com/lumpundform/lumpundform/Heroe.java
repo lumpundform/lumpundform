@@ -48,7 +48,7 @@ public class Heroe extends Personaje {
 	
 	private void moverHeroe(float delta) {
 		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
-			estado = MOVIMIENTO;
+			if (estado != COLISIONANDO) estado = MOVIMIENTO;
 			if (Gdx.input.isKeyPressed(Keys.A)) {
 				direccionX = IZQUIERDA;
 				moverIzquierda(delta);
