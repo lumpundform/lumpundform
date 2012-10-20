@@ -4,11 +4,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class Personaje extends ObjetoActor {
+public abstract class Personaje extends ObjetoActor {
 
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 	}
+	protected abstract void cargarAnimaciones();
 	
 	
 	

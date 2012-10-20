@@ -52,15 +52,7 @@ public abstract class ObjetoActor extends Actor {
 
 		tiempoTranscurrido = 0f;
 	}
-	protected void cargarAnimaciones() {
-		try {
-			animacion.put("detenido", initAnimacion("detenido"));
-			animacion.put("corriendo", initAnimacion("corriendo"));
-			animacion.put("colisionando", initAnimacion("colisionando"));
-		} catch (NullPointerException e) {
-			U.err(e);
-		}
-	}
+	protected abstract void cargarAnimaciones();
 	
 	
 	

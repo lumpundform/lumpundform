@@ -21,6 +21,15 @@ public class Heroe extends Personaje {
 		
 		cargarAnimaciones();
 	}
+	protected void cargarAnimaciones() {
+		try {
+			animacion.put("detenido", initAnimacion("detenido"));
+			animacion.put("corriendo", initAnimacion("corriendo"));
+			animacion.put("colisionando", initAnimacion("colisionando"));
+		} catch (NullPointerException e) {
+			U.err(e);
+		}
+	}
 	
 	
 	@Override
