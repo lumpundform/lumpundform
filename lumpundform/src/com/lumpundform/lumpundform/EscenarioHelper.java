@@ -1,11 +1,13 @@
 package com.lumpundform.lumpundform;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class EscenarioHelper {
 	private OrthographicCamera camara;
@@ -51,10 +53,7 @@ public class EscenarioHelper {
 		escenario.act(delta);
 		escenario.draw();
 		
-		// Dibujar líneas colisión
-		U.dibujarLineasColision(escenario.piso);
-		U.dibujarLineasColision(amigo.getHitbox(), Color.MAGENTA);
-		U.dibujarLineasColision(heroe.getHitbox(), Color.GREEN);
+		dibujarLineasColision();
 		
 		// TODO: manejar esta lógica dentro de los actores, posiblemente dentro
 		// del método act()
@@ -65,6 +64,21 @@ public class EscenarioHelper {
 				heroe.y += 3;
 			//heroe.x += 2;
 		}
+	}
+	
+	/**
+	 * Dibuja las líneas de colisión del piso del escenario y de todos los
+	 * actores que se encuentran en el escenario
+	 */
+	public void dibujarLineasColision() {
+		List<Actor> actores = escenario.getActors();
+		
+		for (int i = 0; i < actores.size(); i++) {
+			ObjetoActor actor = (ObjetoActor) actores.get(i);
+			U.dibujarLineasColision(actor.getHitbox());
+		}
+
+		U.dibujarLineasColision(escenario.piso);
 	}
 
 }
