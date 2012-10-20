@@ -34,7 +34,7 @@ public class EscenarioHelper {
 			escenario.addActor(heroe);
 			escenario.addActor(amigo);
 		} catch (NullPointerException e) {
-			U.l("Error", e.getStackTrace());
+			U.err(e);
 		}
 
 		// Detectar gestos con DetectorGestos
