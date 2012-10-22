@@ -4,8 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Clase específica para el héroe del juego
+ * @author Sergio
+ *
+ */
 public class Heroe extends Personaje {
 
+	/**
+	 * Carga datos específicos del héroe, incluyendo su hitbox y su estado
+	 * inicial
+	 * @param nombre El nombre del {@link Actor}
+	 * @param puntoOrigen El punto donde se va a originar el {@link Actor}
+	 */
 	public Heroe(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 		
@@ -21,6 +32,8 @@ public class Heroe extends Personaje {
 		
 		cargarAnimaciones();
 	}
+	
+	@Override
 	protected void cargarAnimaciones() {
 		try {
 			animacion.put("detenido", initAnimacion("detenido"));
@@ -45,7 +58,10 @@ public class Heroe extends Personaje {
 	}
 	
 	
-	
+	/**
+	 * Mueve al héroe al presionar las teclas adecuadas
+	 * @param delta El delta de {@link Screen.render()}
+	 */
 	private void moverHeroe(float delta) {
 		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
 			if (estado != COLISIONANDO) estado = MOVIMIENTO;

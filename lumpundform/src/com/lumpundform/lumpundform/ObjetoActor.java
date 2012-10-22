@@ -11,6 +11,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+/**
+ * Clase personalizada que extiende a {@link Actor} y le agrega valores
+ * específicos del juego
+ * @author Sergio
+ *
+ */
 public abstract class ObjetoActor extends Actor {
 	// Valores Estáticos
 	protected static final int DETENIDO = 0;
@@ -52,25 +58,46 @@ public abstract class ObjetoActor extends Actor {
 
 		tiempoTranscurrido = 0f;
 	}
+	/**
+	 * Aqui se inicializan todas las animaciones existentes de la clase
+	 */
 	protected abstract void cargarAnimaciones();
 	
 	
 	
+	/**
+	 * Calcula la velocidad del {@link Actor} conforme al delta pasado
+	 * @param delta El delta que proviene de {@link Screen.render()}
+	 * @return La velocidad
+	 */
 	protected float getVelocidad(float delta) {
 		return delta * velocidad;
 	}
 	
 	
 	
+	/**
+	 * Mueve al {@link Actor} a la izquierda conforme a su velocidad
+	 * @param delta El delta que proviene de {@link Screen.render()}
+	 */
 	protected void moverIzquierda(float delta) {
 		x -= getVelocidad(delta);
 	}
+	/**
+	 * Mueve al {@link Actor} a la derecha conforme a su velocidad
+	 * @param delta El delta que proviene de {@link Screen.render()}
+	 */
 	protected void moverDerecha(float delta) {
 		x += getVelocidad(delta);
 	}
 	
 	
 	
+	/**
+	 * Regresa el hitbox del {@link Actor} en la posición actual de dicho
+	 * {@link Actor}
+	 * @return El hitbox
+	 */
 	public Rectangulo getHitbox() {
 		return hitbox.posicionar(x + (width / 2), y + (height / 2));
 	}

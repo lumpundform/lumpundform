@@ -7,6 +7,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+/**
+ * La base para los escenarios, extiende a {@link Stage} y agrega funciones y
+ * valores específicos del juego
+ * @author Sergio
+ *
+ */
 public class EscenarioBase extends Stage {
 	public Poligono piso;
 
@@ -15,6 +21,10 @@ public class EscenarioBase extends Stage {
 		super(width, height, stretch, batch);
 	}
 
+	/**
+	 * Cambia el estado del héroe si este está colisionando con algún otro
+	 * actor del escenario
+	 */
 	public void colisionActores() {
 		Heroe heroe = (Heroe) findActor("heroe");
 		List<Actor> actores = getActors();
@@ -30,6 +40,9 @@ public class EscenarioBase extends Stage {
 		}
 	}
 	
+	/**
+	 * Detecta la colisión de todos los actores con el piso
+	 */
 	public void colisionPiso() {
 		List<Actor> actores = getActors();
 		

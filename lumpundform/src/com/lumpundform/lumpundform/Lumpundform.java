@@ -13,8 +13,12 @@ public class Lumpundform extends Game {
 		// en consola
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
+		// TODO: no comenzar el juego con la pantalla de juego
 		pantallaJuego = new PantallaJuego();
 		setScreen(pantallaJuego);
+
+		// Detectar gestos con DetectorGestos
+		Gdx.input.setInputProcessor(new ProcesadorEntrada());
 	}
 	
 }

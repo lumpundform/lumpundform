@@ -4,16 +4,13 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * Clase que implementa {@link InputProcessor} y {@link GestureListener} para
+ * los controles del juego
+ * @author Sergio
+ *
+ */
 public class ProcesadorEntrada implements InputProcessor, GestureListener {
-	@SuppressWarnings("unused")
-	private Heroe heroe;
-	
-	public ProcesadorEntrada(Heroe heroe) {
-		this.heroe = heroe;
-	}
-	
-	
-	
 	// InputProcessor
 
 	@Override

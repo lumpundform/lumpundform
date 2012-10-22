@@ -26,29 +26,52 @@ public class MapaHelper {
 	}
 	
 	
-	
+	/**
+	 * Carga el mapa y regresa el {@link TileMapRenderer} que se va a utilizar
+	 * para dibujarlo
+	 * @return El {@link TileMapRenderer} necesario para dibujar el mapa
+	 */
 	public TileMapRenderer cargarMapa() {
 		return new TileMapRenderer(mapa, atlas, 16, 16);
 	}
 	
 	
 	
+	/**
+	 * Regresa el ancho total del mapa
+	 * @return El ancho
+	 */
 	public int getWidth() {
 		return mapa.width * mapa.tileWidth;
 	}
-	
+	/**
+	 * Regresa el alto total del mapa
+	 * @return El alto
+	 */
 	public int getHeight() {
 		return mapa.height * mapa.tileHeight;
 	}
 	
 	
 	
+	/**
+	 * Regresa el punto de origen del {@link Heroe}
+	 * @param camara La cámara a referenciar para las coordenadas del punto
+	 * @return El punto de origen
+	 */
 	public Vector2 origenHeroe(OrthographicCamera camara) {
 		TiledObject objeto = tiledObject("origenes", "heroe");
 		Vector3 origen = U.voltearCoordenadas(camara, objeto.x, objeto.y);
 		return new Vector2(origen.x, origen.y);
 	}
 	
+	/**
+	 * Carga las colisiones del mapa del objeto referenciado por nombreObjeto
+	 * @param camara La cámara a referenciar para las coordenadas del punto
+	 * @param nombreObjeto El nombre del objeto del cuál se quieren saber
+	 *                     sus vértices
+	 * @return Un arreglo de todos los vertices del objeto
+	 */
 	public Vector2[] cargarColisiones(OrthographicCamera camara, String nombreObjeto) {
 		TiledObject objeto = tiledObject("plataformas", nombreObjeto);
 		Vector2 puntoInicialObjeto = new Vector2(objeto.x, objeto.y);
@@ -65,6 +88,12 @@ public class MapaHelper {
 	}
 
 	
+	/**
+	 * Carga el {@link TiledObject} del grupo y objeto dados del archivo *.tmx
+	 * @param nombreGrupo El nombre del grupo
+	 * @param nombreObjeto El nombre del objeto
+	 * @return El objeto
+	 */
 	private TiledObject tiledObject(String nombreGrupo, String nombreObjeto) {
 		TiledObjectGroup objetoGrupo = tiledObjectGroup(nombreGrupo);
 		for (int i = 0; i < objetoGrupo.objects.size(); i++) {
@@ -74,6 +103,11 @@ public class MapaHelper {
 		}
 		return null;
 	}
+	/**
+	 * Carga el {@link TiledObjectGroup} del nombre dado del archivo *.tmx
+	 * @param nombre El nombre del {@link TiledObjectGroup}
+	 * @return El objectGroup
+	 */
 	private TiledObjectGroup tiledObjectGroup(String nombre) {
 		for (int i = 0; i < mapa.objectGroups.size(); i++) {
 			if (mapa.objectGroups.get(i).name.equals(nombre)) {

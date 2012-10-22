@@ -2,31 +2,44 @@ package com.lumpundform.lumpundform;
 
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+/**
+ * Clase que ayuda con las funciones de los escenarios, como cargar el mapa,
+ * los actores, las líneas de colisión y hace que actúen y se dibujen los
+ * actores
+ * @author Sergio
+ *
+ */
 public class EscenarioHelper {
 	private OrthographicCamera camara;
 	private TileMapRenderer renderer;
 	private EscenarioBase escenario;
 
+	/**
+	 * Inicializa el escenario, el mapa, las colisiones y el héroe para el 
+	 * escenario del nombre dado
+	 * @param batch El SpriteBatch con el que se van a dibujar los actores
+	 * @param cam La cámara de la pantalla actual
+	 * @param nombre El nombre del escenario para referenciarlo en la clase D
+	 */
 	public EscenarioHelper(SpriteBatch batch, OrthographicCamera cam, String nombre) {
 		camara = cam;
 		
 		MapaHelper mh = new MapaHelper(nombre);
-		
 		renderer = mh.cargarMapa();
 		
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch);
 		escenario.setCamera(camara);
 		
-		// Agregar las colisiones
+		// Agregar las colisiones del piso
 		escenario.piso = new Poligono(mh.cargarColisiones(camara, "piso"));
 		
+		// Héroe y actores de prueba
 		Vector2 origenHeroe = mh.origenHeroe(camara);
 		Heroe heroe = new Heroe("heroe", origenHeroe);
 		Humanoide amigo = new Humanoide("amigo", origenHeroe);
@@ -43,22 +56,26 @@ public class EscenarioHelper {
 		} catch (NullPointerException e) {
 			U.err(e);
 		}
-
-		// Detectar gestos con DetectorGestos
-		Gdx.input.setInputProcessor(new ProcesadorEntrada(heroe));
-		
 	}
 
+	/**
+	 * Manda a actuar a todos los actores del escenario y los dibuja. También
+	 * calcula las colisiones de los actores y dibuja las líneas de colisión
+	 * @param delta Proviene de Screen.render()
+	 */
 	public void actuarDibujar(float delta) {
 		// Dibujar mapa
 		renderer.render(camara);
 		
-		// Dibujar y actuar de todos los actores del escenario
+		// Colisión
 		escenario.colisionActores();
 		escenario.colisionPiso();
+		
+		// Dibujar y actuar de todos los actores del escenario
 		escenario.act(delta);
 		escenario.draw();
 		
+		// Debug líneas colisión
 		dibujarLineasColision();
 	}
 	
@@ -77,6 +94,10 @@ public class EscenarioHelper {
 		U.dibujarLineasColision(escenario.piso);
 	}
 	
+	/**
+	 * Regresa al héroe del escenario
+	 * @return El héroe
+	 */
 	public ObjetoActor getHeroe() {
 		return (ObjetoActor) escenario.findActor("heroe");
 	}

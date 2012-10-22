@@ -3,8 +3,18 @@ package com.lumpundform.lumpundform;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Clase específica para los humanoides del juego
+ * @author Sergio
+ *
+ */
 public class Humanoide extends Personaje {
 
+	/**
+	 * Carga datos específicos de {@link Humanoide}
+	 * @param nombre El nombre del {@link Actor}
+	 * @param puntoOrigen En donde se va a originar el {@link Actor}
+	 */
 	protected Humanoide(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 		
@@ -20,6 +30,8 @@ public class Humanoide extends Personaje {
 		
 		cargarAnimaciones();
 	}
+	
+	@Override
 	protected void cargarAnimaciones() {
 		try {
 			animacion.put("detenido", initAnimacion("detenido"));
