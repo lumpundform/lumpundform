@@ -3,16 +3,15 @@ package com.lumpundform.lumpundform;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PantallaJuego implements Screen {
-	private OrthographicCamera camara;
+	private CamaraJuego camara;
 	private SpriteBatch batch;
 	private EscenarioHelper escenario;
 	
 	public PantallaJuego() {
-		camara = new OrthographicCamera();
+		camara = new CamaraJuego();
 		camara.setToOrtho(false);
 
 		batch = new SpriteBatch();

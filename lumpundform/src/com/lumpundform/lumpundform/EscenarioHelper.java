@@ -2,7 +2,6 @@ package com.lumpundform.lumpundform;
 
 import java.util.List;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *
  */
 public class EscenarioHelper {
-	private OrthographicCamera camara;
+	private CamaraJuego camara;
 	private TileMapRenderer renderer;
 	private EscenarioBase escenario;
 
@@ -27,7 +26,7 @@ public class EscenarioHelper {
 	 * @param cam La cámara de la pantalla actual
 	 * @param nombre El nombre del escenario para referenciarlo en la clase D
 	 */
-	public EscenarioHelper(SpriteBatch batch, OrthographicCamera cam, String nombre) {
+	public EscenarioHelper(SpriteBatch batch, CamaraJuego cam, String nombre) {
 		camara = cam;
 		
 		MapaHelper mh = new MapaHelper(nombre);
@@ -71,34 +70,46 @@ public class EscenarioHelper {
 		escenario.colisionActores();
 		escenario.colisionPiso();
 		
-		// Dibujar y actuar de todos los actores del escenario
+		// Actuar de todos los actores del escenario
 		escenario.act(delta);
-		escenario.draw();
 		
 		// Debug líneas colisión
 		dibujarLineasColision();
+		
+		// Mover la cámara
+		moverCamara();
+		
+		// Dibujar los actores del escenario 
+		escenario.draw();
 	}
 	
 	/**
 	 * Dibuja las líneas de colisión del piso del escenario y de todos los
 	 * actores que se encuentran en el escenario
 	 */
-	public void dibujarLineasColision() {
+	private void dibujarLineasColision() {
 		List<Actor> actores = escenario.getActors();
 		
 		for (int i = 0; i < actores.size(); i++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			U.dibujarLineasColision(actor.getHitbox());
+			U.dibujarLineasColision(actor.getHitbox(), camara);
 		}
 
-		U.dibujarLineasColision(escenario.piso);
+		U.dibujarLineasColision(escenario.piso, camara);
+	}
+	
+	private void moverCamara() {
+		camara.setPosicion(getHeroe().x, camara.position.y);
+		
+		if (camara.posicionOrigen.x < 0) camara.setPosicionOrigen(0, camara.posicionOrigen.y);
+		U.l("Posicion origen camara", camara.position);
 	}
 	
 	/**
 	 * Regresa al héroe del escenario
 	 * @return El héroe
 	 */
-	public ObjetoActor getHeroe() {
+	private ObjetoActor getHeroe() {
 		return (ObjetoActor) escenario.findActor("heroe");
 	}
 

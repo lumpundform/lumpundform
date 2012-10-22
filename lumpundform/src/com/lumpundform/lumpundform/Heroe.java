@@ -52,7 +52,6 @@ public class Heroe extends Personaje {
 		moverHeroe(delta);
 		
 		if (x < 0) x = 0;
-		if ((x + width) > Gdx.graphics.getWidth()) x = Gdx.graphics.getWidth() - width;
 		
 		U.ds(x);
 	}

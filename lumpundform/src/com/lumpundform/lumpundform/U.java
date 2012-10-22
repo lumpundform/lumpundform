@@ -51,14 +51,17 @@ public class U {
 	 *                 de colisón
 	 * @param color El color con el que se van a dibujar las líneas
 	 */
-	static public void dibujarLineasColision(Poligono poligono, Color color) {
+	static public void dibujarLineasColision(Poligono poligono, CamaraJuego camara, Color color) {
 		Vector2[] vertices = poligono.vertices;
 		
 		sr.begin(ShapeType.Line);
 		sr.setColor(color);
 		for (int i = 0; i < vertices.length; i++) {
 			int i2 = (i + 1 >= vertices.length) ? 0 : i + 1;
-			sr.line(vertices[i].x, vertices[i].y, vertices[i2].x, vertices[i2].y);
+			sr.line(vertices[i].x - camara.posicionOrigen.x,
+					vertices[i].y - camara.posicionOrigen.y,
+					vertices[i2].x - camara.posicionOrigen.x,
+					vertices[i2].y - camara.posicionOrigen.y);
 		}
 		sr.end();
 	}
@@ -68,8 +71,8 @@ public class U {
 	 * @param poligono El {@link Poligono} del cuál se van a dibujar las líneas
 	 *                 de colisión
 	 */
-	static public void dibujarLineasColision(Poligono poligono) {
-		dibujarLineasColision(poligono, Color.WHITE);
+	static public void dibujarLineasColision(Poligono poligono, CamaraJuego camara) {
+		dibujarLineasColision(poligono, camara, Color.WHITE);
 	}
 	
 	/**
