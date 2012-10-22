@@ -16,6 +16,11 @@ import com.badlogic.gdx.math.Vector3;
  *
  */
 public class U {
+	private static ShapeRenderer sr = new ShapeRenderer();
+	private static SpriteBatch sb = new SpriteBatch();
+	private static BitmapFont bmf = new BitmapFont(Gdx.files.internal("data/font/font.fnt"),
+			Gdx.files.internal("data/font/font.png"), false);
+	
 	static public Vector3 voltearCoordenadas(Camera camara, int x, int y) {
 		Vector3 posicion = new Vector3(x, y, 0);
 		camara.unproject(posicion);
@@ -29,7 +34,6 @@ public class U {
 	
 	static public void dibujarLineasColision(Poligono poligono, Color color) {
 		Vector2[] puntos = poligono.puntos;
-		ShapeRenderer sr = new ShapeRenderer();
 		
 		sr.begin(ShapeType.Line);
 		sr.setColor(color);
@@ -57,10 +61,6 @@ public class U {
 	}
 	
 	static public void ds(Object mensaje) {
-		SpriteBatch sb = new SpriteBatch();
-		BitmapFont bmf = new BitmapFont(Gdx.files.internal("data/font/font.fnt"),
-				Gdx.files.internal("data/font/font.png"), false);
-		
 		CharSequence msg = mensaje + "";
 		sb.begin();
 		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);

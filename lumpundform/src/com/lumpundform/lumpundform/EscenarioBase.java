@@ -19,7 +19,6 @@ public class EscenarioBase extends Stage {
 		Heroe heroe = (Heroe) findActor("heroe");
 		List<Actor> actores = getActors();
 		
-		U.l("Cantidad actores", actores.size());
 		for (int i = 0; i < actores.size(); i ++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
 			if (actor.name != "heroe" && heroe.getHitbox().estaColisionando(actor.getHitbox())) {
