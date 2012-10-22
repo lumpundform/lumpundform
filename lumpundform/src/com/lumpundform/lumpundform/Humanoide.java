@@ -57,9 +57,6 @@ public class Humanoide extends Personaje {
 		} else if (direccionX == DERECHA) {
 			moverDerecha(delta);
 		}
-		
-		if (x < 0) x = 0;
-		if ((x + width) > Gdx.graphics.getWidth()) x = Gdx.graphics.getWidth() - width;
 	}
 
 }

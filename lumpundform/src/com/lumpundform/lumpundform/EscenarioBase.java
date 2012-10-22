@@ -3,7 +3,6 @@ package com.lumpundform.lumpundform;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -48,7 +47,7 @@ public class EscenarioBase extends Stage {
 		
 		for (int i = 0; i < actores.size(); i ++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			if(!piso.estaColisionando(new Vector2(actor.x, actor.y))) {
+			if(!piso.estaColisionando(actor.getHitbox())) {
 				actor.y -= 3;
 			}
 		}

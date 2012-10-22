@@ -50,10 +50,6 @@ public class Heroe extends Personaje {
 		super.act(delta);
 		
 		moverHeroe(delta);
-		
-		if (x < 0) x = 0;
-		
-		U.ds(x);
 	}
 	
 	

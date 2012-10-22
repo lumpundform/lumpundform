@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class EscenarioHelper {
 	private CamaraJuego camara;
+	private MapaHelper mh;
 	private TileMapRenderer renderer;
 	private EscenarioBase escenario;
 
@@ -29,7 +30,7 @@ public class EscenarioHelper {
 	public EscenarioHelper(SpriteBatch batch, CamaraJuego cam, String nombre) {
 		camara = cam;
 		
-		MapaHelper mh = new MapaHelper(nombre);
+		mh = new MapaHelper(nombre);
 		renderer = mh.cargarMapa();
 		
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch);
@@ -73,14 +74,16 @@ public class EscenarioHelper {
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
 		
+		acomodarActores();
+		
 		// Debug líneas colisión
 		dibujarLineasColision();
 		
-		// Mover la cámara
-		moverCamara();
-		
 		// Dibujar los actores del escenario 
 		escenario.draw();
+		
+		// Mover la cámara
+		moverCamara(delta);
 	}
 	
 	/**
@@ -98,19 +101,58 @@ public class EscenarioHelper {
 		U.dibujarLineasColision(escenario.piso, camara);
 	}
 	
-	private void moverCamara() {
-		camara.setPosicion(getHeroe().x, camara.position.y);
+	/**
+	 * Mueve la cámara conforme a la posición del {@link Heroe}
+	 * @param delta El delta de {@link Screen.render(float)}
+	 */
+	private void moverCamara(float delta) {
+		Heroe heroe = getHeroe();
+		float factor = 1.7f;
+		float destinoCamara;
+		
+		if (heroe.direccionX == ObjetoActor.DERECHA) {
+			destinoCamara = heroe.x + heroe.width / 2 + camara.viewportWidth / 6;
+			if (camara.position.x < destinoCamara) {
+				camara.setPosicion((float) (camara.position.x + heroe.getVelocidad(delta) * factor), camara.position.y);
+			}
+			if (camara.position.x >= destinoCamara) {
+				camara.setPosicion(destinoCamara, camara.position.y);
+			}
+		} else {
+			destinoCamara = heroe.x + heroe.width / 2 - camara.viewportWidth / 6;
+			if (camara.position.x > destinoCamara) {
+				camara.setPosicion((float) (camara.position.x - heroe.getVelocidad(delta) * factor), camara.position.y);
+			}
+			if (camara.position.x <= destinoCamara) {
+				camara.setPosicion(destinoCamara, camara.position.y);
+			}
+		}
 		
 		if (camara.posicionOrigen.x < 0) camara.setPosicionOrigen(0, camara.posicionOrigen.y);
-		U.l("Posicion origen camara", camara.position);
+		if (camara.posicionOrigen.x + camara.viewportWidth > mh.getWidth())
+			camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth, camara.posicionOrigen.y);
 	}
 	
 	/**
 	 * Regresa al héroe del escenario
 	 * @return El héroe
 	 */
-	private ObjetoActor getHeroe() {
-		return (ObjetoActor) escenario.findActor("heroe");
+	private Heroe getHeroe() {
+		return (Heroe) escenario.findActor("heroe");
+	}
+
+	/**
+	 * Limita las posiciones de los actores del escenario para que no se salgan
+	 * del mismo
+	 */
+	private void acomodarActores() {
+		List<Actor> actores = escenario.getActors();
+		
+		for (int i = 0; i < actores.size(); i ++) {
+			ObjetoActor actor = (ObjetoActor) actores.get(i);
+			if (actor.x < 0) actor.x = 0;
+			if (actor.x + actor.width > mh.getWidth()) actor.x = mh.getWidth() - actor.width;
+		}
 	}
 
 }
