@@ -1,8 +1,11 @@
 package com.lumpundform.lumpundform;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -42,12 +45,87 @@ public class EscenarioBase extends Stage {
 	/**
 	 * Detecta la colisión de todos los actores con el piso
 	 */
-	public void colisionPiso() {
+	public void colisionPiso(float delta) {
 		List<Actor> actores = getActors();
+		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
 		
 		for (int i = 0; i < actores.size(); i ++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			if(!piso.estaColisionando(actor.getHitbox())) {
+			caidaLibre.put(actor.name, false);
+			if (!piso.estaColisionando(actor.getSensor("inf-izq")) &&
+					!piso.estaColisionando(actor.getSensor("inf-der"))) {
+				caidaLibre.put(actor.name, true);
+			}
+			
+			if (actor.direccionX == ObjetoActor.DERECHA) {
+				if (!piso.estaColisionando(actor.getSensor("inf-izq")) &&
+						!piso.estaColisionando(actor.getSensor("inf-der"))) {
+					Vector2 puntoTemp = actor.getSensor("inf-izq");
+					Vector2 p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
+					Linea l = piso.linea("arriba", p);
+					
+					float pendiente = 0.0f;
+					try {
+						pendiente = l.pendiente();
+					} catch (Exception e) {}
+					
+					if (l != null && pendiente <= 1.01f && l.yEnX(p) <= actor.y &&
+							(l.direccionDiagonal() == "abajo" || l.direccionLinea() == "x")) {
+						caidaLibre.put(actor.name, false);
+						actor.y = l.yEnX(p);
+					}
+				} else if (piso.estaColisionando(actor.getSensor("inf-der"))) {
+					Vector2 p = actor.getSensor("inf-der");
+					Linea l = piso.linea("arriba", p);
+					
+					float pendiente = 0.0f;
+					try {
+						pendiente = l.pendiente();
+					} catch (Exception e) {
+						U.err(e);
+					}
+					
+					if (pendiente <= 1.01f && l.yEnX(p) <= actor.y + 10 &&
+							(l.direccionDiagonal() == "arriba" || l.direccionLinea() == "x")) {
+						caidaLibre.put(actor.name, false);
+						actor.y = l.yEnX(p);
+					}
+				}
+			} else {
+				if (!piso.estaColisionando(actor.getSensor("inf-izq")) &&
+						!piso.estaColisionando(actor.getSensor("inf-der"))) {
+					Vector2 puntoTemp = actor.getSensor("inf-der");
+					Vector2 p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
+					Linea l = piso.linea("arriba", p);
+					
+					float pendiente = 0.0f;
+					try {
+						pendiente = l.pendiente();
+					} catch (Exception e) { U.err(e); }
+					
+					if (l != null && pendiente <= 1.01f && l.yEnX(p) <= actor.y &&
+							(l.direccionDiagonal() == "arriba" || l.direccionLinea() == "-x")) {
+						caidaLibre.put(actor.name, false);
+						actor.y = l.yEnX(p);
+					}
+				} else if (piso.estaColisionando(actor.getSensor("inf-izq"))) {
+					Vector2 p = actor.getSensor("inf-izq");
+					Linea l = piso.linea("arriba", p);
+					
+					float pendiente = 0.0f;
+					try {
+						pendiente = l.pendiente();
+					} catch (Exception e) { U.err(e); }
+					
+					if (pendiente <= 1.01f && l.yEnX(p) <= actor.y + 10 &&
+							(l.direccionDiagonal() == "abajo" || l.direccionLinea() == "-x")) {
+						caidaLibre.put(actor.name, false);
+						actor.y = l.yEnX(p);
+					}
+				}
+			}
+			
+			if (caidaLibre.get(actor.name)) {
 				actor.y -= 3;
 			}
 		}

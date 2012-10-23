@@ -43,16 +43,10 @@ public class EscenarioHelper {
 		Vector2 origenHeroe = mh.origenHeroe(camara);
 		Heroe heroe = new Heroe("heroe", origenHeroe);
 		Humanoide amigo = new Humanoide("amigo", origenHeroe);
-		Humanoide amigo2 = new Humanoide("amigo", new Vector2(origenHeroe.x + 350, origenHeroe.y + 99));
-		Humanoide amigo3 = new Humanoide("amigo", new Vector2(origenHeroe.x + 250, origenHeroe.y + 201));
-		Humanoide amigo4 = new Humanoide("amigo", new Vector2(origenHeroe.x - 100, origenHeroe.y + 300));
 		
 		try {
 			escenario.addActor(heroe);
 			escenario.addActor(amigo);
-			escenario.addActor(amigo2);
-			escenario.addActor(amigo3);
-			escenario.addActor(amigo4);
 		} catch (NullPointerException e) {
 			U.err(e);
 		}
@@ -69,7 +63,7 @@ public class EscenarioHelper {
 		
 		// Colisión
 		escenario.colisionActores();
-		escenario.colisionPiso();
+		escenario.colisionPiso(delta);
 		
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
@@ -150,8 +144,8 @@ public class EscenarioHelper {
 		
 		for (int i = 0; i < actores.size(); i ++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			if (actor.x < 0) actor.x = 0;
-			if (actor.x + actor.width > mh.getWidth()) actor.x = mh.getWidth() - actor.width;
+			if (actor.getSensor("inf-izq").x < 0) actor.setSensorX("inf-izq", 0.0f);
+			if (actor.getSensor("inf-der").x > mh.getWidth()) actor.setSensorX("inf-izq", (mh.getWidth() - actor.getHitbox().getAncho()));
 		}
 	}
 

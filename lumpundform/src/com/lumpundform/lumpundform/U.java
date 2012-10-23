@@ -89,7 +89,7 @@ public class U {
 	 * @param e El error
 	 */
 	static public void err(Exception e) {
-		l("Error", e.getMessage());
+		l("Error", e.getLocalizedMessage());
 	}
 	
 	/**

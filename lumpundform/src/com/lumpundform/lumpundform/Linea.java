@@ -57,6 +57,13 @@ public class Linea {
 	 * @return El punto en Y para la X dada
 	 */
 	public float yEnX(Vector2 punto) {
+		return yEnX(punto, false);
+	}
+	public float yEnX(Vector2 punto, boolean debug) {
+		if (debug) {
+			U.l("Punto 1", p1);
+			U.l("Punto 2", p2);
+		}
 		if (direccionLinea() == ".") {
 			if (p1.x == punto.x) return p1.y;
 			// TODO: Que escriba en un archivo si le estamos pasando un punto como línea
@@ -83,6 +90,11 @@ public class Linea {
 	public String direccionDiagonal() {
 		if (direccionLinea() == "xy" || direccionLinea() == "-x-y") return "arriba";
 		else return "abajo";
+	}
+	
+	public float pendiente() throws Exception {
+		if (longitudX() == 0) throw new Exception("La linea es vertical");
+		return longitudY() / longitudX();
 	}
 	
 	
@@ -177,7 +189,7 @@ public class Linea {
 	 * es diagonal hacia abajo a la derecha.
 	 * @return El nombre de la dirección
 	 */
-	private String direccionLinea() {
+	public String direccionLinea() {
 		String nombre = "";
 		
 		// Punto

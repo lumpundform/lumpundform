@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Rectangulo extends Poligono {
 	private float alto;
 	private float ancho;
-	private boolean centrado;
+	public boolean centrado;
 	
 	/**
 	 * Manda llamar {@link Rectangulo(float, float, boolean)} con valor
@@ -35,6 +35,10 @@ public class Rectangulo extends Poligono {
 		this.centrado = centrado;
 	}
 	
+	public float getAncho() {
+		return ancho;
+	}
+	
 	/**
 	 * Posiciona al {@link Rectangulo} en el punto dado tomando en cuenta si
 	 * el {@link Rectangulo} tiene punto de referencia centrado o no
@@ -55,5 +59,44 @@ public class Rectangulo extends Poligono {
 			vertices[3] = new Vector2(x + ancho, y);
 		}
 		return this;
+	}
+	
+	public Vector2 punto(String nombre) {
+		float xTemp = vertices[0].x;
+		float yTemp = vertices[0].y;
+		int indicePunto = 0;
+		for (int i = 1; i < vertices.length; i++) {
+			if (nombre.equals("inf-izq")) {
+				if (vertices[i].x <= xTemp && vertices[i].y <= yTemp) {
+					xTemp = vertices[i].x;
+					yTemp = vertices[i].y;
+					indicePunto = i;
+				}
+			} else if (nombre.equals("inf-der")) {
+				if (vertices[i].x >= xTemp && vertices[i].y <= yTemp) {
+					xTemp = vertices[i].x;
+					yTemp = vertices[i].y;
+					indicePunto = i;
+				}
+			} else if (nombre.equals("sup-izq")) {
+				if (vertices[i].x <= xTemp && vertices[i].y >= yTemp) {
+					xTemp = vertices[i].x;
+					yTemp = vertices[i].y;
+					indicePunto = i;
+				}
+			} else if (nombre.equals("sup-der")) {
+				if (vertices[i].x >= xTemp && vertices[i].y >= yTemp) {
+					xTemp = vertices[i].x;
+					yTemp = vertices[i].y;
+					indicePunto = i;
+				}
+			}
+		}
+		return vertices[indicePunto];
+	}
+	
+	public Vector2 centro() {
+		return new Vector2((punto("inf-izq").x + punto("inf-der").x) / 2,
+				(punto("inf-izq").y + punto("sup-izq").y) / 2);
 	}
 }

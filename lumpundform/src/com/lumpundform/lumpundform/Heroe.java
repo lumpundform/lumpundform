@@ -66,7 +66,9 @@ public class Heroe extends Personaje {
 			} else if (Gdx.input.isKeyPressed(Keys.D)) {
 				direccionX = DERECHA;
 				moverDerecha(delta);
-			}
+			} 
+		} else {
+			if (estado != COLISIONANDO) estado = DETENIDO;
 		}
 	}
 }

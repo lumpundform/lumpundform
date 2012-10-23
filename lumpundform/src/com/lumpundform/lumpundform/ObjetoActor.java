@@ -44,6 +44,8 @@ public abstract class ObjetoActor extends Actor {
 	
 	// Colisión
 	protected Rectangulo hitbox;
+	protected Map<String, Vector2> sensores;
+	protected Map<String, Vector2> sensoresDelta;
 
 	/**
 	 * Inicializa los valores generales de todos los actores
@@ -53,11 +55,44 @@ public abstract class ObjetoActor extends Actor {
 		
 		this.x = puntoOrigen.x;
 		this.y = puntoOrigen.y;
-		
+
+		sensores = new HashMap<String, Vector2>();
+		sensoresDelta = new HashMap<String, Vector2>();
 		animacion = new HashMap<String, Animation>();
 
 		tiempoTranscurrido = 0f;
 	}
+	
+	public Vector2 getSensor(String nombre) {
+		if (hitbox == null) return null;
+		
+		sensores.remove(nombre);
+		sensores.put(nombre, getHitbox().punto(nombre));
+		return sensores.get(nombre);
+	}
+
+	public void setSensorX(String nombre, float x) {
+		hitbox.centrado = false;
+		hitbox.posicionar(x, sensores.get(nombre).y);
+		this.x = hitbox.centro().x - width / 2;
+		hitbox.centrado = true;
+	}
+	
+	public Vector2 getSensorDelta(String nombre, float delta) {
+		if (hitbox == null) return null;
+		Vector2 punto = null;
+		Vector2 puntoTemp = getHitbox().punto(nombre);
+		
+		sensoresDelta.remove(nombre);
+		if (nombre.equals("inf-izq") || nombre.equals("sup-izq")) {
+			punto = new Vector2(puntoTemp.x - (getVelocidad(delta) * 4), puntoTemp.y);
+		} else if (nombre.equals("inf-der") || nombre.equals("sup-der")) {
+			punto = new Vector2(puntoTemp.x + (getVelocidad(delta) * 4), puntoTemp.y);
+		}
+		sensoresDelta.put(nombre, punto);
+		return sensoresDelta.get(nombre);
+	}
+	
 	/**
 	 * Aqui se inicializan todas las animaciones existentes de la clase
 	 */
