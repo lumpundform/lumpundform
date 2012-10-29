@@ -61,7 +61,7 @@ public class EscenarioHelper {
 	public void actuarDibujar(float delta) {
 		
 		// Dibujar Background
-		mh.renderFondo();
+		mh.renderFondo(camara, delta);
 		
 		// Dibujar mapa
 		renderer.render(camara);

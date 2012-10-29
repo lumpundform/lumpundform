@@ -1,6 +1,7 @@
 package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -42,10 +43,12 @@ public class MapaHelper {
 	}
 	
 	
-	public void renderFondo() {
+	public void renderFondo(Camera camara, Float delta) {
+		float fondo_x =  (camara.viewportWidth / 2) - camara.position.x ;
+		U.l("V3", fondo_x);
 		sb.begin();
 		sb.disableBlending();
-		sb.draw(fondo,0,0);
+		sb.draw(fondo, fondo_x * delta * 5,0);
 		sb.enableBlending();
 		sb.end();
 	}
