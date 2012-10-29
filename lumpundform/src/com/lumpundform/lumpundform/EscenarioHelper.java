@@ -2,6 +2,7 @@ package com.lumpundform.lumpundform;
 
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -58,6 +59,10 @@ public class EscenarioHelper {
 	 * @param delta Proviene de Screen.render()
 	 */
 	public void actuarDibujar(float delta) {
+		
+		// Dibujar Background
+		mh.renderFondo();
+		
 		// Dibujar mapa
 		renderer.render(camara);
 		

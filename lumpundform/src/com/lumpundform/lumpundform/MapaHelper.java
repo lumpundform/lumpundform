@@ -2,6 +2,8 @@ package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
@@ -19,10 +21,14 @@ import com.badlogic.gdx.math.Vector3;
 public class MapaHelper {
 	TiledMap mapa;
 	TileAtlas atlas;
+	Texture fondo;
+	SpriteBatch sb;
 	
 	public MapaHelper(String nombre) {
 		mapa = TiledLoader.createMap(Gdx.files.internal(D.s(nombre).get("archivo_tmx")));
 		atlas = new TileAtlas(mapa, Gdx.files.internal(D.s(nombre).get("atlas")));
+		fondo = new Texture(Gdx.files.internal(D.s(nombre).get("fondo")));
+		sb = new SpriteBatch();
 	}
 	
 	
@@ -36,6 +42,13 @@ public class MapaHelper {
 	}
 	
 	
+	public void renderFondo() {
+		sb.begin();
+		sb.disableBlending();
+		sb.draw(fondo,0,0);
+		sb.enableBlending();
+		sb.end();
+	}
 	
 	/**
 	 * Regresa el ancho total del mapa

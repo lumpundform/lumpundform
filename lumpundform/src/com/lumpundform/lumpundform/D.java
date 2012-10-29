@@ -57,6 +57,7 @@ public class D {
 		Map<String, String> escenario101 = new HashMap<String, String>();
 		escenario101.put("archivo_tmx", "data/world/level1/level.tmx");
 		escenario101.put("atlas", "data/packer/bosque/");
+		escenario101.put("fondo", "data/background.png");
 		
 		Map<String, Map> datos = new HashMap<String, Map>();
 		datos.put("heroe", datosHeroe);
