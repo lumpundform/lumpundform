@@ -47,6 +47,7 @@ public class D {
 		datosHeroe.put("sprite_sheet_detenido", "heroe_sprite_sheet.png");
 		datosHeroe.put("sprite_sheet_corriendo", "heroe_corriendo.png");
 		datosHeroe.put("sprite_sheet_colisionando", "heroe_colisionando.png");
+		datosHeroe.put("sprite_sheet_cayendo", "heroe_cayendo.png");
 		
 		// Datos del Amigo
 		Map<String, String> datosAmigo = new HashMap<String, String>();
@@ -77,6 +78,8 @@ public class D {
 		datosHeroe.put("renglones_corriendo", 1);
 		datosHeroe.put("columnas_colisionando", 8);
 		datosHeroe.put("renglones_colisionando", 1);
+		datosHeroe.put("columnas_cayendo", 1);
+		datosHeroe.put("renglones_cayendo", 1);
 		
 		// Datos del heroe
 		Map<String, Integer> datosAmigo = new HashMap<String, Integer>();

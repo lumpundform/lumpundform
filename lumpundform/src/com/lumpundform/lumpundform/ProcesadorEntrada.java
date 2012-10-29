@@ -1,7 +1,9 @@
 package com.lumpundform.lumpundform;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -10,7 +12,69 @@ import com.badlogic.gdx.InputProcessor;
  * @author Sergio
  *
  */
-public class ProcesadorEntrada implements InputProcessor, GestureListener {
+public class ProcesadorEntrada implements GestureListener, InputProcessor {
+	private Heroe heroe;
+	private OrthographicCamera camara;
+	
+	public ProcesadorEntrada(Lumpundform juego) {
+		PantallaJuego pantalla = (PantallaJuego) juego.getScreen();
+		this.heroe = pantalla.escenario.getHeroe();
+		this.camara = pantalla.camara;
+	}
+	
+	
+	
+	
+	// GestureListener
+
+	@Override
+	public boolean touchDown(int x, int y, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean tap(int x, int y, int count) {
+		if (count >= 2) {
+			U.l("doble tap", "si");
+			Vector3 posicion = U.voltearCoordenadas(camara, x, y);
+			heroe.teletransportar(new Vector2(posicion.x, posicion.y));
+		}
+		return false;
+	}
+
+	@Override
+	public boolean longPress(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pan(int x, int y, int deltaX, int deltaY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float originalDistance, float currentDistance) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialFirstPointer,
+			Vector2 initialSecondPointer, Vector2 firstPointer,
+			Vector2 secondPointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	// InputProcessor
 
 	@Override
@@ -50,55 +114,6 @@ public class ProcesadorEntrada implements InputProcessor, GestureListener {
 
 	@Override
 	public boolean scrolled(int amount) {
-		return false;
-	}
-	
-	
-	
-	
-	// GestureListener
-
-	@Override
-	public boolean touchDown(int x, int y, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean tap(int x, int y, int count) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean longPress(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pan(int x, int y, int deltaX, int deltaY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean zoom(float originalDistance, float currentDistance) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialFirstPointer,
-			Vector2 initialSecondPointer, Vector2 firstPointer,
-			Vector2 secondPointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

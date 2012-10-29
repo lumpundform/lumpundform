@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PantallaJuego implements Screen {
-	private CamaraJuego camara;
+	public CamaraJuego camara;
 	private SpriteBatch batch;
-	private EscenarioHelper escenario;
+	public EscenarioHelper escenario;
 	
 	public PantallaJuego() {
 		camara = new CamaraJuego();

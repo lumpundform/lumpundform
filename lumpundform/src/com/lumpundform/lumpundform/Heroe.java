@@ -71,4 +71,9 @@ public class Heroe extends Personaje {
 			if (estado != COLISIONANDO) estado = DETENIDO;
 		}
 	}
+
+	public void teletransportar(Vector2 pos) {
+		x = pos.x - width / 2;
+		y = pos.y - height / 2;
+	}
 }

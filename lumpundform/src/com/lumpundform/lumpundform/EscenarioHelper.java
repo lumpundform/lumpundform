@@ -2,7 +2,6 @@ package com.lumpundform.lumpundform;
 
 import java.util.List;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -136,7 +135,7 @@ public class EscenarioHelper {
 	 * Regresa al héroe del escenario
 	 * @return El héroe
 	 */
-	private Heroe getHeroe() {
+	public Heroe getHeroe() {
 		return (Heroe) escenario.findActor("heroe");
 	}
 
