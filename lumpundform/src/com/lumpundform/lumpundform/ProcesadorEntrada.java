@@ -36,7 +36,6 @@ public class ProcesadorEntrada implements GestureListener, InputProcessor {
 	@Override
 	public boolean tap(int x, int y, int count) {
 		if (count >= 2) {
-			U.l("doble tap", "si");
 			Vector3 posicion = U.voltearCoordenadas(camara, x, y);
 			heroe.teletransportar(new Vector2(posicion.x, posicion.y));
 		}

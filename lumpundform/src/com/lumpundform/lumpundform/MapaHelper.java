@@ -45,7 +45,6 @@ public class MapaHelper {
 	
 	public void renderFondo(Camera camara, Float delta) {
 		float fondo_x =  (camara.viewportWidth / 2) - camara.position.x ;
-		U.l("V3", fondo_x);
 		sb.begin();
 		sb.disableBlending();
 		sb.draw(fondo, fondo_x * delta * 5,0);
