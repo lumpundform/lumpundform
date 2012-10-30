@@ -80,6 +80,13 @@ public abstract class ObjetoActor extends Actor {
 		this.x = hitbox.centro().x - width / 2;
 		hitbox.centrado = true;
 	}
+
+	public void setSensorY(String nombre, float y) {
+		hitbox.centrado = false;
+		hitbox.posicionar(sensores.get(nombre).x, y);
+		this.y = hitbox.centro().y - height / 2;
+		hitbox.centrado = true;
+	}
 	
 	public Vector2 getSensorDelta(String nombre, float delta) {
 		if (hitbox == null) return null;

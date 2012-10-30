@@ -138,6 +138,10 @@ public class EscenarioHelper {
 	public Heroe getHeroe() {
 		return (Heroe) escenario.findActor("heroe");
 	}
+	
+	public Poligono getPiso() {
+		return escenario.piso;
+	}
 
 	/**
 	 * Limita las posiciones de los actores del escenario para que no se salgan
