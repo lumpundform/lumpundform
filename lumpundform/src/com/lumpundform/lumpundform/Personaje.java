@@ -47,10 +47,15 @@ public abstract class Personaje extends ObjetoActor {
 		case CAYENDO:
 			nombreAnimacion = "cayendo";
 			break;
-		case COLISIONANDO:
-			nombreAnimacion = "colisionando";
-			break;
 		}
+		if (colisionActores) {
+			nombreAnimacion = "colisionando";
+		}
+		
+		if (!animacion.containsKey(nombreAnimacion)) {
+			nombreAnimacion = "detenido";
+		}
+		
 		return animacion.get(nombreAnimacion)
 				.getKeyFrame(tiempoTranscurrido, true);
 	}

@@ -34,10 +34,10 @@ public class EscenarioBase extends Stage {
 		for (int i = 0; i < actores.size(); i ++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
 			if (actor.name != "heroe" && heroe.getHitbox().estaColisionando(actor.getHitbox())) {
-				heroe.estado = ObjetoActor.COLISIONANDO;
+				heroe.colisionActores = true;
 				break;
 			} else if (actor.name != "heroe") {
-				heroe.estado = ObjetoActor.DETENIDO;
+				heroe.colisionActores = false;
 			}
 		}
 	}
@@ -126,7 +126,13 @@ public class EscenarioBase extends Stage {
 			}
 			
 			if (caidaLibre.get(actor.name)) {
-				actor.y -= 3;
+				actor.colisionPiso = false;
+				actor.y -= 5;
+			} else {
+				actor.colisionPiso = true;
+				if (actor.name == "heroe") {
+					actor.teletransportar = false;
+				}
 			}
 		}
 	}

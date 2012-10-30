@@ -41,11 +41,14 @@ public abstract class ObjetoActor extends Actor {
 	protected float destinoX;
 	protected float velocidad;
 	protected boolean cambio_direccion;
+	protected boolean teletransportar = false;
 	
 	// Colisión
 	protected Rectangulo hitbox;
 	protected Map<String, Vector2> sensores;
 	protected Map<String, Vector2> sensoresDelta;
+	protected boolean colisionActores = false;
+	protected boolean colisionPiso = false;
 
 	/**
 	 * Inicializa los valores generales de todos los actores
@@ -116,6 +119,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @param delta El delta que proviene de {@link Screen.render()}
 	 */
 	protected void moverIzquierda(float delta) {
+		if (estado != CAYENDO) estado = MOVIMIENTO;
 		x -= getVelocidad(delta);
 	}
 	/**
@@ -123,7 +127,16 @@ public abstract class ObjetoActor extends Actor {
 	 * @param delta El delta que proviene de {@link Screen.render()}
 	 */
 	protected void moverDerecha(float delta) {
+		if (estado != CAYENDO) estado = MOVIMIENTO;
 		x += getVelocidad(delta);
+	}
+
+	protected Vector2 getPosicionCentro() {
+		return new Vector2(x + width / 2, y + height / 2);
+	}
+	protected void setPosicionCentro(Vector2 pos) {
+		x = pos.x - width / 2;
+		y = pos.y - height / 2;
 	}
 	
 	
@@ -145,6 +158,7 @@ public abstract class ObjetoActor extends Actor {
 	
 	@Override
 	public void act(float delta) {
+		estado = colisionPiso ? DETENIDO : CAYENDO;
 		tiempoTranscurrido += delta;
 	}
 	

@@ -39,6 +39,7 @@ public class Heroe extends Personaje {
 			animacion.put("detenido", initAnimacion("detenido"));
 			animacion.put("corriendo", initAnimacion("corriendo"));
 			animacion.put("colisionando", initAnimacion("colisionando"));
+			animacion.put("cayendo", initAnimacion("cayendo"));
 		} catch (NullPointerException e) {
 			U.err(e);
 		}
@@ -58,22 +59,26 @@ public class Heroe extends Personaje {
 	 * @param delta El delta de {@link Screen.render()}
 	 */
 	private void moverHeroe(float delta) {
-		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D)) {
-			if (estado != COLISIONANDO) estado = MOVIMIENTO;
+		if (!teletransportar && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D))) {
+			float d = delta;
+			if (!colisionPiso) { d = delta * 0.75f; }
 			if (Gdx.input.isKeyPressed(Keys.A)) {
 				direccionX = IZQUIERDA;
-				moverIzquierda(delta);
+				moverIzquierda(d);
 			} else if (Gdx.input.isKeyPressed(Keys.D)) {
 				direccionX = DERECHA;
-				moverDerecha(delta);
+				moverDerecha(d);
 			} 
-		} else {
-			if (estado != COLISIONANDO) estado = DETENIDO;
 		}
 	}
 
 	public void teletransportar(Vector2 pos) {
-		x = pos.x - width / 2;
-		y = pos.y - height / 2;
+		if (colisionPiso) {
+			Vector2 posicionAnterior = getPosicionCentro();
+			
+			teletransportar = true;
+			direccionX = posicionAnterior.x >= pos.x ? IZQUIERDA : DERECHA;
+			setPosicionCentro(pos);
+		}
 	}
 }

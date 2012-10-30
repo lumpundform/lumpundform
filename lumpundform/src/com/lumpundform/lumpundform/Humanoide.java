@@ -23,7 +23,7 @@ public class Humanoide extends Personaje {
 		
 		hitbox = new Rectangulo(height, width / 2, true);
 		
-		estado = MOVIMIENTO;
+		estado = DETENIDO;
 		destinoX = x;
 		direccionX = DERECHA;
 		velocidad = 200;
