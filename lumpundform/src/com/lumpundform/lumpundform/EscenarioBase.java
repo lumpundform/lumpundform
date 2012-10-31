@@ -47,7 +47,7 @@ public class EscenarioBase extends Stage {
 	/**
 	 * Detecta la colisión de todos los {@link ObjetoActor}es con el piso
 	 */
-	public void colisionPiso(float delta) {
+	public void colisionPiso() {
 		List<Actor> actores = getActors();
 		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
 
@@ -110,8 +110,7 @@ public class EscenarioBase extends Stage {
 				}
 
 				// Posiciona al actor sobre la línea si la linea tiene una
-				// pendiente
-				// menor a 1
+				// pendiente menor a 1
 				if (lineaNull
 						&& pendiente <= 1.01f
 						&& l.yEnX(p) <= altura
@@ -131,6 +130,54 @@ public class EscenarioBase extends Stage {
 				actor.colisionPiso = true;
 				if (actor.name == "heroe") {
 					actor.teletransportar = false;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Limita las posiciones de los {@link ObjetoActor}es del escenario para que
+	 * no se salgan del mismo
+	 */
+	public void acomodarActores(float width) {
+		List<Actor> actores = getActors();
+
+		for (int i = 0; i < actores.size(); i++) {
+			ObjetoActor actor = (ObjetoActor) actores.get(i);
+			if (actor.getSensor("inf-izq").x < 0)
+				actor.setSensorX("inf-izq", 0.0f);
+			if (actor.getSensor("inf-der").x > width)
+				actor.setSensorX("inf-izq", (width - actor.getHitbox()
+						.getAncho()));
+
+			// Detecta colisión con paredes
+			Vector2 pc = null;
+			String lineaLateral;
+			Double yPunto = null;
+			if (actor.direccionX == ObjetoActor.DERECHA) {
+				pc = actor.getSensor("inf-der");
+				lineaLateral = "izquierda";
+				yPunto = Math.floor(pc.y);
+			} else {
+				pc = actor.getSensor("inf-izq");
+				lineaLateral = "derecha";
+				yPunto = Math.floor(pc.y) + 10.0f;
+			}
+
+			if (piso.estaColisionando(pc)
+					&& piso.linea("arriba", pc).esHorizontal()
+					&& piso.linea(lineaLateral, pc).esVertical()
+					&& yPunto < Math.floor(piso.linea("arriba", pc).yEnX(pc))) {
+				Linea linea = piso.linea(lineaLateral, pc);
+				if (linea != null) {
+					Float xLinea = null;
+					if (lineaLateral == "izquierda") {
+						xLinea = linea.xEnY(pc) - actor.getHitbox().getAncho()
+								- 1;
+					} else {
+						xLinea = linea.xEnY(pc) + 1;
+					}
+					actor.setSensorX("inf-izq", xLinea);
 				}
 			}
 		}

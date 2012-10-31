@@ -75,12 +75,12 @@ public class EscenarioHelper {
 
 		// Colisión
 		escenario.colisionActores();
-		escenario.colisionPiso(delta);
+		escenario.colisionPiso();
 
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
 
-		acomodarActores();
+		escenario.acomodarActores(mh.getWidth());
 
 		// Debug líneas colisión
 		dibujarLineasColision();
@@ -165,23 +165,6 @@ public class EscenarioHelper {
 	 */
 	public Poligono getPiso() {
 		return escenario.piso;
-	}
-
-	/**
-	 * Limita las posiciones de los {@link ObjetoActor}es del escenario para que
-	 * no se salgan del mismo
-	 */
-	private void acomodarActores() {
-		List<Actor> actores = escenario.getActors();
-
-		for (int i = 0; i < actores.size(); i++) {
-			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			if (actor.getSensor("inf-izq").x < 0)
-				actor.setSensorX("inf-izq", 0.0f);
-			if (actor.getSensor("inf-der").x > mh.getWidth())
-				actor.setSensorX("inf-izq", (mh.getWidth() - actor.getHitbox()
-						.getAncho()));
-		}
 	}
 
 }
