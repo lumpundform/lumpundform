@@ -2,7 +2,6 @@ package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
@@ -92,7 +91,7 @@ public class MapaHelper {
 	 *            punto
 	 * @return El punto de origen
 	 */
-	public Vector2 origenHeroe(OrthographicCamera camara) {
+	public Vector2 origenHeroe(CamaraJuego camara) {
 		TiledObject objeto = tiledObject("origenes", "heroe");
 		Vector3 origen = U.voltearCoordenadas(camara, objeto.x, objeto.y);
 		return new Vector2(origen.x, origen.y);
@@ -108,7 +107,7 @@ public class MapaHelper {
 	 *            El nombre del objeto del cuál se quieren saber sus vértices
 	 * @return Un arreglo de todos los vertices del objeto
 	 */
-	public Vector2[] cargarColisiones(OrthographicCamera camara,
+	public Vector2[] cargarColisiones(CamaraJuego camara,
 			String nombreObjeto) {
 		TiledObject objeto = tiledObject("plataformas", nombreObjeto);
 		Vector2 puntoInicialObjeto = new Vector2(objeto.x, objeto.y);

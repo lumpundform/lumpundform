@@ -1,6 +1,5 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -15,7 +14,7 @@ import com.badlogic.gdx.InputProcessor;
  */
 public class ProcesadorEntrada implements GestureListener, InputProcessor {
 	private PantallaJuego pantalla;
-	private OrthographicCamera camara;
+	private CamaraJuego camara;
 	private Heroe heroe;
 
 	public ProcesadorEntrada(Lumpundform juego) {
