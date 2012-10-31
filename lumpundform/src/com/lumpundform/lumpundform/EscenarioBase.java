@@ -54,94 +54,76 @@ public class EscenarioBase extends Stage {
 		for (int i = 0; i < actores.size(); i++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
 			caidaLibre.put(actor.name, false);
+
+			// Datos para cuando va hacia derecha o izquierda
+			String puntoColision, puntoColisionTemp;
+			String direccionDiagonalDer, direccionDiagonalIzq, direccionLinea;
+			if (actor.direccionX == ObjetoActor.DERECHA) {
+				puntoColision = "inf-der";
+				puntoColisionTemp = "inf-izq";
+				direccionDiagonalDer = "abajo";
+				direccionDiagonalIzq = "arriba";
+				direccionLinea = "x";
+			} else {
+				puntoColision = "inf-izq";
+				puntoColisionTemp = "inf-der";
+				direccionDiagonalDer = "arriba";
+				direccionDiagonalIzq = "abajo";
+				direccionLinea = "-x";
+			}
+
+			// Revisa si el actor está en caída libre o si está colisionando
+			// alguna de las esquinas de su hitbox para inicializar variables
+			Vector2 p = null;
+			boolean lineaNull = true, ln = false;
+			Float altura = null;
+			String direccionDiagonal = null;
 			if (!piso.estaColisionando(actor.getSensor("inf-izq"))
 					&& !piso.estaColisionando(actor.getSensor("inf-der"))) {
 				caidaLibre.put(actor.name, true);
+
+				Vector2 puntoTemp = actor.getSensor(puntoColisionTemp);
+				p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
+				ln = true;
+				altura = actor.y;
+				direccionDiagonal = direccionDiagonalDer;
+			} else if (piso.estaColisionando(actor.getSensor(puntoColision))) {
+				p = actor.getSensor(puntoColision);
+				altura = actor.y + 10;
+				direccionDiagonal = direccionDiagonalIzq;
 			}
 
-			if (actor.direccionX == ObjetoActor.DERECHA) {
-				if (!piso.estaColisionando(actor.getSensor("inf-izq"))
-						&& !piso.estaColisionando(actor.getSensor("inf-der"))) {
-					Vector2 puntoTemp = actor.getSensor("inf-izq");
-					Vector2 p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
-					Linea l = piso.linea("arriba", p);
-
-					float pendiente = 0.0f;
-					try {
-						pendiente = l.pendiente();
-					} catch (Exception e) {
-					}
-
-					if (l != null
-							&& pendiente <= 1.01f
-							&& l.yEnX(p) <= actor.y
-							&& (l.direccionDiagonal() == "abajo" || l
-									.direccionLinea() == "x")) {
-						caidaLibre.put(actor.name, false);
-						actor.y = l.yEnX(p);
-					}
-				} else if (piso.estaColisionando(actor.getSensor("inf-der"))) {
-					Vector2 p = actor.getSensor("inf-der");
-					Linea l = piso.linea("arriba", p);
-
-					float pendiente = 0.0f;
-					try {
-						pendiente = l.pendiente();
-					} catch (Exception e) {
-						U.err(e);
-					}
-
-					if (pendiente <= 1.01f
-							&& l.yEnX(p) <= actor.y + 10
-							&& (l.direccionDiagonal() == "arriba" || l
-									.direccionLinea() == "x")) {
-						caidaLibre.put(actor.name, false);
-						actor.y = l.yEnX(p);
-					}
+			// Saca la línea en la cual se va a posicionar el actor si es
+			// necesario
+			if (p != null) {
+				Linea l = piso.linea("arriba", p);
+				if (ln) {
+					lineaNull = l != null;
 				}
-			} else {
-				if (!piso.estaColisionando(actor.getSensor("inf-izq"))
-						&& !piso.estaColisionando(actor.getSensor("inf-der"))) {
-					Vector2 puntoTemp = actor.getSensor("inf-der");
-					Vector2 p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
-					Linea l = piso.linea("arriba", p);
 
-					float pendiente = 0.0f;
-					try {
-						pendiente = l.pendiente();
-					} catch (Exception e) {
-						U.err(e);
-					}
+				// Saca la pendiente de la línea
+				float pendiente = 0.0f;
+				try {
+					pendiente = l.pendiente();
+				} catch (Exception e) {
+					U.err(e);
+				}
 
-					if (l != null
-							&& pendiente <= 1.01f
-							&& l.yEnX(p) <= actor.y
-							&& (l.direccionDiagonal() == "arriba" || l
-									.direccionLinea() == "-x")) {
-						caidaLibre.put(actor.name, false);
-						actor.y = l.yEnX(p);
-					}
-				} else if (piso.estaColisionando(actor.getSensor("inf-izq"))) {
-					Vector2 p = actor.getSensor("inf-izq");
-					Linea l = piso.linea("arriba", p);
-
-					float pendiente = 0.0f;
-					try {
-						pendiente = l.pendiente();
-					} catch (Exception e) {
-						U.err(e);
-					}
-
-					if (pendiente <= 1.01f
-							&& l.yEnX(p) <= actor.y + 10
-							&& (l.direccionDiagonal() == "abajo" || l
-									.direccionLinea() == "-x")) {
-						caidaLibre.put(actor.name, false);
-						actor.y = l.yEnX(p);
-					}
+				// Posiciona al actor sobre la línea si la linea tiene una
+				// pendiente
+				// menor a 1
+				if (lineaNull
+						&& pendiente <= 1.01f
+						&& l.yEnX(p) <= altura
+						&& (l.direccionDiagonal() == direccionDiagonal || l
+								.direccionLinea() == direccionLinea)) {
+					caidaLibre.put(actor.name, false);
+					actor.y = l.yEnX(p);
 				}
 			}
 
+			// Cambia el estado colisión del actor, asi como teletransportar del
+			// héroe
 			if (caidaLibre.get(actor.name)) {
 				actor.colisionPiso = false;
 				actor.y -= 5;
@@ -153,5 +135,4 @@ public class EscenarioBase extends Stage {
 			}
 		}
 	}
-
 }
