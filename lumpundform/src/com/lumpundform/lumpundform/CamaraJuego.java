@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
  * 
  */
 public class CamaraJuego extends OrthographicCamera {
-	public Vector2 posicionOrigen = new Vector2();
+	private Vector2 posicionOrigen = new Vector2();
 
 	public CamaraJuego() {
 		super();

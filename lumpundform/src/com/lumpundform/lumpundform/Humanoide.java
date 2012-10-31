@@ -19,7 +19,7 @@ public class Humanoide extends Personaje {
 	 * @param puntoOrigen
 	 *            En donde se va a originar el {@link ObjetoActor}
 	 */
-	protected Humanoide(String nombre, Vector2 puntoOrigen) {
+	public Humanoide(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 
 		width = 125.0f;

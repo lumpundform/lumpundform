@@ -3,7 +3,6 @@ package com.lumpundform.lumpundform;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -17,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class EscenarioHelper {
 	private CamaraJuego camara;
 	private MapaHelper mh;
-	private TileMapRenderer renderer;
 	private EscenarioBase escenario;
 
 	/**
@@ -35,17 +33,16 @@ public class EscenarioHelper {
 		camara = cam;
 
 		mh = new MapaHelper(nombre);
-		renderer = mh.cargarMapa();
 
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
 				batch);
 		escenario.setCamera(camara);
 
 		// Agregar las colisiones del piso
-		escenario.piso = new Poligono(mh.cargarColisiones(camara, "piso"));
+		escenario.piso = new Poligono(mh.getVerticesPlataforma(camara, "piso"));
 
 		// Héroe y actores de prueba
-		Vector2 origenHeroe = mh.origenHeroe(camara);
+		Vector2 origenHeroe = mh.getOrigenHeroe(camara);
 		Heroe heroe = new Heroe("heroe", origenHeroe);
 		Humanoide amigo = new Humanoide("amigo", origenHeroe);
 
@@ -71,7 +68,7 @@ public class EscenarioHelper {
 		mh.renderFondo(camara);
 
 		// Dibujar mapa
-		renderer.render(camara);
+		mh.renderMapa(camara);
 
 		// Colisión
 		escenario.colisionActores();
@@ -118,7 +115,7 @@ public class EscenarioHelper {
 		float factor = 1.7f;
 		float destinoCamara;
 
-		if (heroe.direccionX == ObjetoActor.DERECHA) {
+		if (heroe.derecha()) {
 			destinoCamara = heroe.x + heroe.width / 2 + camara.viewportWidth
 					/ 6;
 			if (camara.position.x < destinoCamara) {
@@ -142,11 +139,11 @@ public class EscenarioHelper {
 			}
 		}
 
-		if (camara.posicionOrigen.x < 0)
-			camara.setPosicionOrigen(0, camara.posicionOrigen.y);
-		if (camara.posicionOrigen.x + camara.viewportWidth > mh.getWidth())
+		if (camara.getPosicionOrigen().x < 0)
+			camara.setPosicionOrigen(0, camara.getPosicionOrigen().y);
+		if (camara.getPosicionOrigen().x + camara.viewportWidth > mh.getWidth())
 			camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth,
-					camara.posicionOrigen.y);
+					camara.getPosicionOrigen().y);
 	}
 
 	/**

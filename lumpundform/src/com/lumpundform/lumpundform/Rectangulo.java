@@ -65,15 +65,15 @@ public class Rectangulo extends Poligono {
 	 */
 	public Rectangulo posicionar(float x, float y) {
 		if (centrado) {
-			vertices[0] = new Vector2(x - (ancho / 2), y - (alto / 2));
-			vertices[1] = new Vector2(x - (ancho / 2), y + (alto / 2));
-			vertices[2] = new Vector2(x + (ancho / 2), y + (alto / 2));
-			vertices[3] = new Vector2(x + (ancho / 2), y - (alto / 2));
+			getVertices()[0] = new Vector2(x - (ancho / 2), y - (alto / 2));
+			getVertices()[1] = new Vector2(x - (ancho / 2), y + (alto / 2));
+			getVertices()[2] = new Vector2(x + (ancho / 2), y + (alto / 2));
+			getVertices()[3] = new Vector2(x + (ancho / 2), y - (alto / 2));
 		} else {
-			vertices[0] = new Vector2(x, y);
-			vertices[1] = new Vector2(x, y + alto);
-			vertices[2] = new Vector2(x + ancho, y + alto);
-			vertices[3] = new Vector2(x + ancho, y);
+			getVertices()[0] = new Vector2(x, y);
+			getVertices()[1] = new Vector2(x, y + alto);
+			getVertices()[2] = new Vector2(x + ancho, y + alto);
+			getVertices()[3] = new Vector2(x + ancho, y);
 		}
 		return this;
 	}
@@ -86,37 +86,37 @@ public class Rectangulo extends Poligono {
 	 * @return El punto
 	 */
 	public Vector2 punto(String nombre) {
-		float xTemp = vertices[0].x;
-		float yTemp = vertices[0].y;
+		float xTemp = getVertices()[0].x;
+		float yTemp = getVertices()[0].y;
 		int indicePunto = 0;
 		for (int i = 1; i < vertices.length; i++) {
 			if (nombre.equals("inf-izq")) {
-				if (vertices[i].x <= xTemp && vertices[i].y <= yTemp) {
-					xTemp = vertices[i].x;
-					yTemp = vertices[i].y;
+				if (getVertices()[i].x <= xTemp && getVertices()[i].y <= yTemp) {
+					xTemp = getVertices()[i].x;
+					yTemp = getVertices()[i].y;
 					indicePunto = i;
 				}
 			} else if (nombre.equals("inf-der")) {
-				if (vertices[i].x >= xTemp && vertices[i].y <= yTemp) {
-					xTemp = vertices[i].x;
-					yTemp = vertices[i].y;
+				if (getVertices()[i].x >= xTemp && getVertices()[i].y <= yTemp) {
+					xTemp = getVertices()[i].x;
+					yTemp = getVertices()[i].y;
 					indicePunto = i;
 				}
 			} else if (nombre.equals("sup-izq")) {
-				if (vertices[i].x <= xTemp && vertices[i].y >= yTemp) {
-					xTemp = vertices[i].x;
-					yTemp = vertices[i].y;
+				if (getVertices()[i].x <= xTemp && getVertices()[i].y >= yTemp) {
+					xTemp = getVertices()[i].x;
+					yTemp = getVertices()[i].y;
 					indicePunto = i;
 				}
 			} else if (nombre.equals("sup-der")) {
-				if (vertices[i].x >= xTemp && vertices[i].y >= yTemp) {
-					xTemp = vertices[i].x;
-					yTemp = vertices[i].y;
+				if (getVertices()[i].x >= xTemp && getVertices()[i].y >= yTemp) {
+					xTemp = getVertices()[i].x;
+					yTemp = getVertices()[i].y;
 					indicePunto = i;
 				}
 			}
 		}
-		return vertices[indicePunto];
+		return getVertices()[indicePunto];
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class Rectangulo extends Poligono {
 	 * 
 	 * @return El punto
 	 */
-	public Vector2 centro() {
+	public Vector2 getCentro() {
 		return new Vector2((punto("inf-izq").x + punto("inf-der").x) / 2,
 				(punto("inf-izq").y + punto("sup-izq").y) / 2);
 	}

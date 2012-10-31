@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Mago extends Personaje {
 
-	protected Mago(String nombre, Vector2 puntoOrigen) {
+	public Mago(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 	}
 

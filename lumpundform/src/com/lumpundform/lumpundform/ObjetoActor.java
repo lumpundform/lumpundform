@@ -20,14 +20,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public abstract class ObjetoActor extends Actor {
 	// Valores Estáticos
-	protected static final int DETENIDO = 0;
-	protected static final int MOVIMIENTO = 1;
-	protected static final int CAYENDO = 2;
-	protected static final int IZQUIERDA = 10;
-	protected static final int DERECHA = 11;
-	protected static final int ARRIBA = 20;
-	protected static final int ABAJO = 21;
-	protected static final int COLISIONANDO = 30;
+	public static final int DETENIDO = 0;
+	public static final int MOVIMIENTO = 1;
+	public static final int CAYENDO = 2;
+	public static final int IZQUIERDA = 10;
+	public static final int DERECHA = 11;
+	public static final int ARRIBA = 20;
+	public static final int ABAJO = 21;
+	public static final int COLISIONANDO = 30;
 
 	// Animaciones
 	protected Map<String, Animation> animacion;
@@ -36,20 +36,17 @@ public abstract class ObjetoActor extends Actor {
 	// Estado, Posición y Tamaño
 	protected int estado;
 	protected int direccionX;
-	protected int direccionY;
 
 	// Movimiento
 	protected float destinoX;
 	protected float velocidad;
-	protected boolean cambio_direccion;
 	protected boolean teletransportar = false;
 
 	// Colisión
 	protected Rectangulo hitbox;
-	protected Map<String, Vector2> sensores;
-	protected Map<String, Vector2> sensoresDelta;
-	protected boolean colisionActores = false;
-	protected boolean colisionPiso = false;
+	private Map<String, Vector2> sensores;
+	public boolean colisionActores = false;
+	public boolean colisionPiso = false;
 
 	/**
 	 * Inicializa los valores generales de todos los actores
@@ -61,10 +58,18 @@ public abstract class ObjetoActor extends Actor {
 		this.y = puntoOrigen.y;
 
 		sensores = new HashMap<String, Vector2>();
-		sensoresDelta = new HashMap<String, Vector2>();
 		animacion = new HashMap<String, Animation>();
 
 		tiempoTranscurrido = 0f;
+	}
+
+	/**
+	 * Si el héroe esta volteando hacia la derecha
+	 * 
+	 * @return {@link true} o {@link false}
+	 */
+	public boolean derecha() {
+		return direccionX == DERECHA;
 	}
 
 	/**
@@ -97,7 +102,7 @@ public abstract class ObjetoActor extends Actor {
 		hitbox.centrado = false;
 		hitbox.posicionar(x, sensores.get(nombre).y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		this.x = hitbox.centro().x - width / 2;
+		this.x = hitbox.getCentro().x - width / 2;
 		hitbox.centrado = true;
 	}
 
@@ -114,7 +119,7 @@ public abstract class ObjetoActor extends Actor {
 		hitbox.centrado = false;
 		hitbox.posicionar(sensores.get(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		this.y = hitbox.centro().y - height / 2;
+		this.y = hitbox.getCentro().y - height / 2;
 		hitbox.centrado = true;
 	}
 

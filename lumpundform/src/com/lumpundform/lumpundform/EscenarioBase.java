@@ -58,7 +58,7 @@ public class EscenarioBase extends Stage {
 			// Datos para cuando va hacia derecha o izquierda
 			String puntoColision, puntoColisionTemp;
 			String direccionDiagonalDer, direccionDiagonalIzq, direccionLinea;
-			if (actor.direccionX == ObjetoActor.DERECHA) {
+			if (actor.derecha()) {
 				puntoColision = "inf-der";
 				puntoColisionTemp = "inf-izq";
 				direccionDiagonalDer = "abajo";
@@ -154,7 +154,7 @@ public class EscenarioBase extends Stage {
 			Vector2 pc = null;
 			String lineaLateral;
 			Double yPunto = null;
-			if (actor.direccionX == ObjetoActor.DERECHA) {
+			if (actor.derecha()) {
 				pc = actor.getSensor("inf-der");
 				lineaLateral = "izquierda";
 				yPunto = Math.floor(pc.y);

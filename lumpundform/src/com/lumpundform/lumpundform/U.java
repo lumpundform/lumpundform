@@ -65,16 +65,16 @@ public class U {
 	 */
 	static public void dibujarLineasColision(Poligono poligono,
 			CamaraJuego camara, Color color) {
-		Vector2[] vertices = poligono.vertices;
+		Vector2[] vertices = poligono.getVertices();
 
 		sr.begin(ShapeType.Line);
 		sr.setColor(color);
 		for (int i = 0; i < vertices.length; i++) {
 			int i2 = (i + 1 >= vertices.length) ? 0 : i + 1;
-			sr.line(vertices[i].x - camara.posicionOrigen.x, vertices[i].y
-					- camara.posicionOrigen.y, vertices[i2].x
-					- camara.posicionOrigen.x, vertices[i2].y
-					- camara.posicionOrigen.y);
+			sr.line(vertices[i].x - camara.getPosicionOrigen().x, vertices[i].y
+					- camara.getPosicionOrigen().y,
+					vertices[i2].x - camara.getPosicionOrigen().x,
+					vertices[i2].y - camara.getPosicionOrigen().y);
 		}
 		sr.end();
 	}

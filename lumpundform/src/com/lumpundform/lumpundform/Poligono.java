@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  * 
  */
 public class Poligono {
-	public Vector2[] vertices;
+	protected Vector2[] vertices;
 
 	public Poligono(Vector2[] vertices) {
 		this.vertices = vertices;
@@ -47,8 +47,8 @@ public class Poligono {
 	 */
 	public boolean estaColisionando(Poligono poligono) {
 		// TODO: Hacer que la colisión no funcione únicamente con rectángulos
-		for (int i = 0; i < poligono.vertices.length; i++) {
-			if (estaColisionando(poligono.vertices[i])) {
+		for (int i = 0; i < poligono.getVertices().length; i++) {
+			if (estaColisionando(poligono.getVertices()[i])) {
 				return true;
 			}
 		}
@@ -88,34 +88,34 @@ public class Poligono {
 	private Linea[] lineasPoligono(Vector2 punto) {
 		Linea[] lineas = { null, null, null, null };
 		// Recorre todas las líneas del polígono
-		for (int i = 0; i < vertices.length; i++) {
-			int i2 = (i + 1 >= vertices.length) ? 0 : i + 1;
-			Vector2 p1 = vertices[i];
-			Vector2 p2 = vertices[i2];
+		for (int i = 0; i < getVertices().length; i++) {
+			int i2 = (i + 1 >= getVertices().length) ? 0 : i + 1;
+			Vector2 p1 = getVertices()[i];
+			Vector2 p2 = getVertices()[i2];
 			Linea lin = new Linea(p1, p2);
-			if (lin.xMenor <= punto.x
-					&& lin.xMayor >= punto.x
+			if (lin.getX("menor") <= punto.x
+					&& lin.getX("mayor") >= punto.x
 					&& lin.yEnX(punto) >= punto.y
 					&& (lineas[0] == null || (lineas[0].yEnX(punto) > lin
 							.yEnX(punto)))) {
 				lineas[0] = lin;
 			}
-			if (lin.xMenor <= punto.x
-					&& lin.xMayor >= punto.x
+			if (lin.getX("menor") <= punto.x
+					&& lin.getX("mayor") >= punto.x
 					&& lin.yEnX(punto) <= punto.y
 					&& (lineas[1] == null || (lineas[1].yEnX(punto) < lin
 							.yEnX(punto)))) {
 				lineas[1] = lin;
 			}
-			if (lin.yMenor <= punto.y
-					&& lin.yMayor >= punto.y
+			if (lin.getY("menor") <= punto.y
+					&& lin.getY("mayor") >= punto.y
 					&& lin.xEnY(punto) >= punto.x
 					&& (lineas[3] == null || (lineas[3].xEnY(punto) > lin
 							.xEnY(punto)))) {
 				lineas[3] = lin;
 			}
-			if (lin.yMenor <= punto.y
-					&& lin.yMayor >= punto.y
+			if (lin.getY("menor") <= punto.y
+					&& lin.getY("mayor") >= punto.y
 					&& lin.xEnY(punto) <= punto.x
 					&& (lineas[2] == null || (lineas[2].xEnY(punto) < lin
 							.xEnY(punto)))) {
@@ -124,5 +124,14 @@ public class Poligono {
 		}
 
 		return lineas;
+	}
+
+	/**
+	 * Regresa la lista de vertices
+	 * 
+	 * @return Arreglo de vertices
+	 */
+	public Vector2[] getVertices() {
+		return vertices;
 	}
 }

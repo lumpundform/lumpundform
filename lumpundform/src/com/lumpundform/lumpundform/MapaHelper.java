@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 public class MapaHelper {
 	TiledMap mapa;
 	TileAtlas atlas;
+	TileMapRenderer renderer;
 	Texture fondo;
 	SpriteBatch sb;
 
@@ -36,18 +37,16 @@ public class MapaHelper {
 				"archivo_tmx")));
 		atlas = new TileAtlas(mapa,
 				Gdx.files.internal(D.s(nombre).get("atlas")));
+		renderer = new TileMapRenderer(mapa, atlas, 16, 16);
 		fondo = new Texture(Gdx.files.internal(D.s(nombre).get("fondo")));
 		sb = new SpriteBatch();
 	}
 
 	/**
-	 * Carga el mapa y regresa el {@link TileMapRenderer} que se va a utilizar
-	 * para dibujarlo
-	 * 
-	 * @return El {@link TileMapRenderer} necesario para dibujar el mapa
+	 * Dibuja el mapa
 	 */
-	public TileMapRenderer cargarMapa() {
-		return new TileMapRenderer(mapa, atlas, 16, 16);
+	public void renderMapa(CamaraJuego camara) {
+		renderer.render(camara);
 	}
 
 	/**
@@ -91,7 +90,7 @@ public class MapaHelper {
 	 *            punto
 	 * @return El punto de origen
 	 */
-	public Vector2 origenHeroe(CamaraJuego camara) {
+	public Vector2 getOrigenHeroe(CamaraJuego camara) {
 		TiledObject objeto = tiledObject("origenes", "heroe");
 		Vector3 origen = U.voltearCoordenadas(camara, objeto.x, objeto.y);
 		return new Vector2(origen.x, origen.y);
@@ -107,7 +106,7 @@ public class MapaHelper {
 	 *            El nombre del objeto del cuál se quieren saber sus vértices
 	 * @return Un arreglo de todos los vertices del objeto
 	 */
-	public Vector2[] cargarColisiones(CamaraJuego camara,
+	public Vector2[] getVerticesPlataforma(CamaraJuego camara,
 			String nombreObjeto) {
 		TiledObject objeto = tiledObject("plataformas", nombreObjeto);
 		Vector2 puntoInicialObjeto = new Vector2(objeto.x, objeto.y);

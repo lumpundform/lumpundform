@@ -13,10 +13,10 @@ public class Linea {
 	private Vector2 p1;
 	private Vector2 p2;
 
-	public float yMenor;
-	public float yMayor;
-	public float xMenor;
-	public float xMayor;
+	private float yMenor;
+	private float yMayor;
+	private float xMenor;
+	private float xMayor;
 
 	public Linea(Vector2 p1, Vector2 p2) {
 		this.p1 = p1;
@@ -156,6 +156,28 @@ public class Linea {
 	 */
 	private float longitudY(Vector2 punto) {
 		return punto.y - yMenor;
+	}
+
+	/**
+	 * Regresa x menor o mayor
+	 * 
+	 * @param nombre
+	 *            "menor" o "mayor"
+	 * @return El valor de la x
+	 */
+	public float getX(String nombre) {
+		return nombre == "mayor" ? xMayor : xMenor;
+	}
+
+	/**
+	 * Regresa y menor o mayor
+	 * 
+	 * @param nombre
+	 *            "menor" o "mayor"
+	 * @return El valor de la y
+	 */
+	public float getY(String nombre) {
+		return nombre == "mayor" ? yMayor : yMenor;
 	}
 
 	/**

@@ -19,8 +19,8 @@ public class ProcesadorEntrada implements GestureListener, InputProcessor {
 
 	public ProcesadorEntrada(Lumpundform juego) {
 		this.pantalla = (PantallaJuego) juego.getScreen();
-		this.camara = pantalla.camara;
-		this.heroe = pantalla.escenario.getHeroe();
+		this.camara = pantalla.getCamara();
+		this.heroe = pantalla.getEscenario().getHeroe();
 	}
 
 	// GestureListener
@@ -36,7 +36,7 @@ public class ProcesadorEntrada implements GestureListener, InputProcessor {
 		if (count >= 2) {
 			Vector3 posicion = U.voltearCoordenadas(camara, x, y);
 			heroe.teletransportar(new Vector2(posicion.x, posicion.y),
-					pantalla.escenario.getPiso());
+					pantalla.getEscenario().getPiso());
 		}
 		return false;
 	}

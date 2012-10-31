@@ -12,9 +12,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * 
  */
 public class PantallaJuego implements Screen {
-	public CamaraJuego camara;
+	private CamaraJuego camara;
 	private SpriteBatch batch;
-	public EscenarioHelper escenario;
+	private EscenarioHelper escenario;
 
 	/**
 	 * Inicializa la {@link PantallaJuego} y crea una {@link CamaraJuego}, un
@@ -22,12 +22,12 @@ public class PantallaJuego implements Screen {
 	 */
 	public PantallaJuego() {
 		camara = new CamaraJuego();
-		camara.setToOrtho(false);
+		getCamara().setToOrtho(false);
 
 		batch = new SpriteBatch();
 
 		// TODO: hacer que se cargue dinamicamente el escenario
-		escenario = new EscenarioHelper(batch, camara, "escenario101");
+		escenario = new EscenarioHelper(batch, getCamara(), "escenario101");
 	}
 
 	@Override
@@ -35,7 +35,25 @@ public class PantallaJuego implements Screen {
 		// Limpiar pantalla
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		escenario.actuarDibujar(delta);
+		getEscenario().actuarDibujar(delta);
+	}
+
+	/**
+	 * Regresa la {@link CamaraJuego} de la {@link PantallaJuego}
+	 * 
+	 * @return La {@link CamaraJuego}
+	 */
+	public CamaraJuego getCamara() {
+		return camara;
+	}
+
+	/**
+	 * Regresa el {@link EscenarioHelper} de la {@link PantallaJuego}
+	 * 
+	 * @return El {@link EscenarioHelper}
+	 */
+	public EscenarioHelper getEscenario() {
+		return escenario;
 	}
 
 	@Override
