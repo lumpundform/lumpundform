@@ -93,25 +93,33 @@ public class Poligono {
 			Vector2 p1 = vertices[i];
 			Vector2 p2 = vertices[i2];
 			Linea lin = new Linea(p1, p2);
-			if (lin.xMenor <= punto.x && lin.xMayor >= punto.x
-					&& lin.yEnX(punto) >= punto.y) {
-				if (lineas[0] == null)
-					lineas[0] = lin;
+			if (lin.xMenor <= punto.x
+					&& lin.xMayor >= punto.x
+					&& lin.yEnX(punto) >= punto.y
+					&& (lineas[0] == null || (lineas[0].yEnX(punto) > lin
+							.yEnX(punto)))) {
+				lineas[0] = lin;
 			}
-			if (lin.xMenor <= punto.x && lin.xMayor >= punto.x
-					&& lin.yEnX(punto) <= punto.y) {
-				if (lineas[1] == null)
-					lineas[1] = lin;
+			if (lin.xMenor <= punto.x
+					&& lin.xMayor >= punto.x
+					&& lin.yEnX(punto) <= punto.y
+					&& (lineas[1] == null || (lineas[1].yEnX(punto) < lin
+							.yEnX(punto)))) {
+				lineas[1] = lin;
 			}
-			if (lin.yMenor <= punto.y && lin.yMayor >= punto.y
-					&& lin.xEnY(punto) >= punto.x) {
-				if (lineas[3] == null)
-					lineas[3] = lin;
+			if (lin.yMenor <= punto.y
+					&& lin.yMayor >= punto.y
+					&& lin.xEnY(punto) >= punto.x
+					&& (lineas[3] == null || (lineas[3].xEnY(punto) > lin
+							.xEnY(punto)))) {
+				lineas[3] = lin;
 			}
-			if (lin.yMenor <= punto.y && lin.yMayor >= punto.y
-					&& lin.xEnY(punto) <= punto.x) {
-				if (lineas[2] == null)
-					lineas[2] = lin;
+			if (lin.yMenor <= punto.y
+					&& lin.yMayor >= punto.y
+					&& lin.xEnY(punto) <= punto.x
+					&& (lineas[2] == null || (lineas[2].xEnY(punto) < lin
+							.xEnY(punto)))) {
+				lineas[2] = lin;
 			}
 		}
 
