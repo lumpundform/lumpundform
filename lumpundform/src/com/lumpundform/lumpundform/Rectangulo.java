@@ -4,29 +4,38 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Un {@link Poligono} de tipo rectángulo
+ * 
  * @author Sergio
- *
+ * 
  */
 public class Rectangulo extends Poligono {
 	private float alto;
 	private float ancho;
 	public boolean centrado;
-	
+
 	/**
-	 * Manda llamar {@link Rectangulo(float, float, boolean)} con valor
-	 * predeterminado de centrado de false
-	 * @param alto El alto del {@link Rectangulo}
-	 * @param ancho El ancho del {@link Rectangulo}
+	 * Manda llamar {@link this(float, float, boolean)} con valor predeterminado
+	 * de centrado de false
+	 * 
+	 * @param alto
+	 *            El alto del {@link Rectangulo}
+	 * @param ancho
+	 *            El ancho del {@link Rectangulo}
 	 */
 	public Rectangulo(float alto, float ancho) {
 		this(alto, ancho, false);
 	}
+
 	/**
 	 * Inicializa un {@link Rectangulo} del alto y ancho dados
-	 * @param alto El alto del {@link Rectangulo}
-	 * @param ancho El ancho del {@link Rectangulo}
-	 * @param centrado Si el punto de referencia debe ser el centro del
-	 *                 {@link Rectangulo}
+	 * 
+	 * @param alto
+	 *            El alto del {@link Rectangulo}
+	 * @param ancho
+	 *            El ancho del {@link Rectangulo}
+	 * @param centrado
+	 *            Si el punto de referencia debe ser el centro del
+	 *            {@link Rectangulo}
 	 */
 	public Rectangulo(float alto, float ancho, boolean centrado) {
 		super(new Vector2[4]);
@@ -34,16 +43,24 @@ public class Rectangulo extends Poligono {
 		this.ancho = ancho;
 		this.centrado = centrado;
 	}
-	
+
+	/**
+	 * Regresa el ancho del {@link Rectangulo}
+	 * 
+	 * @return El ancho
+	 */
 	public float getAncho() {
 		return ancho;
 	}
-	
+
 	/**
-	 * Posiciona al {@link Rectangulo} en el punto dado tomando en cuenta si
-	 * el {@link Rectangulo} tiene punto de referencia centrado o no
-	 * @param x La x del punto
-	 * @param y La y del punto
+	 * Posiciona al {@link Rectangulo} en el punto dado tomando en cuenta si el
+	 * {@link Rectangulo} tiene punto de referencia centrado o no
+	 * 
+	 * @param x
+	 *            La x del punto
+	 * @param y
+	 *            La y del punto
 	 * @return El {@link Rectangulo} en la posición dada
 	 */
 	public Rectangulo posicionar(float x, float y) {
@@ -60,7 +77,14 @@ public class Rectangulo extends Poligono {
 		}
 		return this;
 	}
-	
+
+	/**
+	 * Regresa el punto del {@link Rectangulo} especificado
+	 * 
+	 * @param nombre
+	 *            El nombre del punto a buscar
+	 * @return El punto
+	 */
 	public Vector2 punto(String nombre) {
 		float xTemp = vertices[0].x;
 		float yTemp = vertices[0].y;
@@ -94,7 +118,12 @@ public class Rectangulo extends Poligono {
 		}
 		return vertices[indicePunto];
 	}
-	
+
+	/**
+	 * Regresa el punto del centro del {@link Rectangulo}
+	 * 
+	 * @return El punto
+	 */
 	public Vector2 centro() {
 		return new Vector2((punto("inf-izq").x + punto("inf-der").x) / 2,
 				(punto("inf-izq").y + punto("sup-izq").y) / 2);

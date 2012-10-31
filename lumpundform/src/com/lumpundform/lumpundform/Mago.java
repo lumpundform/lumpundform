@@ -7,6 +7,8 @@ public class Mago extends Personaje {
 	protected Mago(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 	}
-	protected void cargarAnimaciones() {}
+
+	protected void cargarAnimaciones() {
+	}
 
 }

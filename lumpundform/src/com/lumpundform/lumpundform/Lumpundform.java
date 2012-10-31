@@ -19,7 +19,6 @@ public class Lumpundform extends Game {
 		pantallaJuego = new PantallaJuego();
 		setScreen(pantallaJuego);
 
-		// Detectar gestos con DetectorGestos
 		Gdx.input.setInputProcessor(new InputMultiplexer(new ProcesadorEntrada(
 				this), new GestureDetector(new ProcesadorEntrada(this))));
 	}

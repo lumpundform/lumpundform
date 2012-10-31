@@ -9,23 +9,21 @@ import com.badlogic.gdx.InputProcessor;
 /**
  * Clase que implementa {@link InputProcessor} y {@link GestureListener} para
  * los controles del juego
+ * 
  * @author Sergio
- *
+ * 
  */
 public class ProcesadorEntrada implements GestureListener, InputProcessor {
 	private PantallaJuego pantalla;
 	private OrthographicCamera camara;
 	private Heroe heroe;
-	
+
 	public ProcesadorEntrada(Lumpundform juego) {
 		this.pantalla = (PantallaJuego) juego.getScreen();
 		this.camara = pantalla.camara;
 		this.heroe = pantalla.escenario.getHeroe();
 	}
-	
-	
-	
-	
+
 	// GestureListener
 
 	@Override
@@ -38,7 +36,8 @@ public class ProcesadorEntrada implements GestureListener, InputProcessor {
 	public boolean tap(int x, int y, int count) {
 		if (count >= 2) {
 			Vector3 posicion = U.voltearCoordenadas(camara, x, y);
-			heroe.teletransportar(new Vector2(posicion.x, posicion.y), pantalla.escenario.getPiso());
+			heroe.teletransportar(new Vector2(posicion.x, posicion.y),
+					pantalla.escenario.getPiso());
 		}
 		return false;
 	}
@@ -74,7 +73,7 @@ public class ProcesadorEntrada implements GestureListener, InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	// InputProcessor
 
 	@Override

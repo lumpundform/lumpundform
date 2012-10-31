@@ -16,62 +16,80 @@ import com.badlogic.gdx.math.Vector3;
 
 /**
  * Clase que contiene funciones necesarias para cargar el mapa en el juego
+ * 
  * @author Sergio
- *
+ * 
  */
 public class MapaHelper {
 	TiledMap mapa;
 	TileAtlas atlas;
 	Texture fondo;
 	SpriteBatch sb;
-	
+
+	/**
+	 * Lee los archivos necesarios y crea las variables necesarias para el
+	 * funcionamiento de la clase
+	 * 
+	 * @param nombre
+	 */
 	public MapaHelper(String nombre) {
-		mapa = TiledLoader.createMap(Gdx.files.internal(D.s(nombre).get("archivo_tmx")));
-		atlas = new TileAtlas(mapa, Gdx.files.internal(D.s(nombre).get("atlas")));
+		mapa = TiledLoader.createMap(Gdx.files.internal(D.s(nombre).get(
+				"archivo_tmx")));
+		atlas = new TileAtlas(mapa,
+				Gdx.files.internal(D.s(nombre).get("atlas")));
 		fondo = new Texture(Gdx.files.internal(D.s(nombre).get("fondo")));
 		sb = new SpriteBatch();
 	}
-	
-	
+
 	/**
 	 * Carga el mapa y regresa el {@link TileMapRenderer} que se va a utilizar
 	 * para dibujarlo
+	 * 
 	 * @return El {@link TileMapRenderer} necesario para dibujar el mapa
 	 */
 	public TileMapRenderer cargarMapa() {
 		return new TileMapRenderer(mapa, atlas, 16, 16);
 	}
-	
-	
+
+	/**
+	 * Dibuja el fondo del mapa
+	 * 
+	 * @param camara
+	 *            La {@link CamaraJuego} con la que se va a dibujar el fondo
+	 */
 	public void renderFondo(Camera camara) {
-		float fondo_x =  (camara.viewportWidth / 2) - camara.position.x ;
+		float fondo_x = (camara.viewportWidth / 2) - camara.position.x;
 		sb.begin();
 		sb.disableBlending();
 		sb.draw(fondo, fondo_x * 0.15f, 0);
 		sb.enableBlending();
 		sb.end();
 	}
-	
+
 	/**
 	 * Regresa el ancho total del mapa
+	 * 
 	 * @return El ancho
 	 */
 	public int getWidth() {
 		return mapa.width * mapa.tileWidth;
 	}
+
 	/**
 	 * Regresa el alto total del mapa
+	 * 
 	 * @return El alto
 	 */
 	public int getHeight() {
 		return mapa.height * mapa.tileHeight;
 	}
-	
-	
-	
+
 	/**
 	 * Regresa el punto de origen del {@link Heroe}
-	 * @param camara La cámara a referenciar para las coordenadas del punto
+	 * 
+	 * @param camara
+	 *            La {@link CamaraJuego} a referenciar para las coordenadas del
+	 *            punto
 	 * @return El punto de origen
 	 */
 	public Vector2 origenHeroe(OrthographicCamera camara) {
@@ -79,34 +97,42 @@ public class MapaHelper {
 		Vector3 origen = U.voltearCoordenadas(camara, objeto.x, objeto.y);
 		return new Vector2(origen.x, origen.y);
 	}
-	
+
 	/**
 	 * Carga las colisiones del mapa del objeto referenciado por nombreObjeto
-	 * @param camara La cámara a referenciar para las coordenadas del punto
-	 * @param nombreObjeto El nombre del objeto del cuál se quieren saber
-	 *                     sus vértices
+	 * 
+	 * @param camara
+	 *            La {@link CamaraJuego} a referenciar para las coordenadas del
+	 *            punto
+	 * @param nombreObjeto
+	 *            El nombre del objeto del cuál se quieren saber sus vértices
 	 * @return Un arreglo de todos los vertices del objeto
 	 */
-	public Vector2[] cargarColisiones(OrthographicCamera camara, String nombreObjeto) {
+	public Vector2[] cargarColisiones(OrthographicCamera camara,
+			String nombreObjeto) {
 		TiledObject objeto = tiledObject("plataformas", nombreObjeto);
 		Vector2 puntoInicialObjeto = new Vector2(objeto.x, objeto.y);
 		String[] puntos = objeto.polyline.split(" ");
-		
+
 		Vector2[] vectoresPuntos = new Vector2[puntos.length];
 		for (int i = 0; i < puntos.length; i++) {
 			String[] punto = puntos[i].split(",");
-			
-			Vector3 p = U.voltearCoordenadas(camara, Integer.parseInt(punto[0]), (int) puntoInicialObjeto.y + Integer.parseInt(punto[1]));
+
+			Vector3 p = U.voltearCoordenadas(camara,
+					Integer.parseInt(punto[0]), (int) puntoInicialObjeto.y
+							+ Integer.parseInt(punto[1]));
 			vectoresPuntos[i] = new Vector2(p.x, p.y);
 		}
 		return vectoresPuntos;
 	}
 
-	
 	/**
 	 * Carga el {@link TiledObject} del grupo y objeto dados del archivo *.tmx
-	 * @param nombreGrupo El nombre del grupo
-	 * @param nombreObjeto El nombre del objeto
+	 * 
+	 * @param nombreGrupo
+	 *            El nombre del grupo
+	 * @param nombreObjeto
+	 *            El nombre del objeto
 	 * @return El objeto
 	 */
 	private TiledObject tiledObject(String nombreGrupo, String nombreObjeto) {
@@ -118,9 +144,12 @@ public class MapaHelper {
 		}
 		return null;
 	}
+
 	/**
 	 * Carga el {@link TiledObjectGroup} del nombre dado del archivo *.tmx
-	 * @param nombre El nombre del {@link TiledObjectGroup}
+	 * 
+	 * @param nombre
+	 *            El nombre del {@link TiledObjectGroup}
 	 * @return El objectGroup
 	 */
 	private TiledObjectGroup tiledObjectGroup(String nombre) {
