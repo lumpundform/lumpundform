@@ -95,8 +95,10 @@ public class U {
 	/**
 	 * Función atajo de {@link Gdx#app#log()}
 	 * 
-	 * @param tag La etiqueta
-	 * @param mensaje El mensaje
+	 * @param tag
+	 *            La etiqueta
+	 * @param mensaje
+	 *            El mensaje
 	 */
 	static public void l(String tag, Object mensaje) {
 		Gdx.app.log(tag, mensaje + "");
@@ -109,7 +111,7 @@ public class U {
 	 *            El error
 	 */
 	static public void err(Exception e) {
-		l("Error", e.getLocalizedMessage());
+		e.printStackTrace();
 	}
 
 	/**
