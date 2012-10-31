@@ -189,12 +189,28 @@ public class Linea {
 	 */
 	private boolean esRecta() {
 		String direccionLinea = direccionLinea();
-		if (direccionLinea == "x" || direccionLinea == "-x"
-				|| direccionLinea == "y" || direccionLinea == "-y") {
-			return true;
-		} else {
-			return false;
-		}
+		return direccionLinea == "x" || direccionLinea == "-x"
+				|| direccionLinea == "y" || direccionLinea == "-y";
+	}
+
+	/**
+	 * Dice si la {@link Linea} es horizontal
+	 * 
+	 * @return {@link true} si es horizontal, {@link false} si no
+	 */
+	public boolean esHorizontal() {
+		String direccionLinea = direccionLinea();
+		return direccionLinea == "x" || direccionLinea == "-x";
+	}
+
+	/**
+	 * Dice si la {@link Linea} es vertical
+	 * 
+	 * @return {@link true} si es vertical, {@link false} si no
+	 */
+	public boolean esVertical() {
+		String direccionLinea = direccionLinea();
+		return direccionLinea == "y" || direccionLinea == "-y";
 	}
 
 	/**
