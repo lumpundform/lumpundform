@@ -976,19 +976,19 @@
   </object>
  </objectgroup>
  <objectgroup name="eventos" width="34" height="12">
-  <object name="evento" type="spawn" x="1536" y="640">
+  <object name="evento1" type="spawn" x="1536" y="640">
    <polyline points="0,0 128,0"/>
   </object>
-  <object name="evento" type="muerte" x="1920" y="768">
+  <object name="evento2" type="caida_libre" x="1920" y="768">
    <polyline points="0,0 128,0"/>
   </object>
-  <object name="evento" type="spawn" x="384" y="640">
+  <object name="evento3" type="spawn" x="384" y="640">
    <polyline points="0,0 128,0"/>
   </object>
-  <object name="evento" type="fin" x="2048" y="640">
+  <object name="evento4" type="fin" x="2048" y="640">
    <polyline points="0,0 128,0"/>
   </object>
-  <object name="evento" type="inicio" x="0" y="576">
+  <object name="evento5" type="inicio" x="0" y="576">
    <polyline points="0,0 128,0"/>
   </object>
  </objectgroup>

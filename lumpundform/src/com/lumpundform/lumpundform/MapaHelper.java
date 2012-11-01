@@ -95,7 +95,12 @@ public class MapaHelper {
 		Vector3 origen = U.voltearCoordenadas(camara, objeto.x, objeto.y);
 		return new Vector2(origen.x, origen.y);
 	}
-
+	
+	public TiledObjectGroup eventosMapa() {
+		TiledObjectGroup eventos = tiledObjectGroup("eventos");
+		return eventos;
+	}
+	
 	/**
 	 * Carga las colisiones del mapa del objeto referenciado por nombreObjeto
 	 * 
@@ -150,7 +155,7 @@ public class MapaHelper {
 	 *            El nombre del {@link TiledObjectGroup}
 	 * @return El objectGroup
 	 */
-	private TiledObjectGroup tiledObjectGroup(String nombre) {
+	TiledObjectGroup tiledObjectGroup(String nombre) {
 		for (int i = 0; i < mapa.objectGroups.size(); i++) {
 			if (mapa.objectGroups.get(i).name.equals(nombre)) {
 				return mapa.objectGroups.get(i);
