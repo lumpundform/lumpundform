@@ -13,13 +13,11 @@ import com.badlogic.gdx.InputProcessor;
  */
 public class ProcesadorEntrada implements GestureListener, InputProcessor {
 	private PantallaJuego pantalla;
-	private CamaraJuego camara;
-	private Heroe heroe;
+	private EscenarioHelper escenario;
 
-	public ProcesadorEntrada(Lumpundform juego) {
-		this.pantalla = (PantallaJuego) juego.getScreen();
-		this.camara = pantalla.getCamara();
-		this.heroe = pantalla.getEscenario().getHeroe();
+	public ProcesadorEntrada(PantallaJuego pantalla) {
+		this.pantalla = pantalla;
+		this.escenario = pantalla.getEscenario();
 	}
 
 	// GestureListener
@@ -33,8 +31,7 @@ public class ProcesadorEntrada implements GestureListener, InputProcessor {
 	@Override
 	public boolean tap(int x, int y, int count) {
 		if (count >= 2) {
-			heroe.teletransportar(U.voltearCoordenadas(camara, x, y), pantalla
-					.getEscenario().getPiso());
+			escenario.getHeroe().teletransportar(U.voltearCoordenadas(pantalla.getCamara(), x, y));
 		}
 		return false;
 	}

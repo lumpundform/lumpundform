@@ -85,13 +85,16 @@ public class Heroe extends Personaje {
 	 * o doble tap
 	 * 
 	 * @param pos
-	 *            La posición en la que se hizo el doble click o doble tap
+	 *            La posición en la que se hizo el doble click o doble tap (hay
+	 *            que convertir las coordenadas antes de pasarlas a esta
+	 *            función)
 	 * @param piso
 	 *            El {@link Poligono} del piso del escenario donde se encuentra
 	 *            el {@link Heroe}
 	 */
-	public void teletransportar(Vector2 pos, Poligono piso) {
+	public void teletransportar(Vector2 pos) {
 		if (colisionPiso) {
+			Poligono piso = ((EscenarioBase) getStage()).piso;
 			Vector2 posicionAnterior = getPosicionCentro();
 
 			teletransportar = true;
