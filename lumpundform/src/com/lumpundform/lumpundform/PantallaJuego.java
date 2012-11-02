@@ -1,9 +1,11 @@
 package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 
 /**
  * Base para las diferentes pantallas del juego, implementa {@link Screen}
@@ -28,6 +30,9 @@ public class PantallaJuego implements Screen {
 
 		// TODO: hacer que se cargue dinamicamente el escenario
 		escenario = new EscenarioHelper(batch, getCamara(), "escenario101");
+
+		Gdx.input.setInputProcessor(new InputMultiplexer(new ProcesadorEntrada(
+				this), new GestureDetector(new ProcesadorEntrada(this))));
 	}
 
 	@Override
