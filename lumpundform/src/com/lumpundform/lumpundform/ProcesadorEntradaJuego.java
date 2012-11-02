@@ -11,11 +11,11 @@ import com.badlogic.gdx.InputProcessor;
  * @author Sergio
  * 
  */
-public class ProcesadorEntrada implements GestureListener, InputProcessor {
+public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	private PantallaJuego pantalla;
 	private EscenarioHelper escenario;
 
-	public ProcesadorEntrada(PantallaJuego pantalla) {
+	public ProcesadorEntradaJuego(PantallaJuego pantalla) {
 		this.pantalla = pantalla;
 		this.escenario = pantalla.getEscenario();
 	}
