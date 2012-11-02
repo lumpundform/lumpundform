@@ -2,7 +2,6 @@ package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -34,9 +33,8 @@ public class ProcesadorEntrada implements GestureListener, InputProcessor {
 	@Override
 	public boolean tap(int x, int y, int count) {
 		if (count >= 2) {
-			Vector3 posicion = U.voltearCoordenadas(camara, x, y);
-			heroe.teletransportar(new Vector2(posicion.x, posicion.y),
-					pantalla.getEscenario().getPiso());
+			heroe.teletransportar(U.voltearCoordenadas(camara, x, y), pantalla
+					.getEscenario().getPiso());
 		}
 		return false;
 	}

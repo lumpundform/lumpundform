@@ -1,7 +1,9 @@
 package com.lumpundform.lumpundform;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Clase que extiende a {@link OrthographicCamera} y agrega funciones para
@@ -56,5 +58,19 @@ public class CamaraJuego extends OrthographicCamera {
 	 */
 	public Vector2 getPosicionOrigen() {
 		return posicionOrigen;
+	}
+
+	/**
+	 * Manda llamar a {@link #unproject(Vector3)} de {@link Camera} pero sin
+	 * necesidad de pasar un {@link Vector3}
+	 * 
+	 * @param vector
+	 *            El vector a coonvertir
+	 */
+	public Vector2 unproject(Vector2 vector) {
+		Vector3 pos = new Vector3(vector.x, vector.y, 0);
+		unproject(pos);
+		
+		return new Vector2(pos.x, pos.y);
 	}
 }

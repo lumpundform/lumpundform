@@ -1,14 +1,13 @@
 package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 /**
  * Clase de funciones de Utileria
@@ -29,28 +28,40 @@ public class U {
 	 * 
 	 * @param camara
 	 *            La {@link CamaraJuego} de {@link Screen}
+	 * @param pos
+	 *            La posición de la cual se quieren voltear las coordenadas
+	 * @return La posición con las coordenadas volteadas
+	 */
+	static public Vector2 voltearCoordenadas(CamaraJuego camara, Vector2 pos) {
+		return camara.unproject(pos);
+	}
+
+	/**
+	 * Manda llamar a {@link #voltearCoordenadas(CamaraJuego, Vector2)} con los
+	 * valores X y Y especificados
+	 * 
+	 * @param camara
+	 *            La {@link CamaraJuego} de {@link Screen}
 	 * @param x
 	 *            La x del punto
 	 * @param y
 	 *            La y del punto
 	 * @return El punto en coordenadas de la {@link CamaraJuego}
 	 */
-	static public Vector3 voltearCoordenadas(Camera camara, int x, int y) {
-		Vector3 posicion = new Vector3(x, y, 0);
-		camara.unproject(posicion);
-
-		return posicion;
+	static public Vector2 voltearCoordenadas(CamaraJuego camara, float x,
+			float y) {
+		return voltearCoordenadas(camara, new Vector2(x, y));
 	}
 
 	/**
-	 * Manda llamar a {@link U#voltearCoordenadas(Camera camara, int x, int y)}
-	 * con los valores de {@link Gdx#input()}
+	 * Manda llamar a {@link #voltearCoordenadas(CamaraJuego, float, float)} con
+	 * los valores de {@link Gdx#input()}
 	 * 
 	 * @param camara
 	 *            La cámara de {@link Screen}
 	 * @return El punto en coordenadas de la {@link CamaraJuego}
 	 */
-	static public Vector3 voltearCoordenadasInput(Camera camara) {
+	static public Vector2 voltearCoordenadasInput(CamaraJuego camara) {
 		return voltearCoordenadas(camara, Gdx.input.getX(), Gdx.input.getY());
 	}
 
