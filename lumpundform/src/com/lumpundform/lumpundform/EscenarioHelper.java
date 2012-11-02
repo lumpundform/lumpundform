@@ -51,11 +51,9 @@ public class EscenarioHelper {
 		// Héroe y actores de prueba
 		Vector2 origenHeroe = mh.getOrigenHeroe(camara);
 		Heroe heroe = new Heroe("heroe", origenHeroe);
-		Humanoide amigo = new Humanoide("amigo", origenHeroe);
 
 		try {
 			escenario.addActor(heroe);
-			escenario.addActor(amigo);
 		} catch (NullPointerException e) {
 			U.err(e);
 		}
