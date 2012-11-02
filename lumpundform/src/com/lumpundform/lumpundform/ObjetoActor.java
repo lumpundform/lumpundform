@@ -51,11 +51,8 @@ public abstract class ObjetoActor extends Actor {
 	/**
 	 * Inicializa los valores generales de todos los actores
 	 */
-	protected ObjetoActor(String nombre, Vector2 puntoOrigen) {
+	protected ObjetoActor(String nombre) {
 		super(nombre);
-
-		this.x = puntoOrigen.x;
-		this.y = puntoOrigen.y;
 
 		sensores = new HashMap<String, Vector2>();
 		animacion = new HashMap<String, Animation>();
@@ -198,7 +195,6 @@ public abstract class ObjetoActor extends Actor {
 
 	@Override
 	public void act(float delta) {
-		estado = colisionPiso ? DETENIDO : CAYENDO;
 		tiempoTranscurrido += delta;
 	}
 

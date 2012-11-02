@@ -1,5 +1,8 @@
 package com.lumpundform.lumpundform;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -11,9 +14,13 @@ import com.badlogic.gdx.math.Vector2;
  * 
  */
 public abstract class Personaje extends ObjetoActor {
+	protected Map<String, Habilidad> habilidades;
 
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
-		super(nombre, puntoOrigen);
+		super(nombre);
+
+		this.x = puntoOrigen.x;
+		this.y = puntoOrigen.y;
 	}
 
 	@Override
@@ -34,6 +41,13 @@ public abstract class Personaje extends ObjetoActor {
 
 		if (flip)
 			cuadroActual.flip(true, false);
+	}
+
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		estado = colisionPiso ? DETENIDO : CAYENDO;
+		reducirCooldownHabilidades(delta);
 	}
 
 	@Override
@@ -62,5 +76,12 @@ public abstract class Personaje extends ObjetoActor {
 
 		return animacion.get(nombreAnimacion).getKeyFrame(tiempoTranscurrido,
 				true);
+	}
+
+	private void reducirCooldownHabilidades(float delta) {
+		Iterator<Habilidad> i = habilidades.values().iterator();
+		while (i.hasNext()) {
+			i.next().reducirCooldown(delta);
+		}
 	}
 }

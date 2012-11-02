@@ -136,7 +136,7 @@ public class U {
 		CharSequence msg = mensaje + "";
 		sb.begin();
 		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
-		bmf.draw(sb, msg, 30, 500);
+		bmf.draw(sb, msg, 30, 30);
 		sb.end();
 	}
 }

@@ -31,7 +31,12 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	@Override
 	public boolean tap(int x, int y, int count) {
 		if (count >= 2) {
-			escenario.getHeroe().teletransportar(U.voltearCoordenadas(pantalla.getCamara(), x, y));
+			try {
+				escenario.getHeroe().habilidad("teletransportar",
+						U.voltearCoordenadas(pantalla.getCamara(), x, y));
+			} catch (HabilidadInexistenteException e) {
+				U.err(e);
+			}
 		}
 		return false;
 	}
