@@ -108,11 +108,10 @@ public class Linea {
 	 * Regresa la paneidnete de la {@link Linea}
 	 * 
 	 * @return El valor de la pendiente
-	 * @throws Exception
 	 */
-	public float pendiente() throws Exception {
+	public Float pendiente() {
 		if (longitudX() == 0)
-			throw new Exception("La linea es vertical");
+			return null;
 		return longitudY() / longitudX();
 	}
 

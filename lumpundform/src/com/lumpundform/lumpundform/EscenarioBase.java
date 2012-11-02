@@ -75,7 +75,6 @@ public class EscenarioBase extends Stage {
 			// Revisa si el actor está en caída libre o si está colisionando
 			// alguna de las esquinas de su hitbox para inicializar variables
 			Vector2 p = null;
-			boolean lineaNull = true, ln = false;
 			Float altura = null;
 			String direccionDiagonal = null;
 			if (!piso.estaColisionando(actor.getSensor("inf-izq"))
@@ -84,7 +83,6 @@ public class EscenarioBase extends Stage {
 
 				Vector2 puntoTemp = actor.getSensor(puntoColisionTemp);
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
-				ln = true;
 				altura = actor.y;
 				direccionDiagonal = direccionDiagonalDer;
 			} else if (piso.estaColisionando(actor.getSensor(puntoColision))) {
@@ -97,22 +95,12 @@ public class EscenarioBase extends Stage {
 			// necesario
 			if (p != null) {
 				Linea l = piso.linea("arriba", p);
-				if (ln) {
-					lineaNull = l != null;
-				}
-
-				// Saca la pendiente de la línea
-				float pendiente = 0.0f;
-				try {
-					pendiente = l.pendiente();
-				} catch (Exception e) {
-					U.err(e);
-				}
 
 				// Posiciona al actor sobre la línea si la linea tiene una
 				// pendiente menor a 1
-				if (lineaNull
-						&& pendiente <= 1.01f
+				if (l != null
+						&& l.pendiente() != null
+						&& l.pendiente() <= 1.0001d
 						&& l.yEnX(p) <= altura
 						&& (l.direccionDiagonal() == direccionDiagonal || l
 								.direccionLinea() == direccionLinea)) {
