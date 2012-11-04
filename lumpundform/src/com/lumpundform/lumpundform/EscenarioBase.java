@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * La base para los escenarios, extiende a {@link Stage} y agrega funciones y
@@ -18,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  */
 public class EscenarioBase extends Stage {
 	public Poligono piso;
+	
+	public Array<Evento> eventos;
 
 	public EscenarioBase(float width, float height, boolean stretch,
 			SpriteBatch batch) {
@@ -168,6 +172,17 @@ public class EscenarioBase extends Stage {
 					actor.setSensorX("inf-izq", xLinea);
 				}
 			}
+		}
+	}
+	
+	public void cargarEventos(TiledObjectGroup tmo, CamaraJuego camara) {
+		eventos = new Array<Evento>();
+		for (int i = 0; i < tmo.objects.size(); i++) {
+			eventos.add(new Evento(U.voltearCoordenadas(camara, 
+					tmo.objects.get(i).x,
+					tmo.objects.get(i).y),
+					tmo.objects.get(i).name,
+					tmo.objects.get(i).type, false, false));
 		}
 	}
 }

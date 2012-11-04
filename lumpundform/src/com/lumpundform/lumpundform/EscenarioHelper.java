@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class EscenarioHelper {
 	private CamaraJuego camara;
 	private MapaHelper mh;
-	private Evento ev;
 	private EscenarioBase escenario;
 
 	/**
@@ -38,9 +37,10 @@ public class EscenarioHelper {
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
 				batch);
 		
-		ev = new Evento(mh.eventosMapa(), camara);
-		for(int i = 0; i < ev.getEventos().size; i++) {
-			U.l("evento", ev.getEventos().get(i).activado + " : " + ev.getEventos().get(i).terminado + " : " + ev.getEventos().get(i).nombre + " : " + ev.getEventos().get(i).tipo + " : " + ev.getEventos().get(i).vector.x + " : " + ev.getEventos().get(i).vector.y);
+		escenario.cargarEventos(mh.eventosMapa(), camara);
+		
+		for(int i = 0; i < escenario.eventos.size; i++) {
+			U.l("evento", escenario.eventos.get(i).activado + " : " + escenario.eventos.get(i).terminado + " : " + escenario.eventos.get(i).nombre + " : " + escenario.eventos.get(i).tipo + " : " + escenario.eventos.get(i).vector.x + " : " + escenario.eventos.get(i).vector.y);
 		}
 		
 		escenario.setCamera(camara);
