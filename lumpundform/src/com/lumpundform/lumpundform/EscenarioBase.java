@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -20,7 +21,7 @@ import com.badlogic.gdx.utils.Array;
  */
 public class EscenarioBase extends Stage {
 	public Poligono piso;
-	
+
 	public Array<Evento> eventos;
 
 	public EscenarioBase(float width, float height, boolean stretch,
@@ -174,21 +175,40 @@ public class EscenarioBase extends Stage {
 			}
 		}
 	}
-	
-	public void cargarEventos(TiledObjectGroup tmo, CamaraJuego camara) {
+
+	public void cargarEventos(TiledObjectGroup tog, CamaraJuego camara) {
 		eventos = new Array<Evento>();
-		for (int i = 0; i < tmo.objects.size(); i++) {
-			eventos.add(new Evento(U.voltearCoordenadas(camara, 
-					tmo.objects.get(i).x,
-					tmo.objects.get(i).y),
-					tmo.objects.get(i).name,
-					tmo.objects.get(i).type, false, false));
+		for (int i = 0; i < tog.objects.size(); i++) {
+			TiledObject to = tog.objects.get(i);
+			eventos.add(new Evento(U.voltearCoordenadas(camara, to.x, to.y),
+					to, this));
 		}
 	}
-	
-	public void revisarEventos(Heroe heroe) {
-		for(int i = 0; i < eventos.size; i++) {
-			eventos.get(i).revisarEvento(heroe);
+
+	public void revisarEventos() {
+		for (int i = 0; i < eventos.size; i++) {
+			eventos.get(i).revisarEvento();
 		}
+	}
+
+	public void agregarActor(String tipo, Vector2 posicion)
+			throws ActorNoDefinidoException {
+		if (tipo == "heroe") {
+			addActor(new Heroe("heroe", posicion));
+		} else if (tipo == "humanoide") {
+			addActor(new Humanoide("amigo", posicion));
+		} else {
+			throw new ActorNoDefinidoException("El Actor " + tipo
+					+ " no esta definido");
+		}
+	}
+
+	/**
+	 * Regresa al {@link Heroe} del escenario
+	 * 
+	 * @return El héroe
+	 */
+	public Heroe getHeroe() {
+		return (Heroe) findActor("heroe");
 	}
 }

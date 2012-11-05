@@ -1,7 +1,5 @@
 package com.lumpundform.lumpundform;
 
-import java.util.HashMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -53,8 +51,6 @@ public class Heroe extends Personaje {
 	}
 
 	private void cargarHabilidades() {
-		habilidades = new HashMap<String, Habilidad>();
-
 		habilidades.put("teletransportar", new HabilidadTeletransportar(
 				"teletransportar"));
 	}

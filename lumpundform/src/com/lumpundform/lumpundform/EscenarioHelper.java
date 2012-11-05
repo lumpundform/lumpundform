@@ -3,7 +3,6 @@ package com.lumpundform.lumpundform;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
@@ -36,25 +35,27 @@ public class EscenarioHelper {
 
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
 				batch);
-		
+
 		escenario.cargarEventos(mh.eventosMapa(), camara);
-		
-		for(int i = 0; i < escenario.eventos.size; i++) {
-			U.l("evento", escenario.eventos.get(i).activado + " : " + escenario.eventos.get(i).terminado + " : " + escenario.eventos.get(i).nombre + " : " + escenario.eventos.get(i).tipo + " : " + escenario.eventos.get(i).vector.x + " : " + escenario.eventos.get(i).vector.y);
+
+		for (int i = 0; i < escenario.eventos.size; i++) {
+			U.l("evento",
+					escenario.eventos.get(i).activado + " : "
+							+ escenario.eventos.get(i).terminado + " : "
+							+ escenario.eventos.get(i).nombre + " : "
+							+ escenario.eventos.get(i).tipo + " : "
+							+ escenario.eventos.get(i).posicion.x + " : "
+							+ escenario.eventos.get(i).posicion.y);
 		}
-		
+
 		escenario.setCamera(camara);
 
 		// Agregar las colisiones del piso
 		escenario.piso = new Poligono(mh.getVerticesPlataforma(camara, "piso"));
 
-		// Héroe y actores de prueba
-		Vector2 origenHeroe = mh.getOrigenHeroe(camara);
-		Heroe heroe = new Heroe("heroe", origenHeroe);
-
 		try {
-			escenario.addActor(heroe);
-		} catch (NullPointerException e) {
+			escenario.agregarActor("heroe", mh.getOrigenHeroe(camara));
+		} catch (ActorNoDefinidoException e) {
 			U.err(e);
 		}
 	}
@@ -78,7 +79,7 @@ public class EscenarioHelper {
 		// Colisión
 		escenario.colisionActores();
 		escenario.colisionPiso();
-		escenario.revisarEventos(getHeroe());
+		escenario.revisarEventos();
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
 

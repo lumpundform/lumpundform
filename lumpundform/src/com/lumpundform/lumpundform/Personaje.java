@@ -1,5 +1,6 @@
 package com.lumpundform.lumpundform;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ public abstract class Personaje extends ObjetoActor {
 
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
+
+		habilidades = new HashMap<String, Habilidad>();
 
 		this.x = puntoOrigen.x;
 		this.y = puntoOrigen.y;

@@ -221,6 +221,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return La animación en si
 	 */
 	protected Animation initAnimacion(String tipoAnimacion) {
+		// TODO: Implementar Exception para esta función
 		String spriteSheet = D.s(name).get("sprite_sheet_" + tipoAnimacion);
 		int columnas = D.i("heroe").get("columnas_" + tipoAnimacion);
 		int renglones = D.i("heroe").get("renglones_" + tipoAnimacion);

@@ -1,30 +1,46 @@
 package com.lumpundform.lumpundform;
 
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.math.Vector2;
 
 public class Evento {
-	public Vector2 vector;
+	public Vector2 posicion;
 	public String nombre;
 	public String tipo;
+	public float rango;
 	public Boolean activado;
 	public Boolean terminado;
+	public EscenarioBase escenario;
 
-	public Evento(Vector2 vector, String nombre, String tipo,
-			Boolean activado, Boolean terminado) {
-		this.vector = vector;
-		this.nombre = nombre;
-		this.tipo = tipo;
-		this.activado = activado;
-		this.terminado = terminado;
+	public Evento(Vector2 posicion, TiledObject objeto, EscenarioBase escenario) {
+		this.posicion = posicion;
+		this.nombre = objeto.name;
+		this.tipo = objeto.type;
+		this.rango = Float.parseFloat(objeto.properties.get("rango"));
+		this.activado = false;
+		this.terminado = false;
+		this.escenario = escenario;
 	}
-	
-	public void revisarEvento(Heroe heroe) {
-		if(tipo.equals("spawn") && heroe.x > (vector.x - 50.0f) && heroe.x < (vector.x + 50.0f)) {
-			U.ds(tipo);
-		} else if (tipo.equals("fin") && heroe.x > (vector.x - 20.0f)) {
+
+	public void revisarEvento() {
+		Heroe heroe = escenario.getHeroe();
+		if (heroe.getPosicionCentro().x > (posicion.x - rango)
+				&& heroe.getPosicionCentro().x < (posicion.x + rango)) {
+			ejecutarEvento();
 			U.ds(tipo);
 		}
-		
+
 	}
-	
+
+	private void ejecutarEvento() {
+		try {
+			if (tipo.equals("spawn")) {
+				escenario.agregarActor("humanoide", new Vector2(
+						posicion.x - 64, posicion.y));
+			}
+		} catch (ActorNoDefinidoException e) {
+			U.err(e);
+		}
+	}
+
 }
