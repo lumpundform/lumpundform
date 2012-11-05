@@ -22,7 +22,7 @@ public abstract class Habilidad extends ObjetoActor {
 		if (cooldown < 0.0f) {
 			cooldown = 0.0f;
 		}
-		U.ds(String.format("Cooldown teletransportar: %.2fs", cooldown));
+		//U.ds(String.format("Cooldown teletransportar: %.2fs", cooldown));
 	}
 
 	@Override

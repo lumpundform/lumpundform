@@ -17,5 +17,14 @@ public class Evento {
 		this.activado = activado;
 		this.terminado = terminado;
 	}
-
+	
+	public static void revisarEvento(Evento evento, Heroe heroe) {
+		if(evento.tipo.equals("spawn") && heroe.x > (evento.vector.x - 50.0f) && heroe.x < (evento.vector.x + 50.0f)) {
+			U.ds(evento.tipo);
+		} else if (evento.tipo.equals("fin") && heroe.x > (evento.vector.x - 20.0f)) {
+			U.ds(evento.tipo);
+		}
+		
+	}
+	
 }

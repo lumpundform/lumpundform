@@ -185,4 +185,10 @@ public class EscenarioBase extends Stage {
 					tmo.objects.get(i).type, false, false));
 		}
 	}
+	
+	public void revisarEventos(Array<Evento> eventos, Heroe heroe) {
+		for(int i = 0; i < eventos.size; i++) {
+			Evento.revisarEvento(eventos.get(i), heroe);
+		}
+	}
 }
