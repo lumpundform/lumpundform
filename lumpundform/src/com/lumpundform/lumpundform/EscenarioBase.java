@@ -186,9 +186,9 @@ public class EscenarioBase extends Stage {
 		}
 	}
 	
-	public void revisarEventos(Array<Evento> eventos, Heroe heroe) {
+	public void revisarEventos(Heroe heroe) {
 		for(int i = 0; i < eventos.size; i++) {
-			Evento.revisarEvento(eventos.get(i), heroe);
+			eventos.get(i).revisarEvento(heroe);
 		}
 	}
 }

@@ -78,7 +78,7 @@ public class EscenarioHelper {
 		// Colisión
 		escenario.colisionActores();
 		escenario.colisionPiso();
-		escenario.revisarEventos(escenario.eventos, getHeroe());
+		escenario.revisarEventos(getHeroe());
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
 
