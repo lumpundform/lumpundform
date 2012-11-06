@@ -1,6 +1,8 @@
 package com.lumpundform.lumpundform;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -210,5 +212,17 @@ public class EscenarioBase extends Stage {
 	 */
 	public Heroe getHeroe() {
 		return (Heroe) findActor("heroe");
+	}
+	
+	public List<Actor> getActores() {
+		Iterator<Actor> i = getActors().iterator();
+		List<Actor> actores = new ArrayList<Actor>();
+		while(i.hasNext()) {
+			Actor temp = i.next();
+			if(!temp.getClass().getName().equals("Heroe")) {
+				actores.add(temp);
+			}
+		}
+		return actores;
 	}
 }

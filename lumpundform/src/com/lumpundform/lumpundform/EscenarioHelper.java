@@ -37,7 +37,7 @@ public class EscenarioHelper {
 				batch);
 
 		escenario.cargarEventos(mh.eventosMapa(), camara);
-
+		
 		for (int i = 0; i < escenario.eventos.size; i++) {
 			U.l("evento",
 					escenario.eventos.get(i).activado + " : "
@@ -75,7 +75,7 @@ public class EscenarioHelper {
 
 		// Dibujar mapa
 		mh.renderMapa(camara);
-
+		
 		// Colisión
 		escenario.colisionActores();
 		escenario.colisionPiso();
