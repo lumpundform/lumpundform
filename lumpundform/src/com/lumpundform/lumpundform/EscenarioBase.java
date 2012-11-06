@@ -195,14 +195,22 @@ public class EscenarioBase extends Stage {
 
 	public void agregarActor(String tipo, Vector2 posicion)
 			throws ActorNoDefinidoException {
+		agregarActor(tipo, posicion, "");
+	}
+	
+	public void agregarActor(String tipo, Vector2 posicion, String evento)
+			throws ActorNoDefinidoException {
+		ObjetoActor temp;
 		if (tipo == "heroe") {
-			addActor(new Heroe("heroe", posicion));
+			temp = (new Heroe("heroe", posicion));
 		} else if (tipo == "humanoide") {
-			addActor(new Humanoide("amigo", posicion));
+			temp = new Humanoide("amigo", posicion);
 		} else {
 			throw new ActorNoDefinidoException("El Actor " + tipo
 					+ " no esta definido");
 		}
+		temp.perteneceAEvento = evento;
+		addActor(temp);
 	}
 
 	/**

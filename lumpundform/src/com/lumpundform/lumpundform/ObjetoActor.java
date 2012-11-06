@@ -48,6 +48,9 @@ public abstract class ObjetoActor extends Actor {
 	public boolean colisionActores = false;
 	public boolean colisionPiso = false;
 
+	// Pertenece a evento
+	public String perteneceAEvento;
+	
 	/**
 	 * Inicializa los valores generales de todos los actores
 	 */
