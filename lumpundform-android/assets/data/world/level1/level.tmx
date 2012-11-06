@@ -20,11 +20,13 @@
   <object name="evento2" type="spawn" x="1600" y="704">
    <properties>
     <property name="rango" value="50.0"/>
+    <property name="limite" value="5"/>
    </properties>
   </object>
   <object name="evento1" type="spawn" x="448" y="640">
    <properties>
     <property name="rango" value="50.0"/>
+    <property name="limite" value="4"/>
    </properties>
   </object>
   <object name="evento3" type="fin" x="2176" y="640">

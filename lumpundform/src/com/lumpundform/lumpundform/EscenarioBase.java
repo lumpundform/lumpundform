@@ -165,7 +165,7 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	private List<Actor> getPersonajes() {
+	public List<Actor> getPersonajes() {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
 		while (i.hasNext()) {
@@ -291,5 +291,14 @@ public class EscenarioBase extends Stage {
 			}
 		}
 		return actores;
+	}
+	
+	public void destruirAtaques(CamaraJuego camara) {
+		for(int i = 0; i < getAtaques().size(); i++) {
+			Actor ataque = getAtaques().get(i);
+			if ((ataque.x + ataque.width) < camara.getPosicionOrigen().x || ataque.x > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
+				ataque.remove();
+			}
+		}
 	}
 }

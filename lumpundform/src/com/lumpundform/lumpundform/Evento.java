@@ -11,6 +11,8 @@ public class Evento {
 	public Boolean activado;
 	public Boolean terminado;
 	public EscenarioBase escenario;
+	public int limite;
+
 	private int cantidadActual;
 
 	public Evento(Vector2 posicion, TiledObject objeto, EscenarioBase escenario) {
@@ -21,6 +23,10 @@ public class Evento {
 		this.activado = false;
 		this.terminado = false;
 		this.escenario = escenario;
+		if (objeto.properties.containsKey("limite")) {
+			this.limite = Integer.parseInt(objeto.properties.get("limite"));
+		}
+
 	}
 
 	public void revisarEvento() {
@@ -34,16 +40,20 @@ public class Evento {
 	}
 
 	private void ejecutarEvento() {
+		U.l("Cantidad actores", escenario.getPersonajes().size());
 		try {
 			if (tipo.equals("spawn") && terminado.equals(false)) {
 				if (activado == false) {
-					cantidadActual = escenario.getActores().size();
+					cantidadActual = escenario.getPersonajes().size();
 					activado = true;
-				} else if (escenario.getActores().size() < (cantidadActual + 3)
+				} else if (escenario.getPersonajes().size() < (cantidadActual + limite)
 						&& activado == true) {
 					escenario.agregarActor("humanoide", new Vector2(
 							posicion.x - 64, posicion.y), nombre);
-					
+
+				}
+				if (escenario.getPersonajes().size() >= (cantidadActual + limite)) {
+					terminado = true;
 				}
 			}
 		} catch (ActorNoDefinidoException e) {

@@ -10,7 +10,7 @@ public class HabilidadTeletransportar extends Habilidad {
 
 	@Override
 	public void ejecutar(Personaje actor, Vector2 pos) {
-		if (actor.colisionPiso && cooldown == 0.0f) {
+		if (!actor.teletransportar && cooldown == 0.0f) {
 			Poligono piso = ((EscenarioBase) actor.getStage()).piso;
 			Vector2 posicionAnterior = actor.getPosicionCentro();
 
