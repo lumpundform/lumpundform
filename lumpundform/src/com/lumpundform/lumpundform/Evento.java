@@ -1,6 +1,5 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.math.Vector2;
 
@@ -38,10 +37,11 @@ public class Evento {
 		try {
 			U.l("Activado", activado);
 			if (tipo.equals("spawn") && terminado.equals(false)) {
-				if(activado == false) {
+				if (activado == false) {
 					cantidadActual = escenario.getActores().size();
 					activado = true;
-				} else if (escenario.getActores().size() < (cantidadActual + 3) && activado == true) {
+				} else if (escenario.getActores().size() < (cantidadActual + 3)
+						&& activado == true) {
 					escenario.agregarActor("humanoide", new Vector2(
 							posicion.x - 64, posicion.y));
 				} // else if algo pasa, terminado = true;
