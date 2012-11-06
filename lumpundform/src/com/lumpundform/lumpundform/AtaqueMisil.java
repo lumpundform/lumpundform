@@ -14,6 +14,8 @@ public class AtaqueMisil extends Ataque {
 		velocidad = 800.0f;
 		direccionX = personaje.direccionX;
 		
+		dano = 30.0f;
+		
 		y = personaje.y + (personaje.getHitbox().getAlto() / 2) - 33;
 		
 		float xNueva;

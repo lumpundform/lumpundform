@@ -31,6 +31,8 @@ public class Humanoide extends Personaje {
 		destinoX = x;
 		direccionX = DERECHA;
 		velocidad = 200;
+		
+		vida = 100.0f;
 
 		cargarAnimaciones();
 	}

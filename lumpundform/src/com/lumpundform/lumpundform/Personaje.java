@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Personaje extends ObjetoActor {
 	protected Map<String, Habilidad> habilidades;
+	protected float vida;
 
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
@@ -52,6 +53,13 @@ public abstract class Personaje extends ObjetoActor {
 		Iterator<Habilidad> i = habilidades.values().iterator();
 		while (i.hasNext()) {
 			i.next().reducirCooldown(delta);
+		}
+	}
+
+	public void quitarVida(float dano) {
+		vida -= dano;
+		if (vida <= 0.0f) {
+			remove();
 		}
 	}
 }

@@ -44,11 +44,7 @@ public class Evento {
 					escenario.agregarActor("humanoide", new Vector2(
 							posicion.x - 64, posicion.y), nombre);
 					
-				} // else if algo pasa, terminado = true;
-			}
-			if(escenario.getActores().size() > 3 ) {
-				String blarg = ((Humanoide) escenario.getActors().get(2)).perteneceAEvento;
-				U.l("Actor", blarg);
+				}
 			}
 		} catch (ActorNoDefinidoException e) {
 			U.err(e);

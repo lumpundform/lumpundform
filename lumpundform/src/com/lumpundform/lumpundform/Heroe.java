@@ -33,6 +33,8 @@ public class Heroe extends Personaje {
 		destinoX = x;
 		direccionX = DERECHA;
 		velocidad = 500;
+		
+		vida = 100.0f;
 
 		cargarAnimaciones();
 		cargarHabilidades();

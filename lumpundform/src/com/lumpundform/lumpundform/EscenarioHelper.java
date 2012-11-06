@@ -1,7 +1,5 @@
 package com.lumpundform.lumpundform;
 
-import java.util.List;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -38,16 +36,6 @@ public class EscenarioHelper {
 
 		escenario.cargarEventos(mh.eventosMapa(), camara);
 
-		for (int i = 0; i < escenario.eventos.size; i++) {
-			U.l("evento",
-					escenario.eventos.get(i).activado + " : "
-							+ escenario.eventos.get(i).terminado + " : "
-							+ escenario.eventos.get(i).nombre + " : "
-							+ escenario.eventos.get(i).tipo + " : "
-							+ escenario.eventos.get(i).posicion.x + " : "
-							+ escenario.eventos.get(i).posicion.y);
-		}
-
 		escenario.setCamera(camara);
 
 		// Agregar las colisiones del piso
@@ -80,35 +68,23 @@ public class EscenarioHelper {
 		escenario.colisionActores();
 		escenario.colisionPiso();
 		escenario.colisionAtaques();
+
+		// Eventos
 		escenario.revisarEventos();
+
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
 
 		escenario.acomodarActores(mh.getWidth());
 
 		// Debug líneas colisión
-		// dibujarLineasColision();
+		escenario.dibujarLineasColision(camara);
 
 		// Dibujar los actores del escenario
 		escenario.draw();
 
 		// Mover la cámara
 		moverCamara(delta);
-	}
-
-	/**
-	 * Dibuja las líneas de colisión del piso del escenario y de todos los
-	 * {@link ObjetoActor}es que se encuentran en el escenario
-	 */
-	private void dibujarLineasColision() {
-		List<Actor> actores = escenario.getActors();
-
-		for (int i = 0; i < actores.size(); i++) {
-			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			U.dibujarLineasColision(actor.getHitbox(), camara);
-		}
-
-		U.dibujarLineasColision(escenario.piso, camara);
 	}
 
 	/**

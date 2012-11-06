@@ -32,6 +32,21 @@ public class EscenarioBase extends Stage {
 	}
 
 	/**
+	 * Dibuja las líneas de colisión del piso del escenario y de todos los
+	 * {@link ObjetoActor}es que se encuentran en el escenario
+	 */
+	public void dibujarLineasColision(CamaraJuego camara) {
+		List<Actor> actores = getActors();
+
+		for (int i = 0; i < actores.size(); i++) {
+			ObjetoActor actor = (ObjetoActor) actores.get(i);
+			U.dibujarLineasColision(actor.getHitbox(), camara);
+		}
+
+		U.dibujarLineasColision(piso, camara);
+	}
+
+	/**
 	 * Cambia el estado del {@link Heroe} si este está colisionando con algún
 	 * otro {@link ObjetoActor} del escenario
 	 */
@@ -62,6 +77,9 @@ public class EscenarioBase extends Stage {
 				if (!personaje.name.equals("heroe")
 						&& personaje.getHitbox().estaColisionando(
 								ataque.getHitbox())) {
+					if (ataque.haceDano) {
+						personaje.quitarVida(ataque.dano);
+					}
 					ataque.destruir();
 				}
 			}

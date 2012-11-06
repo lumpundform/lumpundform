@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public abstract class Ataque extends ObjetoActor {
 	Personaje personaje;
 	boolean destruir = false;
+	public float dano;
+	public boolean haceDano = true;
 
 	protected Ataque(String nombre, Personaje personaje) {
 		super(nombre);
@@ -45,6 +47,7 @@ public abstract class Ataque extends ObjetoActor {
 	}
 
 	public void destruir() {
+		haceDano = false;
 		destruir = true;
 	}
 
