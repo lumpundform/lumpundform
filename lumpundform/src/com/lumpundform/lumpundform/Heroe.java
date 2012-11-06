@@ -53,6 +53,7 @@ public class Heroe extends Personaje {
 	private void cargarHabilidades() {
 		habilidades.put("teletransportar", new HabilidadTeletransportar(
 				"teletransportar"));
+		habilidades.put("disparar", new HabilidadDisparar("disparar"));
 	}
 
 	@Override
@@ -94,11 +95,7 @@ public class Heroe extends Personaje {
 			throws HabilidadInexistenteException {
 		if (habilidades.containsKey(nombre)) {
 			Habilidad hab = habilidades.get(nombre);
-			// if (pos == null) {
-			// hab.ejecutar(this);
-			// } else {
 			hab.ejecutar(this, pos);
-			// }
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad "
 					+ nombre + " para el actor " + name);

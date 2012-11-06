@@ -1,16 +1,12 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Habilidad extends ObjetoActor {
+public abstract class Habilidad {
 	protected float cooldown;
 	protected float cooldownDefault;
 
-	public Habilidad(String nombre, float cooldownDefault) {
-		super(nombre);
-
+	public Habilidad(float cooldownDefault) {
 		this.cooldown = 0.0f;
 		this.cooldownDefault = cooldownDefault;
 	}
@@ -22,20 +18,6 @@ public abstract class Habilidad extends ObjetoActor {
 		if (cooldown < 0.0f) {
 			cooldown = 0.0f;
 		}
-		//U.ds(String.format("Cooldown teletransportar: %.2fs", cooldown));
-	}
-
-	@Override
-	protected void cargarAnimaciones() {
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-	}
-
-	@Override
-	protected TextureRegion getCuadroActual() {
-		return null;
 	}
 
 }

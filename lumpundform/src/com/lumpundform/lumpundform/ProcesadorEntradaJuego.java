@@ -1,5 +1,6 @@
 package com.lumpundform.lumpundform;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
@@ -30,10 +31,10 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean tap(int x, int y, int count) {
+		Vector2 posicion = U.voltearCoordenadas(pantalla.getCamara(), x, y);
 		if (count >= 2) {
 			try {
-				escenario.getHeroe().habilidad("teletransportar",
-						U.voltearCoordenadas(pantalla.getCamara(), x, y));
+				escenario.getHeroe().habilidad("teletransportar", posicion);
 			} catch (HabilidadInexistenteException e) {
 				U.err(e);
 			}
@@ -77,6 +78,14 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (keycode == Keys.SPACE) {
+			try {
+				escenario.getHeroe().habilidad("disparar");
+			} catch (HabilidadInexistenteException e) {
+				U.err(e);
+			}
+			return true;
+		}
 		return false;
 	}
 

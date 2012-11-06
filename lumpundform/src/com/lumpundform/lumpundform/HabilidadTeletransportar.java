@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class HabilidadTeletransportar extends Habilidad {
 
 	public HabilidadTeletransportar(String nombre) {
-		super(nombre, 3.0f);
+		super(3.0f);
 	}
 
 	@Override
@@ -15,8 +15,8 @@ public class HabilidadTeletransportar extends Habilidad {
 			Vector2 posicionAnterior = actor.getPosicionCentro();
 
 			actor.teletransportar = true;
-			actor.direccionX = posicionAnterior.x >= pos.x ? IZQUIERDA
-					: DERECHA;
+			actor.direccionX = posicionAnterior.x >= pos.x ? ObjetoActor.IZQUIERDA
+					: ObjetoActor.DERECHA;
 			actor.setPosicionCentro(pos);
 
 			if (piso.estaColisionando(actor.getHitbox())) {
@@ -97,7 +97,7 @@ public class HabilidadTeletransportar extends Habilidad {
 								supDer);
 						yFinal = yFinalIzq > yFinalDer ? yFinalIzq : yFinalDer;
 					} else {
-						yFinal = yAbajo - supIzq.y - height;
+						yFinal = yAbajo - supIzq.y - actor.height;
 					}
 					actor.setSensorY("inf-izq", yFinal);
 				}
