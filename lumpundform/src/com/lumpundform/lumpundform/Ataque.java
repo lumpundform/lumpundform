@@ -1,32 +1,51 @@
 package com.lumpundform.lumpundform;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class Ataque extends ObjetoActor {
 	Personaje personaje;
+	boolean destruir = false;
 
 	protected Ataque(String nombre, Personaje personaje) {
 		super(nombre);
 
 		this.personaje = personaje;
-		this.x = personaje.getPosicionCentro().x;
-		this.y = personaje.getPosicionCentro().y;
+		setPosicionCentro(personaje.getPosicionCentro());
 	}
 
 	@Override
 	protected abstract void cargarAnimaciones();
 
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		// TODO Auto-generated method stub
+	protected TextureRegion getCuadroActual() {
+		// Revisar de cual animación se va a agarrar el cuadro actual
+		String nombreAnimacion;
+		boolean loop;
+		switch (estado) {
+		case NORMAL:
+		default:
+			nombreAnimacion = "normal";
+			loop = true;
+			break;
+		case EXPLOTANDO:
+			nombreAnimacion = "explosion";
+			loop = false;
+			if (tiempoTranscurrido > animacion.get(nombreAnimacion).frameDuration * 10) {
+				remove();
+			}
+			break;
+		}
 
+		if (!animacion.containsKey(nombreAnimacion)) {
+			nombreAnimacion = "normal";
+		}
+
+		return animacion.get(nombreAnimacion).getKeyFrame(tiempoTranscurrido,
+				loop);
 	}
 
-	@Override
-	protected TextureRegion getCuadroActual() {
-		// TODO Auto-generated method stub
-		return null;
+	public void destruir() {
+		destruir = true;
 	}
 
 }

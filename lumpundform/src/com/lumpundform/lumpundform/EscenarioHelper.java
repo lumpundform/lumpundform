@@ -79,6 +79,7 @@ public class EscenarioHelper {
 		// Colisión
 		escenario.colisionActores();
 		escenario.colisionPiso();
+		escenario.colisionAtaques();
 		escenario.revisarEventos();
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
@@ -86,7 +87,7 @@ public class EscenarioHelper {
 		escenario.acomodarActores(mh.getWidth());
 
 		// Debug líneas colisión
-		dibujarLineasColision();
+		// dibujarLineasColision();
 
 		// Dibujar los actores del escenario
 		escenario.draw();

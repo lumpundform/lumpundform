@@ -63,11 +63,17 @@ public class D {
 		escenario101.put("archivo_tmx", "data/world/level1/level.tmx");
 		escenario101.put("atlas", "data/packer/bosque/");
 		escenario101.put("fondo", "data/background.png");
+		
+		// Datos del Ataque Misil
+		Map<String, String> datosAtaqueMisil = new HashMap<String, String>();
+		datosAtaqueMisil.put("sprite_sheet_normal", "ataque_misil.png");
+		datosAtaqueMisil.put("sprite_sheet_explosion", "ataque_misil.png");
 
 		Map<String, Map> datos = new HashMap<String, Map>();
 		datos.put("heroe", datosHeroe);
 		datos.put("amigo", datosAmigo);
 		datos.put("escenario101", escenario101);
+		datos.put("ataque_misil", datosAtaqueMisil);
 
 		return datos;
 	}
@@ -85,14 +91,25 @@ public class D {
 		datosHeroe.put("columnas_cayendo", 1);
 		datosHeroe.put("renglones_cayendo", 1);
 
-		// Datos del heroe
+		// Datos del amigo
 		Map<String, Integer> datosAmigo = new HashMap<String, Integer>();
 		datosAmigo.put("columnas_detenido", 1);
 		datosAmigo.put("renglones_detenido", 1);
+		datosAmigo.put("columnas_corriendo", 10);
+		datosAmigo.put("renglones_corriendo", 1);
+		
+		// Datos del ataque misil
+		Map<String, Integer> datosAtaqueMisil = new HashMap<String, Integer>();
+		datosAtaqueMisil.put("columnas_normal", 3);
+		datosAtaqueMisil.put("renglones_normal", 1);
+		datosAtaqueMisil.put("columnas_explosion", 10);
+		datosAtaqueMisil.put("renglones_explosion", 1);
+		datosAtaqueMisil.put("columnas_offset_explosion", 3);
 
 		Map<String, Map> datos = new HashMap<String, Map>();
 		datos.put("heroe", datosHeroe);
 		datos.put("amigo", datosAmigo);
+		datos.put("ataque_misil", datosAtaqueMisil);
 
 		return datos;
 	}

@@ -37,7 +37,7 @@ public class EscenarioBase extends Stage {
 	 */
 	public void colisionActores() {
 		Heroe heroe = (Heroe) findActor("heroe");
-		List<Actor> actores = getActors();
+		List<Actor> actores = getPersonajes();
 
 		for (int i = 0; i < actores.size(); i++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
@@ -51,11 +51,28 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	public void colisionAtaques() {
+		List<Actor> ataques = getAtaques();
+		List<Actor> personajes = getPersonajes();
+
+		for (int i = 0; i < ataques.size(); i++) {
+			Ataque ataque = (Ataque) ataques.get(i);
+			for (int j = 0; j < personajes.size(); j++) {
+				Personaje personaje = (Personaje) personajes.get(j);
+				if (!personaje.name.equals("heroe")
+						&& personaje.getHitbox().estaColisionando(
+								ataque.getHitbox())) {
+					ataque.destruir();
+				}
+			}
+		}
+	}
+
 	/**
 	 * Detecta la colisión de todos los {@link ObjetoActor}es con el piso
 	 */
 	public void colisionPiso() {
-		List<Actor> actores = getActors();
+		List<Actor> actores = getPersonajes();
 		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
 
 		for (int i = 0; i < actores.size(); i++) {
@@ -130,12 +147,24 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	private List<Actor> getPersonajes() {
+		Iterator<Actor> i = getActors().iterator();
+		List<Actor> actores = new ArrayList<Actor>();
+		while (i.hasNext()) {
+			Actor temp = i.next();
+			if (temp instanceof Personaje) {
+				actores.add(temp);
+			}
+		}
+		return actores;
+	}
+
 	/**
 	 * Limita las posiciones de los {@link ObjetoActor}es del escenario para que
 	 * no se salgan del mismo
 	 */
 	public void acomodarActores(float width) {
-		List<Actor> actores = getActors();
+		List<Actor> actores = getPersonajes();
 
 		for (int i = 0; i < actores.size(); i++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
@@ -221,13 +250,25 @@ public class EscenarioBase extends Stage {
 	public Heroe getHeroe() {
 		return (Heroe) findActor("heroe");
 	}
-	
+
 	public List<Actor> getActores() {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
-		while(i.hasNext()) {
+		while (i.hasNext()) {
 			Actor temp = i.next();
-			if(!temp.getClass().getName().equals("Heroe")) {
+			if (!(temp instanceof Heroe)) {
+				actores.add(temp);
+			}
+		}
+		return actores;
+	}
+
+	private List<Actor> getAtaques() {
+		Iterator<Actor> i = getActors().iterator();
+		List<Actor> actores = new ArrayList<Actor>();
+		while (i.hasNext()) {
+			Actor temp = i.next();
+			if (temp instanceof Ataque) {
 				actores.add(temp);
 			}
 		}

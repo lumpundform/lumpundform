@@ -53,6 +53,10 @@ public class Rectangulo extends Poligono {
 		return ancho;
 	}
 
+	public float getAlto() {
+		return alto;
+	}
+
 	/**
 	 * Posiciona al {@link Rectangulo} en el punto dado tomando en cuenta si el
 	 * {@link Rectangulo} tiene punto de referencia centrado o no

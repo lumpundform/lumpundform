@@ -23,11 +23,13 @@ public abstract class ObjetoActor extends Actor {
 	public static final int DETENIDO = 0;
 	public static final int MOVIMIENTO = 1;
 	public static final int CAYENDO = 2;
+	public static final int NORMAL = 3;
 	public static final int IZQUIERDA = 10;
 	public static final int DERECHA = 11;
 	public static final int ARRIBA = 20;
 	public static final int ABAJO = 21;
 	public static final int COLISIONANDO = 30;
+	public static final int EXPLOTANDO = 40;
 
 	// Animaciones
 	protected Map<String, Animation> animacion;
@@ -100,7 +102,7 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	public void setSensorX(String nombre, float x) {
 		hitbox.centrado = false;
-		hitbox.posicionar(x, sensores.get(nombre).y);
+		hitbox.posicionar(x, getSensor(nombre).y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
 		this.x = hitbox.getCentro().x - width / 2;
 		hitbox.centrado = true;
@@ -117,7 +119,7 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	public void setSensorY(String nombre, float y) {
 		hitbox.centrado = false;
-		hitbox.posicionar(sensores.get(nombre).x, y);
+		hitbox.posicionar(getSensor(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
 		this.y = hitbox.getCentro().y - height / 2;
 		hitbox.centrado = true;
@@ -146,8 +148,6 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render()}
 	 */
 	protected void moverIzquierda(float delta) {
-		if (estado != CAYENDO)
-			estado = MOVIMIENTO;
 		x -= getVelocidad(delta);
 	}
 
@@ -158,8 +158,6 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render()}
 	 */
 	protected void moverDerecha(float delta) {
-		if (estado != CAYENDO)
-			estado = MOVIMIENTO;
 		x += getVelocidad(delta);
 	}
 
@@ -194,7 +192,21 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	@Override
-	public abstract void draw(SpriteBatch batch, float parentAlpha);
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		boolean flip = false;
+		TextureRegion cuadroActual = getCuadroActual();
+
+		// Si está caminando al revés, voltea el sprite
+		if (direccionX == IZQUIERDA) {
+			cuadroActual.flip(true, false);
+			flip = true;
+		}
+
+		batch.draw(cuadroActual, x, y);
+
+		if (flip)
+			cuadroActual.flip(true, false);
+	}
 
 	@Override
 	public void act(float delta) {
@@ -212,7 +224,32 @@ public abstract class ObjetoActor extends Actor {
 	 * 
 	 * @return El cuadro actual
 	 */
-	protected abstract TextureRegion getCuadroActual();
+	protected TextureRegion getCuadroActual() {
+		// Revisar de cual animación se va a agarrar el cuadro actual
+		String nombreAnimacion;
+		switch (estado) {
+		case DETENIDO:
+		default:
+			nombreAnimacion = "detenido";
+			break;
+		case MOVIMIENTO:
+			nombreAnimacion = "corriendo";
+			break;
+		case CAYENDO:
+			nombreAnimacion = "cayendo";
+			break;
+		}
+		if (colisionActores) {
+			nombreAnimacion = "colisionando";
+		}
+
+		if (!animacion.containsKey(nombreAnimacion)) {
+			nombreAnimacion = "detenido";
+		}
+
+		return animacion.get(nombreAnimacion).getKeyFrame(tiempoTranscurrido,
+				true);
+	}
 
 	/**
 	 * Inicializa la animación del {@link ObjetoActor}, con la imagen y datos
@@ -226,8 +263,13 @@ public abstract class ObjetoActor extends Actor {
 	protected Animation initAnimacion(String tipoAnimacion) {
 		// TODO: Implementar Exception para esta función
 		String spriteSheet = D.s(name).get("sprite_sheet_" + tipoAnimacion);
-		int columnas = D.i("heroe").get("columnas_" + tipoAnimacion);
-		int renglones = D.i("heroe").get("renglones_" + tipoAnimacion);
+		int columnas = D.i(name).get("columnas_" + tipoAnimacion);
+		int renglones = D.i(name).get("renglones_" + tipoAnimacion);
+		
+		int index1 = 0;
+		if (D.i(name).containsKey(("columnas_offset_" + tipoAnimacion))) {
+			index1 = D.i(name).get("columnas_offset_" + tipoAnimacion) - 1;
+		}
 
 		Texture texturaAnimacion = new Texture(Gdx.files.internal(spriteSheet));
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion,
@@ -236,7 +278,7 @@ public abstract class ObjetoActor extends Actor {
 				* renglones];
 		int index = 0;
 		for (int i = 0; i < renglones; i++) {
-			for (int j = 0; j < columnas; j++) {
+			for (int j = index1; j < columnas + index1; j++) {
 				cuadrosAnimacion[index++] = tmp[i][j];
 			}
 		}
