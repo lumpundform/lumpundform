@@ -126,17 +126,30 @@ public class U {
 	}
 
 	/**
-	 * Dibuja en pantalla el mensaje dado
+	 * Dibuja en pantalla el mensaje dado en la posición 30, 30
 	 * 
 	 * @param mensaje
 	 *            El mensaje a imprimir en pantalla
 	 */
 	static public void ds(Object mensaje) {
-		// TODO: hacer que se le pueda pasar una posición dinámica
+		ds(mensaje, 30.0f, 30.0f);
+	}
+
+	/**
+	 * Dibuja en pantalla el mensaje dado en la posición dada
+	 * 
+	 * @param mensaje
+	 *            El mensaje a imprimir en pantalla
+	 * @param x
+	 *            La x de la posición
+	 * @param y
+	 *            La y de la posición
+	 */
+	static public void ds(Object mensaje, float x, float y) {
 		CharSequence msg = mensaje + "";
 		sb.begin();
 		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
-		bmf.draw(sb, msg, 30, 30);
+		bmf.draw(sb, msg, x, y);
 		sb.end();
 	}
 }
