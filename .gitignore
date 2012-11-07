@@ -1,9 +1,13 @@
 lumpundform-android/bin/
 lumpundform-android/gen/
+lumpundform-android/.settings/
 lumpundform-desktop/bin/
 lumpundform-desktop/*.log
+lumpundform-desktop/.settings/
 lumpundform/bin/
+lumpundform/.settings/
 lumpundform-html/.gwt/
 lumpundform-html/war/
 lumpundform-html/gwt-unitCache/
+lumpundform-html/.settings/
 
