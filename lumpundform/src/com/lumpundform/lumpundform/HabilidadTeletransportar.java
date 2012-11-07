@@ -15,8 +15,8 @@ public class HabilidadTeletransportar extends Habilidad {
 			Vector2 posicionAnterior = actor.getPosicionCentro();
 
 			actor.teletransportar = true;
-			actor.direccionX = posicionAnterior.x >= pos.x ? ObjetoActor.IZQUIERDA
-					: ObjetoActor.DERECHA;
+			actor.direccionX = posicionAnterior.x >= pos.x ? ObjetoActor.Direccion.IZQUIERDA
+					: ObjetoActor.Direccion.DERECHA;
 			actor.setPosicionCentro(pos);
 
 			if (piso.estaColisionando(actor.getHitbox())) {

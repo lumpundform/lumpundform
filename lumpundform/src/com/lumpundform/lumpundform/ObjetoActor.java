@@ -19,16 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * 
  */
 public abstract class ObjetoActor extends Actor {
-	// Valores Estáticos
-	public static final int DETENIDO = 0;
-	public static final int MOVIMIENTO = 1;
-	public static final int CAYENDO = 2;
-	public static final int NORMAL = 3;
-	public static final int IZQUIERDA = 10;
-	public static final int DERECHA = 11;
-	public static final int ARRIBA = 20;
-	public static final int ABAJO = 21;
-	public static final int COLISIONANDO = 30;
+	// Valores estáticos de todos los actores
+	public static enum Direccion {
+		IZQUIERDA, DERECHA, ARRIBA, ABAJO
+	}
 	public static final int EXPLOTANDO = 40;
 
 	// Animaciones
@@ -36,8 +30,7 @@ public abstract class ObjetoActor extends Actor {
 	protected float tiempoTranscurrido;
 
 	// Estado, Posición y Tamaño
-	protected int estado;
-	protected int direccionX;
+	protected Direccion direccionX;
 
 	// Movimiento
 	protected float destinoX;
@@ -71,7 +64,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return {@link true} o {@link false}
 	 */
 	public boolean derecha() {
-		return direccionX == DERECHA;
+		return direccionX == Direccion.DERECHA;
 	}
 
 	/**
@@ -197,7 +190,7 @@ public abstract class ObjetoActor extends Actor {
 		TextureRegion cuadroActual = getCuadroActual();
 
 		// Si está caminando al revés, voltea el sprite
-		if (direccionX == IZQUIERDA) {
+		if (direccionX == Direccion.IZQUIERDA) {
 			cuadroActual.flip(true, false);
 			flip = true;
 		}
@@ -224,32 +217,7 @@ public abstract class ObjetoActor extends Actor {
 	 * 
 	 * @return El cuadro actual
 	 */
-	protected TextureRegion getCuadroActual() {
-		// Revisar de cual animación se va a agarrar el cuadro actual
-		String nombreAnimacion;
-		switch (estado) {
-		case DETENIDO:
-		default:
-			nombreAnimacion = "detenido";
-			break;
-		case MOVIMIENTO:
-			nombreAnimacion = "corriendo";
-			break;
-		case CAYENDO:
-			nombreAnimacion = "cayendo";
-			break;
-		}
-		if (colisionActores) {
-			nombreAnimacion = "colisionando";
-		}
-
-		if (!animacion.containsKey(nombreAnimacion)) {
-			nombreAnimacion = "detenido";
-		}
-
-		return animacion.get(nombreAnimacion).getKeyFrame(tiempoTranscurrido,
-				true);
-	}
+	protected abstract TextureRegion getCuadroActual();
 
 	/**
 	 * Inicializa la animación del {@link ObjetoActor}, con la imagen y datos

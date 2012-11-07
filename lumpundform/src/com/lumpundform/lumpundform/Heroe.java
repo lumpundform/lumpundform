@@ -29,9 +29,9 @@ public class Heroe extends Personaje {
 
 		hitbox = new Rectangulo(height, width / 3, true);
 
-		estado = DETENIDO;
+		estado = Estado.DETENIDO;
 		destinoX = x;
-		direccionX = DERECHA;
+		direccionX = Direccion.DERECHA;
 		velocidad = 500;
 
 		vida = 100.0f;
@@ -80,10 +80,10 @@ public class Heroe extends Personaje {
 				d = delta * 0.75f;
 			}
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				direccionX = IZQUIERDA;
+				direccionX = Direccion.IZQUIERDA;
 				moverIzquierda(d);
 			} else if (Gdx.input.isKeyPressed(Keys.D)) {
-				direccionX = DERECHA;
+				direccionX = Direccion.DERECHA;
 				moverDerecha(d);
 			}
 		}

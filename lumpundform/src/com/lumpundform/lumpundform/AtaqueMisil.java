@@ -10,7 +10,7 @@ public class AtaqueMisil extends Ataque {
 
 		hitbox = new Rectangulo(height * 0.2f, width * 0.55f, true);
 
-		estado = NORMAL;
+		estado = Estado.NORMAL;
 		velocidad = 800.0f;
 		direccionX = personaje.direccionX;
 		
@@ -43,7 +43,7 @@ public class AtaqueMisil extends Ataque {
 	public void act(float delta) {
 		super.act(delta);
 
-		if (estado == NORMAL) {
+		if (estado == Estado.NORMAL) {
 			if (derecha()) {
 				moverDerecha(delta);
 			} else {
@@ -57,7 +57,7 @@ public class AtaqueMisil extends Ataque {
 		if (!destruir) {
 			super.destruir();
 			tiempoTranscurrido = 0.0f;
-			estado = EXPLOTANDO;
+			estado = Estado.EXPLOTANDO;
 		}
 	}
 

@@ -3,9 +3,17 @@ package com.lumpundform.lumpundform;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class Ataque extends ObjetoActor {
-	Personaje personaje;
-	boolean destruir = false;
-	public float dano;
+	// Valores estáticos de los personajes
+	public static enum Estado {
+		NORMAL, EXPLOTANDO
+	}
+	
+	// Estado
+	protected Estado estado;
+	
+	private Personaje personaje;
+	protected boolean destruir = false;
+	protected float dano;
 	public boolean haceDano = true;
 
 	protected Ataque(String nombre, Personaje personaje) {

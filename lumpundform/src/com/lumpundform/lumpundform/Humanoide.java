@@ -27,9 +27,9 @@ public class Humanoide extends Personaje {
 
 		hitbox = new Rectangulo(height, width / 2, true);
 
-		estado = DETENIDO;
+		estado = Estado.DETENIDO;
 		destinoX = x;
-		direccionX = DERECHA;
+		direccionX = Direccion.DERECHA;
 		velocidad = 200;
 
 		vida = 100.0f;
@@ -52,15 +52,15 @@ public class Humanoide extends Personaje {
 		super.act(delta);
 
 		if (x <= 0) {
-			direccionX = DERECHA;
+			direccionX = Direccion.DERECHA;
 		} else if (x + width >= Gdx.graphics.getWidth()) {
-			direccionX = IZQUIERDA;
+			direccionX = Direccion.IZQUIERDA;
 		}
 
-		if (direccionX == IZQUIERDA) {
-			moverIzquierda(delta);
-		} else if (direccionX == DERECHA) {
+		if (derecha()) {
 			moverDerecha(delta);
+		} else {
+			moverIzquierda(delta);
 		}
 	}
 
