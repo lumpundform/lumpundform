@@ -31,7 +31,7 @@ public class Humanoide extends Personaje {
 		destinoX = x;
 		direccionX = DERECHA;
 		velocidad = 200;
-		
+
 		vida = 100.0f;
 
 		cargarAnimaciones();
@@ -42,7 +42,7 @@ public class Humanoide extends Personaje {
 		try {
 			animacion.put("detenido", initAnimacion("detenido"));
 			animacion.put("corriendo", initAnimacion("corriendo"));
-		} catch (NullPointerException e) {
+		} catch (DatoInexistenteException e) {
 			U.err(e);
 		}
 	}

@@ -33,7 +33,7 @@ public class Heroe extends Personaje {
 		destinoX = x;
 		direccionX = DERECHA;
 		velocidad = 500;
-		
+
 		vida = 100.0f;
 
 		cargarAnimaciones();
@@ -47,7 +47,7 @@ public class Heroe extends Personaje {
 			animacion.put("corriendo", initAnimacion("corriendo"));
 			animacion.put("colisionando", initAnimacion("colisionando"));
 			animacion.put("cayendo", initAnimacion("cayendo"));
-		} catch (NullPointerException e) {
+		} catch (DatoInexistenteException e) {
 			U.err(e);
 		}
 	}

@@ -52,7 +52,7 @@ public abstract class ObjetoActor extends Actor {
 
 	// Pertenece a evento
 	public String perteneceAEvento;
-	
+
 	/**
 	 * Inicializa los valores generales de todos los actores
 	 */
@@ -260,16 +260,13 @@ public abstract class ObjetoActor extends Actor {
 	 *            el que obtiene los valores de los diferentes {@link Map}s
 	 * @return La animación en si
 	 */
-	protected Animation initAnimacion(String tipoAnimacion) {
-		// TODO: Implementar Exception para esta función
-		String spriteSheet = D.s(name).get("sprite_sheet_" + tipoAnimacion);
-		int columnas = D.i(name).get("columnas_" + tipoAnimacion);
-		int renglones = D.i(name).get("renglones_" + tipoAnimacion);
-		
-		int index1 = 0;
-		if (D.i(name).containsKey(("columnas_offset_" + tipoAnimacion))) {
-			index1 = D.i(name).get("columnas_offset_" + tipoAnimacion) - 1;
-		}
+	protected Animation initAnimacion(String tipoAnimacion)
+			throws DatoInexistenteException {
+		String spriteSheet = D.gs(name, "sprite_sheet_" + tipoAnimacion);
+		int columnas = D.gi(name, "columnas_" + tipoAnimacion);
+		int renglones = D.gi(name, "renglones_" + tipoAnimacion);
+
+		int columnasOffset = D.gi(name, "columnas_offset_" + tipoAnimacion);
 
 		Texture texturaAnimacion = new Texture(Gdx.files.internal(spriteSheet));
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion,
@@ -278,7 +275,7 @@ public abstract class ObjetoActor extends Actor {
 				* renglones];
 		int index = 0;
 		for (int i = 0; i < renglones; i++) {
-			for (int j = index1; j < columnas + index1; j++) {
+			for (int j = columnasOffset; j < columnas + columnasOffset; j++) {
 				cuadrosAnimacion[index++] = tmp[i][j];
 			}
 		}

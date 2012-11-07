@@ -32,13 +32,17 @@ public class MapaHelper {
 	 * @param nombre
 	 */
 	public MapaHelper(String nombre) {
-		mapa = TiledLoader.createMap(Gdx.files.internal(D.s(nombre).get(
-				"archivo_tmx")));
-		atlas = new TileAtlas(mapa,
-				Gdx.files.internal(D.s(nombre).get("atlas")));
-		renderer = new TileMapRenderer(mapa, atlas, 16, 16);
-		fondo = new Texture(Gdx.files.internal(D.s(nombre).get("fondo")));
-		sb = new SpriteBatch();
+		try {
+			mapa = TiledLoader.createMap(Gdx.files.internal(D.gs(nombre,
+					"archivo_tmx")));
+			atlas = new TileAtlas(mapa, Gdx.files.internal(D
+					.gs(nombre, "atlas")));
+			renderer = new TileMapRenderer(mapa, atlas, 16, 16);
+			fondo = new Texture(Gdx.files.internal(D.gs(nombre, "fondo")));
+			sb = new SpriteBatch();
+		} catch (DatoInexistenteException e) {
+			U.err(e);
+		}
 	}
 
 	/**

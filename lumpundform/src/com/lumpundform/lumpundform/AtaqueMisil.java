@@ -31,8 +31,12 @@ public class AtaqueMisil extends Ataque {
 
 	@Override
 	protected void cargarAnimaciones() {
-		animacion.put("normal", initAnimacion("normal"));
-		animacion.put("explosion", initAnimacion("explosion"));
+		try {
+			animacion.put("normal", initAnimacion("normal"));
+			animacion.put("explosion", initAnimacion("explosion"));
+		} catch (DatoInexistenteException e) {
+			U.err(e);
+		}
 	}
 
 	@Override
