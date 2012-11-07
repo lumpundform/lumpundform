@@ -35,6 +35,7 @@ public class Heroe extends Personaje {
 		velocidad = 500;
 
 		vida = 100.0f;
+		vidaMaxima = 100.0f;
 
 		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
 		cargarHabilidades();
@@ -51,6 +52,10 @@ public class Heroe extends Personaje {
 		super.act(delta);
 
 		moverHeroe(delta);
+
+		vida -= delta;
+		if (vida < 0)
+			vida = 0;
 	}
 
 	/**

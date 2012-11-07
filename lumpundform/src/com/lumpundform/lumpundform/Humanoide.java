@@ -33,6 +33,7 @@ public class Humanoide extends Personaje {
 		velocidad = 200;
 
 		vida = 100.0f;
+		vidaMaxima = 100.0f;
 
 		cargarAnimaciones("detenido", "corriendo");
 	}

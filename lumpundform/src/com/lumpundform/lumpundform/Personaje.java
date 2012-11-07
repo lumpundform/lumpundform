@@ -27,6 +27,7 @@ public abstract class Personaje extends ObjetoActor {
 	
 	// Vida
 	protected float vida;
+	protected float vidaMaxima;
 
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
