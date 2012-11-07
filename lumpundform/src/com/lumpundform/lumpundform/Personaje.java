@@ -52,9 +52,6 @@ public abstract class Personaje extends ObjetoActor {
 	}
 
 	@Override
-	protected abstract void cargarAnimaciones();
-
-	@Override
 	public void act(float delta) {
 		super.act(delta);
 		estado = colisionPiso ? Estado.DETENIDO : Estado.CAYENDO;

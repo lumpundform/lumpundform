@@ -121,7 +121,15 @@ public abstract class ObjetoActor extends Actor {
 	/**
 	 * Aqui se inicializan todas las animaciones existentes de la clase
 	 */
-	protected abstract void cargarAnimaciones();
+	protected void cargarAnimaciones(String... nombres) {
+		try {
+			for (String nombre : nombres) {
+				animacion.put(nombre, initAnimacion(nombre));
+			}
+		} catch (DatoInexistenteException e) {
+			U.err(e);
+		}
+	}
 
 	/**
 	 * Calcula la velocidad del {@link ObjetoActor} conforme al delta pasado

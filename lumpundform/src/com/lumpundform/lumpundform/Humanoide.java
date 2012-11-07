@@ -34,17 +34,7 @@ public class Humanoide extends Personaje {
 
 		vida = 100.0f;
 
-		cargarAnimaciones();
-	}
-
-	@Override
-	protected void cargarAnimaciones() {
-		try {
-			animacion.put("detenido", initAnimacion("detenido"));
-			animacion.put("corriendo", initAnimacion("corriendo"));
-		} catch (DatoInexistenteException e) {
-			U.err(e);
-		}
+		cargarAnimaciones("detenido", "corriendo");
 	}
 
 	@Override

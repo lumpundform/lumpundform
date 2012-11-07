@@ -13,11 +13,11 @@ public class AtaqueMisil extends Ataque {
 		estado = Estado.NORMAL;
 		velocidad = 800.0f;
 		direccionX = personaje.direccionX;
-		
+
 		dano = 30.0f;
-		
+
 		y = personaje.y + (personaje.getHitbox().getAlto() / 2) - 33;
-		
+
 		float xNueva;
 		if (derecha()) {
 			xNueva = personaje.getSensor("inf-izq").x + 30;
@@ -26,17 +26,7 @@ public class AtaqueMisil extends Ataque {
 		}
 		setSensorX("inf-izq", xNueva);
 
-		cargarAnimaciones();
-	}
-
-	@Override
-	protected void cargarAnimaciones() {
-		try {
-			animacion.put("normal", initAnimacion("normal"));
-			animacion.put("explosion", initAnimacion("explosion"));
-		} catch (DatoInexistenteException e) {
-			U.err(e);
-		}
+		cargarAnimaciones("normal", "explosion");
 	}
 
 	@Override

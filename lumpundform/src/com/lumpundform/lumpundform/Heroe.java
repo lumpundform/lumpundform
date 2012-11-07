@@ -36,20 +36,8 @@ public class Heroe extends Personaje {
 
 		vida = 100.0f;
 
-		cargarAnimaciones();
+		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
 		cargarHabilidades();
-	}
-
-	@Override
-	protected void cargarAnimaciones() {
-		try {
-			animacion.put("detenido", initAnimacion("detenido"));
-			animacion.put("corriendo", initAnimacion("corriendo"));
-			animacion.put("colisionando", initAnimacion("colisionando"));
-			animacion.put("cayendo", initAnimacion("cayendo"));
-		} catch (DatoInexistenteException e) {
-			U.err(e);
-		}
 	}
 
 	private void cargarHabilidades() {

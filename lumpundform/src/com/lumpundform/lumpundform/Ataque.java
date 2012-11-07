@@ -24,9 +24,6 @@ public abstract class Ataque extends ObjetoActor {
 	}
 
 	@Override
-	protected abstract void cargarAnimaciones();
-
-	@Override
 	protected TextureRegion getCuadroActual() {
 		// Revisar de cual animación se va a agarrar el cuadro actual
 		String nombreAnimacion;
