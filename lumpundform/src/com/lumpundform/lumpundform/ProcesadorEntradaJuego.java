@@ -25,7 +25,6 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -44,25 +43,21 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean longPress(int x, int y) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean fling(float velocityX, float velocityY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean pan(int x, int y, int deltaX, int deltaY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean zoom(float originalDistance, float currentDistance) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -70,7 +65,6 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	public boolean pinch(Vector2 initialFirstPointer,
 			Vector2 initialSecondPointer, Vector2 firstPointer,
 			Vector2 secondPointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
