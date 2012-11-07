@@ -165,18 +165,6 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	public List<Actor> getPersonajes() {
-		Iterator<Actor> i = getActors().iterator();
-		List<Actor> actores = new ArrayList<Actor>();
-		while (i.hasNext()) {
-			Actor actor = i.next();
-			if (actor instanceof Personaje) {
-				actores.add(actor);
-			}
-		}
-		return actores;
-	}
-
 	/**
 	 * Limita las posiciones de los {@link ObjetoActor}es del escenario para que
 	 * no se salgan del mismo
@@ -269,24 +257,20 @@ public class EscenarioBase extends Stage {
 		return (Heroe) findActor("heroe");
 	}
 
-	public List<Actor> getActores() {
-		Iterator<Actor> i = getActors().iterator();
-		List<Actor> actores = new ArrayList<Actor>();
-		while (i.hasNext()) {
-			Actor actor = i.next();
-			if (!(actor instanceof Heroe)) {
-				actores.add(actor);
-			}
-		}
-		return actores;
+	public List<Actor> getPersonajes() {
+		return getActores(Personaje.class);
 	}
 
 	private List<Actor> getAtaques() {
+		return getActores(Ataque.class);
+	}
+	
+	private List<Actor> getActores(Class<?> clase) {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
 		while (i.hasNext()) {
 			Actor actor = i.next();
-			if (actor instanceof Ataque) {
+			if (clase.isInstance(actor)) {
 				actores.add(actor);
 			}
 		}

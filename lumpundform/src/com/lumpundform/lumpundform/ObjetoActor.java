@@ -23,7 +23,6 @@ public abstract class ObjetoActor extends Actor {
 	public static enum Direccion {
 		IZQUIERDA, DERECHA, ARRIBA, ABAJO
 	}
-	public static final int EXPLOTANDO = 40;
 
 	// Animaciones
 	protected Map<String, Animation> animacion;
