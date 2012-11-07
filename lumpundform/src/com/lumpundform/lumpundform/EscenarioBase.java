@@ -169,9 +169,9 @@ public class EscenarioBase extends Stage {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
 		while (i.hasNext()) {
-			Actor temp = i.next();
-			if (temp instanceof Personaje) {
-				actores.add(temp);
+			Actor actor = i.next();
+			if (actor instanceof Personaje) {
+				actores.add(actor);
 			}
 		}
 		return actores;
@@ -247,17 +247,17 @@ public class EscenarioBase extends Stage {
 	
 	public void agregarActor(String tipo, Vector2 posicion, String evento)
 			throws ActorNoDefinidoException {
-		ObjetoActor temp;
+		ObjetoActor actor;
 		if (tipo == "heroe") {
-			temp = (new Heroe("heroe", posicion));
+			actor = new Heroe("heroe", posicion);
 		} else if (tipo == "humanoide") {
-			temp = new Humanoide("amigo", posicion);
+			actor = new Humanoide("amigo", posicion);
 		} else {
 			throw new ActorNoDefinidoException("El Actor " + tipo
 					+ " no esta definido");
 		}
-		temp.perteneceAEvento = evento;
-		addActor(temp);
+		actor.perteneceAEvento = evento;
+		addActor(actor);
 	}
 
 	/**
@@ -273,9 +273,9 @@ public class EscenarioBase extends Stage {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
 		while (i.hasNext()) {
-			Actor temp = i.next();
-			if (!(temp instanceof Heroe)) {
-				actores.add(temp);
+			Actor actor = i.next();
+			if (!(actor instanceof Heroe)) {
+				actores.add(actor);
 			}
 		}
 		return actores;
@@ -285,9 +285,9 @@ public class EscenarioBase extends Stage {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
 		while (i.hasNext()) {
-			Actor temp = i.next();
-			if (temp instanceof Ataque) {
-				actores.add(temp);
+			Actor actor = i.next();
+			if (actor instanceof Ataque) {
+				actores.add(actor);
 			}
 		}
 		return actores;

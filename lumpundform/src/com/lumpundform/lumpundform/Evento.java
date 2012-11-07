@@ -40,7 +40,6 @@ public class Evento {
 	}
 
 	private void ejecutarEvento() {
-		U.l("Cantidad actores", escenario.getPersonajes().size());
 		try {
 			if (tipo.equals("spawn") && terminado.equals(false)) {
 				if (activado == false) {

@@ -11,7 +11,6 @@ public abstract class Ataque extends ObjetoActor {
 	// Estado
 	protected Estado estado;
 	
-	private Personaje personaje;
 	protected boolean destruir = false;
 	protected float dano;
 	public boolean haceDano = true;
@@ -19,7 +18,6 @@ public abstract class Ataque extends ObjetoActor {
 	protected Ataque(String nombre, Personaje personaje) {
 		super(nombre);
 
-		this.personaje = personaje;
 		setPosicionCentro(personaje.getPosicionCentro());
 	}
 
