@@ -78,7 +78,7 @@ public class EscenarioBase extends Stage {
 						&& personaje.getHitbox().estaColisionando(
 								ataque.getHitbox())) {
 					if (ataque.haceDano) {
-						personaje.quitarVida(ataque.dano);
+						personaje.quitarVida(ataque.dano, getEvento(personaje.perteneceAEvento));
 					}
 					ataque.destruir();
 				}
@@ -222,9 +222,9 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	public void revisarEventos() {
+	public void revisarEventos(CamaraJuego camara) {
 		for (int i = 0; i < eventos.size; i++) {
-			eventos.get(i).revisarEvento();
+			eventos.get(i).revisarEvento(camara, getHeroe());
 		}
 	}
 
@@ -284,5 +284,15 @@ public class EscenarioBase extends Stage {
 				ataque.remove();
 			}
 		}
+	}
+	
+	private Evento getEvento(String nombreEvento) {
+		Evento evento = null;
+		for(int i = 0; i < eventos.size; i++) {
+			if(eventos.get(i).nombre.equals(nombreEvento)) {
+				evento = eventos.get(i);
+			}
+		}
+		return evento;
 	}
 }

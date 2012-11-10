@@ -13,50 +13,62 @@ public class Evento {
 	public EscenarioBase escenario;
 	public int limite;
 
-	private int cantidadActual;
+	private int personajesCreados = 0;
+	public int personajesMatados = 0;
 
 	public Evento(Vector2 posicion, TiledObject objeto, EscenarioBase escenario) {
 		this.posicion = posicion;
 		this.nombre = objeto.name;
 		this.tipo = objeto.type;
-		this.rango = Float.parseFloat(objeto.properties.get("rango"));
 		this.activado = false;
 		this.terminado = false;
 		this.escenario = escenario;
-		if (objeto.properties.containsKey("limite")) {
+		
+		if (objeto.properties.containsKey("rango"))
+			this.rango = Float.parseFloat(objeto.properties.get("rango"));
+		if (objeto.properties.containsKey("limite"))
 			this.limite = Integer.parseInt(objeto.properties.get("limite"));
+	}
+
+	public void revisarEvento(CamaraJuego camara, Heroe heroe) {
+		if (!activado || !terminado) {
+			ejecutarEvento(camara, heroe);
 		}
 
 	}
 
-	public void revisarEvento() {
-		Heroe heroe = escenario.getHeroe();
-		if (heroe.getPosicionCentro().x > (posicion.x - rango)
-				&& heroe.getPosicionCentro().x < (posicion.x + rango)) {
-			ejecutarEvento();
-			U.ds(tipo);
-		}
-
-	}
-
-	private void ejecutarEvento() {
+	private void ejecutarEvento(CamaraJuego camara, Heroe heroe) {
 		try {
-			if (tipo.equals("spawn") && terminado.equals(false)) {
-				if (activado == false) {
-					cantidadActual = escenario.getPersonajes().size();
+			if (tipo.equals("spawn")) {
+				if (activado == false && heroe.x > (posicion.x - rango) && heroe.x < (posicion.x + rango)) {
 					activado = true;
-				} else if (escenario.getPersonajes().size() < (cantidadActual + limite)
-						&& activado == true) {
+				} else if (limite > personajesCreados && activado.equals(true)) {
 					escenario.agregarActor("humanoide", new Vector2(
 							posicion.x - 64, posicion.y), nombre);
-
+					personajesCreados += 1;
 				}
-				if (escenario.getPersonajes().size() >= (cantidadActual + limite)) {
+				if (limite <= personajesCreados) {
+					terminado = true;
+				}
+			} else if (tipo.equals("coliseo")) {
+				if (activado == false && heroe.x > (posicion.x - rango) && heroe.x < (posicion.x + rango)) {
+					activado = true;
+					camara.bloqueada = true;
+				} else if (limite > personajesCreados && activado.equals(true)) {
+					escenario.agregarActor("humanoide", new Vector2(
+							posicion.x - 64, posicion.y), nombre);
+					personajesCreados += 1;
+				} else if (limite == personajesMatados) {
+					camara.bloqueada = false;
 					terminado = true;
 				}
 			}
 		} catch (ActorNoDefinidoException e) {
 			U.err(e);
 		}
+	}
+	
+	public void matarPersonaje() {
+		personajesMatados += 1;
 	}
 }

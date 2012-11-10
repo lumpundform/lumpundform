@@ -23,7 +23,7 @@
     <property name="limite" value="5"/>
    </properties>
   </object>
-  <object name="evento1" type="spawn" x="448" y="640">
+  <object name="evento1" type="coliseo" x="448" y="640">
    <properties>
     <property name="rango" value="50.0"/>
     <property name="limite" value="4"/>

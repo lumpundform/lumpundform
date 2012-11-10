@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class CamaraJuego extends OrthographicCamera {
 	private Vector2 posicionOrigen = new Vector2();
+	public boolean bloqueada = false;
 
 	public CamaraJuego() {
 		super();
@@ -30,10 +31,12 @@ public class CamaraJuego extends OrthographicCamera {
 	 *            Posición y para posicionar la cámara
 	 */
 	public void setPosicion(float x, float y) {
-		position.x = x;
-		position.y = y;
-		posicionOrigen.x = x - viewportWidth / 2;
-		posicionOrigen.y = y - viewportHeight / 2;
+		if(!bloqueada) {
+			position.x = x;
+			position.y = y;
+			posicionOrigen.x = x - viewportWidth / 2;
+			posicionOrigen.y = y - viewportHeight / 2;
+		}
 	}
 
 	/**

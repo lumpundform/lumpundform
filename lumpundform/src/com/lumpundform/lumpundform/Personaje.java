@@ -94,9 +94,10 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
-	public void quitarVida(float dano) {
+	public void quitarVida(float dano, Evento evento) {
 		vida -= dano;
 		if (vida <= 0.0f) {
+			evento.matarPersonaje();
 			remove();
 		}
 	}
