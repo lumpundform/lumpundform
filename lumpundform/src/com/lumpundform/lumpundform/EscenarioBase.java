@@ -222,9 +222,9 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	public void revisarEventos(CamaraJuego camara) {
+	public void revisarEventos(CamaraJuego camara, float delta) {
 		for (int i = 0; i < eventos.size; i++) {
-			eventos.get(i).revisarEvento(camara, getHeroe());
+			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
 		}
 	}
 

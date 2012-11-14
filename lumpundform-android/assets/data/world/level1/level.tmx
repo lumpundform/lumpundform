@@ -34,5 +34,11 @@
     <property name="rango" value="20.0"/>
    </properties>
   </object>
+  <object name="evento4" type="clima" x="1600" y="704">
+   <properties>
+    <property name="rango" value="80.0"/>
+    <property name="duracion" value="10"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

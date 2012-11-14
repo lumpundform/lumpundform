@@ -73,7 +73,7 @@ public class EscenarioHelper {
 		escenario.colisionAtaques();
 
 		// Eventos
-		escenario.revisarEventos(camara);
+		escenario.revisarEventos(camara, delta);
 		escenario.destruirAtaques(camara);
 
 		// Actuar de todos los actores del escenario
