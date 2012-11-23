@@ -18,13 +18,13 @@ public abstract class Personaje extends ObjetoActor {
 	public static enum Estado {
 		DETENIDO, MOVIMIENTO, CAYENDO, COLISIONANDO;
 	}
-	
+
 	// Estado
 	protected Estado estado;
-	
+
 	// Habilidades
 	protected Map<String, Habilidad> habilidades;
-	
+
 	// Vida
 	protected float vida;
 	protected float vidaMaxima;
@@ -94,10 +94,14 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
-	public void quitarVida(float dano, Evento evento) {
+	public void quitarVida(float dano) {
+		Evento evento = ((EscenarioBase) getStage())
+				.getEvento(perteneceAEvento);
 		vida -= dano;
 		if (vida <= 0.0f) {
-			evento.matarPersonaje();
+			if (evento != null) {
+				evento.matarPersonaje();
+			}
 			remove();
 		}
 	}

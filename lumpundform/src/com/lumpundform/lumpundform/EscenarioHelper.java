@@ -80,6 +80,7 @@ public class EscenarioHelper {
 		escenario.act(delta);
 
 		escenario.acomodarActores(mh.getWidth());
+		escenario.acomodarHeroe(camara);
 
 		// Debug líneas colisión
 		escenario.dibujarLineasColision(camara);

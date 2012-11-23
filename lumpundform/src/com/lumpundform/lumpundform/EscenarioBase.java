@@ -78,7 +78,7 @@ public class EscenarioBase extends Stage {
 						&& personaje.getHitbox().estaColisionando(
 								ataque.getHitbox())) {
 					if (ataque.haceDano) {
-						personaje.quitarVida(ataque.dano, getEvento(personaje.perteneceAEvento));
+						personaje.quitarVida(ataque.dano);
 					}
 					ataque.destruir();
 				}
@@ -168,6 +168,9 @@ public class EscenarioBase extends Stage {
 	/**
 	 * Limita las posiciones de los {@link ObjetoActor}es del escenario para que
 	 * no se salgan del mismo
+	 * 
+	 * @param width
+	 *            El ancho del {@link EscenarioBase}
 	 */
 	public void acomodarActores(float width) {
 		List<Actor> actores = getPersonajes();
@@ -212,6 +215,17 @@ public class EscenarioBase extends Stage {
 			}
 		}
 	}
+	
+	public void acomodarHeroe(CamaraJuego camara) {
+		float min = camara.getPosicionOrigen().x;
+		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
+		Heroe heroe = getHeroe();
+		if (heroe.getSensor("inf-izq").x < min)
+			heroe.setSensorX("inf-izq", min);
+		if (heroe.getSensor("inf-der").x > max)
+			heroe.setSensorX("inf-izq", (max - heroe.getHitbox()
+					.getAncho()));
+	}
 
 	public void cargarEventos(TiledObjectGroup tog, CamaraJuego camara) {
 		eventos = new Array<Evento>();
@@ -232,7 +246,7 @@ public class EscenarioBase extends Stage {
 			throws ActorNoDefinidoException {
 		agregarActor(tipo, posicion, "");
 	}
-	
+
 	public void agregarActor(String tipo, Vector2 posicion, String evento)
 			throws ActorNoDefinidoException {
 		ObjetoActor actor;
@@ -264,7 +278,7 @@ public class EscenarioBase extends Stage {
 	private List<Actor> getAtaques() {
 		return getActores(Ataque.class);
 	}
-	
+
 	private List<Actor> getActores(Class<?> clase) {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
@@ -276,20 +290,21 @@ public class EscenarioBase extends Stage {
 		}
 		return actores;
 	}
-	
+
 	public void destruirAtaques(CamaraJuego camara) {
-		for(int i = 0; i < getAtaques().size(); i++) {
+		for (int i = 0; i < getAtaques().size(); i++) {
 			Actor ataque = getAtaques().get(i);
-			if ((ataque.x + ataque.width) < camara.getPosicionOrigen().x || ataque.x > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
+			if ((ataque.x + ataque.width) < camara.getPosicionOrigen().x
+					|| ataque.x > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
 				ataque.remove();
 			}
 		}
 	}
-	
-	private Evento getEvento(String nombreEvento) {
+
+	public Evento getEvento(String nombreEvento) {
 		Evento evento = null;
-		for(int i = 0; i < eventos.size; i++) {
-			if(eventos.get(i).nombre.equals(nombreEvento)) {
+		for (int i = 0; i < eventos.size; i++) {
+			if (eventos.get(i).nombre.equals(nombreEvento)) {
 				evento = eventos.get(i);
 			}
 		}
