@@ -52,16 +52,15 @@ public class EscenarioBase extends Stage {
 	 */
 	public void colisionActores() {
 		Heroe heroe = (Heroe) findActor("heroe");
+		heroe.colisionActores = false;
 		List<Actor> actores = getPersonajes();
 
-		for (int i = 0; i < actores.size(); i++) {
-			ObjetoActor actor = (ObjetoActor) actores.get(i);
+		for (Actor a : actores) {
+			ObjetoActor actor = (ObjetoActor) a;
 			if (actor.name != "heroe"
 					&& heroe.getHitbox().estaColisionando(actor.getHitbox())) {
 				heroe.colisionActores = true;
 				break;
-			} else if (actor.name != "heroe") {
-				heroe.colisionActores = false;
 			}
 		}
 	}

@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Habilidad {
 	protected float cooldown;
 	protected float cooldownDefault;
+	
+	protected float mana;
 
 	public Habilidad(float cooldownDefault) {
 		this.cooldown = 0.0f;

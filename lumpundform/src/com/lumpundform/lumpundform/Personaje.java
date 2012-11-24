@@ -25,9 +25,12 @@ public abstract class Personaje extends ObjetoActor {
 	// Habilidades
 	protected Map<String, Habilidad> habilidades;
 
-	// Vida
+	// Vida y Mana
 	protected float vida;
-	protected float vidaMaxima;
+	protected float mana;
+	protected float vidaMax;
+	protected float manaMax;
+	protected float manaPorSegundo;
 
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
@@ -57,6 +60,7 @@ public abstract class Personaje extends ObjetoActor {
 		super.act(delta);
 		estado = colisionPiso ? Estado.DETENIDO : Estado.CAYENDO;
 		reducirCooldownHabilidades(delta);
+		aumentarMana(delta);
 	}
 
 	@Override
@@ -79,6 +83,7 @@ public abstract class Personaje extends ObjetoActor {
 			nombreAnimacion = "colisionando";
 		}
 
+		U.l("Animacion", nombreAnimacion);
 		if (!animacion.containsKey(nombreAnimacion)) {
 			nombreAnimacion = "detenido";
 		}
@@ -93,6 +98,16 @@ public abstract class Personaje extends ObjetoActor {
 			i.next().reducirCooldown(delta);
 		}
 	}
+	
+	private void aumentarMana(float delta) {
+		if (manaPorSegundo > 0) {
+			mana += (manaPorSegundo * delta);
+		}
+		
+		if (mana >= manaMax) {
+			mana = manaMax;
+		}
+	}
 
 	public void quitarVida(float dano) {
 		Evento evento = ((EscenarioBase) getStage())
@@ -103,6 +118,13 @@ public abstract class Personaje extends ObjetoActor {
 				evento.matarPersonaje();
 			}
 			remove();
+		}
+	}
+	
+	public void quitarMana(float mana) {
+		this.mana -= mana;
+		if (this.mana <= 0.0f) {
+			this.mana = 0.0f;
 		}
 	}
 }

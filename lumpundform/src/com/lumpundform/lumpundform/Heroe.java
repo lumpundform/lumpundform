@@ -35,7 +35,10 @@ public class Heroe extends Personaje {
 		velocidad = 500;
 
 		vida = 100.0f;
-		vidaMaxima = 100.0f;
+		vidaMax = 100.0f;
+		mana = 100.0f;
+		manaMax = 100.0f;
+		manaPorSegundo = 5.0f;
 
 		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
 		cargarHabilidades();
@@ -52,10 +55,6 @@ public class Heroe extends Personaje {
 		super.act(delta);
 
 		moverHeroe(delta);
-
-		vida -= delta;
-		if (vida < 0)
-			vida = 0;
 	}
 
 	/**
@@ -90,7 +89,9 @@ public class Heroe extends Personaje {
 			throws HabilidadInexistenteException {
 		if (habilidades.containsKey(nombre)) {
 			Habilidad hab = habilidades.get(nombre);
-			hab.ejecutar(this, pos);
+			if (hab.mana <= mana) {
+				hab.ejecutar(this, pos);
+			}
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad "
 					+ nombre + " para el actor " + name);
