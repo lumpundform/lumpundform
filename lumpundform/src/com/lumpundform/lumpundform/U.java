@@ -18,9 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 public class U {
 	private static ShapeRenderer sr = new ShapeRenderer();
 	private static SpriteBatch sb = new SpriteBatch();
-	private static BitmapFont bmf = new BitmapFont(
-			Gdx.files.internal("data/font/font.fnt"),
-			Gdx.files.internal("data/font/font.png"), false);
+	private static BitmapFont bmf = Fuentes.regular();
 
 	/**
 	 * Voltea coordenadas de un punto a coordenadas de la {@link CamaraJuego} de

@@ -13,7 +13,7 @@ public class Evento {
 	public EscenarioBase escenario;
 	public int limite;
 	
-	// Eventos con tiempo límite.
+	// Eventos con tiempo lÃ­mite.
 	public float duracion;
 	public float tiempoTranscurrido = 0.0f;
 
@@ -70,7 +70,6 @@ public class Evento {
 					terminado = true;
 				}
 			} else if (tipo.equals("clima")) {
-				U.l("tiempo Transcurrido", tiempoTranscurrido + " : duracion " + duracion);
 				if (activado == false && heroe.x > (posicion.x - rango) && heroe.x < (posicion.x + rango)) {
 					activado = true;
 				} else if (activado == true && duracion > tiempoTranscurrido) {
