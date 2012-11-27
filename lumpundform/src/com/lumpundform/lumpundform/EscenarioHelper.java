@@ -21,11 +21,11 @@ public class EscenarioHelper {
 	 * el escenario del nombre dado
 	 * 
 	 * @param batch
-	 *            El SpriteBatch con el que se van a dibujar los actores
+	 *            El {@link SpriteBatch} con el que se van a dibujar los actores
 	 * @param cam
-	 *            La cámara de la pantalla actual
+	 *            La {@link CamaraJuego} de la pantalla actual
 	 * @param nombre
-	 *            El nombre del escenario para referenciarlo en la clase D
+	 *            El nombre del escenario para referenciarlo en {@link D}
 	 */
 	public EscenarioHelper(SpriteBatch batch, CamaraJuego cam, String nombre) {
 		camara = cam;
@@ -69,8 +69,8 @@ public class EscenarioHelper {
 
 		// Colisión
 		escenario.colisionActores();
-		escenario.colisionPiso();
 		escenario.colisionAtaques();
+		escenario.colisionPiso();
 
 		// Eventos
 		escenario.revisarEventos(camara, delta);
@@ -87,7 +87,7 @@ public class EscenarioHelper {
 
 		// Dibujar los actores del escenario
 		escenario.draw();
-		
+
 		// Dibujar la interfaz
 		ih.dibujar(getHeroe());
 

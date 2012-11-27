@@ -20,11 +20,11 @@ public class AtaqueMisil extends Ataque {
 
 		float xNueva;
 		if (derecha()) {
-			xNueva = personaje.getSensor("inf-izq").x + 30;
+			xNueva = personaje.getEsquina("inf-izq").x + 30;
 		} else {
-			xNueva = personaje.getSensor("inf-izq").x - 40;
+			xNueva = personaje.getEsquina("inf-izq").x - 40;
 		}
-		setSensorX("inf-izq", xNueva);
+		setEsquinaX("inf-izq", xNueva);
 
 		cargarAnimaciones("normal", "explosion");
 	}

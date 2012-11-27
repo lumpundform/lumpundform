@@ -74,7 +74,7 @@ public abstract class ObjetoActor extends Actor {
 	 *            "sup-izq", "sup-der"
 	 * @return El punto
 	 */
-	public Vector2 getSensor(String nombre) {
+	public Vector2 getEsquina(String nombre) {
 		if (hitbox == null)
 			return null;
 
@@ -92,9 +92,9 @@ public abstract class ObjetoActor extends Actor {
 	 * @param x
 	 *            La posicion x del punto
 	 */
-	public void setSensorX(String nombre, float x) {
+	public void setEsquinaX(String nombre, float x) {
 		hitbox.centrado = false;
-		hitbox.posicionar(x, getSensor(nombre).y);
+		hitbox.posicionar(x, getEsquina(nombre).y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
 		this.x = hitbox.getCentro().x - width / 2;
 		hitbox.centrado = true;
@@ -109,9 +109,9 @@ public abstract class ObjetoActor extends Actor {
 	 * @param y
 	 *            La posicion y del punto
 	 */
-	public void setSensorY(String nombre, float y) {
+	public void setEsquinaY(String nombre, float y) {
 		hitbox.centrado = false;
-		hitbox.posicionar(getSensor(nombre).x, y);
+		hitbox.posicionar(getEsquina(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
 		this.y = hitbox.getCentro().y - height / 2;
 		hitbox.centrado = true;

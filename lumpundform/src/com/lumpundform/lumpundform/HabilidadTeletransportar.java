@@ -20,10 +20,10 @@ public class HabilidadTeletransportar extends Habilidad {
 			actor.setPosicionCentro(pos);
 
 			if (piso.estaColisionando(actor.getHitbox())) {
-				Vector2 infIzq = actor.getSensor("inf-izq");
-				Vector2 infDer = actor.getSensor("inf-der");
-				Vector2 supIzq = actor.getSensor("sup-izq");
-				Vector2 supDer = actor.getSensor("sup-der");
+				Vector2 infIzq = actor.getEsquina("inf-izq");
+				Vector2 infDer = actor.getEsquina("inf-der");
+				Vector2 supIzq = actor.getEsquina("sup-izq");
+				Vector2 supDer = actor.getEsquina("sup-der");
 				Linea lii = piso.estaColisionando(infIzq) ? piso.linea(
 						"arriba", infIzq) : null;
 				Linea lid = piso.estaColisionando(infDer) ? piso.linea(
@@ -99,7 +99,7 @@ public class HabilidadTeletransportar extends Habilidad {
 					} else {
 						yFinal = yAbajo - supIzq.y - actor.height;
 					}
-					actor.setSensorY("inf-izq", yFinal);
+					actor.setEsquinaY("inf-izq", yFinal);
 				}
 			}
 

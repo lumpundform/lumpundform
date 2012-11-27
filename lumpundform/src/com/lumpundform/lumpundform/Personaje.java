@@ -83,7 +83,6 @@ public abstract class Personaje extends ObjetoActor {
 			nombreAnimacion = "colisionando";
 		}
 
-		U.l("Animacion", nombreAnimacion);
 		if (!animacion.containsKey(nombreAnimacion)) {
 			nombreAnimacion = "detenido";
 		}

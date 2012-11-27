@@ -89,11 +89,10 @@ public class EscenarioBase extends Stage {
 	 * Detecta la colisión de todos los {@link ObjetoActor}es con el piso
 	 */
 	public void colisionPiso() {
-		List<Actor> actores = getPersonajes();
 		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
 
-		for (int i = 0; i < actores.size(); i++) {
-			ObjetoActor actor = (ObjetoActor) actores.get(i);
+		for (Actor a : getPersonajes()) {
+			ObjetoActor actor = (ObjetoActor) a;
 			caidaLibre.put(actor.name, false);
 
 			// Datos para cuando va hacia derecha o izquierda
@@ -118,16 +117,16 @@ public class EscenarioBase extends Stage {
 			Vector2 p = null;
 			Float altura = null;
 			String direccionDiagonal = null;
-			if (!piso.estaColisionando(actor.getSensor("inf-izq"))
-					&& !piso.estaColisionando(actor.getSensor("inf-der"))) {
+			if (!piso.estaColisionando(actor.getEsquina("inf-izq"))
+					&& !piso.estaColisionando(actor.getEsquina("inf-der"))) {
 				caidaLibre.put(actor.name, true);
 
-				Vector2 puntoTemp = actor.getSensor(puntoColisionTemp);
+				Vector2 puntoTemp = actor.getEsquina(puntoColisionTemp);
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
 				altura = actor.y;
 				direccionDiagonal = direccionDiagonalDer;
-			} else if (piso.estaColisionando(actor.getSensor(puntoColision))) {
-				p = actor.getSensor(puntoColision);
+			} else if (piso.estaColisionando(actor.getEsquina(puntoColision))) {
+				p = actor.getEsquina(puntoColision);
 				altura = actor.y + 10;
 				direccionDiagonal = direccionDiagonalIzq;
 			}
@@ -176,10 +175,10 @@ public class EscenarioBase extends Stage {
 
 		for (int i = 0; i < actores.size(); i++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			if (actor.getSensor("inf-izq").x < 0)
-				actor.setSensorX("inf-izq", 0.0f);
-			if (actor.getSensor("inf-der").x > width)
-				actor.setSensorX("inf-izq", (width - actor.getHitbox()
+			if (actor.getEsquina("inf-izq").x < 0)
+				actor.setEsquinaX("inf-izq", 0.0f);
+			if (actor.getEsquina("inf-der").x > width)
+				actor.setEsquinaX("inf-izq", (width - actor.getHitbox()
 						.getAncho()));
 
 			// Detecta colisión con paredes
@@ -187,11 +186,11 @@ public class EscenarioBase extends Stage {
 			String lineaLateral;
 			Double yPunto = null;
 			if (actor.derecha()) {
-				pc = actor.getSensor("inf-der");
+				pc = actor.getEsquina("inf-der");
 				lineaLateral = "izquierda";
 				yPunto = Math.floor(pc.y);
 			} else {
-				pc = actor.getSensor("inf-izq");
+				pc = actor.getEsquina("inf-izq");
 				lineaLateral = "derecha";
 				yPunto = Math.floor(pc.y) + 10.0f;
 			}
@@ -209,7 +208,7 @@ public class EscenarioBase extends Stage {
 					} else {
 						xLinea = linea.xEnY(pc) + 1;
 					}
-					actor.setSensorX("inf-izq", xLinea);
+					actor.setEsquinaX("inf-izq", xLinea);
 				}
 			}
 		}
@@ -219,10 +218,10 @@ public class EscenarioBase extends Stage {
 		float min = camara.getPosicionOrigen().x;
 		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
 		Heroe heroe = getHeroe();
-		if (heroe.getSensor("inf-izq").x < min)
-			heroe.setSensorX("inf-izq", min);
-		if (heroe.getSensor("inf-der").x > max)
-			heroe.setSensorX("inf-izq", (max - heroe.getHitbox()
+		if (heroe.getEsquina("inf-izq").x < min)
+			heroe.setEsquinaX("inf-izq", min);
+		if (heroe.getEsquina("inf-der").x > max)
+			heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox()
 					.getAncho()));
 	}
 
