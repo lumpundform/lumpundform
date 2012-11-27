@@ -32,7 +32,7 @@ public class EscenarioHelper {
 
 		mh = new MapaHelper(nombre);
 
-		ih = new InterfazHelper();
+		ih = new InterfazHelper(camara);
 
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
 				batch);

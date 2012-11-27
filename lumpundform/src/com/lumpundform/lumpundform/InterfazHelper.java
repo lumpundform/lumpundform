@@ -1,7 +1,6 @@
 package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -10,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 
 public class InterfazHelper {
 	private SpriteBatch sb;
+	private CamaraJuego camara;
 	private NinePatch lifebar;
 	private NinePatch manabar;
 	private NinePatch botonMenu;
@@ -21,8 +21,9 @@ public class InterfazHelper {
 	private float margen;
 	private int cantBotones;
 
-	public InterfazHelper() {
+	public InterfazHelper(CamaraJuego cam) {
 		sb = new SpriteBatch();
+		camara = cam;
 		lifebar = new NinePatch(new Texture(Gdx.files.internal("lifebar.png")),
 				1, 1, 1, 1);
 		manabar = new NinePatch(new Texture(Gdx.files.internal("manabar.png")),
@@ -50,7 +51,7 @@ public class InterfazHelper {
 	}
 
 	private void botonMenu() {
-		float x = (Gdx.graphics.getWidth() / 2) - (anchoBotones() / 2);
+		float x = (camara.viewportWidth / 2) - (anchoBotones() / 2);
 		float y = yBotones();
 		float anchoBotones = anchoBotones();
 		botonMenu.draw(sb, x, y, anchoBotones, altoBotones);
@@ -61,15 +62,13 @@ public class InterfazHelper {
 		float xMenu = x + (anchoBotones / 2) - (tb.width / 2);
 		float yMenu = y + (altoBotones / 2) + (tb.height / 2);
 
-		bmf.setColor(Color.BLUE);
-		U.l("color", bmf.getColor());
 		bmf.draw(sb, msg, xMenu, yMenu);
 	}
 
 	private void habilidades() {
 		float y = yBotones();
 		float x = margen;
-		float ancho = (Gdx.graphics.getWidth() - (2 * margen));
+		float ancho = (camara.viewportWidth - (2 * margen));
 		float anchoBotones = anchoBotones();
 
 		for (int i = 0; i < (cantBotones / 2); i++) {
@@ -82,7 +81,7 @@ public class InterfazHelper {
 	}
 
 	private void lifebar(Heroe heroe) {
-		float y = Gdx.graphics.getHeight() - margen - altoBotones - margen
+		float y = camara.viewportHeight - margen - altoBotones - margen
 				- altoBarras;
 		float x = margen;
 
@@ -92,9 +91,9 @@ public class InterfazHelper {
 	}
 
 	private void manabar(Heroe heroe) {
-		float y = Gdx.graphics.getHeight() - margen - altoBotones - margen
+		float y = camara.viewportHeight - margen - altoBotones - margen
 				- altoBarras;
-		float x = Gdx.graphics.getWidth() - anchoBarras - margen;
+		float x = camara.viewportWidth - anchoBarras - margen;
 
 		barBackground.draw(sb, x, y, anchoBarras, altoBarras);
 		manabar.draw(sb, x, y, anchoBarras, altoBarras * heroe.mana
@@ -102,12 +101,12 @@ public class InterfazHelper {
 	}
 
 	private float anchoBotones() {
-		return ((Gdx.graphics.getWidth() - (2 * margen)) - (margen * (cantBotones)))
+		return ((camara.viewportWidth - (2 * margen)) - (margen * (cantBotones)))
 				/ (cantBotones + 1);
 	}
 
 	private float yBotones() {
-		return Gdx.graphics.getHeight() - margen - altoBotones;
+		return camara.viewportHeight - margen - altoBotones;
 	}
 
 }
