@@ -4,20 +4,20 @@ import com.badlogic.gdx.math.Vector2;
 
 public class HabilidadDisparar extends Habilidad {
 
-	public HabilidadDisparar(String nombre) {
-		super(0.1f);
+	public HabilidadDisparar(Personaje actor, String nombre) {
+		super(actor, 0.1f);
 
 		mana = 5.0f;
 	}
 
 	@Override
-	public void ejecutar(Personaje actor, Vector2 pos) {
-		if (cooldown == 0.0f) {
-			actor.quitarMana(mana);
-			actor.getStage().addActor(new AtaqueMisil(actor));
+	public void ejecutar(Vector2 pos) {
+		super.ejecutar(pos);
 
-			cooldown = cooldownDefault;
-		}
+		actor.quitarMana(mana);
+		actor.getStage().addActor(new AtaqueMisil(actor));
+
+		cooldown = cooldownDefault;
 	}
 
 }

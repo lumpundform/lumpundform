@@ -51,6 +51,7 @@ public class EscenarioHelper {
 		}
 
 		ih.agregarElementos();
+		ih.agregarHabilidades(getHeroe());
 	}
 
 	/**

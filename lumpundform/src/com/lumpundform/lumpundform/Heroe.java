@@ -1,5 +1,8 @@
 package com.lumpundform.lumpundform;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
  * 
  */
 public class Heroe extends Personaje {
+	public List<Habilidad> habilidadesInterfaz;
 
 	/**
 	 * Carga datos específicos del {@link Heroe}, incluyendo su hitbox y su
@@ -45,9 +49,18 @@ public class Heroe extends Personaje {
 	}
 
 	private void cargarHabilidades() {
-		habilidades.put("teletransportar", new HabilidadTeletransportar(
+		habilidades.put("teletransportar", new HabilidadTeletransportar(this,
 				"teletransportar"));
-		habilidades.put("disparar", new HabilidadDisparar("disparar"));
+		habilidades.put("disparar", new HabilidadDisparar(this, "disparar"));
+
+		// TODO: cargar habilidadesInterfaz de los settings
+		habilidadesInterfaz = new ArrayList<Habilidad>();
+		try {
+			habilidadesInterfaz.add(getHabilidad("disparar"));
+			habilidadesInterfaz.add(getHabilidad("teletransportar"));
+		} catch (HabilidadInexistenteException e) {
+			U.err(e);
+		}
 	}
 
 	@Override
@@ -90,8 +103,18 @@ public class Heroe extends Personaje {
 		if (habilidades.containsKey(nombre)) {
 			Habilidad hab = habilidades.get(nombre);
 			if (hab.mana <= mana) {
-				hab.ejecutar(this, pos);
+				hab.ejecutar(pos);
 			}
+		} else {
+			throw new HabilidadInexistenteException("No existe la habilidad "
+					+ nombre + " para el actor " + name);
+		}
+	}
+
+	private Habilidad getHabilidad(String nombre)
+			throws HabilidadInexistenteException {
+		if (habilidades.containsKey(nombre)) {
+			return habilidades.get(nombre);
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad "
 					+ nombre + " para el actor " + name);

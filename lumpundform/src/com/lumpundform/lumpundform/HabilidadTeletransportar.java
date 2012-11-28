@@ -4,13 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 
 public class HabilidadTeletransportar extends Habilidad {
 
-	public HabilidadTeletransportar(String nombre) {
-		super(3.0f);
+	public HabilidadTeletransportar(Personaje actor, String nombre) {
+		super(actor, 3.0f);
 	}
 
 	@Override
-	public void ejecutar(Personaje actor, Vector2 pos) {
-		if (!actor.teletransportar && cooldown == 0.0f) {
+	public void ejecutar(Vector2 pos) {
+		super.ejecutar(pos);
+		if (!actor.teletransportar) {
 			Poligono piso = ((EscenarioBase) actor.getStage()).piso;
 			Vector2 posicionAnterior = actor.getPosicionCentro();
 

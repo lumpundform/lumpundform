@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -202,6 +203,8 @@ public abstract class ObjetoActor extends Actor {
 			flip = true;
 		}
 
+		Color color = batch.getColor();
+		batch.setColor(color.r, color.g, color.b, parentAlpha);
 		batch.draw(cuadroActual, x, y);
 
 		if (flip)
