@@ -37,6 +37,7 @@ public class EscenarioHelper {
 		InterfazHelper ih = new InterfazHelper(escenario);
 
 		escenario.cargarEventos(mh.eventosMapa(), camara);
+		escenario.cargarEscenas("escena101");
 
 		escenario.setCamera(camara);
 
@@ -75,6 +76,7 @@ public class EscenarioHelper {
 
 		// Eventos
 		escenario.revisarEventos(camara, delta);
+		escenario.revisarEscena(getHeroe());
 		escenario.destruirAtaques(camara);
 
 		// Actuar de todos los actores del escenario

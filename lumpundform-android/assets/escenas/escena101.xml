@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escenas>
+    <escena id="1">
+	    <accion id_accion="1">
+	        <evento actor="heroe" objetivo="ir_a" destino="600"/>
+	        <evento actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo!" />
+	    </accion>
+	    
+	    <accion id_accion="2">
+	        <evento actor="heroe" objetivo="ir_a" destino="50" />
+	    </accion>
+	</escena>
+</escenas>

@@ -78,7 +78,7 @@ public class Evento {
 				} else if (activado == true && duracion <= tiempoTranscurrido) {
 					terminado = true;
 				}
-			}
+			} 
 		} catch (ActorNoDefinidoException e) {
 			U.err(e);
 		}

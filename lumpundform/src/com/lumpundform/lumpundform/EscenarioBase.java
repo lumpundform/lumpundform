@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 /**
  * La base para los escenarios, extiende a {@link Stage} y agrega funciones y
@@ -25,6 +28,7 @@ public class EscenarioBase extends Stage {
 	public Poligono piso;
 
 	public Array<Evento> eventos;
+	public Array<Escena> escenas;
 
 	public EscenarioBase(float width, float height, boolean stretch,
 			SpriteBatch batch) {
@@ -237,6 +241,31 @@ public class EscenarioBase extends Stage {
 	public void revisarEventos(CamaraJuego camara, float delta) {
 		for (int i = 0; i < eventos.size; i++) {
 			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+		}
+	}
+	
+	
+	public void cargarEscenas(String nombreEscena) {
+		escenas = new Array<Escena>();
+		
+		XmlReader xmlF;
+		String xmlS;
+		Element xmlE;
+		
+		xmlF = new XmlReader();
+		xmlS = Gdx.files.internal("escenas/" + nombreEscena + ".xml").readString();
+		xmlE = xmlF.parse(xmlS);
+		
+		Array<Element> escena = xmlE.getChildrenByNameRecursively("escena");
+		
+		for (int i = 0; i < escena.size; i++) {
+			escenas.add(new Escena(escena.get(i)));
+		}
+	}
+	
+	public void revisarEscena(Heroe heroe) {
+		for (int i = 0; i < escenas.size; i++) {
+			escenas.get(i).ejecutarEscena(heroe);
 		}
 	}
 

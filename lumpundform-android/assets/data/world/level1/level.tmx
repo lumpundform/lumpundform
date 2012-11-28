@@ -23,6 +23,7 @@
     <property name="limite" value="5"/>
    </properties>
   </object>
+  <object name="escena101" id_escena="1" type="escena" x="1600" y="704"/>
   <object name="evento1" type="coliseo" x="448" y="640">
    <properties>
     <property name="rango" value="50.0"/>
