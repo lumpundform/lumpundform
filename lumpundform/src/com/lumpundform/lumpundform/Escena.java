@@ -1,9 +1,9 @@
 package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
-public class Escena extends XmlReader {
+public class Escena {
 	
 	private Element escena;
 	private int accionEjecutada = 0;
