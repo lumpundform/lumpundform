@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class EscenarioHelper {
 	private CamaraJuego camara;
 	private MapaHelper mh;
-	private InterfazHelper ih;
 	private EscenarioBase escenario;
 
 	/**
@@ -32,10 +31,10 @@ public class EscenarioHelper {
 
 		mh = new MapaHelper(nombre);
 
-		ih = new InterfazHelper(camara);
-
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
 				batch);
+
+		InterfazHelper ih = new InterfazHelper(escenario);
 
 		escenario.cargarEventos(mh.eventosMapa(), camara);
 
@@ -49,6 +48,8 @@ public class EscenarioHelper {
 		} catch (ActorNoDefinidoException e) {
 			U.err(e);
 		}
+
+		ih.agregarElementos();
 	}
 
 	/**
@@ -87,9 +88,6 @@ public class EscenarioHelper {
 
 		// Dibujar los actores del escenario
 		escenario.draw();
-
-		// Dibujar la interfaz
-		ih.dibujar(getHeroe());
 
 		// Mover la cámara
 		moverCamara(delta);
@@ -153,6 +151,10 @@ public class EscenarioHelper {
 	 */
 	public Poligono getPiso() {
 		return escenario.piso;
+	}
+
+	public EscenarioBase getEscenario() {
+		return escenario;
 	}
 
 }

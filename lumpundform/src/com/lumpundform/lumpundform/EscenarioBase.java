@@ -30,13 +30,13 @@ public class EscenarioBase extends Stage {
 			SpriteBatch batch) {
 		super(width, height, stretch, batch);
 	}
-
+	
 	/**
 	 * Dibuja las líneas de colisión del piso del escenario y de todos los
 	 * {@link ObjetoActor}es que se encuentran en el escenario
 	 */
 	public void dibujarLineasColision(CamaraJuego camara) {
-		List<Actor> actores = getActors();
+		List<Actor> actores = getActores(ObjetoActor.class);
 
 		for (int i = 0; i < actores.size(); i++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);

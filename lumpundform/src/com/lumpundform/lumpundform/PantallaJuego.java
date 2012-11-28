@@ -33,7 +33,7 @@ public class PantallaJuego implements Screen {
 
 		Gdx.input.setInputProcessor(new InputMultiplexer(new GestureDetector(
 				new ProcesadorEntradaJuego(this)), new ProcesadorEntradaJuego(
-				this)));
+				this), escenario.getEscenario()));
 	}
 
 	@Override
