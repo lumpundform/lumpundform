@@ -37,12 +37,12 @@ import com.lumpundform.utilerias.U;
  * 
  */
 public class EscenarioBase extends Stage {
-	public Poligono piso;
+	private Poligono piso;
 
-	public Array<Evento> eventos;
-	public Array<Escena> escenas;
+	private Array<Evento> eventos;
+	private Array<Escena> escenas;
 
-	public EscenarioBase(float width, float height, boolean stretch,
+	EscenarioBase(float width, float height, boolean stretch,
 			SpriteBatch batch) {
 		super(width, height, stretch, batch);
 	}
@@ -51,7 +51,7 @@ public class EscenarioBase extends Stage {
 	 * Dibuja las líneas de colisión del piso del escenario y de todos los
 	 * {@link ObjetoActor}es que se encuentran en el escenario
 	 */
-	public void dibujarLineasColision(CamaraJuego camara) {
+	void dibujarLineasColision(CamaraJuego camara) {
 		List<Actor> actores = getActores(ObjetoActor.class);
 
 		for (int i = 0; i < actores.size(); i++) {
@@ -59,29 +59,29 @@ public class EscenarioBase extends Stage {
 			U.dibujarLineasColision(actor.getHitbox(), camara);
 		}
 
-		U.dibujarLineasColision(piso, camara);
+		U.dibujarLineasColision(getPiso(), camara);
 	}
 
 	/**
 	 * Cambia el estado del {@link Heroe} si este está colisionando con algún
 	 * otro {@link ObjetoActor} del escenario
 	 */
-	public void colisionActores() {
+	void colisionActores() {
 		Heroe heroe = (Heroe) findActor("heroe");
-		heroe.colisionActores = false;
+		heroe.setColisionActores(false);
 		List<Actor> actores = getPersonajes();
 
 		for (Actor a : actores) {
 			ObjetoActor actor = (ObjetoActor) a;
 			if (actor.name != "heroe"
 					&& heroe.getHitbox().estaColisionando(actor.getHitbox())) {
-				heroe.colisionActores = true;
+				heroe.setColisionActores(true);
 				break;
 			}
 		}
 	}
 
-	public void colisionAtaques() {
+	void colisionAtaques() {
 		List<Actor> ataques = getAtaques();
 		List<Actor> personajes = getPersonajes();
 
@@ -92,8 +92,8 @@ public class EscenarioBase extends Stage {
 				if (!personaje.name.equals("heroe")
 						&& personaje.getHitbox().estaColisionando(
 								ataque.getHitbox())) {
-					if (ataque.haceDano) {
-						personaje.quitarVida(ataque.dano);
+					if (ataque.isHaceDano()) {
+						personaje.quitarVida(ataque.getDano());
 					}
 					ataque.destruir();
 				}
@@ -104,7 +104,7 @@ public class EscenarioBase extends Stage {
 	/**
 	 * Detecta la colisión de todos los {@link ObjetoActor}es con el piso
 	 */
-	public void colisionPiso() {
+	void colisionPiso() {
 		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
 
 		for (Actor a : getPersonajes()) {
@@ -133,15 +133,15 @@ public class EscenarioBase extends Stage {
 			Vector2 p = null;
 			Float altura = null;
 			String direccionDiagonal = null;
-			if (!piso.estaColisionando(actor.getEsquina("inf-izq"))
-					&& !piso.estaColisionando(actor.getEsquina("inf-der"))) {
+			if (!getPiso().estaColisionando(actor.getEsquina("inf-izq"))
+					&& !getPiso().estaColisionando(actor.getEsquina("inf-der"))) {
 				caidaLibre.put(actor.name, true);
 
 				Vector2 puntoTemp = actor.getEsquina(puntoColisionTemp);
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
 				altura = actor.y;
 				direccionDiagonal = direccionDiagonalDer;
-			} else if (piso.estaColisionando(actor.getEsquina(puntoColision))) {
+			} else if (getPiso().estaColisionando(actor.getEsquina(puntoColision))) {
 				p = actor.getEsquina(puntoColision);
 				altura = actor.y + 10;
 				direccionDiagonal = direccionDiagonalIzq;
@@ -150,7 +150,7 @@ public class EscenarioBase extends Stage {
 			// Saca la línea en la cual se va a posicionar el actor si es
 			// necesario
 			if (p != null) {
-				Linea l = piso.linea("arriba", p);
+				Linea l = getPiso().linea("arriba", p);
 
 				// Posiciona al actor sobre la línea si la linea tiene una
 				// pendiente menor a 1
@@ -168,12 +168,12 @@ public class EscenarioBase extends Stage {
 			// Cambia el estado colisión del actor, asi como teletransportar del
 			// héroe
 			if (caidaLibre.get(actor.name)) {
-				actor.colisionPiso = false;
+				actor.setColisionPiso(false);
 				actor.y -= 5;
 			} else {
-				actor.colisionPiso = true;
+				actor.setColisionPiso(true);
 				if (actor.name == "heroe") {
-					actor.teletransportar = false;
+					actor.setTeletransportar(false);
 				}
 			}
 		}
@@ -186,7 +186,7 @@ public class EscenarioBase extends Stage {
 	 * @param width
 	 *            El ancho del {@link EscenarioBase}
 	 */
-	public void acomodarActores(float width) {
+	void acomodarActores(float width) {
 		List<Actor> actores = getPersonajes();
 
 		for (int i = 0; i < actores.size(); i++) {
@@ -211,11 +211,11 @@ public class EscenarioBase extends Stage {
 				yPunto = Math.floor(pc.y) + 10.0f;
 			}
 
-			if (piso.estaColisionando(pc)
-					&& piso.linea("arriba", pc).esHorizontal()
-					&& piso.linea(lineaLateral, pc).esVertical()
-					&& yPunto < Math.floor(piso.linea("arriba", pc).yEnX(pc))) {
-				Linea linea = piso.linea(lineaLateral, pc);
+			if (getPiso().estaColisionando(pc)
+					&& getPiso().linea("arriba", pc).esHorizontal()
+					&& getPiso().linea(lineaLateral, pc).esVertical()
+					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(pc))) {
+				Linea linea = getPiso().linea(lineaLateral, pc);
 				if (linea != null) {
 					Float xLinea = null;
 					if (lineaLateral == "izquierda") {
@@ -230,7 +230,7 @@ public class EscenarioBase extends Stage {
 		}
 	}
 	
-	public void acomodarHeroe(CamaraJuego camara) {
+	void acomodarHeroe(CamaraJuego camara) {
 		float min = camara.getPosicionOrigen().x;
 		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
 		Heroe heroe = getHeroe();
@@ -241,7 +241,7 @@ public class EscenarioBase extends Stage {
 					.getAncho()));
 	}
 
-	public void cargarEventos(TiledObjectGroup tog, CamaraJuego camara) {
+	void cargarEventos(TiledObjectGroup tog, CamaraJuego camara) {
 		eventos = new Array<Evento>();
 		for (int i = 0; i < tog.objects.size(); i++) {
 			TiledObject to = tog.objects.get(i);
@@ -250,14 +250,14 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	public void revisarEventos(CamaraJuego camara, float delta) {
+	void revisarEventos(CamaraJuego camara, float delta) {
 		for (int i = 0; i < eventos.size; i++) {
 			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
 		}
 	}
 	
 	
-	public void cargarEscenas(String nombreEscena) {
+	void cargarEscenas(String nombreEscena) {
 		escenas = new Array<Escena>();
 		
 		XmlReader xmlF;
@@ -275,13 +275,13 @@ public class EscenarioBase extends Stage {
 		}
 	}
 	
-	public void revisarEscena(Heroe heroe) {
+	void revisarEscena(Heroe heroe) {
 		for (int i = 0; i < escenas.size; i++) {
 			escenas.get(i).ejecutarEscena(heroe);
 		}
 	}
 
-	public void agregarActor(String tipo, Vector2 posicion)
+	void agregarActor(String tipo, Vector2 posicion)
 			throws ActorNoDefinidoException {
 		agregarActor(tipo, posicion, "");
 	}
@@ -297,7 +297,7 @@ public class EscenarioBase extends Stage {
 			throw new ActorNoDefinidoException("El Actor " + tipo
 					+ " no esta definido");
 		}
-		actor.perteneceAEvento = evento;
+		actor.setPerteneceAEvento(evento);
 		addActor(actor);
 	}
 
@@ -310,7 +310,7 @@ public class EscenarioBase extends Stage {
 		return (Heroe) findActor("heroe");
 	}
 
-	public List<Actor> getPersonajes() {
+	private List<Actor> getPersonajes() {
 		return getActores(Personaje.class);
 	}
 
@@ -330,7 +330,7 @@ public class EscenarioBase extends Stage {
 		return actores;
 	}
 
-	public void destruirAtaques(CamaraJuego camara) {
+	void destruirAtaques(CamaraJuego camara) {
 		for (int i = 0; i < getAtaques().size(); i++) {
 			Actor ataque = getAtaques().get(i);
 			if ((ataque.x + ataque.width) < camara.getPosicionOrigen().x
@@ -343,10 +343,18 @@ public class EscenarioBase extends Stage {
 	public Evento getEvento(String nombreEvento) {
 		Evento evento = null;
 		for (int i = 0; i < eventos.size; i++) {
-			if (eventos.get(i).nombre.equals(nombreEvento)) {
+			if (eventos.get(i).getNombre().equals(nombreEvento)) {
 				evento = eventos.get(i);
 			}
 		}
 		return evento;
+	}
+
+	public Poligono getPiso() {
+		return piso;
+	}
+
+	public void setPiso(Poligono piso) {
+		this.piso = piso;
 	}
 }

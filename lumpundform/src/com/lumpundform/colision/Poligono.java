@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  * 
  */
 public class Poligono {
-	protected Vector2[] vertices;
+	private Vector2[] vertices;
 
 	public Poligono(Vector2[] vertices) {
 		this.vertices = vertices;

@@ -9,16 +9,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.utilerias.Fuentes;
 
-public class BotonMenu extends BotonSuperior {
+class BotonMenu extends BotonSuperior {
 	BitmapFont bmf = Fuentes.regular();
 	
-	public BotonMenu(EscenarioBase escenario) {
+	BotonMenu(EscenarioBase escenario) {
 		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1,
 				1, 1, 1), escenario);
 		width = anchoBoton();
 		height = UI.altoBoton;
-		xBase = (camara.viewportWidth / 2) - (anchoBoton() / 2);
-		yBase = yBoton();
+		setxBase((getCamara().viewportWidth / 2) - (anchoBoton() / 2));
+		setyBase(yBoton());
 	}
 	
 	@Override

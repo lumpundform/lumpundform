@@ -11,20 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Rectangulo extends Poligono {
 	private float alto;
 	private float ancho;
-	public boolean centrado;
-
-	/**
-	 * Manda llamar {@link this(float, float, boolean)} con valor predeterminado
-	 * de centrado de false
-	 * 
-	 * @param alto
-	 *            El alto del {@link Rectangulo}
-	 * @param ancho
-	 *            El ancho del {@link Rectangulo}
-	 */
-	public Rectangulo(float alto, float ancho) {
-		this(alto, ancho, false);
-	}
+	private boolean centrado;
 
 	/**
 	 * Inicializa un {@link Rectangulo} del alto y ancho dados
@@ -37,11 +24,11 @@ public class Rectangulo extends Poligono {
 	 *            Si el punto de referencia debe ser el centro del
 	 *            {@link Rectangulo}
 	 */
-	public Rectangulo(float alto, float ancho, boolean centrado) {
+	public Rectangulo(float alto, float ancho) {
 		super(new Vector2[4]);
 		this.alto = alto;
 		this.ancho = ancho;
-		this.centrado = centrado;
+		this.setCentrado(true);
 	}
 
 	/**
@@ -68,7 +55,7 @@ public class Rectangulo extends Poligono {
 	 * @return El {@link Rectangulo} en la posición dada
 	 */
 	public Rectangulo posicionar(float x, float y) {
-		if (centrado) {
+		if (isCentrado()) {
 			getVertices()[0] = new Vector2(x - (ancho / 2), y - (alto / 2));
 			getVertices()[1] = new Vector2(x - (ancho / 2), y + (alto / 2));
 			getVertices()[2] = new Vector2(x + (ancho / 2), y + (alto / 2));
@@ -93,7 +80,7 @@ public class Rectangulo extends Poligono {
 		float xTemp = getVertices()[0].x;
 		float yTemp = getVertices()[0].y;
 		int indicePunto = 0;
-		for (int i = 1; i < vertices.length; i++) {
+		for (int i = 1; i < getVertices().length; i++) {
 			if (nombre.equals("inf-izq")) {
 				if (getVertices()[i].x <= xTemp && getVertices()[i].y <= yTemp) {
 					xTemp = getVertices()[i].x;
@@ -131,5 +118,13 @@ public class Rectangulo extends Poligono {
 	public Vector2 getCentro() {
 		return new Vector2((punto("inf-izq").x + punto("inf-der").x) / 2,
 				(punto("inf-izq").y + punto("sup-izq").y) / 2);
+	}
+
+	public boolean isCentrado() {
+		return centrado;
+	}
+
+	public void setCentrado(boolean centrado) {
+		this.centrado = centrado;
 	}
 }

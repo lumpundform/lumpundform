@@ -70,7 +70,7 @@ public class D {
 	 * @throws DatoInexistenteException
 	 */
 	@SuppressWarnings("unchecked")
-	static public Map<String, String> s(String nombre)
+	static private Map<String, String> s(String nombre)
 			throws DatoInexistenteException {
 		if (datosString().containsKey(nombre)) {
 			return datosString().get(nombre);
@@ -90,7 +90,7 @@ public class D {
 	 *         objeto
 	 */
 	@SuppressWarnings("unchecked")
-	static public Map<String, Integer> i(String nombre) {
+	static private Map<String, Integer> i(String nombre) {
 		return datosInteger().get(nombre);
 	}
 

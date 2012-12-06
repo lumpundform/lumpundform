@@ -23,7 +23,7 @@ import com.lumpundform.utilerias.U;
  * @author Sergio
  * 
  */
-public class MapaHelper {
+class MapaHelper {
 	TiledMap mapa;
 	TileAtlas atlas;
 	TileMapRenderer renderer;
@@ -36,7 +36,7 @@ public class MapaHelper {
 	 * 
 	 * @param nombre
 	 */
-	public MapaHelper(String nombre) {
+	MapaHelper(String nombre) {
 		try {
 			mapa = TiledLoader.createMap(Gdx.files.internal(D.gs(nombre,
 					"archivo_tmx")));
@@ -53,7 +53,7 @@ public class MapaHelper {
 	/**
 	 * Dibuja el mapa
 	 */
-	public void renderMapa(CamaraJuego camara) {
+	void renderMapa(CamaraJuego camara) {
 		renderer.render(camara);
 	}
 
@@ -63,7 +63,7 @@ public class MapaHelper {
 	 * @param camara
 	 *            La {@link CamaraJuego} con la que se va a dibujar el fondo
 	 */
-	public void renderFondo(Camera camara) {
+	void renderFondo(Camera camara) {
 		float fondo_x = (camara.viewportWidth / 2) - camara.position.x;
 		sb.begin();
 		sb.disableBlending();
@@ -77,7 +77,7 @@ public class MapaHelper {
 	 * 
 	 * @return El ancho
 	 */
-	public int getWidth() {
+	int getWidth() {
 		return mapa.width * mapa.tileWidth;
 	}
 
@@ -86,7 +86,7 @@ public class MapaHelper {
 	 * 
 	 * @return El alto
 	 */
-	public int getHeight() {
+	int getHeight() {
 		return mapa.height * mapa.tileHeight;
 	}
 
@@ -98,12 +98,12 @@ public class MapaHelper {
 	 *            punto
 	 * @return El punto de origen
 	 */
-	public Vector2 getOrigenHeroe(CamaraJuego camara) {
+	Vector2 getOrigenHeroe(CamaraJuego camara) {
 		TiledObject objeto = tiledObject("origenes", "heroe");
 		return U.voltearCoordenadas(camara, objeto.x, objeto.y);
 	}
 
-	public TiledObjectGroup eventosMapa() {
+	TiledObjectGroup eventosMapa() {
 		TiledObjectGroup eventos = tiledObjectGroup("eventos");
 		return eventos;
 	}
@@ -118,7 +118,7 @@ public class MapaHelper {
 	 *            El nombre del objeto del cuál se quieren saber sus vértices
 	 * @return Un arreglo de todos los vertices del objeto
 	 */
-	public Vector2[] getVerticesPlataforma(CamaraJuego camara,
+	Vector2[] getVerticesPlataforma(CamaraJuego camara,
 			String nombreObjeto) {
 		TiledObject objeto = tiledObject("plataformas", nombreObjeto);
 		Vector2 puntoInicialObjeto = new Vector2(objeto.x, objeto.y);

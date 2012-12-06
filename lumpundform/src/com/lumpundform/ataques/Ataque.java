@@ -6,16 +6,16 @@ import com.lumpundform.actores.Personaje;
 
 public abstract class Ataque extends ObjetoActor {
 	// Valores estáticos de los personajes
-	public static enum Estado {
+	protected static enum Estado {
 		NORMAL, EXPLOTANDO
 	}
 	
 	// Estado
-	protected Estado estado;
+	private Estado estado;
 	
-	protected boolean destruir = false;
-	public float dano;
-	public boolean haceDano = true;
+	private boolean destruir = false;
+	private float dano;
+	private boolean haceDano = true;
 
 	protected Ataque(String nombre, Personaje personaje) {
 		super(nombre);
@@ -28,7 +28,7 @@ public abstract class Ataque extends ObjetoActor {
 		// Revisar de cual animación se va a agarrar el cuadro actual
 		String nombreAnimacion;
 		boolean loop;
-		switch (estado) {
+		switch (getEstado()) {
 		case NORMAL:
 		default:
 			nombreAnimacion = "normal";
@@ -37,23 +37,55 @@ public abstract class Ataque extends ObjetoActor {
 		case EXPLOTANDO:
 			nombreAnimacion = "explosion";
 			loop = false;
-			if (tiempoTranscurrido > animacion.get(nombreAnimacion).frameDuration * 10) {
+			if (getTiempoTranscurrido() > getAnimacion().get(nombreAnimacion).frameDuration * 10) {
 				remove();
 			}
 			break;
 		}
 
-		if (!animacion.containsKey(nombreAnimacion)) {
+		if (!getAnimacion().containsKey(nombreAnimacion)) {
 			nombreAnimacion = "normal";
 		}
 
-		return animacion.get(nombreAnimacion).getKeyFrame(tiempoTranscurrido,
+		return getAnimacion().get(nombreAnimacion).getKeyFrame(getTiempoTranscurrido(),
 				loop);
 	}
 
 	public void destruir() {
-		haceDano = false;
-		destruir = true;
+		setHaceDano(false);
+		setDestruir(true);
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public float getDano() {
+		return dano;
+	}
+
+	public void setDano(float dano) {
+		this.dano = dano;
+	}
+
+	public boolean isDestruir() {
+		return destruir;
+	}
+
+	public void setDestruir(boolean destruir) {
+		this.destruir = destruir;
+	}
+
+	public boolean isHaceDano() {
+		return haceDano;
+	}
+
+	public void setHaceDano(boolean haceDano) {
+		this.haceDano = haceDano;
 	}
 
 }

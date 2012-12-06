@@ -17,20 +17,20 @@ public class HabilidadTeletransportar extends Habilidad {
 	public void ejecutar(Vector2 pos) {
 		if (pos == null) return;
 		super.ejecutar(pos);
-		if (!actor.teletransportar) {
-			Poligono piso = ((EscenarioBase) actor.getStage()).piso;
-			Vector2 posicionAnterior = actor.getPosicionCentro();
+		if (!getActor().isTeletransportar()) {
+			Poligono piso = ((EscenarioBase) getActor().getStage()).getPiso();
+			Vector2 posicionAnterior = getActor().getPosicionCentro();
 
-			actor.teletransportar = true;
-			actor.direccionX = posicionAnterior.x >= pos.x ? ObjetoActor.Direccion.IZQUIERDA
-					: ObjetoActor.Direccion.DERECHA;
-			actor.setPosicionCentro(pos);
+			getActor().setTeletransportar(true);
+			getActor().setDireccionX(posicionAnterior.x >= pos.x ? ObjetoActor.Direccion.IZQUIERDA
+					: ObjetoActor.Direccion.DERECHA);
+			getActor().setPosicionCentro(pos);
 
-			if (piso.estaColisionando(actor.getHitbox())) {
-				Vector2 infIzq = actor.getEsquina("inf-izq");
-				Vector2 infDer = actor.getEsquina("inf-der");
-				Vector2 supIzq = actor.getEsquina("sup-izq");
-				Vector2 supDer = actor.getEsquina("sup-der");
+			if (piso.estaColisionando(getActor().getHitbox())) {
+				Vector2 infIzq = getActor().getEsquina("inf-izq");
+				Vector2 infDer = getActor().getEsquina("inf-der");
+				Vector2 supIzq = getActor().getEsquina("sup-izq");
+				Vector2 supDer = getActor().getEsquina("sup-der");
 				Linea lii = piso.estaColisionando(infIzq) ? piso.linea(
 						"arriba", infIzq) : null;
 				Linea lid = piso.estaColisionando(infDer) ? piso.linea(
@@ -89,28 +89,28 @@ public class HabilidadTeletransportar extends Habilidad {
 					float yFinalArriba, yFinalAbajo, yFinal;
 					if (yArriba != null && yAbajo != null) {
 						yFinalArriba = yArriba + infIzq.y;
-						yFinalAbajo = yAbajo - supIzq.y - actor.height;
-						if (yArriba < yAbajo || yFinalAbajo < actor.height) {
+						yFinalAbajo = yAbajo - supIzq.y - getActor().height;
+						if (yArriba < yAbajo || yFinalAbajo < getActor().height) {
 							yFinal = yFinalArriba;
 						} else {
 							yFinal = yFinalAbajo;
 						}
 					} else if (yArriba != null) {
 						yFinal = yArriba + infIzq.y;
-					} else if ((yAbajo - supIzq.y - actor.height) < actor.height) {
+					} else if ((yAbajo - supIzq.y - getActor().height) < getActor().height) {
 						float yFinalIzq = piso.linea("arriba", supIzq).yEnX(
 								supIzq);
 						float yFinalDer = piso.linea("arriba", supDer).yEnX(
 								supDer);
 						yFinal = yFinalIzq > yFinalDer ? yFinalIzq : yFinalDer;
 					} else {
-						yFinal = yAbajo - supIzq.y - actor.height;
+						yFinal = yAbajo - supIzq.y - getActor().height;
 					}
-					actor.setEsquinaY("inf-izq", yFinal);
+					getActor().setEsquinaY("inf-izq", yFinal);
 				}
 			}
 
-			cooldown = cooldownDefault;
+			setCooldown(getCooldownDefault());
 		}
 	}
 

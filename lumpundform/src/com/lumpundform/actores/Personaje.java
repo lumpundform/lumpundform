@@ -18,27 +18,27 @@ import com.lumpundform.habilidades.Habilidad;
  */
 public abstract class Personaje extends ObjetoActor {
 	// Valores estáticos de los personajes
-	public static enum Estado {
+	protected static enum Estado {
 		DETENIDO, MOVIMIENTO, CAYENDO, COLISIONANDO;
 	}
 
 	// Estado
-	protected Estado estado;
+	private Estado estado;
 
 	// Habilidades
-	protected Map<String, Habilidad> habilidades;
+	private Map<String, Habilidad> habilidades;
 
 	// Vida y Mana
-	public float vida;
-	public float mana;
-	public float vidaMax;
-	public float manaMax;
-	protected float manaPorSegundo;
+	private float vida;
+	private float mana;
+	private float vidaMax;
+	private float manaMax;
+	private float manaPorSegundo;
 
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
 
-		habilidades = new HashMap<String, Habilidad>();
+		setHabilidades(new HashMap<String, Habilidad>());
 
 		this.x = puntoOrigen.x;
 		this.y = puntoOrigen.y;
@@ -47,21 +47,21 @@ public abstract class Personaje extends ObjetoActor {
 	@Override
 	protected void moverDerecha(float delta) {
 		super.moverDerecha(delta);
-		if (estado != Estado.CAYENDO)
-			estado = Estado.MOVIMIENTO;
+		if (getEstado() != Estado.CAYENDO)
+			setEstado(Estado.MOVIMIENTO);
 	}
 
 	@Override
 	protected void moverIzquierda(float delta) {
 		super.moverIzquierda(delta);
-		if (estado != Estado.CAYENDO)
-			estado = Estado.MOVIMIENTO;
+		if (getEstado() != Estado.CAYENDO)
+			setEstado(Estado.MOVIMIENTO);
 	}
 
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		estado = colisionPiso ? Estado.DETENIDO : Estado.CAYENDO;
+		setEstado(isColisionPiso() ? Estado.DETENIDO : Estado.CAYENDO);
 		reducirCooldownHabilidades(delta);
 		aumentarMana(delta);
 	}
@@ -70,7 +70,7 @@ public abstract class Personaje extends ObjetoActor {
 	protected TextureRegion getCuadroActual() {
 		// Revisar de cual animación se va a agarrar el cuadro actual
 		String nombreAnimacion;
-		switch (estado) {
+		switch (getEstado()) {
 		case DETENIDO:
 		default:
 			nombreAnimacion = "detenido";
@@ -82,40 +82,40 @@ public abstract class Personaje extends ObjetoActor {
 			nombreAnimacion = "cayendo";
 			break;
 		}
-		if (colisionActores) {
+		if (isColisionActores()) {
 			nombreAnimacion = "colisionando";
 		}
 
-		if (!animacion.containsKey(nombreAnimacion)) {
+		if (!getAnimacion().containsKey(nombreAnimacion)) {
 			nombreAnimacion = "detenido";
 		}
 
-		return animacion.get(nombreAnimacion).getKeyFrame(tiempoTranscurrido,
+		return getAnimacion().get(nombreAnimacion).getKeyFrame(getTiempoTranscurrido(),
 				true);
 	}
 
 	private void reducirCooldownHabilidades(float delta) {
-		Iterator<Habilidad> i = habilidades.values().iterator();
+		Iterator<Habilidad> i = getHabilidades().values().iterator();
 		while (i.hasNext()) {
 			i.next().reducirCooldown(delta);
 		}
 	}
 	
 	private void aumentarMana(float delta) {
-		if (manaPorSegundo > 0) {
-			mana += (manaPorSegundo * delta);
+		if (getManaPorSegundo() > 0) {
+			setMana(getMana() + (getManaPorSegundo() * delta));
 		}
 		
-		if (mana >= manaMax) {
-			mana = manaMax;
+		if (getMana() >= getManaMax()) {
+			setMana(getManaMax());
 		}
 	}
 
 	public void quitarVida(float dano) {
 		Evento evento = ((EscenarioBase) getStage())
-				.getEvento(perteneceAEvento);
-		vida -= dano;
-		if (vida <= 0.0f) {
+				.getEvento(getPerteneceAEvento());
+		setVida(getVida() - dano);
+		if (getVida() <= 0.0f) {
 			if (evento != null) {
 				evento.matarPersonaje();
 			}
@@ -124,9 +124,65 @@ public abstract class Personaje extends ObjetoActor {
 	}
 	
 	public void quitarMana(float mana) {
-		this.mana -= mana;
-		if (this.mana <= 0.0f) {
-			this.mana = 0.0f;
+		this.setMana(this.getMana() - mana);
+		if (this.getMana() <= 0.0f) {
+			this.setMana(0.0f);
 		}
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public float getVida() {
+		return vida;
+	}
+
+	public void setVida(float vida) {
+		this.vida = vida;
+	}
+
+	public float getVidaMax() {
+		return vidaMax;
+	}
+
+	public void setVidaMax(float vidaMax) {
+		this.vidaMax = vidaMax;
+	}
+
+	public float getMana() {
+		return mana;
+	}
+
+	public void setMana(float mana) {
+		this.mana = mana;
+	}
+
+	public float getManaMax() {
+		return manaMax;
+	}
+
+	public void setManaMax(float manaMax) {
+		this.manaMax = manaMax;
+	}
+
+	public float getManaPorSegundo() {
+		return manaPorSegundo;
+	}
+
+	public void setManaPorSegundo(float manaPorSegundo) {
+		this.manaPorSegundo = manaPorSegundo;
+	}
+
+	public Map<String, Habilidad> getHabilidades() {
+		return habilidades;
+	}
+
+	public void setHabilidades(Map<String, Habilidad> habilidades) {
+		this.habilidades = habilidades;
 	}
 }

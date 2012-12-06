@@ -20,7 +20,7 @@ import com.lumpundform.utilerias.U;
  * 
  */
 public class Heroe extends Personaje {
-	public List<Habilidad> habilidadesInterfaz;
+	private List<Habilidad> habilidadesInterfaz;
 
 	/**
 	 * Carga datos específicos del {@link Heroe}, incluyendo su hitbox y su
@@ -37,33 +37,33 @@ public class Heroe extends Personaje {
 		width = 125.0f;
 		height = 150.0f;
 
-		hitbox = new Rectangulo(height, width / 3, true);
+		setHitbox(new Rectangulo(height, width / 3));
 
-		estado = Estado.DETENIDO;
-		destinoX = x;
-		direccionX = Direccion.DERECHA;
-		velocidad = 500;
+		setEstado(Estado.DETENIDO);
+		setDestinoX(x);
+		setDireccionX(Direccion.DERECHA);
+		setVelocidad(500);
 
-		vida = 100.0f;
-		vidaMax = 100.0f;
-		mana = 100.0f;
-		manaMax = 100.0f;
-		manaPorSegundo = 5.0f;
+		setVida(100.0f);
+		setVidaMax(100.0f);
+		setMana(100.0f);
+		setManaMax(100.0f);
+		setManaPorSegundo(5.0f);
 
 		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
 		cargarHabilidades();
 	}
 
 	private void cargarHabilidades() {
-		habilidades.put("teletransportar", new HabilidadTeletransportar(this,
+		getHabilidades().put("teletransportar", new HabilidadTeletransportar(this,
 				"teletransportar"));
-		habilidades.put("disparar", new HabilidadDisparar(this, "disparar"));
+		getHabilidades().put("disparar", new HabilidadDisparar(this, "disparar"));
 
 		// TODO: cargar habilidadesInterfaz de los settings
-		habilidadesInterfaz = new ArrayList<Habilidad>();
+		setHabilidadesInterfaz(new ArrayList<Habilidad>());
 		try {
-			habilidadesInterfaz.add(getHabilidad("disparar"));
-			habilidadesInterfaz.add(getHabilidad("teletransportar"));
+			getHabilidadesInterfaz().add(getHabilidad("disparar"));
+			getHabilidadesInterfaz().add(getHabilidad("teletransportar"));
 		} catch (HabilidadInexistenteException e) {
 			U.err(e);
 		}
@@ -83,18 +83,18 @@ public class Heroe extends Personaje {
 	 *            El delta de {@link Screen#render()}
 	 */
 	private void moverHeroe(float delta) {
-		if (!teletransportar
+		if (!isTeletransportar()
 				&& (Gdx.input.isKeyPressed(Keys.A) || Gdx.input
 						.isKeyPressed(Keys.D))) {
 			float d = delta;
-			if (!colisionPiso) {
+			if (!isColisionPiso()) {
 				d = delta * 0.75f;
 			}
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				direccionX = Direccion.IZQUIERDA;
+				setDireccionX(Direccion.IZQUIERDA);
 				moverIzquierda(d);
 			} else if (Gdx.input.isKeyPressed(Keys.D)) {
-				direccionX = Direccion.DERECHA;
+				setDireccionX(Direccion.DERECHA);
 				moverDerecha(d);
 			}
 		}
@@ -106,8 +106,8 @@ public class Heroe extends Personaje {
 
 	public void habilidad(String nombre, Vector2 pos)
 			throws HabilidadInexistenteException {
-		if (habilidades.containsKey(nombre)) {
-			habilidades.get(nombre).ejecutar(pos);
+		if (getHabilidades().containsKey(nombre)) {
+			getHabilidades().get(nombre).ejecutar(pos);
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad "
 					+ nombre + " para el actor " + name);
@@ -116,11 +116,19 @@ public class Heroe extends Personaje {
 
 	private Habilidad getHabilidad(String nombre)
 			throws HabilidadInexistenteException {
-		if (habilidades.containsKey(nombre)) {
-			return habilidades.get(nombre);
+		if (getHabilidades().containsKey(nombre)) {
+			return getHabilidades().get(nombre);
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad "
 					+ nombre + " para el actor " + name);
 		}
+	}
+
+	public List<Habilidad> getHabilidadesInterfaz() {
+		return habilidadesInterfaz;
+	}
+
+	public void setHabilidadesInterfaz(List<Habilidad> habilidadesInterfaz) {
+		this.habilidadesInterfaz = habilidadesInterfaz;
 	}
 }

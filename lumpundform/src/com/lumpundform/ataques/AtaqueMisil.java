@@ -11,13 +11,13 @@ public class AtaqueMisil extends Ataque {
 		width = 100.0f;
 		height = 100.0f;
 
-		hitbox = new Rectangulo(height * 0.2f, width * 0.55f, true);
+		setHitbox(new Rectangulo(height * 0.2f, width * 0.55f));
 
-		estado = Estado.NORMAL;
-		velocidad = 800.0f;
-		direccionX = personaje.direccionX;
+		setEstado(Estado.NORMAL);
+		setVelocidad(800.0f);
+		setDireccionX(personaje.getDireccionX());
 
-		dano = 30.0f;
+		setDano(30.0f);
 
 		y = personaje.y + (personaje.getHitbox().getAlto() / 2) - 33;
 
@@ -36,7 +36,7 @@ public class AtaqueMisil extends Ataque {
 	public void act(float delta) {
 		super.act(delta);
 
-		if (estado == Estado.NORMAL) {
+		if (getEstado() == Estado.NORMAL) {
 			if (derecha()) {
 				moverDerecha(delta);
 			} else {
@@ -47,10 +47,10 @@ public class AtaqueMisil extends Ataque {
 
 	@Override
 	public void destruir() {
-		if (!destruir) {
+		if (!isDestruir()) {
 			super.destruir();
-			tiempoTranscurrido = 0.0f;
-			estado = Estado.EXPLOTANDO;
+			setTiempoTranscurrido(0.0f);
+			setEstado(Estado.EXPLOTANDO);
 		}
 	}
 

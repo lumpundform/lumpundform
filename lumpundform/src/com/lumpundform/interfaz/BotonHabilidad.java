@@ -12,10 +12,10 @@ import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.utilerias.U;
 
-public class BotonHabilidad extends BotonSuperior {
+class BotonHabilidad extends BotonSuperior {
 	private Habilidad habilidad;
 
-	public BotonHabilidad(EscenarioBase escenario, Habilidad habilidad,
+	BotonHabilidad(EscenarioBase escenario, Habilidad habilidad,
 			int posicion) {
 		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1,
 				1, 1, 1), escenario);
@@ -24,8 +24,8 @@ public class BotonHabilidad extends BotonSuperior {
 
 		this.width = anchoBoton();
 		this.height = UI.altoBoton;
-		this.xBase = xHabilidad(posicion);
-		this.yBase = yBoton();
+		setxBase(xHabilidad(posicion));
+		setyBase(yBoton());
 
 		setClickListener(new ClickListener() {
 			@Override
@@ -33,7 +33,7 @@ public class BotonHabilidad extends BotonSuperior {
 				BotonHabilidad boton = (BotonHabilidad) actor;
 				Heroe heroe = ((EscenarioBase) boton.getStage()).getHeroe();
 				try {
-					heroe.habilidad(boton.habilidad.nombre);
+					heroe.habilidad(boton.habilidad.getNombre());
 				} catch (HabilidadInexistenteException e) {
 					U.err(e);
 				}
@@ -44,7 +44,7 @@ public class BotonHabilidad extends BotonSuperior {
 	private float xHabilidad(int posicion) {
 		if (posicion > (UI.cantHabilidades / 2)) {
 			return UI.margen
-					+ ((camara.viewportWidth - (2 * UI.margen)))
+					+ ((getCamara().viewportWidth - (2 * UI.margen)))
 					- anchoBoton()
 					- ((UI.cantHabilidades - posicion) * (anchoBoton() + UI.margen));
 		} else {

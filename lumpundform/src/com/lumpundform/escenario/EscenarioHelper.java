@@ -50,7 +50,7 @@ public class EscenarioHelper {
 		escenario.setCamera(camara);
 
 		// Agregar las colisiones del piso
-		escenario.piso = new Poligono(mh.getVerticesPlataforma(camara, "piso"));
+		escenario.setPiso(new Poligono(mh.getVerticesPlataforma(camara, "piso")));
 
 		try {
 			escenario.agregarActor("heroe", mh.getOrigenHeroe(camara));
@@ -153,15 +153,6 @@ public class EscenarioHelper {
 	 */
 	public Heroe getHeroe() {
 		return (Heroe) escenario.findActor("heroe");
-	}
-
-	/**
-	 * Regresa el {@link Poligono} del piso del escenario
-	 * 
-	 * @return El piso
-	 */
-	public Poligono getPiso() {
-		return escenario.piso;
 	}
 
 	public EscenarioBase getEscenario() {

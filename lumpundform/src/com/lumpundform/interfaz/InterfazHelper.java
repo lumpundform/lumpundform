@@ -18,8 +18,8 @@ public class InterfazHelper {
 	}
 
 	public void agregarHabilidades(Heroe heroe) {
-		for (int i = 0; i < heroe.habilidadesInterfaz.size(); i++) {
-			Habilidad habilidad = heroe.habilidadesInterfaz.get(i);
+		for (int i = 0; i < heroe.getHabilidadesInterfaz().size(); i++) {
+			Habilidad habilidad = heroe.getHabilidadesInterfaz().get(i);
 			new BotonHabilidad(escenario, habilidad, i + 1);
 		}
 	}

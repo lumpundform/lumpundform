@@ -32,7 +32,7 @@ public class U {
 	 *            La posición de la cual se quieren voltear las coordenadas
 	 * @return La posición con las coordenadas volteadas
 	 */
-	static public Vector2 voltearCoordenadas(CamaraJuego camara, Vector2 pos) {
+	static private Vector2 voltearCoordenadas(CamaraJuego camara, Vector2 pos) {
 		return camara.unproject(pos);
 	}
 
@@ -48,21 +48,9 @@ public class U {
 	 *            La y del punto
 	 * @return El punto en coordenadas de la {@link CamaraJuego}
 	 */
-	static public Vector2 voltearCoordenadas(CamaraJuego camara, float x,
+	public static Vector2 voltearCoordenadas(CamaraJuego camara, float x,
 			float y) {
 		return voltearCoordenadas(camara, new Vector2(x, y));
-	}
-
-	/**
-	 * Manda llamar a {@link #voltearCoordenadas(CamaraJuego, float, float)} con
-	 * los valores de {@link Gdx#input()}
-	 * 
-	 * @param camara
-	 *            La cámara de {@link Screen}
-	 * @return El punto en coordenadas de la {@link CamaraJuego}
-	 */
-	static public Vector2 voltearCoordenadasInput(CamaraJuego camara) {
-		return voltearCoordenadas(camara, Gdx.input.getX(), Gdx.input.getY());
 	}
 
 	/**
@@ -74,7 +62,7 @@ public class U {
 	 * @param color
 	 *            El color con el que se van a dibujar las líneas
 	 */
-	static public void dibujarLineasColision(Poligono poligono,
+	static private void dibujarLineasColision(Poligono poligono,
 			CamaraJuego camara, Color color) {
 		Vector2[] vertices = poligono.getVertices();
 
@@ -98,7 +86,7 @@ public class U {
 	 *            El {@link Poligono} del cuál se van a dibujar las líneas de
 	 *            colisión
 	 */
-	static public void dibujarLineasColision(Poligono poligono,
+	public static void dibujarLineasColision(Poligono poligono,
 			CamaraJuego camara) {
 		dibujarLineasColision(poligono, camara, Color.WHITE);
 	}
@@ -111,7 +99,7 @@ public class U {
 	 * @param mensaje
 	 *            El mensaje
 	 */
-	static public void l(String tag, Object mensaje) {
+	public static void l(String tag, Object mensaje) {
 		Gdx.app.log(tag, mensaje + "");
 	}
 
@@ -121,7 +109,7 @@ public class U {
 	 * @param e
 	 *            El error
 	 */
-	static public void err(Exception e) {
+	public static void err(Exception e) {
 		e.printStackTrace();
 	}
 
@@ -131,7 +119,7 @@ public class U {
 	 * @param mensaje
 	 *            El mensaje a imprimir en pantalla
 	 */
-	static public void ds(Object mensaje) {
+	public static void ds(Object mensaje) {
 		ds(mensaje, 30.0f, 30.0f);
 	}
 
@@ -145,7 +133,7 @@ public class U {
 	 * @param y
 	 *            La y de la posición
 	 */
-	static public void ds(Object mensaje, float x, float y) {
+	private static void ds(Object mensaje, float x, float y) {
 		CharSequence msg = mensaje + "";
 		sb.begin();
 		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);

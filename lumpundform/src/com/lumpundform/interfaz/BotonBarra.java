@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.escenario.EscenarioBase;
 
-public class BotonBarra extends BotonBase {
+class BotonBarra extends BotonBase {
 	private NinePatch barBackground;
 
-	public BotonBarra(NinePatch ninePatch, EscenarioBase escenario) {
+	protected BotonBarra(NinePatch ninePatch, EscenarioBase escenario) {
 		super(ninePatch, escenario);
-		yBase = camara.viewportHeight - UI.margen - UI.altoBoton - UI.margen
-				- UI.altoBarra;
+		setyBase(getCamara().viewportHeight - UI.margen - UI.altoBoton - UI.margen
+				- UI.altoBarra);
 		barBackground = new NinePatch(new Texture(
 				Gdx.files.internal("bar_background.png")), 1, 1, 1, 1);
 	}

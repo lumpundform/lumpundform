@@ -30,25 +30,25 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	// Animaciones
-	protected Map<String, Animation> animacion;
-	protected float tiempoTranscurrido;
+	private Map<String, Animation> animacion;
+	private float tiempoTranscurrido;
 
 	// Estado, Posición y Tamaño
-	public Direccion direccionX;
+	private Direccion direccionX;
 
 	// Movimiento
-	protected float destinoX;
-	protected float velocidad;
-	public boolean teletransportar = false;
+	private float destinoX;
+	private float velocidad;
+	private boolean teletransportar = false;
 
 	// Colisión
-	protected Rectangulo hitbox;
+	private Rectangulo hitbox;
 	private Map<String, Vector2> sensores;
-	public boolean colisionActores = false;
-	public boolean colisionPiso = false;
+	private boolean colisionActores = false;
+	private boolean colisionPiso = false;
 
 	// Pertenece a evento
-	public String perteneceAEvento;
+	private String perteneceAEvento;
 
 	/**
 	 * Inicializa los valores generales de todos los actores
@@ -57,9 +57,9 @@ public abstract class ObjetoActor extends Actor {
 		super(nombre);
 
 		sensores = new HashMap<String, Vector2>();
-		animacion = new HashMap<String, Animation>();
+		setAnimacion(new HashMap<String, Animation>());
 
-		tiempoTranscurrido = 0f;
+		setTiempoTranscurrido(0f);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return {@link true} o {@link false}
 	 */
 	public boolean derecha() {
-		return direccionX == Direccion.DERECHA;
+		return getDireccionX() == Direccion.DERECHA;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El punto
 	 */
 	public Vector2 getEsquina(String nombre) {
-		if (hitbox == null)
+		if (getHitbox() == null)
 			return null;
 
 		sensores.remove(nombre);
@@ -98,11 +98,11 @@ public abstract class ObjetoActor extends Actor {
 	 *            La posicion x del punto
 	 */
 	public void setEsquinaX(String nombre, float x) {
-		hitbox.centrado = false;
-		hitbox.posicionar(x, getEsquina(nombre).y);
+		getHitbox().setCentrado(false);
+		getHitbox().posicionar(x, getEsquina(nombre).y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		this.x = hitbox.getCentro().x - width / 2;
-		hitbox.centrado = true;
+		this.x = getHitbox().getCentro().x - width / 2;
+		getHitbox().setCentrado(true);
 	}
 
 	/**
@@ -115,11 +115,11 @@ public abstract class ObjetoActor extends Actor {
 	 *            La posicion y del punto
 	 */
 	public void setEsquinaY(String nombre, float y) {
-		hitbox.centrado = false;
-		hitbox.posicionar(getEsquina(nombre).x, y);
+		getHitbox().setCentrado(false);
+		getHitbox().posicionar(getEsquina(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		this.y = hitbox.getCentro().y - height / 2;
-		hitbox.centrado = true;
+		this.y = getHitbox().getCentro().y - height / 2;
+		getHitbox().setCentrado(true);
 	}
 
 	/**
@@ -128,7 +128,7 @@ public abstract class ObjetoActor extends Actor {
 	protected void cargarAnimaciones(String... nombres) {
 		try {
 			for (String nombre : nombres) {
-				animacion.put(nombre, initAnimacion(nombre));
+				getAnimacion().put(nombre, initAnimacion(nombre));
 			}
 		} catch (DatoInexistenteException e) {
 			U.err(e);
@@ -202,7 +202,7 @@ public abstract class ObjetoActor extends Actor {
 		TextureRegion cuadroActual = getCuadroActual();
 
 		// Si está caminando al revés, voltea el sprite
-		if (direccionX == Direccion.IZQUIERDA) {
+		if (getDireccionX() == Direccion.IZQUIERDA) {
 			cuadroActual.flip(true, false);
 			flip = true;
 		}
@@ -217,7 +217,7 @@ public abstract class ObjetoActor extends Actor {
 
 	@Override
 	public void act(float delta) {
-		tiempoTranscurrido += delta;
+		setTiempoTranscurrido(getTiempoTranscurrido() + delta);
 	}
 
 	@Override
@@ -242,7 +242,7 @@ public abstract class ObjetoActor extends Actor {
 	 *            el que obtiene los valores de los diferentes {@link Map}s
 	 * @return La animación en si
 	 */
-	protected Animation initAnimacion(String tipoAnimacion)
+	private Animation initAnimacion(String tipoAnimacion)
 			throws DatoInexistenteException {
 		String spriteSheet = D.gs(name, "sprite_sheet_" + tipoAnimacion);
 		int columnas = D.gi(name, "columnas_" + tipoAnimacion);
@@ -262,6 +262,82 @@ public abstract class ObjetoActor extends Actor {
 			}
 		}
 		return new Animation(0.05f, cuadrosAnimacion);
+	}
+
+	public boolean isColisionPiso() {
+		return colisionPiso;
+	}
+
+	public void setColisionPiso(boolean colisionPiso) {
+		this.colisionPiso = colisionPiso;
+	}
+
+	public boolean isColisionActores() {
+		return colisionActores;
+	}
+
+	public void setColisionActores(boolean colisionActores) {
+		this.colisionActores = colisionActores;
+	}
+
+	public Map<String, Animation> getAnimacion() {
+		return animacion;
+	}
+
+	public void setAnimacion(Map<String, Animation> animacion) {
+		this.animacion = animacion;
+	}
+
+	public float getTiempoTranscurrido() {
+		return tiempoTranscurrido;
+	}
+
+	public void setTiempoTranscurrido(float tiempoTranscurrido) {
+		this.tiempoTranscurrido = tiempoTranscurrido;
+	}
+
+	public String getPerteneceAEvento() {
+		return perteneceAEvento;
+	}
+
+	public void setPerteneceAEvento(String perteneceAEvento) {
+		this.perteneceAEvento = perteneceAEvento;
+	}
+
+	public void setHitbox(Rectangulo hitbox) {
+		this.hitbox = hitbox;
+	}
+
+	public float getDestinoX() {
+		return destinoX;
+	}
+
+	public void setDestinoX(float destinoX) {
+		this.destinoX = destinoX;
+	}
+
+	public Direccion getDireccionX() {
+		return direccionX;
+	}
+
+	public void setDireccionX(Direccion direccionX) {
+		this.direccionX = direccionX;
+	}
+
+	public float getVelocidad() {
+		return velocidad;
+	}
+
+	public void setVelocidad(float velocidad) {
+		this.velocidad = velocidad;
+	}
+
+	public boolean isTeletransportar() {
+		return teletransportar;
+	}
+
+	public void setTeletransportar(boolean teletransportar) {
+		this.teletransportar = teletransportar;
 	}
 
 }

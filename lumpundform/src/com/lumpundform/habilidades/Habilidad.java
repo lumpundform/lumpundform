@@ -4,19 +4,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Personaje;
 
 public abstract class Habilidad {
-	protected Personaje actor;
-	public String nombre;
+	private Personaje actor;
+	private String nombre;
 
-	protected float cooldown;
-	protected float cooldownDefault;
+	private float cooldown;
+	private float cooldownDefault;
 
-	protected float mana;
+	private float mana;
 
-	public Habilidad(Personaje actor, String nombre, float cooldownDefault) {
-		this.actor = actor;
-		this.nombre = nombre;
-		this.cooldown = 0.0f;
-		this.cooldownDefault = cooldownDefault;
+	protected Habilidad(Personaje actor, String nombre, float cooldownDefault) {
+		this.setActor(actor);
+		this.setNombre(nombre);
+		this.setCooldown(0.0f);
+		this.setCooldownDefault(cooldownDefault);
 	}
 
 	public void ejecutar(Vector2 pos) {
@@ -25,19 +25,59 @@ public abstract class Habilidad {
 	}
 
 	public void reducirCooldown(float delta) {
-		cooldown -= delta;
-		if (cooldown < 0.0f) {
-			cooldown = 0.0f;
+		setCooldown(getCooldown() - delta);
+		if (getCooldown() < 0.0f) {
+			setCooldown(0.0f);
 		}
 	}
 
 	public boolean sePuedeEjecutar() {
-		if (cooldown > 0.0f)
+		if (getCooldown() > 0.0f)
 			return false;
-		if (mana > actor.mana)
+		if (getMana() > getActor().getMana())
 			return false;
 
 		return true;
+	}
+
+	public float getMana() {
+		return mana;
+	}
+
+	public void setMana(float mana) {
+		this.mana = mana;
+	}
+
+	public Personaje getActor() {
+		return actor;
+	}
+
+	public void setActor(Personaje actor) {
+		this.actor = actor;
+	}
+
+	public float getCooldown() {
+		return cooldown;
+	}
+
+	public void setCooldown(float cooldown) {
+		this.cooldown = cooldown;
+	}
+
+	public float getCooldownDefault() {
+		return cooldownDefault;
+	}
+
+	public void setCooldownDefault(float cooldownDefault) {
+		this.cooldownDefault = cooldownDefault;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 }

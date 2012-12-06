@@ -9,26 +9,26 @@ import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.U;
 
 public class Evento {
-	public Vector2 posicion;
-	public String nombre;
-	public String tipo;
-	public float rango;
-	public Boolean activado;
-	public Boolean terminado;
-	public EscenarioBase escenario;
-	public int limite;
+	private Vector2 posicion;
+	private String nombre;
+	private String tipo;
+	private float rango;
+	private Boolean activado;
+	private Boolean terminado;
+	private EscenarioBase escenario;
+	private int limite;
 	
 	// Eventos con tiempo límite.
-	public float duracion;
-	public float tiempoTranscurrido = 0.0f;
+	private float duracion;
+	private float tiempoTranscurrido = 0.0f;
 
 	// Cantidad de personajes por cada evento.
-	public int personajesCreados = 0;
-	public int personajesMatados = 0;
+	private int personajesCreados = 0;
+	private int personajesMatados = 0;
 
 	public Evento(Vector2 posicion, TiledObject objeto, EscenarioBase escenario) {
 		this.posicion = posicion;
-		this.nombre = objeto.name;
+		this.setNombre(objeto.name);
 		this.tipo = objeto.type;
 		this.activado = false;
 		this.terminado = false;
@@ -56,7 +56,7 @@ public class Evento {
 					activado = true;
 				} else if (limite > personajesCreados && activado.equals(true)) {
 					escenario.agregarActor("humanoide", new Vector2(
-							posicion.x - 64, posicion.y), nombre);
+							posicion.x - 64, posicion.y), getNombre());
 					personajesCreados += 1;
 				}
 				if (limite <= personajesCreados) {
@@ -65,13 +65,13 @@ public class Evento {
 			} else if (tipo.equals("coliseo")) {
 				if (activado == false && heroe.x > (posicion.x - rango) && heroe.x < (posicion.x + rango)) {
 					activado = true;
-					camara.bloqueada = true;
+					camara.setBloqueada(true);
 				} else if (limite > personajesCreados && activado.equals(true)) {
 					escenario.agregarActor("humanoide", new Vector2(
-							posicion.x - 64, posicion.y), nombre);
+							posicion.x - 64, posicion.y), getNombre());
 					personajesCreados += 1;
 				} else if (limite == personajesMatados) {
-					camara.bloqueada = false;
+					camara.setBloqueada(false);
 					terminado = true;
 				}
 			} else if (tipo.equals("clima")) {
@@ -91,5 +91,13 @@ public class Evento {
 	
 	public void matarPersonaje() {
 		personajesMatados += 1;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 }

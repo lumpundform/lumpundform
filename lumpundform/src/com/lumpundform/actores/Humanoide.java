@@ -26,15 +26,15 @@ public class Humanoide extends Personaje {
 		width = 125.0f;
 		height = 150.0f;
 
-		hitbox = new Rectangulo(height, width / 2, true);
+		setHitbox(new Rectangulo(height, width / 2));
 
-		estado = Estado.DETENIDO;
-		destinoX = x;
-		direccionX = Direccion.DERECHA;
-		velocidad = 200;
+		setEstado(Estado.DETENIDO);
+		setDestinoX(x);
+		setDireccionX(Direccion.DERECHA);
+		setVelocidad(200);
 
-		vida = 100.0f;
-		vidaMax = 100.0f;
+		setVida(100.0f);
+		setVidaMax(100.0f);
 
 		cargarAnimaciones("detenido", "corriendo");
 	}
@@ -44,9 +44,9 @@ public class Humanoide extends Personaje {
 		super.act(delta);
 
 		if (x <= 0) {
-			direccionX = Direccion.DERECHA;
+			setDireccionX(Direccion.DERECHA);
 		} else if (x + width >= Gdx.graphics.getWidth()) {
-			direccionX = Direccion.IZQUIERDA;
+			setDireccionX(Direccion.IZQUIERDA);
 		}
 
 		if (derecha()) {

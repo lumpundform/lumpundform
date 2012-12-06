@@ -18,7 +18,7 @@ public class Linea {
 	private float xMenor;
 	private float xMayor;
 
-	public Linea(Vector2 p1, Vector2 p2) {
+	Linea(Vector2 p1, Vector2 p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 
@@ -164,7 +164,7 @@ public class Linea {
 	 *            "menor" o "mayor"
 	 * @return El valor de la x
 	 */
-	public float getX(String nombre) {
+	float getX(String nombre) {
 		return nombre == "mayor" ? xMayor : xMenor;
 	}
 
@@ -175,7 +175,7 @@ public class Linea {
 	 *            "menor" o "mayor"
 	 * @return El valor de la y
 	 */
-	public float getY(String nombre) {
+	float getY(String nombre) {
 		return nombre == "mayor" ? yMayor : yMenor;
 	}
 
