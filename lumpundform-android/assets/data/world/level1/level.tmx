@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="34" height="12" tilewidth="64" tileheight="64">
+<map version="1.0" orientation="orthogonal" width="34" height="9" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="level" tilewidth="64" tileheight="64">
   <image source="../../packer/bosque/level.png" width="256" height="1024"/>
  </tileset>
- <layer name="Tile Layer 1" width="80" height="12">
+ <layer name="Tile Layer 1" width="34" height="9">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2UwQrCMAyGc/Cwg4cpExQU6sGJioqKihPd+7+VvzBxxAarNMOtfvAd2oyE/VtL9KQDu/SnSr7JvEnfaQJTOLXUmvSeWszgHC489Qst8yVcwfWb50LLxZUN3MKd576h5L2HB3hUntOGSWGL1XrKszU5wQyelecYGBUOWW2gPFuTC7zCvLSncfYMyfmNPM+qksRiv1SP2dqFmF7PqSE5v/GH/X+JSPCRJV+7aMvJCPv3e5Hfh3VCys+XPFNbrvx/rBM3xGA7OgAPAAA=
+   H4sIAAAAAAAAC9NkYGDQAmJtBuoAQSAWIkOfLhDrAbE+jcwnFhgCsREQG1PZXFLdbQrEZkBsTmV3oAMeIBaBYhY0OVEgtgRiKyC2prE7FICYA4pl0OQkgdgWiO2A2B5JnBZpAZ87ZBkQYYWMJZDUCKDxiQECDJjhj88dikhy6BjmJnQ+MRibfbjcwQN1Ly53UAujuw2b+0B8ABV2tGrIBAAA
   </data>
  </layer>
- <objectgroup name="origenes" width="80" height="12" visible="0">
-  <object name="heroe" type="vector" gid="14" x="192" y="576"/>
+ <objectgroup name="origenes" width="34" height="9">
+  <object name="heroe" type="vector" gid="14" x="192" y="384"/>
  </objectgroup>
- <objectgroup name="plataformas" width="80" height="12" visible="0">
-  <object name="piso" x="0" y="768">
+ <objectgroup name="plataformas" width="34" height="9">
+  <object name="piso" x="0" y="576">
    <polyline points="0,0 0,-192 320,-192 384,-128 512,-128 576,-192 640,-192 1024,-192 1344,-192 1387,-192 1536,-192 1536,-64 1664,-64 1664,-384 1920,-384 1920,0 2048,0 2048,-128 2176,-128 2176,0 0,0"/>
   </object>
  </objectgroup>
- <objectgroup name="eventos" width="34" height="12">
-  <object name="evento2" type="spawn" x="1600" y="704">
+ <objectgroup name="eventos" width="34" height="9">
+  <object name="evento2" type="spawn" x="1600" y="512">
    <properties>
-    <property name="rango" value="50.0"/>
     <property name="limite" value="5"/>
-   </properties>
-  </object>
-  <object name="escena101" id_escena="1" type="escena" x="1600" y="704"/>
-  <object name="evento1" type="coliseo" x="448" y="640">
-   <properties>
     <property name="rango" value="50.0"/>
-    <property name="limite" value="4"/>
    </properties>
   </object>
-  <object name="evento3" type="fin" x="2176" y="640">
+  <object name="escena101" type="escena" x="1600" y="512"/>
+  <object name="evento1" type="coliseo" x="448" y="448">
+   <properties>
+    <property name="limite" value="4"/>
+    <property name="rango" value="50.0"/>
+   </properties>
+  </object>
+  <object name="evento3" type="fin" x="2176" y="448">
    <properties>
     <property name="rango" value="20.0"/>
    </properties>
   </object>
-  <object name="evento4" type="clima" x="1600" y="704">
+  <object name="evento4" type="clima" x="1600" y="512">
    <properties>
-    <property name="rango" value="80.0"/>
     <property name="duracion" value="10"/>
+    <property name="rango" value="80.0"/>
    </properties>
   </object>
  </objectgroup>
