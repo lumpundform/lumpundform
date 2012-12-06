@@ -25,7 +25,13 @@ public class BotonHabilidad extends BotonSuperior {
 		setClickListener(new ClickListener() {
 			@Override
 			public void click(Actor actor, float x, float y) {
-				U.l("actor", actor);
+				BotonHabilidad boton = (BotonHabilidad) actor;
+				Heroe heroe = ((EscenarioBase) boton.getStage()).getHeroe();
+				try {
+					heroe.habilidad(boton.habilidad.nombre);
+				} catch (HabilidadInexistenteException e) {
+					U.err(e);
+				}
 			}
 		});
 	}
@@ -40,7 +46,7 @@ public class BotonHabilidad extends BotonSuperior {
 			return UI.margen + ((posicion - 1) * (anchoBoton() + UI.margen));
 		}
 	}
-	
+
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		float alpha = 0;

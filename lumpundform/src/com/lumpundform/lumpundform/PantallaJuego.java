@@ -31,9 +31,10 @@ public class PantallaJuego implements Screen {
 		// TODO: hacer que se cargue dinamicamente el escenario
 		escenario = new EscenarioHelper(batch, getCamara(), "escenario101");
 
-		Gdx.input.setInputProcessor(new InputMultiplexer(new GestureDetector(
+		Gdx.input.setInputProcessor(new InputMultiplexer(escenario
+				.getEscenario(), new GestureDetector(
 				new ProcesadorEntradaJuego(this)), new ProcesadorEntradaJuego(
-				this), escenario.getEscenario()));
+				this)));
 	}
 
 	@Override

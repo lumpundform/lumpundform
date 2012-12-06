@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class HabilidadDisparar extends Habilidad {
 
 	public HabilidadDisparar(Personaje actor, String nombre) {
-		super(actor, 0.1f);
+		super(actor, nombre, 0.1f);
 
 		mana = 5.0f;
 	}

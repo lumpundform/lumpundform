@@ -4,14 +4,16 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Habilidad {
 	protected Personaje actor;
+	protected String nombre;
 
 	protected float cooldown;
 	protected float cooldownDefault;
 
 	protected float mana;
 
-	public Habilidad(Personaje actor, float cooldownDefault) {
+	public Habilidad(Personaje actor, String nombre, float cooldownDefault) {
 		this.actor = actor;
+		this.nombre = nombre;
 		this.cooldown = 0.0f;
 		this.cooldownDefault = cooldownDefault;
 	}
