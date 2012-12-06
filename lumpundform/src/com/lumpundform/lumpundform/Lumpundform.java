@@ -3,6 +3,7 @@ package com.lumpundform.lumpundform;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.lumpundform.pantallas.PantallaJuego;
 
 public class Lumpundform extends Game {
 	private PantallaJuego pantallaJuego;

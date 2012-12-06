@@ -4,6 +4,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
+import com.lumpundform.escenario.EscenarioHelper;
+import com.lumpundform.excepciones.HabilidadInexistenteException;
+import com.lumpundform.pantallas.PantallaJuego;
+import com.lumpundform.utilerias.U;
 
 /**
  * Clase que implementa {@link InputProcessor} y {@link GestureListener} para
