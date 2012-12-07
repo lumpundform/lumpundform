@@ -241,11 +241,11 @@ public class EscenarioBase extends Stage {
 					.getAncho()));
 	}
 
-	void cargarEventos(TiledObjectGroup tog, CamaraJuego camara) {
+	void cargarEventos(TiledObjectGroup tog) {
 		eventos = new Array<Evento>();
 		for (int i = 0; i < tog.objects.size(); i++) {
 			TiledObject to = tog.objects.get(i);
-			eventos.add(new Evento(U.voltearCoordenadas(camara, to.x, to.y),
+			eventos.add(new Evento(U.voltearCoordenadas(to.x, to.y),
 					to, this));
 		}
 	}

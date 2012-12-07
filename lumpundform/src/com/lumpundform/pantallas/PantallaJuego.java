@@ -9,6 +9,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.lumpundform.escenario.EscenarioHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.lumpundform.ProcesadorEntradaJuego;
+import com.lumpundform.utilerias.U;
 
 /**
  * Base para las diferentes pantallas del juego, implementa {@link Screen}
@@ -28,6 +29,8 @@ public class PantallaJuego implements Screen {
 	public PantallaJuego() {
 		camara = new CamaraJuego();
 		getCamara().setToOrtho(false);
+		
+		U.init(camara);
 
 		batch = new SpriteBatch();
 
@@ -36,8 +39,8 @@ public class PantallaJuego implements Screen {
 
 		Gdx.input.setInputProcessor(new InputMultiplexer(escenario
 				.getEscenario(), new GestureDetector(
-				new ProcesadorEntradaJuego(this)), new ProcesadorEntradaJuego(
-				this)));
+				new ProcesadorEntradaJuego(escenario)), new ProcesadorEntradaJuego(
+				escenario)));
 	}
 
 	@Override

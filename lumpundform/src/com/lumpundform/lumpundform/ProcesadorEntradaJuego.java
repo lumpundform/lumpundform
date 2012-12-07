@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
 import com.lumpundform.escenario.EscenarioHelper;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
-import com.lumpundform.pantallas.PantallaJuego;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -17,12 +16,10 @@ import com.lumpundform.utilerias.U;
  * 
  */
 public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
-	private PantallaJuego pantalla;
 	private EscenarioHelper escenario;
 
-	public ProcesadorEntradaJuego(PantallaJuego pantalla) {
-		this.pantalla = pantalla;
-		this.escenario = pantalla.getEscenario();
+	public ProcesadorEntradaJuego(EscenarioHelper escenario) {
+		this.escenario = escenario;
 	}
 
 	// GestureListener
@@ -34,7 +31,7 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean tap(int x, int y, int count) {
-		Vector2 posicion = U.voltearCoordenadas(pantalla.getCamara(), x, y);
+		Vector2 posicion = U.voltearCoordenadas(x, y);
 		if (count >= 2) {
 			try {
 				escenario.getHeroe().habilidad("teletransportar", posicion);

@@ -1,7 +1,6 @@
 package com.lumpundform.utilerias;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,39 +17,48 @@ import com.lumpundform.lumpundform.CamaraJuego;
  * 
  */
 public class U {
+	private static CamaraJuego camara;
 	private static ShapeRenderer sr = new ShapeRenderer();
 	private static SpriteBatch sb = new SpriteBatch();
 	private static BitmapFont bmf = Fuentes.regular();
+
+	public static void init(CamaraJuego camara) {
+		setCamara(camara);
+	}
+
+	private static void setCamara(CamaraJuego camara) {
+		U.camara = camara;
+	}
+
+	private static CamaraJuego getCamara() {
+		// TODO: Agregar detección de error en caso de que camara sea null
+		return U.camara;
+	}
 
 	/**
 	 * Voltea coordenadas de un punto a coordenadas de la {@link CamaraJuego} de
 	 * la pantalla
 	 * 
-	 * @param camara
-	 *            La {@link CamaraJuego} de {@link Screen}
 	 * @param pos
 	 *            La posición de la cual se quieren voltear las coordenadas
 	 * @return La posición con las coordenadas volteadas
 	 */
-	static private Vector2 voltearCoordenadas(CamaraJuego camara, Vector2 pos) {
-		return camara.unproject(pos);
+	static private Vector2 voltearCoordenadas(Vector2 pos) {
+		return getCamara().unproject(pos);
 	}
 
 	/**
 	 * Manda llamar a {@link #voltearCoordenadas(CamaraJuego, Vector2)} con los
 	 * valores X y Y especificados
 	 * 
-	 * @param camara
-	 *            La {@link CamaraJuego} de {@link Screen}
 	 * @param x
 	 *            La x del punto
 	 * @param y
 	 *            La y del punto
 	 * @return El punto en coordenadas de la {@link CamaraJuego}
 	 */
-	public static Vector2 voltearCoordenadas(CamaraJuego camara, float x,
-			float y) {
-		return voltearCoordenadas(camara, new Vector2(x, y));
+	public static Vector2 voltearCoordenadas(float x, float y) {
+		return voltearCoordenadas(new Vector2(x, y));
 	}
 
 	/**

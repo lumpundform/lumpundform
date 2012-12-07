@@ -44,16 +44,16 @@ public class EscenarioHelper {
 
 		InterfazHelper ih = new InterfazHelper(escenario);
 
-		escenario.cargarEventos(mh.eventosMapa(), camara);
+		escenario.cargarEventos(mh.eventosMapa());
 		escenario.cargarEscenas("escena101");
 
 		escenario.setCamera(camara);
 
 		// Agregar las colisiones del piso
-		escenario.setPiso(new Poligono(mh.getVerticesPlataforma(camara, "piso")));
+		escenario.setPiso(new Poligono(mh.getVerticesPlataforma("piso")));
 
 		try {
-			escenario.agregarActor("heroe", mh.getOrigenHeroe(camara));
+			escenario.agregarActor("heroe", mh.getOrigenHeroe());
 		} catch (ActorNoDefinidoException e) {
 			U.err(e);
 		}

@@ -98,9 +98,9 @@ class MapaHelper {
 	 *            punto
 	 * @return El punto de origen
 	 */
-	Vector2 getOrigenHeroe(CamaraJuego camara) {
+	Vector2 getOrigenHeroe() {
 		TiledObject objeto = tiledObject("origenes", "heroe");
-		return U.voltearCoordenadas(camara, objeto.x, objeto.y);
+		return U.voltearCoordenadas(objeto.x, objeto.y);
 	}
 
 	TiledObjectGroup eventosMapa() {
@@ -118,8 +118,7 @@ class MapaHelper {
 	 *            El nombre del objeto del cuál se quieren saber sus vértices
 	 * @return Un arreglo de todos los vertices del objeto
 	 */
-	Vector2[] getVerticesPlataforma(CamaraJuego camara,
-			String nombreObjeto) {
+	Vector2[] getVerticesPlataforma(String nombreObjeto) {
 		TiledObject objeto = tiledObject("plataformas", nombreObjeto);
 		Vector2 puntoInicialObjeto = new Vector2(objeto.x, objeto.y);
 		String[] puntos = objeto.polyline.split(" ");
@@ -128,7 +127,7 @@ class MapaHelper {
 		for (int i = 0; i < puntos.length; i++) {
 			String[] punto = puntos[i].split(",");
 
-			vectoresPuntos[i] = U.voltearCoordenadas(camara,
+			vectoresPuntos[i] = U.voltearCoordenadas(
 					Integer.parseInt(punto[0]), (int) puntoInicialObjeto.y
 							+ Integer.parseInt(punto[1]));
 		}
