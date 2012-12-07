@@ -20,6 +20,7 @@ class BotonBase extends Button {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		setZIndex(100);
 		setX(getxBase() + camara.getPosicionOrigen().x);
 		setY(getyBase() + camara.getPosicionOrigen().y);
 	}
