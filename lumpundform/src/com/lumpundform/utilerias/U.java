@@ -141,10 +141,15 @@ public class U {
 	 * @param y
 	 *            La y de la posición
 	 */
-	private static void ds(Object mensaje, float x, float y) {
+	public static void ds(Object mensaje, float x, float y) {
+		ds(mensaje, x, y, 1.0f);
+	}
+	
+	public static void ds(Object mensaje, float x, float y, float escala) {
 		CharSequence msg = mensaje + "";
 		sb.begin();
 		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
+		bmf.setScale(escala);
 		bmf.draw(sb, msg, x, y);
 		sb.end();
 	}
