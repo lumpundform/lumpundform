@@ -137,13 +137,13 @@ public class EscenarioBase extends Stage {
 				caidaLibre.put(actor.getName(), true);
 
 				Vector2 puntoTemp = actor.getEsquina(puntoColisionTemp);
-				p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
+				p = new Vector2(puntoTemp.x, puntoTemp.y - 25);
 				altura = actor.getY();
 				direccionDiagonal = direccionDiagonalDer;
 			} else if (getPiso().estaColisionando(
 					actor.getEsquina(puntoColision))) {
 				p = actor.getEsquina(puntoColision);
-				altura = actor.getY() + 10;
+				altura = actor.getY() + 25;
 				direccionDiagonal = direccionDiagonalIzq;
 			}
 

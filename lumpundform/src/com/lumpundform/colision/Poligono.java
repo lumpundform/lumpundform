@@ -47,8 +47,8 @@ public class Poligono {
 	 */
 	public boolean estaColisionando(Poligono poligono) {
 		// TODO: Hacer que la colisión no funcione únicamente con rectángulos
-		for (int i = 0; i < poligono.getVertices().length; i++) {
-			if (estaColisionando(poligono.getVertices()[i])) {
+		for (Vector2 vertice : poligono.getVertices()) {
+			if (estaColisionando(vertice)) {
 				return true;
 			}
 		}
