@@ -55,9 +55,10 @@ public class Heroe extends Personaje {
 	}
 
 	private void cargarHabilidades() {
-		getHabilidades().put("teletransportar", new HabilidadTeletransportar(this,
-				"teletransportar"));
-		getHabilidades().put("disparar", new HabilidadDisparar(this, "disparar"));
+		getHabilidades().put("teletransportar",
+				new HabilidadTeletransportar(this, "teletransportar"));
+		getHabilidades().put("disparar",
+				new HabilidadDisparar(this, "disparar"));
 
 		// TODO: cargar habilidadesInterfaz de los settings
 		setHabilidadesInterfaz(new ArrayList<Habilidad>());
@@ -73,7 +74,20 @@ public class Heroe extends Personaje {
 	public void act(float delta) {
 		super.act(delta);
 
+		if (isColisionActores()) {
+			hacerDano();
+		}
+
 		moverHeroe(delta);
+	}
+
+	private void hacerDano() {
+		// TODO: Implementar un tiempo de invincibilidad después de recibir daño
+		setVida(getVida() - 1);
+
+		if (getVida() < 0) {
+			setVida(0);
+		}
 	}
 
 	/**
