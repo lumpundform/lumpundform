@@ -42,11 +42,10 @@ public class EscenarioBase extends Stage {
 	private Array<Evento> eventos;
 	private Array<Escena> escenas;
 
-	EscenarioBase(float width, float height, boolean stretch,
-			SpriteBatch batch) {
+	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
 		super(width, height, stretch, batch);
 	}
-	
+
 	/**
 	 * Dibuja las líneas de colisión del piso del escenario y de todos los
 	 * {@link ObjetoActor}es que se encuentran en el escenario
@@ -67,13 +66,13 @@ public class EscenarioBase extends Stage {
 	 * otro {@link ObjetoActor} del escenario
 	 */
 	void colisionActores() {
-		Heroe heroe = (Heroe) findActor("heroe");
+		Heroe heroe = (Heroe) getActores(Heroe.class).get(0);
 		heroe.setColisionActores(false);
 		List<Actor> actores = getPersonajes();
 
 		for (Actor a : actores) {
 			ObjetoActor actor = (ObjetoActor) a;
-			if (actor.name != "heroe"
+			if (actor.getName() != "heroe"
 					&& heroe.getHitbox().estaColisionando(actor.getHitbox())) {
 				heroe.setColisionActores(true);
 				break;
@@ -89,7 +88,7 @@ public class EscenarioBase extends Stage {
 			Ataque ataque = (Ataque) ataques.get(i);
 			for (int j = 0; j < personajes.size(); j++) {
 				Personaje personaje = (Personaje) personajes.get(j);
-				if (!personaje.name.equals("heroe")
+				if (!personaje.getName().equals("heroe")
 						&& personaje.getHitbox().estaColisionando(
 								ataque.getHitbox())) {
 					if (ataque.isHaceDano()) {
@@ -109,7 +108,7 @@ public class EscenarioBase extends Stage {
 
 		for (Actor a : getPersonajes()) {
 			ObjetoActor actor = (ObjetoActor) a;
-			caidaLibre.put(actor.name, false);
+			caidaLibre.put(actor.getName(), false);
 
 			// Datos para cuando va hacia derecha o izquierda
 			String puntoColision, puntoColisionTemp;
@@ -135,15 +134,16 @@ public class EscenarioBase extends Stage {
 			String direccionDiagonal = null;
 			if (!getPiso().estaColisionando(actor.getEsquina("inf-izq"))
 					&& !getPiso().estaColisionando(actor.getEsquina("inf-der"))) {
-				caidaLibre.put(actor.name, true);
+				caidaLibre.put(actor.getName(), true);
 
 				Vector2 puntoTemp = actor.getEsquina(puntoColisionTemp);
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 10);
-				altura = actor.y;
+				altura = actor.getY();
 				direccionDiagonal = direccionDiagonalDer;
-			} else if (getPiso().estaColisionando(actor.getEsquina(puntoColision))) {
+			} else if (getPiso().estaColisionando(
+					actor.getEsquina(puntoColision))) {
 				p = actor.getEsquina(puntoColision);
-				altura = actor.y + 10;
+				altura = actor.getY() + 10;
 				direccionDiagonal = direccionDiagonalIzq;
 			}
 
@@ -160,19 +160,19 @@ public class EscenarioBase extends Stage {
 						&& l.yEnX(p) <= altura
 						&& (l.direccionDiagonal() == direccionDiagonal || l
 								.direccionLinea() == direccionLinea)) {
-					caidaLibre.put(actor.name, false);
-					actor.y = l.yEnX(p);
+					caidaLibre.put(actor.getName(), false);
+					actor.setY(l.yEnX(p));
 				}
 			}
 
 			// Cambia el estado colisión del actor, asi como teletransportar del
 			// héroe
-			if (caidaLibre.get(actor.name)) {
+			if (caidaLibre.get(actor.getName())) {
 				actor.setColisionPiso(false);
-				actor.y -= 5;
+				actor.setY(actor.getY() - 5);
 			} else {
 				actor.setColisionPiso(true);
-				if (actor.name == "heroe") {
+				if (actor.getName() == "heroe") {
 					actor.setTeletransportar(false);
 				}
 			}
@@ -214,7 +214,8 @@ public class EscenarioBase extends Stage {
 			if (getPiso().estaColisionando(pc)
 					&& getPiso().linea("arriba", pc).esHorizontal()
 					&& getPiso().linea(lineaLateral, pc).esVertical()
-					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(pc))) {
+					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(
+							pc))) {
 				Linea linea = getPiso().linea(lineaLateral, pc);
 				if (linea != null) {
 					Float xLinea = null;
@@ -229,7 +230,7 @@ public class EscenarioBase extends Stage {
 			}
 		}
 	}
-	
+
 	void acomodarHeroe(CamaraJuego camara) {
 		float min = camara.getPosicionOrigen().x;
 		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
@@ -237,16 +238,14 @@ public class EscenarioBase extends Stage {
 		if (heroe.getEsquina("inf-izq").x < min)
 			heroe.setEsquinaX("inf-izq", min);
 		if (heroe.getEsquina("inf-der").x > max)
-			heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox()
-					.getAncho()));
+			heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox().getAncho()));
 	}
 
 	void cargarEventos(TiledObjectGroup tog) {
 		eventos = new Array<Evento>();
 		for (int i = 0; i < tog.objects.size(); i++) {
 			TiledObject to = tog.objects.get(i);
-			eventos.add(new Evento(U.voltearCoordenadas(to.x, to.y),
-					to, this));
+			eventos.add(new Evento(U.voltearCoordenadas(to.x, to.y), to, this));
 		}
 	}
 
@@ -255,26 +254,26 @@ public class EscenarioBase extends Stage {
 			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
 		}
 	}
-	
-	
+
 	void cargarEscenas(String nombreEscena) {
 		escenas = new Array<Escena>();
-		
+
 		XmlReader xmlF;
 		String xmlS;
 		Element xmlE;
-		
+
 		xmlF = new XmlReader();
-		xmlS = Gdx.files.internal("escenas/" + nombreEscena + ".xml").readString();
+		xmlS = Gdx.files.internal("escenas/" + nombreEscena + ".xml")
+				.readString();
 		xmlE = xmlF.parse(xmlS);
-		
+
 		Array<Element> escena = xmlE.getChildrenByNameRecursively("escena");
-		
+
 		for (int i = 0; i < escena.size; i++) {
 			escenas.add(new Escena(escena.get(i)));
 		}
 	}
-	
+
 	void revisarEscena(Heroe heroe) {
 		for (int i = 0; i < escenas.size; i++) {
 			escenas.get(i).ejecutarEscena(heroe);
@@ -307,7 +306,7 @@ public class EscenarioBase extends Stage {
 	 * @return El héroe
 	 */
 	public Heroe getHeroe() {
-		return (Heroe) findActor("heroe");
+		return (Heroe) getActores(Heroe.class).get(0);
 	}
 
 	private List<Actor> getPersonajes() {
@@ -333,8 +332,9 @@ public class EscenarioBase extends Stage {
 	void destruirAtaques(CamaraJuego camara) {
 		for (int i = 0; i < getAtaques().size(); i++) {
 			Actor ataque = getAtaques().get(i);
-			if ((ataque.x + ataque.width) < camara.getPosicionOrigen().x
-					|| ataque.x > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
+			if ((ataque.getX() + ataque.getWidth()) < camara
+					.getPosicionOrigen().x
+					|| ataque.getX() > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
 				ataque.remove();
 			}
 		}

@@ -23,13 +23,13 @@ public class Humanoide extends Personaje {
 	public Humanoide(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 
-		width = 125.0f;
-		height = 150.0f;
+		setWidth(125.0f);
+		setHeight(150.0f);
 
-		setHitbox(new Rectangulo(height, width / 2));
+		setHitbox(new Rectangulo(getHeight(), getWidth() / 2));
 
 		setEstado(Estado.DETENIDO);
-		setDestinoX(x);
+		setDestinoX(getX());
 		setDireccionX(Direccion.DERECHA);
 		setVelocidad(200);
 
@@ -43,9 +43,9 @@ public class Humanoide extends Personaje {
 	public void act(float delta) {
 		super.act(delta);
 
-		if (x <= 0) {
+		if (getX() <= 0) {
 			setDireccionX(Direccion.DERECHA);
-		} else if (x + width >= Gdx.graphics.getWidth()) {
+		} else if (getX() + getWidth() >= Gdx.graphics.getWidth()) {
 			setDireccionX(Direccion.IZQUIERDA);
 		}
 

@@ -11,13 +11,13 @@ class BotonLifebar extends BotonBarra {
 		super(new NinePatch(new Texture(Gdx.files.internal("lifebar.png")), 1,
 				1, 1, 1), escenario);
 		setxBase(UI.margen);
-		width = UI.anchoBarra;
+		setWidth(UI.anchoBarra);
 	}
 	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		Heroe heroe = ((EscenarioBase) stage).getHeroe();
-		height = UI.altoBarra * heroe.getVida() / heroe.getVidaMax();
+		Heroe heroe = ((EscenarioBase) getStage()).getHeroe();
+		setHeight(UI.altoBarra * heroe.getVida() / heroe.getVidaMax());
 	}
 }

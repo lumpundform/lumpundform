@@ -116,7 +116,7 @@ public class EscenarioHelper {
 		float destinoCamara;
 
 		if (heroe.derecha()) {
-			destinoCamara = heroe.x + heroe.width / 2 + camara.viewportWidth
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth
 					/ 6;
 			if (camara.position.x < destinoCamara) {
 				camara.setPosicion(
@@ -127,7 +127,7 @@ public class EscenarioHelper {
 				camara.setPosicion(destinoCamara, camara.position.y);
 			}
 		} else {
-			destinoCamara = heroe.x + heroe.width / 2 - camara.viewportWidth
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth
 					/ 6;
 			if (camara.position.x > destinoCamara) {
 				camara.setPosicion(
@@ -152,7 +152,7 @@ public class EscenarioHelper {
 	 * @return El héroe
 	 */
 	public Heroe getHeroe() {
-		return (Heroe) escenario.findActor("heroe");
+		return (Heroe) escenario.getHeroe();
 	}
 
 	public EscenarioBase getEscenario() {

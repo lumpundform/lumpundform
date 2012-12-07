@@ -2,6 +2,7 @@ package com.lumpundform.interfaz;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.lumpundform.CamaraJuego;
 
@@ -11,16 +12,16 @@ class BotonBase extends Button {
 	private float yBase;
 
 	protected BotonBase(NinePatch patch, EscenarioBase escenario) {
-		super(patch);
+		super(new NinePatchDrawable(patch));
 		escenario.addActor(this);
 		camara = (CamaraJuego) escenario.getCamera();
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		x = getxBase() + camara.getPosicionOrigen().x;
-		y = getyBase() + camara.getPosicionOrigen().y;
+		setX(getxBase() + camara.getPosicionOrigen().x);
+		setY(getyBase() + camara.getPosicionOrigen().y);
 	}
 
 	public CamaraJuego getCamara() {

@@ -54,7 +54,9 @@ public abstract class ObjetoActor extends Actor {
 	 * Inicializa los valores generales de todos los actores
 	 */
 	protected ObjetoActor(String nombre) {
-		super(nombre);
+		super();
+
+		setName(nombre);
 
 		sensores = new HashMap<String, Vector2>();
 		setAnimacion(new HashMap<String, Animation>());
@@ -101,7 +103,7 @@ public abstract class ObjetoActor extends Actor {
 		hitbox.setCentrado(false);
 		hitbox.posicionar(x, getEsquina(nombre).y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		this.x = hitbox.getCentro().x - width / 2;
+		setX(hitbox.getCentro().x - getWidth() / 2);
 		hitbox.setCentrado(true);
 	}
 
@@ -118,7 +120,7 @@ public abstract class ObjetoActor extends Actor {
 		getHitbox().setCentrado(false);
 		getHitbox().posicionar(getEsquina(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		this.y = getHitbox().getCentro().y - height / 2;
+		setY(getHitbox().getCentro().y - getHeight() / 2);
 		getHitbox().setCentrado(true);
 	}
 
@@ -153,7 +155,7 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render()}
 	 */
 	protected void moverIzquierda(float delta) {
-		x -= getVelocidad(delta);
+		setX(getX() - getVelocidad(delta));
 	}
 
 	/**
@@ -163,7 +165,7 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render()}
 	 */
 	protected void moverDerecha(float delta) {
-		x += getVelocidad(delta);
+		setX(getX() + getVelocidad(delta));
 	}
 
 	/**
@@ -172,7 +174,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return La posición
 	 */
 	public Vector2 getPosicionCentro() {
-		return new Vector2(x + width / 2, y + height / 2);
+		return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
 	}
 
 	/**
@@ -182,8 +184,8 @@ public abstract class ObjetoActor extends Actor {
 	 *            La posición a donde mover al {@link ObjetoActor}
 	 */
 	public void setPosicionCentro(Vector2 pos) {
-		x = pos.x - width / 2;
-		y = pos.y - height / 2;
+		setX(pos.x - getWidth() / 2);
+		setY(pos.y - getHeight() / 2);
 	}
 
 	/**
@@ -193,7 +195,8 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El hitbox
 	 */
 	public Rectangulo getHitbox() {
-		return hitbox.posicionar(x + (width / 2), y + (height / 2));
+		return hitbox.posicionar(getX() + (getWidth() / 2), getY()
+				+ (getHeight() / 2));
 	}
 
 	@Override
@@ -209,7 +212,7 @@ public abstract class ObjetoActor extends Actor {
 
 		Color color = batch.getColor();
 		batch.setColor(color.r, color.g, color.b, parentAlpha);
-		batch.draw(cuadroActual, x, y);
+		batch.draw(cuadroActual, getX(), getY());
 
 		if (flip)
 			cuadroActual.flip(true, false);
@@ -221,7 +224,7 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	@Override
-	public Actor hit(float x, float y) {
+	public Actor hit(float x, float y, boolean touchable) {
 		return null;
 	}
 
@@ -244,15 +247,15 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	private Animation initAnimacion(String tipoAnimacion)
 			throws DatoInexistenteException {
-		String spriteSheet = D.gs(name, "sprite_sheet_" + tipoAnimacion);
-		int columnas = D.gi(name, "columnas_" + tipoAnimacion);
-		int renglones = D.gi(name, "renglones_" + tipoAnimacion);
+		String spriteSheet = D.gs(getName(), "sprite_sheet_" + tipoAnimacion);
+		int columnas = D.gi(getName(), "columnas_" + tipoAnimacion);
+		int renglones = D.gi(getName(), "renglones_" + tipoAnimacion);
 
-		int columnasOffset = D.gi(name, "columnas_offset_" + tipoAnimacion);
+		int columnasOffset = D.gi(getName(), "columnas_offset_" + tipoAnimacion);
 
 		Texture texturaAnimacion = new Texture(Gdx.files.internal(spriteSheet));
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion,
-				(int) width, (int) height);
+				(int) getWidth(), (int) getHeight());
 		TextureRegion[] cuadrosAnimacion = new TextureRegion[columnas
 				* renglones];
 		int index = 0;

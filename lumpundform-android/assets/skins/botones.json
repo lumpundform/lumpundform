@@ -1,0 +1,12 @@
+{
+	resources: {
+		com.badlogic.gdx.graphics.g2d.NinePatch: {
+			image: {
+				x: 0,
+				y: 0,
+				width: 1,
+				height: 1
+			}
+		}
+	}
+}

@@ -14,6 +14,6 @@ class BotonSuperior extends BotonBase {
 	}
 
 	protected float yBoton() {
-		return getCamara().viewportHeight - UI.margen - height;
+		return getCamara().viewportHeight - UI.margen - getHeight();
 	}
 }

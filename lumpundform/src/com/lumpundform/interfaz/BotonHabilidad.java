@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
@@ -15,22 +17,22 @@ import com.lumpundform.utilerias.U;
 class BotonHabilidad extends BotonSuperior {
 	private Habilidad habilidad;
 
-	BotonHabilidad(EscenarioBase escenario, Habilidad habilidad,
-			int posicion) {
+	BotonHabilidad(EscenarioBase escenario, Habilidad habilidad, int posicion) {
 		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1,
 				1, 1, 1), escenario);
 
 		this.habilidad = habilidad;
 
-		this.width = anchoBoton();
-		this.height = UI.altoBoton;
+		setWidth(anchoBoton());
+		setHeight(UI.altoBoton);
 		setxBase(xHabilidad(posicion));
 		setyBase(yBoton());
 
-		setClickListener(new ClickListener() {
+		addListener(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
-				BotonHabilidad boton = (BotonHabilidad) actor;
+			public void clicked(InputEvent event, float x, float y) {
+				BotonHabilidad boton = (BotonHabilidad) event
+						.getListenerActor();
 				Heroe heroe = ((EscenarioBase) boton.getStage()).getHeroe();
 				try {
 					heroe.habilidad(boton.habilidad.getNombre());

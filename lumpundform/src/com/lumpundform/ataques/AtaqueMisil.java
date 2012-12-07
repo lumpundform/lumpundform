@@ -8,10 +8,10 @@ public class AtaqueMisil extends Ataque {
 	public AtaqueMisil(Personaje personaje) {
 		super("ataque_misil", personaje);
 
-		width = 100.0f;
-		height = 100.0f;
+		setWidth(100.0f);
+		setHeight(100.0f);
 
-		setHitbox(new Rectangulo(height * 0.2f, width * 0.55f));
+		setHitbox(new Rectangulo(getHeight() * 0.2f, getWidth() * 0.55f));
 
 		setEstado(Estado.NORMAL);
 		setVelocidad(800.0f);
@@ -19,7 +19,7 @@ public class AtaqueMisil extends Ataque {
 
 		setDano(30.0f);
 
-		y = personaje.y + (personaje.getHitbox().getAlto() / 2) - 33;
+		setY(personaje.getY() + (personaje.getHitbox().getAlto() / 2) - 33);
 
 		float xNueva;
 		if (derecha()) {

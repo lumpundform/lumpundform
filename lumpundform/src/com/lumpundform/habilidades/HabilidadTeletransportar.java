@@ -89,22 +89,25 @@ public class HabilidadTeletransportar extends Habilidad {
 					float yFinalArriba, yFinalAbajo, yFinal;
 					if (yArriba != null && yAbajo != null) {
 						yFinalArriba = yArriba + infIzq.y;
-						yFinalAbajo = yAbajo - supIzq.y - getActor().height;
-						if (yArriba < yAbajo || yFinalAbajo < getActor().height) {
+						yFinalAbajo = yAbajo - supIzq.y
+								- getActor().getHeight();
+						if (yArriba < yAbajo
+								|| yFinalAbajo < getActor().getHeight()) {
 							yFinal = yFinalArriba;
 						} else {
 							yFinal = yFinalAbajo;
 						}
 					} else if (yArriba != null) {
 						yFinal = yArriba + infIzq.y;
-					} else if ((yAbajo - supIzq.y - getActor().height) < getActor().height) {
+					} else if ((yAbajo - supIzq.y - getActor().getHeight()) < getActor()
+							.getHeight()) {
 						float yFinalIzq = piso.linea("arriba", supIzq).yEnX(
 								supIzq);
 						float yFinalDer = piso.linea("arriba", supDer).yEnX(
 								supDer);
 						yFinal = yFinalIzq > yFinalDer ? yFinalIzq : yFinalDer;
 					} else {
-						yFinal = yAbajo - supIzq.y - getActor().height;
+						yFinal = yAbajo - supIzq.y - getActor().getHeight();
 					}
 					getActor().setEsquinaY("inf-izq", yFinal);
 				}

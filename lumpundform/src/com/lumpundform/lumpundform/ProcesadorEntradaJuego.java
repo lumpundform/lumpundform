@@ -25,12 +25,12 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	// GestureListener
 
 	@Override
-	public boolean touchDown(int x, int y, int pointer) {
+	public boolean touchDown(float x, float y, int pointer, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean tap(int x, int y, int count) {
+	public boolean tap(float x, float y, int count, int button) {
 		Vector2 posicion = U.voltearCoordenadas(x, y);
 		if (count >= 2) {
 			try {
@@ -43,17 +43,17 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	}
 
 	@Override
-	public boolean longPress(int x, int y) {
+	public boolean longPress(float x, float y) {
 		return false;
 	}
 
 	@Override
-	public boolean fling(float velocityX, float velocityY) {
+	public boolean fling(float velocityX, float velocityY, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean pan(int x, int y, int deltaX, int deltaY) {
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		return false;
 	}
 
@@ -95,6 +95,11 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	}
 
 	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		return false;
 	}
@@ -106,11 +111,6 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean touchMoved(int x, int y) {
 		return false;
 	}
 

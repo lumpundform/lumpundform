@@ -34,13 +34,13 @@ public class Heroe extends Personaje {
 	public Heroe(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 
-		width = 125.0f;
-		height = 150.0f;
+		setWidth(125.0f);
+		setHeight(150.0f);
 
-		setHitbox(new Rectangulo(height, width / 3));
+		setHitbox(new Rectangulo(getHeight(), getWidth() / 3));
 
 		setEstado(Estado.DETENIDO);
-		setDestinoX(x);
+		setDestinoX(getX());
 		setDireccionX(Direccion.DERECHA);
 		setVelocidad(500);
 
@@ -124,7 +124,7 @@ public class Heroe extends Personaje {
 			getHabilidades().get(nombre).ejecutar(pos);
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad "
-					+ nombre + " para el actor " + name);
+					+ nombre + " para el actor " + getName());
 		}
 	}
 
@@ -134,7 +134,7 @@ public class Heroe extends Personaje {
 			return getHabilidades().get(nombre);
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad "
-					+ nombre + " para el actor " + name);
+					+ nombre + " para el actor " + getName());
 		}
 	}
 

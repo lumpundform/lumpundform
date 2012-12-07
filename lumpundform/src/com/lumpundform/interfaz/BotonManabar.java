@@ -11,14 +11,14 @@ class BotonManabar extends BotonBarra {
 		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1,
 				1, 1, 1), escenario);
 		setxBase(getCamara().viewportWidth - UI.anchoBarra - UI.margen);
-		width = UI.anchoBarra;
+		setWidth(UI.anchoBarra);
 	}
 	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		Heroe heroe = ((EscenarioBase) stage).getHeroe();
-		height = UI.altoBarra * heroe.getMana() / heroe.getManaMax();
+		Heroe heroe = ((EscenarioBase) getStage()).getHeroe();
+		setHeight(UI.altoBarra * heroe.getMana() / heroe.getManaMax());
 	}
 
 }

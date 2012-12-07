@@ -17,7 +17,7 @@ public class Evento {
 	private Boolean terminado;
 	private EscenarioBase escenario;
 	private int limite;
-	
+
 	// Eventos con tiempo límite.
 	private float duracion;
 	private float tiempoTranscurrido = 0.0f;
@@ -33,7 +33,7 @@ public class Evento {
 		this.activado = false;
 		this.terminado = false;
 		this.escenario = escenario;
-		
+
 		if (objeto.properties.containsKey("rango"))
 			this.rango = Float.parseFloat(objeto.properties.get("rango"));
 		if (objeto.properties.containsKey("limite"))
@@ -52,7 +52,8 @@ public class Evento {
 	private void ejecutarEvento(CamaraJuego camara, Heroe heroe, float delta) {
 		try {
 			if (tipo.equals("spawn")) {
-				if (activado == false && heroe.x > (posicion.x - rango) && heroe.x < (posicion.x + rango)) {
+				if (activado == false && heroe.getX() > (posicion.x - rango)
+						&& heroe.getX() < (posicion.x + rango)) {
 					activado = true;
 				} else if (limite > personajesCreados && activado.equals(true)) {
 					escenario.agregarActor("humanoide", new Vector2(
@@ -63,7 +64,8 @@ public class Evento {
 					terminado = true;
 				}
 			} else if (tipo.equals("coliseo")) {
-				if (activado == false && heroe.x > (posicion.x - rango) && heroe.x < (posicion.x + rango)) {
+				if (activado == false && heroe.getX() > (posicion.x - rango)
+						&& heroe.getX() < (posicion.x + rango)) {
 					activado = true;
 					camara.setBloqueada(true);
 				} else if (limite > personajesCreados && activado.equals(true)) {
@@ -75,7 +77,8 @@ public class Evento {
 					terminado = true;
 				}
 			} else if (tipo.equals("clima")) {
-				if (activado == false && heroe.x > (posicion.x - rango) && heroe.x < (posicion.x + rango)) {
+				if (activado == false && heroe.getX() > (posicion.x - rango)
+						&& heroe.getX() < (posicion.x + rango)) {
 					activado = true;
 				} else if (activado == true && duracion > tiempoTranscurrido) {
 					// ejecutar lo que haga el evento
@@ -83,12 +86,12 @@ public class Evento {
 				} else if (activado == true && duracion <= tiempoTranscurrido) {
 					terminado = true;
 				}
-			} 
+			}
 		} catch (ActorNoDefinidoException e) {
 			U.err(e);
 		}
 	}
-	
+
 	public void matarPersonaje() {
 		personajesMatados += 1;
 	}

@@ -40,8 +40,8 @@ public abstract class Personaje extends ObjetoActor {
 
 		setHabilidades(new HashMap<String, Habilidad>());
 
-		this.x = puntoOrigen.x;
-		this.y = puntoOrigen.y;
+		setX(puntoOrigen.x);
+		setY(puntoOrigen.y);
 	}
 
 	@Override

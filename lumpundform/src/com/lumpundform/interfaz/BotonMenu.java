@@ -15,8 +15,8 @@ class BotonMenu extends BotonSuperior {
 	BotonMenu(EscenarioBase escenario) {
 		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1,
 				1, 1, 1), escenario);
-		width = anchoBoton();
-		height = UI.altoBoton;
+		setWidth(anchoBoton());
+		setHeight(UI.altoBoton);
 		setxBase((getCamara().viewportWidth / 2) - (anchoBoton() / 2));
 		setyBase(yBoton());
 	}
@@ -27,8 +27,8 @@ class BotonMenu extends BotonSuperior {
 		
 		CharSequence msg = "Menú";
 		TextBounds tb = bmf.getBounds(msg);
-		float xMenu = x + (anchoBoton() / 2) - (tb.width / 2);
-		float yMenu = y + (UI.altoBoton / 2) + (tb.height / 2);
+		float xMenu = getX() + (anchoBoton() / 2) - (tb.width / 2);
+		float yMenu = getY() + (UI.altoBoton / 2) + (tb.height / 2);
 
 		bmf.draw(batch, msg, xMenu, yMenu);
 	}
