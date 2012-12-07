@@ -15,15 +15,15 @@ public class HabilidadTeletransportar extends Habilidad {
 
 	@Override
 	public void ejecutar(Vector2 pos) {
-		if (pos == null) return;
-		super.ejecutar(pos);
-		if (!getActor().isTeletransportar()) {
+		if (sePuedeEjecutar(pos)) {
 			Poligono piso = ((EscenarioBase) getActor().getStage()).getPiso();
 			Vector2 posicionAnterior = getActor().getPosicionCentro();
 
 			getActor().setTeletransportar(true);
-			getActor().setDireccionX(posicionAnterior.x >= pos.x ? ObjetoActor.Direccion.IZQUIERDA
-					: ObjetoActor.Direccion.DERECHA);
+			getActor()
+					.setDireccionX(
+							posicionAnterior.x >= pos.x ? ObjetoActor.Direccion.IZQUIERDA
+									: ObjetoActor.Direccion.DERECHA);
 			getActor().setPosicionCentro(pos);
 
 			if (piso.estaColisionando(getActor().getHitbox())) {
@@ -112,6 +112,11 @@ public class HabilidadTeletransportar extends Habilidad {
 
 			setCooldown(getCooldownDefault());
 		}
+	}
+
+	public boolean sePuedeEjecutar(Vector2 pos) {
+		return (super.sePuedeEjecutar() && pos != null && !getActor()
+				.isTeletransportar());
 	}
 
 }

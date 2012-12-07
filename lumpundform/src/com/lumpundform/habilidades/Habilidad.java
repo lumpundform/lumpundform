@@ -19,10 +19,7 @@ public abstract class Habilidad {
 		this.setCooldownDefault(cooldownDefault);
 	}
 
-	public void ejecutar(Vector2 pos) {
-		if (!sePuedeEjecutar())
-			return;
-	}
+	public abstract void ejecutar(Vector2 pos);
 
 	public void reducirCooldown(float delta) {
 		setCooldown(getCooldown() - delta);
