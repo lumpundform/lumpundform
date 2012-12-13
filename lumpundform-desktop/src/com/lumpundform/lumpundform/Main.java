@@ -1,16 +1,9 @@
 package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class Main {
 	public static void main(String[] args) {
-		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "Lumpundform";
-		cfg.useGL20 = true;
-		cfg.width = 1024;
-		cfg.height = 576;
-		
-		new LwjglApplication(new Lumpundform(), cfg);
+		new LwjglApplication(new Lumpundform(), "Lumpundform", 1024, 576, true);
 	}
 }
