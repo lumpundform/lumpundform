@@ -58,7 +58,8 @@ public class Heroe extends Personaje {
 		cargarHabilidades();
 	}
 
-	private void cargarHabilidades() {
+	@Override
+	protected void cargarHabilidades() {
 		getHabilidades().put("teletransportar",
 				new HabilidadTeletransportar(this, "teletransportar"));
 		getHabilidades().put("disparar",
