@@ -47,6 +47,8 @@ public abstract class Personaje extends ObjetoActor {
 		setX(puntoOrigen.x);
 		setY(puntoOrigen.y);
 	}
+	
+	protected abstract void cargarHabilidades();
 
 	@Override
 	protected void moverDerecha(float delta) {

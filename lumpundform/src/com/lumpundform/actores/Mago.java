@@ -7,5 +7,8 @@ public class Mago extends Personaje {
 	private Mago(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
 	}
+	
+	@Override
+	protected void cargarHabilidades() {}
 
 }

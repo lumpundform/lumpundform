@@ -3,6 +3,7 @@ package com.lumpundform.actores;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.habilidades.HabilidadDisparar;
 
 /**
  * Clase específica para los humanoides del juego
@@ -35,8 +36,18 @@ public class Humanoide extends Personaje {
 
 		setVida(100.0f);
 		setVidaMax(100.0f);
+		setMana(100.0f);
+		setManaMax(100.0f);
 
 		cargarAnimaciones("detenido", "corriendo");
+		cargarHabilidades();
+	}
+
+	@Override
+	protected void cargarHabilidades() {
+		HabilidadDisparar habDisparar = new HabilidadDisparar(this, "disparar");
+		habDisparar.setCooldownDefault(3.0f);
+		getHabilidades().put("disparar", habDisparar);
 	}
 
 	@Override
@@ -55,6 +66,8 @@ public class Humanoide extends Personaje {
 			} else {
 				moverIzquierda(delta);
 			}
+		} else {
+			getHabilidades().get("disparar").ejecutar(null);
 		}
 	}
 
