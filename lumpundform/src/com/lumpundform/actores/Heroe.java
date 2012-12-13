@@ -115,7 +115,7 @@ public class Heroe extends Personaje {
 
 	private void hacerDano() {
 		if (getCooldownDano() <= 0) {
-			setVida(getVida() - 1);
+			setVida(getVida() - 15);
 
 			if (getVida() < 0) {
 				setVida(0);

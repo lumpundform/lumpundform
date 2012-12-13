@@ -43,16 +43,18 @@ public class Humanoide extends Personaje {
 	public void act(float delta) {
 		super.act(delta);
 
-		if (getX() <= 0) {
-			setDireccionX(Direccion.DERECHA);
-		} else if (getX() + getWidth() >= Gdx.graphics.getWidth()) {
-			setDireccionX(Direccion.IZQUIERDA);
-		}
+		if (!isEnemigo()) {
+			if (getX() <= 0) {
+				setDireccionX(Direccion.DERECHA);
+			} else if (getX() + getWidth() >= Gdx.graphics.getWidth()) {
+				setDireccionX(Direccion.IZQUIERDA);
+			}
 
-		if (derecha()) {
-			moverDerecha(delta);
-		} else {
-			moverIzquierda(delta);
+			if (derecha()) {
+				moverDerecha(delta);
+			} else {
+				moverIzquierda(delta);
+			}
 		}
 	}
 

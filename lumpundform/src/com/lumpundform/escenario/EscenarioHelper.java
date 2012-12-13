@@ -6,6 +6,7 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.D;
@@ -116,8 +117,8 @@ public class EscenarioHelper {
 		float destinoCamara;
 
 		if (heroe.derecha()) {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth
-					/ 6;
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2
+					+ camara.viewportWidth / 6;
 			if (camara.position.x < destinoCamara) {
 				camara.setPosicion(
 						(float) (camara.position.x + heroe.getVelocidad(delta)
@@ -127,8 +128,8 @@ public class EscenarioHelper {
 				camara.setPosicion(destinoCamara, camara.position.y);
 			}
 		} else {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth
-					/ 6;
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2
+					- camara.viewportWidth / 6;
 			if (camara.position.x > destinoCamara) {
 				camara.setPosicion(
 						(float) (camara.position.x - heroe.getVelocidad(delta)
@@ -152,7 +153,12 @@ public class EscenarioHelper {
 	 * @return El héroe
 	 */
 	public Heroe getHeroe() {
-		return (Heroe) escenario.getHeroe();
+		try {
+			return (Heroe) escenario.getHeroe();
+		} catch (EscenarioSinHeroeException e) {
+			U.err(e);
+		}
+		return null;
 	}
 
 	public EscenarioBase getEscenario() {

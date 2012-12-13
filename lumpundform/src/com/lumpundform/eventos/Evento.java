@@ -56,7 +56,7 @@ public class Evento {
 						&& heroe.getX() < (posicion.x + rango)) {
 					activado = true;
 				} else if (limite > personajesCreados && activado.equals(true)) {
-					escenario.agregarActor("humanoide", new Vector2(
+					escenario.agregarActor("enemigo", new Vector2(
 							posicion.x - 64, posicion.y), getNombre());
 					personajesCreados += 1;
 				}
@@ -69,7 +69,7 @@ public class Evento {
 					activado = true;
 					camara.setBloqueada(true);
 				} else if (limite > personajesCreados && activado.equals(true)) {
-					escenario.agregarActor("humanoide", new Vector2(
+					escenario.agregarActor("enemigo", new Vector2(
 							posicion.x - 64, posicion.y), getNombre());
 					personajesCreados += 1;
 				} else if (limite == personajesMatados) {

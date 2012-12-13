@@ -26,6 +26,7 @@ import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.U;
 
@@ -234,11 +235,17 @@ public class EscenarioBase extends Stage {
 	void acomodarHeroe(CamaraJuego camara) {
 		float min = camara.getPosicionOrigen().x;
 		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
-		Heroe heroe = getHeroe();
-		if (heroe.getEsquina("inf-izq").x < min)
-			heroe.setEsquinaX("inf-izq", min);
-		if (heroe.getEsquina("inf-der").x > max)
-			heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox().getAncho()));
+		Heroe heroe;
+		try {
+			heroe = getHeroe();
+			if (heroe.getEsquina("inf-izq").x < min)
+				heroe.setEsquinaX("inf-izq", min);
+			if (heroe.getEsquina("inf-der").x > max)
+				heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox()
+						.getAncho()));
+		} catch (EscenarioSinHeroeException e) {
+			U.err(e);
+		}
 	}
 
 	void cargarEventos(TiledObjectGroup tog) {
@@ -251,7 +258,11 @@ public class EscenarioBase extends Stage {
 
 	void revisarEventos(CamaraJuego camara, float delta) {
 		for (int i = 0; i < eventos.size; i++) {
-			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+			try {
+				eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+			} catch (EscenarioSinHeroeException e) {
+				U.err(e);
+			}
 		}
 	}
 
@@ -287,11 +298,14 @@ public class EscenarioBase extends Stage {
 
 	public void agregarActor(String tipo, Vector2 posicion, String evento)
 			throws ActorNoDefinidoException {
-		ObjetoActor actor;
+		Personaje actor;
 		if (tipo == "heroe") {
 			actor = new Heroe("heroe", posicion);
 		} else if (tipo == "humanoide") {
 			actor = new Humanoide("amigo", posicion);
+		} else if (tipo == "enemigo") {
+			actor = new Humanoide("amigo", posicion);
+			actor.setEnemigo(true);
 		} else {
 			throw new ActorNoDefinidoException("El Actor " + tipo
 					+ " no esta definido");
@@ -305,8 +319,14 @@ public class EscenarioBase extends Stage {
 	 * 
 	 * @return El héroe
 	 */
-	public Heroe getHeroe() {
-		return (Heroe) getActores(Heroe.class).get(0);
+	public Heroe getHeroe() throws EscenarioSinHeroeException {
+		List<Actor> actores = getActores(Heroe.class);
+		if (actores.size() == 0) {
+			throw new EscenarioSinHeroeException(
+					"No hay un héroe para este escenario.");
+		} else {
+			return (Heroe) actores.get(0);
+		}
 	}
 
 	private List<Actor> getPersonajes() {
