@@ -31,8 +31,8 @@ class BotonHabilidad extends BotonSuperior {
 			public void clicked(InputEvent event, float x, float y) {
 				BotonHabilidad boton = (BotonHabilidad) event
 						.getListenerActor();
+				Heroe heroe = ((EscenarioBase) boton.getStage()).getHeroe();
 				try {
-					Heroe heroe = ((EscenarioBase) boton.getStage()).getHeroe();
 					heroe.habilidad(boton.habilidad.getNombre());
 				} catch (HabilidadInexistenteException e) {
 					U.err(e);
