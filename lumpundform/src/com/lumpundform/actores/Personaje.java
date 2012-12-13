@@ -91,11 +91,25 @@ public abstract class Personaje extends ObjetoActor {
 		// héroe
 		if (isEnemigo()) {
 			Direccion direccion = getDireccionPosicionHeroe();
+<<<<<<< HEAD
 			setDireccionX(direccion);
 			if (direccion == Direccion.DERECHA) {
 				moverDerecha(delta);
 			} else {
 				moverIzquierda(delta);
+=======
+			if (direccion != null) {
+				float distanciaAlejamiento = 200.0f;
+				setDireccionX(direccion);
+				if (direccion == Direccion.DERECHA
+						&& (getHeroeEscenario().getPosicionCentro().x - getPosicionCentro().x) > distanciaAlejamiento) {
+					moverDerecha(delta);
+				} else if (direccion == Direccion.IZQUIERDA
+						&& (getPosicionCentro().x - getHeroeEscenario()
+								.getPosicionCentro().x) > distanciaAlejamiento) {
+					moverIzquierda(delta);
+				}
+>>>>>>> Los enemigos caminan en dirección del héroe
 			}
 >>>>>>> Los enemigos caminan en dirección del héroe
 		}
@@ -134,11 +148,15 @@ public abstract class Personaje extends ObjetoActor {
 		Heroe heroe = getHeroeEscenario();
 		if (heroe == null) {
 			return null;
+<<<<<<< HEAD
 		} else if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
 =======
 	private Direccion getDireccionPosicionHeroe() {
 		Heroe heroe = getHeroeEscenario();
 		if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
+>>>>>>> Los enemigos caminan en dirección del héroe
+=======
+		} else if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
 >>>>>>> Los enemigos caminan en dirección del héroe
 			return Direccion.IZQUIERDA;
 		} else {
@@ -149,6 +167,7 @@ public abstract class Personaje extends ObjetoActor {
 <<<<<<< HEAD
 	public Heroe getHeroeEscenario() {
 		EscenarioBase escenario = (EscenarioBase) getStage();
+<<<<<<< HEAD
 		return escenario.getHeroe();
 =======
 	private Heroe getHeroeEscenario() {
@@ -159,6 +178,9 @@ public abstract class Personaje extends ObjetoActor {
 			U.err(e);
 		}
 		return null;
+>>>>>>> Los enemigos caminan en dirección del héroe
+=======
+		return escenario.getHeroe();
 >>>>>>> Los enemigos caminan en dirección del héroe
 	}
 
