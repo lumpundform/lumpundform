@@ -73,8 +73,7 @@ public class EscenarioBase extends Stage {
 
 		for (Actor a : actores) {
 			ObjetoActor actor = (ObjetoActor) a;
-			if (actor.getName() != "heroe"
-					&& heroe.getHitbox().estaColisionando(actor.getHitbox())) {
+			if (actor.getName() != "heroe" && heroe.getHitbox().estaColisionando(actor.getHitbox())) {
 				heroe.setColisionActores(true);
 				break;
 			}
@@ -90,8 +89,7 @@ public class EscenarioBase extends Stage {
 			for (int j = 0; j < personajes.size(); j++) {
 				Personaje personaje = (Personaje) personajes.get(j);
 				if (personaje.isEnemigo() != ataque.getPersonaje().isEnemigo()
-						&& personaje.getHitbox().estaColisionando(
-								ataque.getHitbox())) {
+						&& personaje.getHitbox().estaColisionando(ataque.getHitbox())) {
 					if (ataque.isHaceDano()) {
 						personaje.quitarVida(ataque.getDano());
 					}
@@ -141,8 +139,7 @@ public class EscenarioBase extends Stage {
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 25);
 				altura = actor.getY();
 				direccionDiagonal = direccionDiagonalDer;
-			} else if (getPiso().estaColisionando(
-					actor.getEsquina(puntoColision))) {
+			} else if (getPiso().estaColisionando(actor.getEsquina(puntoColision))) {
 				p = actor.getEsquina(puntoColision);
 				altura = actor.getY() + 25;
 				direccionDiagonal = direccionDiagonalIzq;
@@ -155,12 +152,8 @@ public class EscenarioBase extends Stage {
 
 				// Posiciona al actor sobre la línea si la linea tiene una
 				// pendiente menor a 1
-				if (l != null
-						&& l.pendiente() != null
-						&& l.pendiente() <= 1.0001d
-						&& l.yEnX(p) <= altura
-						&& (l.direccionDiagonal() == direccionDiagonal || l
-								.direccionLinea() == direccionLinea)) {
+				if (l != null && l.pendiente() != null && l.pendiente() <= 1.0001d && l.yEnX(p) <= altura
+						&& (l.direccionDiagonal() == direccionDiagonal || l.direccionLinea() == direccionLinea)) {
 					caidaLibre.put(actor.getName(), false);
 					actor.setY(l.yEnX(p));
 				}
@@ -195,8 +188,7 @@ public class EscenarioBase extends Stage {
 			if (actor.getEsquina("inf-izq").x < 0)
 				actor.setEsquinaX("inf-izq", 0.0f);
 			if (actor.getEsquina("inf-der").x > width)
-				actor.setEsquinaX("inf-izq", (width - actor.getHitbox()
-						.getAncho()));
+				actor.setEsquinaX("inf-izq", (width - actor.getHitbox().getAncho()));
 
 			// Detecta colisión con paredes
 			Vector2 pc = null;
@@ -212,17 +204,14 @@ public class EscenarioBase extends Stage {
 				yPunto = Math.floor(pc.y) + 10.0f;
 			}
 
-			if (getPiso().estaColisionando(pc)
-					&& getPiso().linea("arriba", pc).esHorizontal()
+			if (getPiso().estaColisionando(pc) && getPiso().linea("arriba", pc).esHorizontal()
 					&& getPiso().linea(lineaLateral, pc).esVertical()
-					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(
-							pc))) {
+					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(pc))) {
 				Linea linea = getPiso().linea(lineaLateral, pc);
 				if (linea != null) {
 					Float xLinea = null;
 					if (lineaLateral == "izquierda") {
-						xLinea = linea.xEnY(pc) - actor.getHitbox().getAncho()
-								- 1;
+						xLinea = linea.xEnY(pc) - actor.getHitbox().getAncho() - 1;
 					} else {
 						xLinea = linea.xEnY(pc) + 1;
 					}
@@ -304,8 +293,7 @@ public class EscenarioBase extends Stage {
 		agregarActor(tipo, posicion, "");
 	}
 
-	public void agregarActor(String tipo, Vector2 posicion, String evento)
-			throws ActorNoDefinidoException {
+	public void agregarActor(String tipo, Vector2 posicion, String evento) throws ActorNoDefinidoException {
 		Personaje actor;
 		if (tipo == "heroe") {
 			actor = new Heroe("heroe", posicion);
@@ -315,8 +303,7 @@ public class EscenarioBase extends Stage {
 			actor = new Humanoide("amigo", posicion);
 			actor.setEnemigo(true);
 		} else {
-			throw new ActorNoDefinidoException("El Actor " + tipo
-					+ " no esta definido");
+			throw new ActorNoDefinidoException("El Actor " + tipo + " no esta definido");
 		}
 		actor.setPerteneceAEvento(evento);
 		addActor(actor);
@@ -359,8 +346,7 @@ public class EscenarioBase extends Stage {
 	void destruirAtaques(CamaraJuego camara) {
 		for (int i = 0; i < getAtaques().size(); i++) {
 			Actor ataque = getAtaques().get(i);
-			if ((ataque.getX() + ataque.getWidth()) < camara
-					.getPosicionOrigen().x
+			if ((ataque.getX() + ataque.getWidth()) < camara.getPosicionOrigen().x
 					|| ataque.getX() > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
 				ataque.remove();
 			}
