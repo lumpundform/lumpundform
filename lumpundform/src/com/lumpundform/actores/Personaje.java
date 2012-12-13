@@ -9,7 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.habilidades.Habilidad;
+import com.lumpundform.utilerias.U;
 
 /**
  * Clase para todos los personajes del juego
@@ -73,7 +75,29 @@ public abstract class Personaje extends ObjetoActor {
 		super.moverIzquierda(delta);
 		if (getEstado() != Estado.CAYENDO) {
 			setEstado(Estado.MOVIMIENTO);
+<<<<<<< HEAD
 			setDireccionX(Direccion.IZQUIERDA);
+=======
+	}
+
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		setEstado(isColisionPiso() ? Estado.DETENIDO : Estado.CAYENDO);
+		reducirCooldownHabilidades(delta);
+		aumentarMana(delta);
+
+		// Los enemigos se mueven en la dirección en la que se encuentra el
+		// héroe
+		if (isEnemigo()) {
+			Direccion direccion = getDireccionPosicionHeroe();
+			setDireccionX(direccion);
+			if (direccion == Direccion.DERECHA) {
+				moverDerecha(delta);
+			} else {
+				moverIzquierda(delta);
+			}
+>>>>>>> Los enemigos caminan en dirección del héroe
 		}
 	}
 
@@ -105,20 +129,37 @@ public abstract class Personaje extends ObjetoActor {
 				getTiempoTranscurrido(), true);
 	}
 
+<<<<<<< HEAD
 	public Direccion getDireccionPosicionHeroe() {
 		Heroe heroe = getHeroeEscenario();
 		if (heroe == null) {
 			return null;
 		} else if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
+=======
+	private Direccion getDireccionPosicionHeroe() {
+		Heroe heroe = getHeroeEscenario();
+		if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
+>>>>>>> Los enemigos caminan en dirección del héroe
 			return Direccion.IZQUIERDA;
 		} else {
 			return Direccion.DERECHA;
 		}
 	}
 
+<<<<<<< HEAD
 	public Heroe getHeroeEscenario() {
 		EscenarioBase escenario = (EscenarioBase) getStage();
 		return escenario.getHeroe();
+=======
+	private Heroe getHeroeEscenario() {
+		try {
+			EscenarioBase escenario = (EscenarioBase) getStage();
+			return escenario.getHeroe();
+		} catch (EscenarioSinHeroeException e) {
+			U.err(e);
+		}
+		return null;
+>>>>>>> Los enemigos caminan en dirección del héroe
 	}
 
 	public void reducirCooldownHabilidades(float delta) {
@@ -128,7 +169,11 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
+<<<<<<< HEAD
 	public void aumentarMana(float delta) {
+=======
+	private void aumentarMana(float delta) {
+>>>>>>> Los enemigos caminan en dirección del héroe
 		if (getManaPorSegundo() > 0) {
 			setMana(getMana() + (getManaPorSegundo() * delta));
 		}

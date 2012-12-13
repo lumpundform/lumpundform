@@ -26,6 +26,7 @@ import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.U;
 
@@ -234,11 +235,17 @@ public class EscenarioBase extends Stage {
 	void acomodarHeroe(CamaraJuego camara) {
 		float min = camara.getPosicionOrigen().x;
 		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
-		Heroe heroe = getHeroe();
-		if (heroe.getEsquina("inf-izq").x < min)
-			heroe.setEsquinaX("inf-izq", min);
-		if (heroe.getEsquina("inf-der").x > max)
-			heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox().getAncho()));
+		Heroe heroe;
+		try {
+			heroe = getHeroe();
+			if (heroe.getEsquina("inf-izq").x < min)
+				heroe.setEsquinaX("inf-izq", min);
+			if (heroe.getEsquina("inf-der").x > max)
+				heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox()
+						.getAncho()));
+		} catch (EscenarioSinHeroeException e) {
+			U.err(e);
+		}
 	}
 
 	void cargarEventos(TiledObjectGroup tog) {
@@ -251,7 +258,11 @@ public class EscenarioBase extends Stage {
 
 	void revisarEventos(CamaraJuego camara, float delta) {
 		for (int i = 0; i < eventos.size; i++) {
-			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+			try {
+				eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+			} catch (EscenarioSinHeroeException e) {
+				U.err(e);
+			}
 		}
 	}
 
