@@ -1,5 +1,6 @@
 package com.lumpundform.escenario;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.actores.Heroe;
@@ -22,7 +23,7 @@ public class EscenarioHelper {
 	private CamaraJuego camara;
 	private MapaHelper mh;
 	private EscenarioBase escenario;
-	
+
 	/**
 	 * Inicializa el escenario, el mapa, las colisiones y el {@link Heroe} para
 	 * el escenario del nombre dado
@@ -48,7 +49,7 @@ public class EscenarioHelper {
 		escenario.cargarEscenas("escena101");
 
 		escenario.setCamera(camara);
-		
+
 		// Agregar las colisiones del piso
 		escenario.setPiso(new Poligono(mh.getVerticesPlataforma("piso")));
 
@@ -87,7 +88,7 @@ public class EscenarioHelper {
 		escenario.revisarEventos(camara, delta);
 		escenario.revisarEscena(getHeroe());
 		escenario.destruirAtaques(camara);
-		
+
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
 
