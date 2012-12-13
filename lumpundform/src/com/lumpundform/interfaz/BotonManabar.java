@@ -8,8 +8,7 @@ import com.lumpundform.escenario.EscenarioBase;
 
 class BotonManabar extends BotonBarra {
 	BotonManabar(EscenarioBase escenario) {
-		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1,
-				1, 1, 1), escenario);
+		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1, 1, 1, 1), escenario);
 		setxBase(getCamara().viewportWidth - UI.anchoBarra - UI.margen);
 		setWidth(UI.anchoBarra);
 	}
