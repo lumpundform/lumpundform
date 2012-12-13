@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
@@ -21,6 +22,9 @@ import com.lumpundform.utilerias.U;
  */
 public class Heroe extends Personaje {
 	private List<Habilidad> habilidadesInterfaz;
+	private float cooldownDano = 0.0f;
+	private float deltaTransparente = 0.0f;
+	private boolean transparente = false;
 
 	/**
 	 * Carga datos específicos del {@link Heroe}, incluyendo su hitbox y su
@@ -74,19 +78,50 @@ public class Heroe extends Personaje {
 	public void act(float delta) {
 		super.act(delta);
 
+		setCooldownDano(getCooldownDano() - delta);
+
 		if (isColisionActores()) {
 			hacerDano();
 		}
 
+		actualizarTransparente(delta);
+
 		moverHeroe(delta);
 	}
 
-	private void hacerDano() {
-		// TODO: Implementar un tiempo de invincibilidad después de recibir daño
-		setVida(getVida() - 1);
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		float alpha = parentAlpha;
+		if (isTransparente()) {
+			alpha *= 0.5f;
+		}
+		super.draw(batch, alpha);
+	}
 
-		if (getVida() < 0) {
-			setVida(0);
+	private void actualizarTransparente(float delta) {
+		setDeltaTransparente(getDeltaTransparente() + delta);
+		if (getCooldownDano() <= 0.0f) {
+			setTransparente(false);
+			setDeltaTransparente(0.0f);
+		} else if (getDeltaTransparente() >= 0.08f) {
+			if (isTransparente()) {
+				setTransparente(false);
+			} else {
+				setTransparente(true);
+			}
+			setDeltaTransparente(0.0f);
+		}
+	}
+
+	private void hacerDano() {
+		if (getCooldownDano() <= 0) {
+			setVida(getVida() - 1);
+
+			if (getVida() < 0) {
+				setVida(0);
+			}
+
+			setCooldownDano(1.0f);
 		}
 	}
 
@@ -144,5 +179,29 @@ public class Heroe extends Personaje {
 
 	public void setHabilidadesInterfaz(List<Habilidad> habilidadesInterfaz) {
 		this.habilidadesInterfaz = habilidadesInterfaz;
+	}
+
+	public float getCooldownDano() {
+		return cooldownDano;
+	}
+
+	public void setCooldownDano(float cooldownDano) {
+		this.cooldownDano = cooldownDano;
+	}
+
+	public boolean isTransparente() {
+		return transparente;
+	}
+
+	public void setTransparente(boolean transparente) {
+		this.transparente = transparente;
+	}
+
+	public float getDeltaTransparente() {
+		return deltaTransparente;
+	}
+
+	public void setDeltaTransparente(float deltaTransparente) {
+		this.deltaTransparente = deltaTransparente;
 	}
 }
