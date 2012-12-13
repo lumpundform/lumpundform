@@ -89,7 +89,7 @@ public class EscenarioHelper {
 
 		// Eventos
 		escenario.revisarEventos(camara, delta);
-		//escenario.revisarEscena();
+		// escenario.revisarEscena();
 		escenario.destruirAtaques(camara);
 
 		escenario.acomodarActores(mh.getWidth());
