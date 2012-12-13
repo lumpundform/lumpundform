@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioBase;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
+import com.lumpundform.utilerias.U;
 
 class BotonManabar extends BotonBarra {
 	BotonManabar(EscenarioBase escenario) {
@@ -16,8 +18,13 @@ class BotonManabar extends BotonBarra {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		Heroe heroe = ((EscenarioBase) getStage()).getHeroe();
-		setHeight(UI.altoBarra * heroe.getMana() / heroe.getManaMax());
+		Heroe heroe;
+		try {
+			heroe = ((EscenarioBase) getStage()).getHeroe();
+			setHeight(UI.altoBarra * heroe.getMana() / heroe.getManaMax());
+		} catch (EscenarioSinHeroeException e) {
+			U.err(e);
+		}
 	}
 
 }
