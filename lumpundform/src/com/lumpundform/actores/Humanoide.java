@@ -46,7 +46,8 @@ public class Humanoide extends Personaje {
 	@Override
 	protected void cargarHabilidades() {
 		HabilidadDisparar habDisparar = new HabilidadDisparar(this, "disparar");
-		habDisparar.setCooldownDefault(3.0f);
+		habDisparar.setCooldownDefault(4.0f);
+		habDisparar.setCooldown(2.0f);
 		getHabilidades().put("disparar", habDisparar);
 	}
 

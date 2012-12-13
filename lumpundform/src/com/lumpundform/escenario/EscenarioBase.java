@@ -26,7 +26,6 @@ import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
-import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.U;
 
@@ -89,7 +88,7 @@ public class EscenarioBase extends Stage {
 			Ataque ataque = (Ataque) ataques.get(i);
 			for (int j = 0; j < personajes.size(); j++) {
 				Personaje personaje = (Personaje) personajes.get(j);
-				if (!personaje.getName().equals("heroe")
+				if (personaje.isEnemigo() != ataque.getPersonaje().isEnemigo()
 						&& personaje.getHitbox().estaColisionando(
 								ataque.getHitbox())) {
 					if (ataque.isHaceDano()) {
@@ -235,17 +234,11 @@ public class EscenarioBase extends Stage {
 	void acomodarHeroe(CamaraJuego camara) {
 		float min = camara.getPosicionOrigen().x;
 		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
-		Heroe heroe;
-		try {
-			heroe = getHeroe();
-			if (heroe.getEsquina("inf-izq").x < min)
-				heroe.setEsquinaX("inf-izq", min);
-			if (heroe.getEsquina("inf-der").x > max)
-				heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox()
-						.getAncho()));
-		} catch (EscenarioSinHeroeException e) {
-			U.err(e);
-		}
+		Heroe heroe = getHeroe();
+		if (heroe.getEsquina("inf-izq").x < min)
+			heroe.setEsquinaX("inf-izq", min);
+		if (heroe.getEsquina("inf-der").x > max)
+			heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox().getAncho()));
 	}
 
 	void cargarEventos(TiledObjectGroup tog) {
@@ -258,11 +251,7 @@ public class EscenarioBase extends Stage {
 
 	void revisarEventos(CamaraJuego camara, float delta) {
 		for (int i = 0; i < eventos.size; i++) {
-			try {
-				eventos.get(i).revisarEvento(camara, getHeroe(), delta);
-			} catch (EscenarioSinHeroeException e) {
-				U.err(e);
-			}
+			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
 		}
 	}
 
@@ -319,11 +308,10 @@ public class EscenarioBase extends Stage {
 	 * 
 	 * @return El héroe
 	 */
-	public Heroe getHeroe() throws EscenarioSinHeroeException {
+	public Heroe getHeroe() {
 		List<Actor> actores = getActores(Heroe.class);
 		if (actores.size() == 0) {
-			throw new EscenarioSinHeroeException(
-					"No hay un héroe para este escenario.");
+			return null;
 		} else {
 			return (Heroe) actores.get(0);
 		}

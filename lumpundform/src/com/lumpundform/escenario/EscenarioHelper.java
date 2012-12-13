@@ -6,7 +6,6 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
-import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.D;
@@ -153,12 +152,7 @@ public class EscenarioHelper {
 	 * @return El héroe
 	 */
 	public Heroe getHeroe() {
-		try {
-			return (Heroe) escenario.getHeroe();
-		} catch (EscenarioSinHeroeException e) {
-			U.err(e);
-		}
-		return null;
+		return (Heroe) escenario.getHeroe();
 	}
 
 	public EscenarioBase getEscenario() {
