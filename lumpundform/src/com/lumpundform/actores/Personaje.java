@@ -72,11 +72,15 @@ public abstract class Personaje extends ObjetoActor {
 		// Los enemigos se mueven en la dirección en la que se encuentra el
 		// héroe
 		if (isEnemigo()) {
+			float distanciaAlejamiento = 200.0f;
 			Direccion direccion = getDireccionPosicionHeroe();
 			setDireccionX(direccion);
-			if (direccion == Direccion.DERECHA) {
+			if (direccion == Direccion.DERECHA
+					&& (getHeroeEscenario().getPosicionCentro().x - getPosicionCentro().x) > distanciaAlejamiento) {
 				moverDerecha(delta);
-			} else {
+			} else if (direccion == Direccion.IZQUIERDA
+					&& (getPosicionCentro().x - getHeroeEscenario()
+							.getPosicionCentro().x) > distanciaAlejamiento) {
 				moverIzquierda(delta);
 			}
 		}
