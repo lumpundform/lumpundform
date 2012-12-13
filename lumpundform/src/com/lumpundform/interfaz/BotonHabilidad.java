@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioBase;
-import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.utilerias.U;
@@ -36,8 +35,6 @@ class BotonHabilidad extends BotonSuperior {
 					Heroe heroe = ((EscenarioBase) boton.getStage()).getHeroe();
 					heroe.habilidad(boton.habilidad.getNombre());
 				} catch (HabilidadInexistenteException e) {
-					U.err(e);
-				} catch (EscenarioSinHeroeException e) {
 					U.err(e);
 				}
 			}

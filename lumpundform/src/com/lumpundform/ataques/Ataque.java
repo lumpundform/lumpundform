@@ -10,6 +10,9 @@ public abstract class Ataque extends ObjetoActor {
 		NORMAL, EXPLOTANDO
 	}
 	
+	// Personaje
+	private Personaje personaje;
+	
 	// Estado
 	private Estado estado;
 	
@@ -20,6 +23,7 @@ public abstract class Ataque extends ObjetoActor {
 	protected Ataque(String nombre, Personaje personaje) {
 		super(nombre);
 
+		setPersonaje(personaje);
 		setPosicionCentro(personaje.getPosicionCentro());
 	}
 
@@ -86,6 +90,14 @@ public abstract class Ataque extends ObjetoActor {
 
 	public void setHaceDano(boolean haceDano) {
 		this.haceDano = haceDano;
+	}
+
+	public Personaje getPersonaje() {
+		return personaje;
+	}
+
+	public void setPersonaje(Personaje personaje) {
+		this.personaje = personaje;
 	}
 
 }

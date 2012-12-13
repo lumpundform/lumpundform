@@ -81,10 +81,6 @@ public class Heroe extends Personaje {
 
 		setCooldownDano(getCooldownDano() - delta);
 
-		if (isColisionActores()) {
-			hacerDano();
-		}
-
 		actualizarTransparente(delta);
 
 		moverHeroe(delta);
@@ -113,15 +109,11 @@ public class Heroe extends Personaje {
 			setDeltaTransparente(0.0f);
 		}
 	}
-
-	private void hacerDano() {
-		if (getCooldownDano() <= 0) {
-			setVida(getVida() - 15);
-
-			if (getVida() < 0) {
-				setVida(0);
-			}
-
+	
+	@Override
+	protected void hacerDano(float dano) {
+		if (getCooldownDano() <= 0.0f) {
+			super.hacerDano(dano);
 			setCooldownDano(1.0f);
 		}
 	}
