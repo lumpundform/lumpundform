@@ -35,5 +35,5 @@ public class InterfazHelper {
 	private void manabar() {
 		new BotonManabar(escenario);
 	}
-
+	
 }

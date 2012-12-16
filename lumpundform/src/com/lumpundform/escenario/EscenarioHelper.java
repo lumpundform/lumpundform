@@ -6,6 +6,7 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
+import com.lumpundform.interfaz.CuadroTexto;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.D;
@@ -22,6 +23,8 @@ public class EscenarioHelper {
 	private CamaraJuego camara;
 	private MapaHelper mh;
 	private EscenarioBase escenario;
+	
+	CuadroTexto ct;
 
 	/**
 	 * Inicializa el escenario, el mapa, las colisiones y el {@link Heroe} para
@@ -48,6 +51,8 @@ public class EscenarioHelper {
 		escenario.cargarEscenas("escena101");
 
 		escenario.setCamera(camara);
+		
+		ct = new CuadroTexto(batch);
 
 		// Agregar las colisiones del piso
 		escenario.setPiso(new Poligono(mh.getVerticesPlataforma("piso")));
@@ -87,6 +92,8 @@ public class EscenarioHelper {
 		escenario.revisarEventos(camara, delta);
 		escenario.revisarEscena(getHeroe());
 		escenario.destruirAtaques(camara);
+		
+		// ct.draw();
 
 		// Actuar de todos los actores del escenario
 		escenario.act(delta);
