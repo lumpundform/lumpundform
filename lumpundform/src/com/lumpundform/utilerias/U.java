@@ -150,7 +150,7 @@ public class U {
 		sb.begin();
 		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
 		bmf.setScale(escala);
-		bmf.drawMultiLine(sb, msg, x, y);
+		bmf.drawWrapped(sb, msg, x, y, 50.0f);
 		sb.end();
 	}
 }

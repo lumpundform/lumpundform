@@ -2,23 +2,67 @@ package com.lumpundform.interfaz;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lumpundform.utilerias.U;
+import com.lumpundform.utilerias.Fuentes;
 
 public class CuadroTexto {
 	NinePatch np = new NinePatch(new Texture(Gdx.files.internal("ct.png")), 3, 3, 3, 3);
-	SpriteBatch batch;
+	SpriteBatch batch = new SpriteBatch();
+	public Boolean dibujar = true;
+	
+	private float x = 10.0f;
+	private float y = 10.0f;
+	private float width = 325.0f;
+	private float height = 125.0f;
+	private float paddingX = 10.0f;
+	private float paddingY = 10.0f;
+	
+	private static BitmapFont bmf = Fuentes.regular();
 
-	public CuadroTexto(SpriteBatch batch) {
-		this.batch = batch;
+	public CuadroTexto() {
+		
 	}
 	
-	public void draw() {
-		this.batch.begin();
-		np.draw(batch, 10.0f, 10.0f, 150.0f, 100.0f);
-		this.batch.end();
-		// U.ds("Mensaje\notroMensaje\ttabulacion.", 500.0f, 100.0f);
+	public void setX(float x) {
+		this.x = x;
 	}
 	
+	public void setY(float y) {
+		this.y = y;
+	}
+	
+	public void setWidth(float width) {
+		this.width = width;
+	}
+	
+	public void setHeight(float height) {
+		this.height = height;
+	}
+	
+	public void setPaddingX(float paddingX) {
+		this.paddingX = paddingX;
+	}
+	
+	public void setPaddingY(float paddingY) {
+		this.paddingY = paddingY;
+	}
+	public void draw(String str) {
+		if(dibujar) {
+			batch.begin();
+			np.draw(batch, x, y, width, height);
+			batch.end();
+			drawString(str, batch);
+		}
+	}
+	
+	private void drawString(Object mensaje, SpriteBatch batch) {
+		CharSequence msg = mensaje + "";
+		batch.begin();
+		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
+		bmf.setScale(0.80f);
+		bmf.drawWrapped(batch, msg, (x + paddingX), (height - paddingY), (width - paddingX*2));
+		batch.end();
+	}
 }
