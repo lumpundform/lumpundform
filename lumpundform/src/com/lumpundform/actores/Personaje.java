@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.habilidades.Habilidad;
@@ -18,7 +19,7 @@ import com.lumpundform.habilidades.Habilidad;
  */
 public abstract class Personaje extends ObjetoActor {
 	// Valores estáticos de los personajes
-	protected static enum Estado {
+	public static enum Estado {
 		DETENIDO, MOVIMIENTO, CAYENDO, COLISIONANDO;
 	}
 
@@ -44,48 +45,24 @@ public abstract class Personaje extends ObjetoActor {
 
 		setX(puntoOrigen.x);
 		setY(puntoOrigen.y);
+
+		addAction(new PersonajeAction());
 	}
 
 	protected abstract void cargarHabilidades();
 
 	@Override
-	protected void moverDerecha(float delta) {
+	public void moverDerecha(float delta) {
 		super.moverDerecha(delta);
 		if (getEstado() != Estado.CAYENDO)
 			setEstado(Estado.MOVIMIENTO);
 	}
 
 	@Override
-	protected void moverIzquierda(float delta) {
+	public void moverIzquierda(float delta) {
 		super.moverIzquierda(delta);
 		if (getEstado() != Estado.CAYENDO)
 			setEstado(Estado.MOVIMIENTO);
-	}
-
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		setEstado(isColisionPiso() ? Estado.DETENIDO : Estado.CAYENDO);
-		reducirCooldownHabilidades(delta);
-		aumentarMana(delta);
-
-		// Los enemigos se mueven en la dirección en la que se encuentra el
-		// héroe
-		if (isEnemigo()) {
-			Direccion direccion = getDireccionPosicionHeroe();
-			if (direccion != null) {
-				float distanciaAlejamiento = 200.0f;
-				setDireccionX(direccion);
-				if (direccion == Direccion.DERECHA
-						&& (getHeroeEscenario().getPosicionCentro().x - getPosicionCentro().x) > distanciaAlejamiento) {
-					moverDerecha(delta);
-				} else if (direccion == Direccion.IZQUIERDA
-						&& (getPosicionCentro().x - getHeroeEscenario()
-								.getPosicionCentro().x) > distanciaAlejamiento) {
-					moverIzquierda(delta);
-				}
-			}
-		}
 	}
 
 	@Override
@@ -116,7 +93,7 @@ public abstract class Personaje extends ObjetoActor {
 				getTiempoTranscurrido(), true);
 	}
 
-	private Direccion getDireccionPosicionHeroe() {
+	public Direccion getDireccionPosicionHeroe() {
 		Heroe heroe = getHeroeEscenario();
 		if (heroe == null) {
 			return null;
@@ -127,19 +104,19 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
-	private Heroe getHeroeEscenario() {
+	public Heroe getHeroeEscenario() {
 		EscenarioBase escenario = (EscenarioBase) getStage();
 		return escenario.getHeroe();
 	}
 
-	private void reducirCooldownHabilidades(float delta) {
+	public void reducirCooldownHabilidades(float delta) {
 		Iterator<Habilidad> i = getHabilidades().values().iterator();
 		while (i.hasNext()) {
 			i.next().reducirCooldown(delta);
 		}
 	}
 
-	private void aumentarMana(float delta) {
+	public void aumentarMana(float delta) {
 		if (getManaPorSegundo() > 0) {
 			setMana(getMana() + (getManaPorSegundo() * delta));
 		}
@@ -172,7 +149,6 @@ public abstract class Personaje extends ObjetoActor {
 			setVida(0);
 		}
 	}
-
 
 	public void quitarMana(float mana) {
 		this.setMana(this.getMana() - mana);

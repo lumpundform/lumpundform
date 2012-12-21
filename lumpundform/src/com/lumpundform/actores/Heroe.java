@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.lumpundform.acciones.HeroeAction;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
@@ -56,6 +58,8 @@ public class Heroe extends Personaje {
 
 		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
 		cargarHabilidades();
+
+		addAction(new HeroeAction());
 	}
 
 	@Override
@@ -76,17 +80,6 @@ public class Heroe extends Personaje {
 	}
 
 	@Override
-	public void act(float delta) {
-		super.act(delta);
-
-		setCooldownDano(getCooldownDano() - delta);
-
-		actualizarTransparente(delta);
-
-		moverHeroe(delta);
-	}
-
-	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		float alpha = parentAlpha;
 		if (isTransparente()) {
@@ -95,7 +88,7 @@ public class Heroe extends Personaje {
 		super.draw(batch, alpha);
 	}
 
-	private void actualizarTransparente(float delta) {
+	public void actualizarTransparente(float delta) {
 		setDeltaTransparente(getDeltaTransparente() + delta);
 		if (getCooldownDano() <= 0.0f) {
 			setTransparente(false);
@@ -109,7 +102,7 @@ public class Heroe extends Personaje {
 			setDeltaTransparente(0.0f);
 		}
 	}
-	
+
 	@Override
 	protected void hacerDano(float dano) {
 		if (getCooldownDano() <= 0.0f) {
@@ -124,7 +117,7 @@ public class Heroe extends Personaje {
 	 * @param delta
 	 *            El delta de {@link Screen#render()}
 	 */
-	private void moverHeroe(float delta) {
+	public void moverHeroe(float delta) {
 		if (!isTeletransportar()
 				&& (Gdx.input.isKeyPressed(Keys.A) || Gdx.input
 						.isKeyPressed(Keys.D))) {
