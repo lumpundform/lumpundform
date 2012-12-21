@@ -63,7 +63,7 @@ public abstract class ObjetoActor extends Actor {
 		setAnimacion(new HashMap<String, Animation>());
 
 		setTiempoTranscurrido(0f);
-		
+
 		addAction(new ObjetoActorAction());
 	}
 
@@ -179,7 +179,7 @@ public abstract class ObjetoActor extends Actor {
 	public Vector2 getPosicionCentro() {
 		return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
 	}
-	
+
 	public float getXCentro() {
 		return getPosicionCentro().x;
 	}
@@ -225,11 +225,6 @@ public abstract class ObjetoActor extends Actor {
 			cuadroActual.flip(true, false);
 	}
 
-	@Override
-	public Actor hit(float x, float y, boolean touchable) {
-		return null;
-	}
-
 	/**
 	 * Regresa el cuadro actual dentro de la animación elegida del
 	 * {@link ObjetoActor}
@@ -253,7 +248,8 @@ public abstract class ObjetoActor extends Actor {
 		int columnas = D.gi(getName(), "columnas_" + tipoAnimacion);
 		int renglones = D.gi(getName(), "renglones_" + tipoAnimacion);
 
-		int columnasOffset = D.gi(getName(), "columnas_offset_" + tipoAnimacion);
+		int columnasOffset = D
+				.gi(getName(), "columnas_offset_" + tipoAnimacion);
 
 		Texture texturaAnimacion = new Texture(Gdx.files.internal(spriteSheet));
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion,
