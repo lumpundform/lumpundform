@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.lumpundform.acciones.ObjetoActorAction;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.excepciones.DatoInexistenteException;
 import com.lumpundform.utilerias.D;
@@ -62,6 +63,8 @@ public abstract class ObjetoActor extends Actor {
 		setAnimacion(new HashMap<String, Animation>());
 
 		setTiempoTranscurrido(0f);
+		
+		addAction(new ObjetoActorAction());
 	}
 
 	/**
@@ -176,6 +179,10 @@ public abstract class ObjetoActor extends Actor {
 	public Vector2 getPosicionCentro() {
 		return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
 	}
+	
+	public float getXCentro() {
+		return getPosicionCentro().x;
+	}
 
 	/**
 	 * Posiciona al {@link Heroe} conforme a su punto del centro
@@ -216,12 +223,6 @@ public abstract class ObjetoActor extends Actor {
 
 		if (flip)
 			cuadroActual.flip(true, false);
-	}
-
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		setTiempoTranscurrido(getTiempoTranscurrido() + delta);
 	}
 
 	@Override
