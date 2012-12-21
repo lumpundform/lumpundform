@@ -220,6 +220,7 @@ public abstract class ObjetoActor extends Actor {
 
 	@Override
 	public void act(float delta) {
+		super.act(delta);
 		setTiempoTranscurrido(getTiempoTranscurrido() + delta);
 	}
 
