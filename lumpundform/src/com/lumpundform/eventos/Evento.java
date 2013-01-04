@@ -25,10 +25,14 @@ public class Evento {
 	// Cantidad de personajes por cada evento.
 	private int personajesCreados = 0;
 	private int personajesMatados = 0;
+	
+	// Escena
 
+	private Escena escena;
+	
 	public Evento(Vector2 posicion, TiledObject objeto, EscenarioBase escenario) {
 		this.posicion = posicion;
-		this.setNombre(objeto.name);
+		this.nombre = objeto.name;
 		this.tipo = objeto.type;
 		this.activado = false;
 		this.terminado = false;
@@ -40,6 +44,10 @@ public class Evento {
 			this.limite = Integer.parseInt(objeto.properties.get("limite"));
 		if (objeto.properties.containsKey("duracion"))
 			this.duracion = Float.parseFloat(objeto.properties.get("duracion"));
+		
+		// Crear escena
+		if (objeto.type.equals("escena"))
+			escena = escenario.getEscena(objeto.properties.get("escena"));
 	}
 
 	public void revisarEvento(CamaraJuego camara, Heroe heroe, float delta) {
@@ -86,12 +94,16 @@ public class Evento {
 				} else if (activado == true && duracion <= tiempoTranscurrido) {
 					terminado = true;
 				}
+			} else if (tipo.equals("escena")) {
+				if(heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+					escena.ejecutarEscena(heroe);
+				}
 			}
 		} catch (ActorNoDefinidoException e) {
 			U.err(e);
 		}
 	}
-
+	
 	public void matarPersonaje() {
 		personajesMatados += 1;
 	}

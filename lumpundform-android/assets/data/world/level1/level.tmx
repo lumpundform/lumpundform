@@ -17,14 +17,13 @@
   </object>
  </objectgroup>
  <objectgroup name="eventos" width="34" height="9">
-  <object name="evento2" type="spawn" x="1600" y="512">
+  <object name="evento1" type="spawn" x="1600" y="512">
    <properties>
     <property name="limite" value="5"/>
     <property name="rango" value="50.0"/>
    </properties>
   </object>
-  <object name="escena101" type="escena" x="1600" y="512"/>
-  <object name="evento1" type="coliseo" x="448" y="448">
+  <object name="evento2" type="coliseo" x="448" y="448">
    <properties>
     <property name="limite" value="4"/>
     <property name="rango" value="50.0"/>
@@ -40,6 +39,18 @@
     <property name="duracion" value="10"/>
     <property name="rango" value="80.0"/>
    </properties>
+  </object>
+  <object name="evento5" type="escena" x="600" y="512">
+  	<properties>
+  		<property name="escena" value="101"/>
+    	<property name="rango" value="80.0"/>
+  	</properties>
+  </object>
+  <object name="evento5" type="escena" x="1700" y="512">
+  	<properties>
+  		<property name="escena" value="102"/>
+    	<property name="rango" value="80.0"/>
+  	</properties>
   </object>
  </objectgroup>
 </map>
