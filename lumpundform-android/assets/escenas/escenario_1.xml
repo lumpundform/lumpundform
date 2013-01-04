@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escenas>
+	<escena nombre="101">
+	    <paso numero="1">
+	        <accion actor="heroe" objetivo="ir_a" destino="600"/>
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo!" />
+	    </paso>
+	    
+	    <paso numero="2">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hello world!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	    <paso numero="3">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hallo Welt!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	    <paso numero="4">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="ciao mondo!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	</escena>
+	
+	<escena nombre="102">
+	    <paso numero="1">
+	        <accion actor="heroe" objetivo="ir_a" destino="600"/>
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo2!" />
+	    </paso>
+	    
+	    <paso numero="2">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hello world2!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	    <paso numero="3">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hallo Welt2!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	    <paso numero="4">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="ciao mondo2!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	</escena>
+	
+	<escena nombre="103">
+	    <paso numero="1">
+	        <accion actor="heroe" objetivo="ir_a" destino="600"/>
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo3!" />
+	    </paso>
+	    
+	    <paso numero="2">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hello world3!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	    <paso numero="3">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hallo Welt3!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	    <paso numero="4">
+	        <accion actor="heroe" objetivo="hablar" destino="600" texto="ciao mondo3!" />
+	        <accion actor="heroe" objetivo="ir_a" destino="50" />
+	    </paso>
+	</escena>
+</escenas>
