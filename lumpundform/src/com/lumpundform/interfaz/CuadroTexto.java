@@ -26,7 +26,11 @@ public class CuadroTexto {
 	
 	private static BitmapFont bmf = Fuentes.regular();
 
-	public CuadroTexto(String texto) {
+	public CuadroTexto() {
+		
+	}
+	
+	public void setTexto(String texto) {
 		this.texto = texto;
 	}
 	
@@ -53,7 +57,7 @@ public class CuadroTexto {
 	public void setPaddingY(float paddingY) {
 		this.paddingY = paddingY;
 	}
-	public void draw() {
+	public void draw(String texto) {
 		if(dibujar) {
 			batch.begin();
 			np.draw(batch, x, y, width, height);
@@ -62,6 +66,16 @@ public class CuadroTexto {
 		}
 	}
 	
+	public Boolean drawCt() {
+		draw(newstr);
+		if (index < texto.length()) {
+			newstr += texto.substring(index, ++index);
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 	
 	private void drawString(Object mensaje, SpriteBatch batch) {
 		CharSequence msg = mensaje + "";
