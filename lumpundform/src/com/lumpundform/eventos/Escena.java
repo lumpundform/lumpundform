@@ -10,7 +10,10 @@ public class Escena {
 
 	public Element escena;
 	public int paso = 0;
+	private int indexAccion = 0;
 	public String nombre;
+	
+	private CuadroTexto ct = new CuadroTexto();
 
 	public Escena(Element escena, String nombre) {
 		this.escena = escena;
@@ -18,20 +21,38 @@ public class Escena {
 	}
 
 	public void ejecutarEscena(Heroe heroe) {
-		revisarPaso(heroe);
+		revisarPasos(heroe);
 	}
 
-	private void revisarPaso(Heroe heroe) {
+	private void revisarPasos(Heroe heroe) {
 		Array<Element> pasos = escena.getChildrenByNameRecursively("paso");
 		if(paso < pasos.size) {
-			revisarAccion(pasos.get(paso), heroe);
+			revisarAcciones(pasos.get(paso), heroe);
+		}
+	}
+	
+	private void ejecutarAccion(String objetivo, Element accion, Heroe heroe) {
+		if(objetivo.equals("hablar")) {
+			ct.setTexto(accion.get("texto"));
+			hablar(accion);
+		} else if (objetivo.equals("ir_a")) {
+			U.l("ir_a",accion.get("destino"));
+		}
+	}
+	
+	private void hablar(Element accion) {
+		Boolean hablar = ct.drawCt();
+		if(!hablar) {
+			ct.index = 0;
+			ct.newstr = "";
+			indexAccion++;
 		}
 	}
 
-	private void revisarAccion(Element pasos, Heroe heroe) {
+	private void revisarAcciones(Element pasos, Heroe heroe) {
 		Array<Element> acciones = pasos.getChildrenByNameRecursively("accion");
-		for (int i = 0; i < acciones.size; i++) {
-			U.l("evento", acciones.get(i).get("objetivo"));
+		if (acciones.size > indexAccion) {
+			ejecutarAccion(acciones.get(indexAccion).get("objetivo"), acciones.get(indexAccion), heroe);
 		}
 		//ct.draw(newstr);
 		/*
