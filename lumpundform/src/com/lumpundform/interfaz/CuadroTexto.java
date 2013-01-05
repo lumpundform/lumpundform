@@ -26,7 +26,11 @@ public class CuadroTexto {
 	
 	private static BitmapFont bmf = Fuentes.regular();
 
-	public CuadroTexto(String texto) {
+	public CuadroTexto() {
+		
+	}
+	
+	public void setTexto(String texto) {
 		this.texto = texto;
 	}
 	

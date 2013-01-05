@@ -263,8 +263,7 @@ public class EscenarioBase extends Stage {
 		Element xmlE;
 
 		xmlF = new XmlReader();
-		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml")
-				.readString();
+		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml").readString();
 		xmlE = xmlF.parse(xmlS);
 
 		Array<Element> escena = xmlE.getChildrenByNameRecursively("escena");
@@ -273,7 +272,7 @@ public class EscenarioBase extends Stage {
 			escenas.add(new Escena(escena.get(i), escena.get(i).get("nombre")));
 		}
 	}
-	
+
 	public Escena getEscena(String nombre) {
 		for (int i = 0; i < escenas.size; i++) {
 			if (escenas.get(i).nombre.equals(nombre))
@@ -281,15 +280,8 @@ public class EscenarioBase extends Stage {
 		}
 		return null;
 	}
-/*
-	void revisarEscena() {
-		for (int i = 0; i < escenas.size; i++) {
-			//escenas.get(i).ejecutarEscena(getHeroe());
-		}
-	}
-*/
-	void agregarActor(String tipo, Vector2 posicion)
-			throws ActorNoDefinidoException {
+
+	void agregarActor(String tipo, Vector2 posicion) throws ActorNoDefinidoException {
 		agregarActor(tipo, posicion, "");
 	}
 
