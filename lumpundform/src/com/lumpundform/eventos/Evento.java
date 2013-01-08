@@ -95,7 +95,9 @@ public class Evento {
 					terminado = true;
 				}
 			} else if (tipo.equals("escena")) {
-				if(heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+				if(activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+					activado = true;
+				} else if (activado == true ) {
 					escena.ejecutarEscena(heroe);
 				}
 			}

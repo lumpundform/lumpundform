@@ -2,6 +2,7 @@
 <escenas>
 	<escena nombre="101">
 	    <paso numero="1">
+	        <accion actor="heroe" objetivo="ir_a" destino="1200" />
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo!" />
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo2!" />
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo3!" />
