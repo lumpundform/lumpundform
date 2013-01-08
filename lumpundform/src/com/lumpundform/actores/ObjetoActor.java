@@ -39,6 +39,7 @@ public abstract class ObjetoActor extends Actor {
 
 	// Movimiento
 	private float destinoX;
+	private Direccion direccionDestinoX;
 	private float velocidad;
 	private boolean teletransportar = false;
 
@@ -339,6 +340,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setTeletransportar(boolean teletransportar) {
 		this.teletransportar = teletransportar;
+	}
+
+	public Direccion getDireccionDestinoX() {
+		return direccionDestinoX;
+	}
+
+	public void setDireccionDestinoX(Direccion direccionDestinoX) {
+		this.direccionDestinoX = direccionDestinoX;
 	}
 
 }

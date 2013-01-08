@@ -50,19 +50,31 @@ public abstract class Personaje extends ObjetoActor {
 	}
 
 	protected abstract void cargarHabilidades();
+	
+	public void moverDestino(float delta) {
+		if (getDireccionDestinoX() == Direccion.IZQUIERDA && getX() > getDestinoX()) {
+			moverIzquierda(delta);
+		} else if (getDireccionDestinoX() == Direccion.DERECHA && getX() < getDestinoX()) {
+			moverDerecha(delta);
+		}
+	}
 
 	@Override
 	public void moverDerecha(float delta) {
 		super.moverDerecha(delta);
-		if (getEstado() != Estado.CAYENDO)
+		if (getEstado() != Estado.CAYENDO) {
 			setEstado(Estado.MOVIMIENTO);
+			setDireccionX(Direccion.DERECHA);
+		}
 	}
 
 	@Override
 	public void moverIzquierda(float delta) {
 		super.moverIzquierda(delta);
-		if (getEstado() != Estado.CAYENDO)
+		if (getEstado() != Estado.CAYENDO) {
 			setEstado(Estado.MOVIMIENTO);
+			setDireccionX(Direccion.IZQUIERDA);
+		}
 	}
 
 	@Override
@@ -127,8 +139,7 @@ public abstract class Personaje extends ObjetoActor {
 	}
 
 	public void quitarVida(float dano) {
-		Evento evento = ((EscenarioBase) getStage())
-				.getEvento(getPerteneceAEvento());
+		Evento evento = ((EscenarioBase) getStage()).getEvento(getPerteneceAEvento());
 		hacerDano(dano);
 		if (getVida() <= 0.0f) {
 			if (evento != null) {

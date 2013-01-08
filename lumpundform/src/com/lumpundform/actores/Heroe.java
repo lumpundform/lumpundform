@@ -64,10 +64,8 @@ public class Heroe extends Personaje {
 
 	@Override
 	protected void cargarHabilidades() {
-		getHabilidades().put("teletransportar",
-				new HabilidadTeletransportar(this, "teletransportar"));
-		getHabilidades().put("disparar",
-				new HabilidadDisparar(this, "disparar"));
+		getHabilidades().put("teletransportar", new HabilidadTeletransportar(this, "teletransportar"));
+		getHabilidades().put("disparar", new HabilidadDisparar(this, "disparar"));
 
 		// TODO: cargar habilidadesInterfaz de los settings
 		setHabilidadesInterfaz(new ArrayList<Habilidad>());
@@ -118,18 +116,14 @@ public class Heroe extends Personaje {
 	 *            El delta de {@link Screen#render()}
 	 */
 	public void moverHeroe(float delta) {
-		if (!isTeletransportar()
-				&& (Gdx.input.isKeyPressed(Keys.A) || Gdx.input
-						.isKeyPressed(Keys.D))) {
+		if (!isTeletransportar() && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D))) {
 			float d = delta;
 			if (!isColisionPiso()) {
 				d = delta * 0.75f;
 			}
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				setDireccionX(Direccion.IZQUIERDA);
 				moverIzquierda(d);
 			} else if (Gdx.input.isKeyPressed(Keys.D)) {
-				setDireccionX(Direccion.DERECHA);
 				moverDerecha(d);
 			}
 		}
@@ -139,23 +133,19 @@ public class Heroe extends Personaje {
 		habilidad(nombre, null);
 	}
 
-	public void habilidad(String nombre, Vector2 pos)
-			throws HabilidadInexistenteException {
+	public void habilidad(String nombre, Vector2 pos) throws HabilidadInexistenteException {
 		if (getHabilidades().containsKey(nombre)) {
 			getHabilidades().get(nombre).ejecutar(pos);
 		} else {
-			throw new HabilidadInexistenteException("No existe la habilidad "
-					+ nombre + " para el actor " + getName());
+			throw new HabilidadInexistenteException("No existe la habilidad " + nombre + " para el actor " + getName());
 		}
 	}
 
-	private Habilidad getHabilidad(String nombre)
-			throws HabilidadInexistenteException {
+	private Habilidad getHabilidad(String nombre) throws HabilidadInexistenteException {
 		if (getHabilidades().containsKey(nombre)) {
 			return getHabilidades().get(nombre);
 		} else {
-			throw new HabilidadInexistenteException("No existe la habilidad "
-					+ nombre + " para el actor " + getName());
+			throw new HabilidadInexistenteException("No existe la habilidad " + nombre + " para el actor " + getName());
 		}
 	}
 
