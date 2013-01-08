@@ -4,15 +4,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.interfaz.CuadroTexto;
-import com.lumpundform.utilerias.U;
 
 public class Escena {
 
 	public Element escena;
-	public int paso = 0;
-	private int indexAccion = 0;
 	public String nombre;
+	public int paso = 0;
 	
+	private int indexAccion	= 0;
 	private CuadroTexto ct = new CuadroTexto();
 
 	public Escena(Element escena, String nombre) {
@@ -36,7 +35,7 @@ public class Escena {
 			ct.setTexto(accion.get("texto"));
 			hablar(accion);
 		} else if (objetivo.equals("ir_a")) {
-			U.l("ir_a",accion.get("destino"));
+			caminar(heroe, Integer.parseInt(accion.get("destino")));
 		}
 	}
 	
@@ -49,34 +48,19 @@ public class Escena {
 		}
 	}
 
+	private void caminar(Heroe heroe, float destino) {
+		heroe.setDestinoX(destino);
+		if(heroe.getDestinoX() > heroe.getX()) {
+			heroe.setX(heroe.getX() + 5);
+		} else {
+			indexAccion++;
+		}
+	}
+
 	private void revisarAcciones(Element pasos, Heroe heroe) {
 		Array<Element> acciones = pasos.getChildrenByNameRecursively("accion");
 		if (acciones.size > indexAccion) {
 			ejecutarAccion(acciones.get(indexAccion).get("objetivo"), acciones.get(indexAccion), heroe);
 		}
-		//ct.draw(newstr);
-		/*
-		for (int i = 0; i < eventos.size; i++) {
-			Element evento = eventos.get(i);
-			// U.l("escena", evento.get("destino"));
-			if(evento.get("objetivo").equals("hablar")) {
-				String texto = evento.get("texto");
-				CuadroTexto ct = new CuadroTexto(texto);
-				int length = ct.texto.length();
-				if(length > ct.index) {
-					ct.newstr += ct.texto.substring(ct.index, ++ct.index);
-				} else {
-					if(paso < eventos.size) {
-						paso++;
-					}
-				}
-				ct.draw();
-				U.l("objetivo", evento.get("objetivo"));
-				heroe.setDestinoX(Float.parseFloat(evento.get("destino")));
-				if(heroe.getDestinoX() > heroe.getX()) {
-					heroe.setX(heroe.getX() + 5);
-				}
-			}
-		}*/
 	}
 }
