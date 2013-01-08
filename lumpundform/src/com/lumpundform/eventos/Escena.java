@@ -3,6 +3,7 @@ package com.lumpundform.eventos;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lumpundform.actores.Heroe;
+import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.interfaz.CuadroTexto;
 
 public class Escena {
@@ -19,23 +20,23 @@ public class Escena {
 		this.nombre = nombre;
 	}
 
-	public void ejecutarEscena(Heroe heroe) {
-		revisarPasos(heroe);
+	public void ejecutarEscena(Heroe heroe, float delta) {
+		revisarPasos(heroe, delta);
 	}
 
-	private void revisarPasos(Heroe heroe) {
+	private void revisarPasos(Heroe heroe, float delta) {
 		Array<Element> pasos = escena.getChildrenByNameRecursively("paso");
 		if(paso < pasos.size) {
-			revisarAcciones(pasos.get(paso), heroe);
+			revisarAcciones(pasos.get(paso), heroe, delta);
 		}
 	}
 	
-	private void ejecutarAccion(String objetivo, Element accion, Heroe heroe) {
+	private void ejecutarAccion(String objetivo, Element accion, Heroe heroe, float delta) {
 		if(objetivo.equals("hablar")) {
 			ct.setTexto(accion.get("texto"));
 			hablar(accion);
 		} else if (objetivo.equals("ir_a")) {
-			caminar(heroe, Integer.parseInt(accion.get("destino")));
+			caminar(heroe, Integer.parseInt(accion.get("destino")), delta);
 		}
 	}
 	
@@ -48,19 +49,20 @@ public class Escena {
 		}
 	}
 
-	private void caminar(Heroe heroe, float destino) {
+	private void caminar(Heroe heroe, float destino, float delta) {
 		heroe.setDestinoX(destino);
-		if(heroe.getDestinoX() > heroe.getX()) {
-			heroe.setX(heroe.getX() + 5);
-		} else {
+		heroe.setDireccionDestinoX(Direccion.DERECHA);
+		heroe.moverDestino(delta);
+		if((heroe.getDestinoX() > heroe.getX() && heroe.getDireccionDestinoX() == Direccion.IZQUIERDA) ||
+				(heroe.getDestinoX() < heroe.getX() && heroe.getDireccionDestinoX() == Direccion.DERECHA)) {
 			indexAccion++;
 		}
 	}
 
-	private void revisarAcciones(Element pasos, Heroe heroe) {
+	private void revisarAcciones(Element pasos, Heroe heroe, float delta) {
 		Array<Element> acciones = pasos.getChildrenByNameRecursively("accion");
 		if (acciones.size > indexAccion) {
-			ejecutarAccion(acciones.get(indexAccion).get("objetivo"), acciones.get(indexAccion), heroe);
+			ejecutarAccion(acciones.get(indexAccion).get("objetivo"), acciones.get(indexAccion), heroe, delta);
 		}
 	}
 }
