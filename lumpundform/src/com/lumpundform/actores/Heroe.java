@@ -14,6 +14,7 @@ import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.habilidades.HabilidadDisparar;
 import com.lumpundform.habilidades.HabilidadTeletransportar;
+import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -27,6 +28,9 @@ public class Heroe extends Personaje {
 	private float cooldownDano = 0.0f;
 	private float deltaTransparente = 0.0f;
 	private boolean transparente = false;
+
+	private int pocionesVida = 0;
+	private int pocionesVidaMax = 3;
 
 	/**
 	 * Carga datos específicos del {@link Heroe}, incluyendo su hitbox y su
@@ -129,6 +133,24 @@ public class Heroe extends Personaje {
 		}
 	}
 
+	public boolean agarrarPocionVida() {
+		if (getPocionesVida() >= getPocionesVidaMax()) {
+			return false;
+		} else {
+			setPocionesVida(getPocionesVida() + 1);
+			return true;
+		}
+	}
+
+	public void usarPocionVida() {
+		if (getPocionesVida() > 0) {
+			if (getVida() < getVidaMax()) {
+				aumentarVida(PocionBase.cantidad);
+				setPocionesVida(getPocionesVida() - 1);
+			}
+		}
+	}
+
 	public void habilidad(String nombre) throws HabilidadInexistenteException {
 		habilidad(nombre, null);
 	}
@@ -179,5 +201,21 @@ public class Heroe extends Personaje {
 
 	public void setDeltaTransparente(float deltaTransparente) {
 		this.deltaTransparente = deltaTransparente;
+	}
+
+	public int getPocionesVidaMax() {
+		return pocionesVidaMax;
+	}
+
+	public void setPocionesVidaMax(int pocionesVidaMax) {
+		this.pocionesVidaMax = pocionesVidaMax;
+	}
+
+	public int getPocionesVida() {
+		return pocionesVida;
+	}
+
+	public void setPocionesVida(int pocionesVida) {
+		this.pocionesVida = pocionesVida;
 	}
 }
