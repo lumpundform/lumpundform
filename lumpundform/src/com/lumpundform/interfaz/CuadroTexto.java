@@ -34,10 +34,6 @@ public class CuadroTexto {
 		this.texto = texto;
 	}
 	
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-	
 	public void setX(float x) {
 		this.x = x;
 	}

@@ -9,9 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
-import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.habilidades.Habilidad;
-import com.lumpundform.utilerias.U;
 
 /**
  * Clase para todos los personajes del juego

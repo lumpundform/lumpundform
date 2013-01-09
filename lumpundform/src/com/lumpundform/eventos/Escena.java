@@ -7,7 +7,6 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.interfaz.CuadroTexto;
-import com.lumpundform.utilerias.U;
 
 public class Escena {
 
