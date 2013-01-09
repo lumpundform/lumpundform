@@ -118,12 +118,21 @@ public class D {
 		Map<String, String> datosAtaqueMisil = new HashMap<String, String>();
 		datosAtaqueMisil.put("sprite_sheet_normal", "ataque_misil.png");
 		datosAtaqueMisil.put("sprite_sheet_explosion", "ataque_misil.png");
+		
+		// Datos de la poción vida
+		Map<String, String> datosPocionVida = new HashMap<String, String>();
+		datosPocionVida.put("sprite_sheet_normal", "pocion_vida.png");
+		// Datos de la poción mana
+		Map<String, String> datosPocionMana = new HashMap<String, String>();
+		datosPocionMana.put("sprite_sheet_normal", "pocion_mana.png");
 
 		Map<String, Map> datos = new HashMap<String, Map>();
 		datos.put("heroe", datosHeroe);
 		datos.put("amigo", datosAmigo);
 		datos.put("escenario101", escenario101);
 		datos.put("ataque_misil", datosAtaqueMisil);
+		datos.put("pocion_vida", datosPocionVida);
+		datos.put("pocion_mana", datosPocionMana);
 
 		return datos;
 	}
@@ -163,10 +172,23 @@ public class D {
 		datosAtaqueMisil.put("renglones_explosion", 1);
 		datosAtaqueMisil.put("columnas_offset_explosion", 3);
 
+		// Datos de poción vida
+		Map<String, Integer> datosPocionVida = new HashMap<String, Integer>();
+		datosPocionVida.put("columnas_normal", 1);
+		datosPocionVida.put("renglones_normal", 1);
+		datosPocionVida.put("columnas_offset_normal", 0);
+		// Datos de poción mana
+		Map<String, Integer> datosPocionMana = new HashMap<String, Integer>();
+		datosPocionMana.put("columnas_normal", 1);
+		datosPocionMana.put("renglones_normal", 1);
+		datosPocionMana.put("columnas_offset_normal", 0);
+
 		Map<String, Map> datos = new HashMap<String, Map>();
 		datos.put("heroe", datosHeroe);
 		datos.put("amigo", datosAmigo);
 		datos.put("ataque_misil", datosAtaqueMisil);
+		datos.put("pocion_vida", datosPocionVida);
+		datos.put("pocion_mana", datosPocionMana);
 
 		return datos;
 	}

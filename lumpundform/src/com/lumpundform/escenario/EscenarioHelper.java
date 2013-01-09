@@ -82,6 +82,7 @@ public class EscenarioHelper {
 		// Colisión
 		escenario.colisionActores();
 		escenario.colisionAtaques();
+		escenario.colisionPociones();
 		escenario.colisionPiso();
 
 		// Actuar de todos los actores del escenario

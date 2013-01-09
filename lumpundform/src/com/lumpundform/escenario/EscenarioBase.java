@@ -28,6 +28,7 @@ import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.lumpundform.CamaraJuego;
+import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -79,6 +80,18 @@ public class EscenarioBase extends Stage {
 			}
 		}
 	}
+	
+	void colisionPociones() {
+		Heroe heroe = (Heroe) getActores(Heroe.class).get(0);
+		
+		for (Actor p : getPociones()) {
+			PocionBase pocion = (PocionBase) p;
+			if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
+				heroe.recibirVida(pocion.getCantidad());
+				pocion.remove();
+			}
+		}
+	}
 
 	void colisionAtaques() {
 		List<Actor> ataques = getAtaques();
@@ -105,7 +118,7 @@ public class EscenarioBase extends Stage {
 	void colisionPiso() {
 		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
 
-		for (Actor a : getPersonajes()) {
+		for (Actor a : getTodosActores()) {
 			ObjetoActor actor = (ObjetoActor) a;
 			caidaLibre.put(actor.getName(), false);
 
@@ -163,7 +176,9 @@ public class EscenarioBase extends Stage {
 			// héroe
 			if (caidaLibre.get(actor.getName())) {
 				actor.setColisionPiso(false);
-				actor.setY(actor.getY() - 5);
+				if (actor.isCaer()) {
+					actor.setY(actor.getY() - 5);
+				}
 			} else {
 				actor.setColisionPiso(true);
 				if (actor.getName() == "heroe") {
@@ -318,6 +333,10 @@ public class EscenarioBase extends Stage {
 			return (Heroe) actores.get(0);
 		}
 	}
+	
+	private List<Actor> getTodosActores() {
+		return getActores(ObjetoActor.class);
+	}
 
 	private List<Actor> getPersonajes() {
 		return getActores(Personaje.class);
@@ -325,6 +344,10 @@ public class EscenarioBase extends Stage {
 
 	private List<Actor> getAtaques() {
 		return getActores(Ataque.class);
+	}
+	
+	private List<Actor> getPociones() {
+		return getActores(PocionBase.class);
 	}
 
 	private List<Actor> getActores(Class<?> clase) {
@@ -365,5 +388,9 @@ public class EscenarioBase extends Stage {
 
 	public void setPiso(Poligono piso) {
 		this.piso = piso;
+	}
+
+	public void crearPocion(Vector2 posicion) {
+		addActor(new PocionBase("pocion_vida", posicion));
 	}
 }
