@@ -1,14 +1,16 @@
 package com.lumpundform.eventos;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor.Direccion;
+import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.interfaz.CuadroTexto;
 
 public class Escena {
 
-	public Element escena;
+	public Array<Paso> pasosEscena = new Array<Paso>();
 	public String nombre;
 	public int paso = 0;
 	
@@ -16,8 +18,14 @@ public class Escena {
 	private CuadroTexto ct = new CuadroTexto();
 
 	public Escena(Element escena, String nombre) {
-		this.escena = escena;
+		crearPasos(escena.getChildrenByNameRecursively("paso"));
 		this.nombre = nombre;
+	}
+	
+	private void crearPasos(Array<Element> pasos) {
+		for (int i = 0; i < pasos.size; i++) {
+			pasosEscena.add(new Paso(pasos.get(i)));
+		}
 	}
 
 	public void ejecutarEscena(Heroe heroe, float delta) {
@@ -25,22 +33,22 @@ public class Escena {
 	}
 
 	private void revisarPasos(Heroe heroe, float delta) {
-		Array<Element> pasos = escena.getChildrenByNameRecursively("paso");
-		if(paso < pasos.size) {
-			revisarAcciones(pasos.get(paso), heroe, delta);
+		
+		if(paso < pasosEscena.size) {
+			revisarAcciones(pasosEscena.get(paso), heroe, delta);
 		}
 	}
 	
-	private void ejecutarAccion(String objetivo, Element accion, Heroe heroe, float delta) {
+	private void ejecutarAccion(String objetivo, Accion accion, Heroe heroe, float delta) {
 		if(objetivo.equals("hablar")) {
-			ct.setTexto(accion.get("texto"));
+			ct.setTexto(accion.getTexto());
 			hablar(accion);
 		} else if (objetivo.equals("ir_a")) {
-			caminar(heroe, Integer.parseInt(accion.get("destino")), delta);
+			caminar(heroe, accion.getDestino(), delta);
 		}
 	}
 	
-	private void hablar(Element accion) {
+	private void hablar(Accion accion) {
 		Boolean hablar = ct.drawCt();
 		if(!hablar) {
 			ct.index = 0;
@@ -58,11 +66,21 @@ public class Escena {
 			indexAccion++;
 		}
 	}
+	
+	@SuppressWarnings("unused")
+	private void teletransportarse(Heroe heroe, Vector2 pos) {
+		try {
+			heroe.habilidad("teletransportarse", pos);
+		} catch (HabilidadInexistenteException e) {
+			e.printStackTrace();
+		}
+	}
 
-	private void revisarAcciones(Element pasos, Heroe heroe, float delta) {
-		Array<Element> acciones = pasos.getChildrenByNameRecursively("accion");
-		if (acciones.size > indexAccion) {
-			ejecutarAccion(acciones.get(indexAccion).get("objetivo"), acciones.get(indexAccion), heroe, delta);
+	private void revisarAcciones(Paso paso, Heroe heroe, float delta) {
+		
+		if (indexAccion < paso.acciones.size) {
+			ejecutarAccion(paso.acciones.get(indexAccion).getObjetivo(),
+					paso.acciones.get(indexAccion), heroe, delta);
 		}
 	}
 }
