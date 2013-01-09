@@ -7,6 +7,7 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.interfaz.CuadroTexto;
+import com.lumpundform.utilerias.U;
 
 public class Escena {
 
@@ -45,6 +46,8 @@ public class Escena {
 			hablar(accion);
 		} else if (objetivo.equals("ir_a")) {
 			caminar(heroe, accion.getDestino(), delta);
+		} else if (objetivo.equals("teletransportarse")) {
+			teletransportarse(heroe, accion.getPosicionVector());
 		}
 	}
 	
@@ -70,7 +73,8 @@ public class Escena {
 	@SuppressWarnings("unused")
 	private void teletransportarse(Heroe heroe, Vector2 pos) {
 		try {
-			heroe.habilidad("teletransportarse", pos);
+			heroe.habilidad("teletransportar", pos);
+			indexAccion++;
 		} catch (HabilidadInexistenteException e) {
 			e.printStackTrace();
 		}

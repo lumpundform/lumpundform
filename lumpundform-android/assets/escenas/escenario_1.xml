@@ -6,10 +6,10 @@
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo!" />
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo2!" />
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo3!" />
+	        <accion actor="heroe" objetivo="teletransportarse" x="400" y="400" />
 	    </paso>
 	    <paso numero="2">
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hello world!" />
-	        <accion actor="heroe" objetivo="teletransportarse" x="400" y="400" />
 	    </paso>
 	    <paso numero="3">
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hallo Welt!" />

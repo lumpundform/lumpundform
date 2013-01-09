@@ -1,5 +1,6 @@
 package com.lumpundform.eventos;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class Accion {
@@ -9,6 +10,9 @@ public class Accion {
 	public String objetivo;
 	public String destino;
 	public String texto;
+	public float x;
+	public float y;
+	
 
 	public Accion(Element accion) {
 		this.actor = accion.get("actor");
@@ -18,6 +22,10 @@ public class Accion {
 			this.destino = accion.get("destino");
 		if (accion.getAttributes().containsKey("texto"))
 			this.texto = accion.get("texto");
+		if (accion.getAttributes().containsKey("x"))
+			this.x = Float.parseFloat(accion.get("x"));
+		if (accion.getAttributes().containsKey("y"))
+			this.y = Float.parseFloat(accion.get("y"));
 	}
 
 	public String getObjetivo() {
@@ -30,5 +38,9 @@ public class Accion {
 
 	public float getDestino() {
 		return Float.parseFloat(destino);
+	}
+	
+	public Vector2 getPosicionVector() {
+		return new Vector2(x,y);
 	}
 }
