@@ -45,14 +45,14 @@ public abstract class Personaje extends ObjetoActor {
 
 		setX(puntoOrigen.x);
 		setY(puntoOrigen.y);
-		
+
 		setCaer(true);
 
 		addAction(new PersonajeAction());
 	}
 
 	protected abstract void cargarHabilidades();
-	
+
 	public void moverDestino(float delta) {
 		if (getDireccionDestinoX() == Direccion.IZQUIERDA && getX() > getDestinoX()) {
 			moverIzquierda(delta);
@@ -103,8 +103,7 @@ public abstract class Personaje extends ObjetoActor {
 			nombreAnimacion = "detenido";
 		}
 
-		return getAnimacion().get(nombreAnimacion).getKeyFrame(
-				getTiempoTranscurrido(), true);
+		return getAnimacion().get(nombreAnimacion).getKeyFrame(getTiempoTranscurrido(), true);
 	}
 
 	public Direccion getDireccionPosicionHeroe() {
@@ -140,17 +139,15 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
-	public void recibirVida(float cantidad) {
-		if (!isEnemigo()) {
-			setVida(getVida() + cantidad);
-			if (getVida() > getVidaMax()) {
-				setVida(getVidaMax());
-			}
+	public void aumentarVida(float cantidad) {
+		setVida(getVida() + cantidad);
+		if (getVida() > getVidaMax()) {
+			setVida(getVidaMax());
 		}
 	}
 
 	public void quitarVida(float dano) {
-		EscenarioBase escenario = (EscenarioBase) getStage(); 
+		EscenarioBase escenario = (EscenarioBase) getStage();
 		Evento evento = escenario.getEvento(getPerteneceAEvento());
 		hacerDano(dano);
 		if (getVida() <= 0.0f) {
@@ -158,7 +155,7 @@ public abstract class Personaje extends ObjetoActor {
 				evento.matarPersonaje();
 			}
 			if (isEnemigo()) {
-				escenario.crearPocion(getEsquina("inf-izq"));
+				escenario.crearPocion(getPosicionCentro());
 				remove();
 			} else {
 				// TODO: Que hacer cuando el héroe muere

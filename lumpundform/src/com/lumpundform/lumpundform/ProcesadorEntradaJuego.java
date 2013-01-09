@@ -63,8 +63,7 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	}
 
 	@Override
-	public boolean pinch(Vector2 initialFirstPointer,
-			Vector2 initialSecondPointer, Vector2 firstPointer,
+	public boolean pinch(Vector2 initialFirstPointer, Vector2 initialSecondPointer, Vector2 firstPointer,
 			Vector2 secondPointer) {
 		return false;
 	}
@@ -80,6 +79,8 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				U.err(e);
 			}
 			return true;
+		} else if (keycode == Keys.Q) {
+			escenario.getHeroe().usarPocionVida();
 		}
 		return false;
 	}

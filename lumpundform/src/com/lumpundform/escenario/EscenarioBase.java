@@ -79,17 +79,19 @@ public class EscenarioBase extends Stage {
 			}
 		}
 	}
-	
+
 	void colisionPociones() {
 		Heroe heroe = (Heroe) getActores(Heroe.class).get(0);
-		
+
 		for (Actor p : getPociones()) {
 			PocionBase pocion = (PocionBase) p;
 			if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
-				heroe.recibirVida(pocion.getCantidad());
-				pocion.remove();
+				if (heroe.agarrarPocionVida()) {
+					pocion.remove();
+				}
 			}
 		}
+		U.ds(heroe.getPocionesVida());
 	}
 
 	void colisionAtaques() {
@@ -322,7 +324,7 @@ public class EscenarioBase extends Stage {
 			return (Heroe) actores.get(0);
 		}
 	}
-	
+
 	private List<Actor> getTodosActores() {
 		return getActores(ObjetoActor.class);
 	}
@@ -334,7 +336,7 @@ public class EscenarioBase extends Stage {
 	private List<Actor> getAtaques() {
 		return getActores(Ataque.class);
 	}
-	
+
 	private List<Actor> getPociones() {
 		return getActores(PocionBase.class);
 	}
