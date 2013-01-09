@@ -45,6 +45,8 @@ public abstract class Personaje extends ObjetoActor {
 
 		setX(puntoOrigen.x);
 		setY(puntoOrigen.y);
+		
+		setCaer(true);
 
 		addAction(new PersonajeAction());
 	}
@@ -138,14 +140,25 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
+	public void recibirVida(float cantidad) {
+		if (!isEnemigo()) {
+			setVida(getVida() + cantidad);
+			if (getVida() > getVidaMax()) {
+				setVida(getVidaMax());
+			}
+		}
+	}
+
 	public void quitarVida(float dano) {
-		Evento evento = ((EscenarioBase) getStage()).getEvento(getPerteneceAEvento());
+		EscenarioBase escenario = (EscenarioBase) getStage(); 
+		Evento evento = escenario.getEvento(getPerteneceAEvento());
 		hacerDano(dano);
 		if (getVida() <= 0.0f) {
 			if (evento != null) {
 				evento.matarPersonaje();
 			}
 			if (isEnemigo()) {
+				escenario.crearPocion(getEsquina("inf-izq"));
 				remove();
 			} else {
 				// TODO: Que hacer cuando el héroe muere

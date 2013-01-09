@@ -42,6 +42,7 @@ public abstract class ObjetoActor extends Actor {
 	private Direccion direccionDestinoX;
 	private float velocidad;
 	private boolean teletransportar = false;
+	private boolean caer = false;
 
 	// Colisión
 	private Rectangulo hitbox;
@@ -348,6 +349,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setDireccionDestinoX(Direccion direccionDestinoX) {
 		this.direccionDestinoX = direccionDestinoX;
+	}
+
+	public boolean isCaer() {
+		return caer;
+	}
+
+	public void setCaer(boolean caer) {
+		this.caer = caer;
 	}
 
 }
