@@ -13,15 +13,17 @@ public class Escena {
 	public Array<Paso> pasosEscena = new Array<Paso>();
 	public String nombre;
 	public int paso = 0;
-	
+
 	private int indexAccion	= 0;
+
+	// Cuadro de texto
 	private CuadroTexto ct = new CuadroTexto();
 
 	public Escena(Element escena, String nombre) {
 		crearPasos(escena.getChildrenByNameRecursively("paso"));
 		this.nombre = nombre;
 	}
-	
+
 	private void crearPasos(Array<Element> pasos) {
 		for (int i = 0; i < pasos.size; i++) {
 			pasosEscena.add(new Paso(pasos.get(i)));
@@ -38,7 +40,7 @@ public class Escena {
 			revisarAcciones(pasosEscena.get(paso), heroe, delta);
 		}
 	}
-	
+
 	private void ejecutarAccion(String objetivo, Accion accion, Heroe heroe, float delta) {
 		if(objetivo.equals("hablar")) {
 			ct.setTexto(accion.getTexto());
@@ -49,7 +51,7 @@ public class Escena {
 			teletransportarse(heroe, accion.getPosicionVector());
 		}
 	}
-	
+
 	private void hablar(Accion accion) {
 		Boolean hablar = ct.drawCt();
 		if(!hablar) {
@@ -68,7 +70,7 @@ public class Escena {
 			indexAccion++;
 		}
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void teletransportarse(Heroe heroe, Vector2 pos) {
 		try {
@@ -80,7 +82,6 @@ public class Escena {
 	}
 
 	private void revisarAcciones(Paso paso, Heroe heroe, float delta) {
-		
 		if (indexAccion < paso.acciones.size) {
 			ejecutarAccion(paso.acciones.get(indexAccion).getObjetivo(),
 					paso.acciones.get(indexAccion), heroe, delta);
