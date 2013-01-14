@@ -1,7 +1,9 @@
 package com.lumpundform.actores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -14,7 +16,8 @@ import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.habilidades.HabilidadDisparar;
 import com.lumpundform.habilidades.HabilidadTeletransportar;
-import com.lumpundform.pociones.PocionBase;
+import com.lumpundform.pociones.PocionMana;
+import com.lumpundform.pociones.PocionVida;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -29,8 +32,8 @@ public class Heroe extends Personaje {
 	private float deltaTransparente = 0.0f;
 	private boolean transparente = false;
 
-	private int pocionesVida = 0;
-	private int pocionesVidaMax = 3;
+	private Map<String, Integer> pociones = new HashMap<String, Integer>();
+	private Map<String, Integer> pocionesMax = new HashMap<String, Integer>();
 
 	/**
 	 * Carga datos específicos del {@link Heroe}, incluyendo su hitbox y su
@@ -59,6 +62,11 @@ public class Heroe extends Personaje {
 		setMana(100.0f);
 		setManaMax(100.0f);
 		setManaPorSegundo(5.0f);
+
+		getPociones().put("vida", 0);
+		getPociones().put("mana", 0);
+		getPocionesMax().put("vida", 3);
+		getPocionesMax().put("mana", 3);
 
 		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
 		cargarHabilidades();
@@ -133,21 +141,34 @@ public class Heroe extends Personaje {
 		}
 	}
 
-	public boolean agarrarPocionVida() {
-		if (getPocionesVida() >= getPocionesVidaMax()) {
+	public boolean agarrarPocion(String tipo) {
+		if (!tipoValido(tipo))
+			return false;
+
+		if (getPociones().get(tipo) >= getPocionesMax().get(tipo)) {
 			return false;
 		} else {
-			setPocionesVida(getPocionesVida() + 1);
+			getPociones().put(tipo, getPociones().get(tipo) + 1);
 			return true;
 		}
 	}
 
-	public void usarPocionVida() {
-		if (getPocionesVida() > 0) {
-			if (getVida() < getVidaMax()) {
-				aumentarVida(PocionBase.cantidad);
-				setPocionesVida(getPocionesVida() - 1);
+	public void usarPocion(String tipo) {
+		if (getPociones().get(tipo) > 0) {
+			if (getValor(tipo) < getValor(tipo, true)) {
+				aumentarValorPocion(tipo);
+				getPociones().put(tipo, getPociones().get(tipo) - 1);
 			}
+		}
+	}
+
+	public void aumentarValorPocion(String tipo) {
+		if (!tipoValido(tipo))
+			return;
+		float cantidad = tipo.equals("vida") ? PocionVida.cantidad : PocionMana.cantidad;
+		setValor(tipo, getValor(tipo) + cantidad);
+		if (getValor(tipo) > getValor(tipo, true)) {
+			setValor(tipo, getValor(tipo, true));
 		}
 	}
 
@@ -168,6 +189,43 @@ public class Heroe extends Personaje {
 			return getHabilidades().get(nombre);
 		} else {
 			throw new HabilidadInexistenteException("No existe la habilidad " + nombre + " para el actor " + getName());
+		}
+	}
+
+	private boolean tipoValido(String tipo) {
+		return (tipo.equals("mana") || tipo.equals("vida"));
+	}
+
+	private Float getValor(String tipo) {
+		return getValor(tipo, false);
+	}
+
+	private Float getValor(String tipo, boolean max) {
+		if (!tipoValido(tipo))
+			return null;
+
+		if (tipo.equals("vida")) {
+			return max ? getVidaMax() : getVida();
+		} else {
+			return max ? getManaMax() : getMana();
+		}
+	}
+
+	private void setValor(String tipo, float valor) {
+		setValor(tipo, valor, false);
+	}
+
+	private void setValor(String tipo, float valor, boolean max) {
+		if (tipo.equals("vida")) {
+			if (max)
+				setVidaMax(valor);
+			else
+				setVida(valor);
+		} else {
+			if (max)
+				setManaMax(valor);
+			else
+				setMana(valor);
 		}
 	}
 
@@ -203,19 +261,11 @@ public class Heroe extends Personaje {
 		this.deltaTransparente = deltaTransparente;
 	}
 
-	public int getPocionesVidaMax() {
-		return pocionesVidaMax;
+	public Map<String, Integer> getPociones() {
+		return pociones;
 	}
 
-	public void setPocionesVidaMax(int pocionesVidaMax) {
-		this.pocionesVidaMax = pocionesVidaMax;
-	}
-
-	public int getPocionesVida() {
-		return pocionesVida;
-	}
-
-	public void setPocionesVida(int pocionesVida) {
-		this.pocionesVida = pocionesVida;
+	public Map<String, Integer> getPocionesMax() {
+		return pocionesMax;
 	}
 }
