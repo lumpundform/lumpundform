@@ -97,8 +97,10 @@ public class Evento {
 				if (activado == false && heroe.getX() > (posicion.x - rango)
 						&& heroe.getX() < (posicion.x + rango)) {
 					activado = true;
-				} else if (activado == true && terminado == false) {
+				} else if (activado == true && terminado == false && escena.escenaTerminada == false) {
 					escena.ejecutarEscena(heroe, delta);
+				} else if (activado == true && escena.escenaTerminada == true) {
+					terminado = true;
 				}
 			}
 		} catch (ActorNoDefinidoException e) {

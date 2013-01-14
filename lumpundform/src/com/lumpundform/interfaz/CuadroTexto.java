@@ -14,12 +14,13 @@ public class CuadroTexto {
 	SpriteBatch batch = new SpriteBatch();
 	public Boolean dibujar = true;
 
-	private float x = 10.0f;
-	private float y = 10.0f;
-	private float width = 325.0f;
-	private float height = 125.0f;
+	private float posicionX;
+	private float posicionY = 400.0f;
+	private float anchoCuadro = 300.0f;
+	private float altoCuadro = 60.0f;
 	private float paddingX = 10.0f;
-	private float paddingY = 10.0f;
+	private float paddingY = 5.0f;
+	private float posicionRetratoX;
 
 	public boolean terminado = false;
 	public String texto;
@@ -30,7 +31,14 @@ public class CuadroTexto {
 	private static BitmapFont bmf = Fuentes.regular();
 	private Texture retrato = new Texture(Gdx.files.internal("samus_portrait.png"));
 
-	public CuadroTexto() {
+	public CuadroTexto(String posicion) {
+		if(posicion == "der") {
+			this.posicionX = Gdx.graphics.getWidth() - this.anchoCuadro - 10.0f;
+			this.posicionRetratoX = (posicionX - paddingX);
+		} else if (posicion == "izq") {
+			this.posicionX = 10.0f;
+			this.posicionRetratoX = (posicionX + (anchoCuadro - retrato.getWidth() - paddingX));
+		}
 	}
 
 	public void setTexto(String texto) {
@@ -38,19 +46,19 @@ public class CuadroTexto {
 	}
 
 	public void setX(float x) {
-		this.x = x;
+		this.posicionX = x;
 	}
 
 	public void setY(float y) {
-		this.y = y;
+		this.posicionY = y;
 	}
 
 	public void setWidth(float width) {
-		this.width = width;
+		this.anchoCuadro = width;
 	}
 
 	public void setHeight(float height) {
-		this.height = height;
+		this.altoCuadro = height;
 	}
 
 	public void setPaddingX(float paddingX) {
@@ -64,7 +72,7 @@ public class CuadroTexto {
 	public void draw(String texto) {
 		if (dibujar) {
 			batch.begin();
-			np.draw(batch, x, y, width, height);
+			np.draw(batch, posicionX, posicionY, anchoCuadro, altoCuadro);
 			batch.end();
 			drawString(texto, batch);
 		}
@@ -85,10 +93,10 @@ public class CuadroTexto {
 		CharSequence msg = mensaje + "";
 		batch.begin();
 		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
-		bmf.setScale(0.80f);
-		bmf.drawWrapped(batch, msg, (x + paddingX), (height - paddingY),
-				(width - paddingX * 2));
-		batch.draw(retrato, x, y, retrato.getWidth(), retrato.getHeight());
+		bmf.setScale(0.60f);
+		bmf.drawWrapped(batch, msg, (posicionX + paddingX), (posicionY + altoCuadro - paddingY),
+				(anchoCuadro - paddingX));
+		batch.draw(retrato, posicionRetratoX, (posicionY + (altoCuadro - retrato.getHeight() - paddingY)), retrato.getWidth(), retrato.getHeight());
 		batch.end();
 	}
 }

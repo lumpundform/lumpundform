@@ -292,16 +292,12 @@ public class EscenarioBase extends Stage {
 
 	public Escena getEscena(String nombre) {
 		for (int i = 0; i < escenas.size; i++) {
-			if (escenas.get(i).nombre.equals(nombre))
+			if (escenas.get(i).nombreEscena.equals(nombre))
 				return escenas.get(i);
 		}
 		return null;
 	}
 
-	/*
-	 * void revisarEscena() { for (int i = 0; i < escenas.size; i++) {
-	 * //escenas.get(i).ejecutarEscena(getHeroe()); } }
-	 */
 	void agregarActor(String tipo, Vector2 posicion) throws ActorNoDefinidoException {
 		agregarActor(tipo, posicion, "");
 	}
