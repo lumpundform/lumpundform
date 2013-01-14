@@ -31,6 +31,7 @@ import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
+import com.lumpundform.pociones.Porcentaje;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -43,6 +44,7 @@ import com.lumpundform.utilerias.U;
 public class EscenarioBase extends Stage {
 	private Poligono piso;
 	private Random random;
+	private Porcentaje porcentajePociones;
 
 	private Array<Evento> eventos;
 	private Array<Escena> escenas;
@@ -50,6 +52,7 @@ public class EscenarioBase extends Stage {
 	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
 		super(width, height, stretch, batch);
 		random = new Random();
+		setPorcentajePociones(new Porcentaje());
 	}
 
 	/**
@@ -74,7 +77,7 @@ public class EscenarioBase extends Stage {
 	void colisionActores() {
 		Heroe heroe = getHeroe();
 		heroe.setColisionActores(false);
-		List<Actor> actores = getPersonajes();
+		List<Actor> actores = getActoresPersonajes();
 
 		for (Actor a : actores) {
 			ObjetoActor actor = (ObjetoActor) a;
@@ -88,7 +91,7 @@ public class EscenarioBase extends Stage {
 	void colisionPociones() {
 		Heroe heroe = getHeroe();
 
-		for (Actor p : getPociones()) {
+		for (Actor p : getActoresPociones()) {
 			PocionBase pocion = (PocionBase) p;
 			if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
 				if (heroe.agarrarPocion(pocion.getTipo())) {
@@ -96,13 +99,14 @@ public class EscenarioBase extends Stage {
 				}
 			}
 		}
-		U.ds(heroe.getPociones().get("vida"));
-		U.ds(heroe.getPociones().get("mana"), 60, 30);
+		U.ds(heroe.getPociones().get("vida"), 0.5f);
+		U.ds(heroe.getPociones().get("mana"), 60, 30, 0.5f);
+		U.ds((getPorcentajePociones().getValor() * 100) + "%", 90, 30, 0.5f);
 	}
 
 	void colisionAtaques() {
-		List<Actor> ataques = getAtaques();
-		List<Actor> personajes = getPersonajes();
+		List<Actor> ataques = getActoresAtaques();
+		List<Actor> personajes = getActoresPersonajes();
 
 		for (int i = 0; i < ataques.size(); i++) {
 			Ataque ataque = (Ataque) ataques.get(i);
@@ -203,7 +207,7 @@ public class EscenarioBase extends Stage {
 	 *            El ancho del {@link EscenarioBase}
 	 */
 	void acomodarActores(float width) {
-		List<Actor> actores = getPersonajes();
+		List<Actor> actores = getActoresPersonajes();
 
 		for (int i = 0; i < actores.size(); i++) {
 			ObjetoActor actor = (ObjetoActor) actores.get(i);
@@ -335,15 +339,15 @@ public class EscenarioBase extends Stage {
 		return getActores(ObjetoActor.class);
 	}
 
-	private List<Actor> getPersonajes() {
+	private List<Actor> getActoresPersonajes() {
 		return getActores(Personaje.class);
 	}
 
-	private List<Actor> getAtaques() {
+	private List<Actor> getActoresAtaques() {
 		return getActores(Ataque.class);
 	}
 
-	private List<Actor> getPociones() {
+	private List<Actor> getActoresPociones() {
 		return getActores(PocionBase.class);
 	}
 
@@ -360,8 +364,8 @@ public class EscenarioBase extends Stage {
 	}
 
 	void destruirAtaques(CamaraJuego camara) {
-		for (int i = 0; i < getAtaques().size(); i++) {
-			Actor ataque = getAtaques().get(i);
+		for (int i = 0; i < getActoresAtaques().size(); i++) {
+			Actor ataque = getActoresAtaques().get(i);
 			if ((ataque.getX() + ataque.getWidth()) < camara.getPosicionOrigen().x
 					|| ataque.getX() > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
 				ataque.remove();
@@ -388,10 +392,23 @@ public class EscenarioBase extends Stage {
 	}
 
 	public void crearPocion(Vector2 posicion) {
-		if (random.nextBoolean()) {
-			addActor(new PocionVida(posicion));
+		if (random.nextFloat() < getPorcentajePociones().getValor()) {
+			if (random.nextBoolean()) {
+				addActor(new PocionVida(posicion));
+			} else {
+				addActor(new PocionMana(posicion));
+			}
+			getPorcentajePociones().reset();
 		} else {
-			addActor(new PocionMana(posicion));
+			getPorcentajePociones().aumentar();
 		}
+	}
+
+	public Porcentaje getPorcentajePociones() {
+		return porcentajePociones;
+	}
+
+	public void setPorcentajePociones(Porcentaje porcentajePociones) {
+		this.porcentajePociones = porcentajePociones;
 	}
 }

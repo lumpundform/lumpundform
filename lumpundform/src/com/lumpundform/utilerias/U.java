@@ -70,18 +70,15 @@ public class U {
 	 * @param color
 	 *            El color con el que se van a dibujar las líneas
 	 */
-	static private void dibujarLineasColision(Poligono poligono,
-			CamaraJuego camara, Color color) {
+	static private void dibujarLineasColision(Poligono poligono, CamaraJuego camara, Color color) {
 		Vector2[] vertices = poligono.getVertices();
 
 		sr.begin(ShapeType.Line);
 		sr.setColor(color);
 		for (int i = 0; i < vertices.length; i++) {
 			int i2 = (i + 1 >= vertices.length) ? 0 : i + 1;
-			sr.line(vertices[i].x - camara.getPosicionOrigen().x, vertices[i].y
-					- camara.getPosicionOrigen().y,
-					vertices[i2].x - camara.getPosicionOrigen().x,
-					vertices[i2].y - camara.getPosicionOrigen().y);
+			sr.line(vertices[i].x - camara.getPosicionOrigen().x, vertices[i].y - camara.getPosicionOrigen().y,
+					vertices[i2].x - camara.getPosicionOrigen().x, vertices[i2].y - camara.getPosicionOrigen().y);
 		}
 		sr.end();
 	}
@@ -94,8 +91,7 @@ public class U {
 	 *            El {@link Poligono} del cuál se van a dibujar las líneas de
 	 *            colisión
 	 */
-	public static void dibujarLineasColision(Poligono poligono,
-			CamaraJuego camara) {
+	public static void dibujarLineasColision(Poligono poligono, CamaraJuego camara) {
 		dibujarLineasColision(poligono, camara, Color.WHITE);
 	}
 
@@ -131,6 +127,10 @@ public class U {
 		ds(mensaje, 30.0f, 30.0f);
 	}
 
+	public static void ds(Object mensaje, float escala) {
+		ds(mensaje, 30.0f, 30.0f, escala);
+	}
+
 	/**
 	 * Dibuja en pantalla el mensaje dado en la posición dada
 	 * 
@@ -144,7 +144,7 @@ public class U {
 	public static void ds(Object mensaje, float x, float y) {
 		ds(mensaje, x, y, 1.0f);
 	}
-	
+
 	public static void ds(Object mensaje, float x, float y, float escala) {
 		CharSequence msg = mensaje + "";
 		sb.begin();
