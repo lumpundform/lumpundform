@@ -12,7 +12,7 @@ public class Accion {
 	public String texto;
 	public float x;
 	public float y;
-	
+	private String posicion;
 
 	public Accion(Element accion) {
 		this.actor = accion.get("actor");
@@ -26,6 +26,8 @@ public class Accion {
 			this.x = Float.parseFloat(accion.get("x"));
 		if (accion.getAttributes().containsKey("y"))
 			this.y = Float.parseFloat(accion.get("y"));
+		if (accion.getAttributes().containsKey("posicion"))
+			this.posicion = accion.get("posicion");
 	}
 
 	public String getObjetivo() {
@@ -42,5 +44,9 @@ public class Accion {
 	
 	public Vector2 getPosicionVector() {
 		return new Vector2(x,y);
+	}
+
+	public String getPosicion() {
+		return posicion;
 	}
 }

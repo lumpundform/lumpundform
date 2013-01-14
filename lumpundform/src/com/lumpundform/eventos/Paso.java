@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class Paso {
 	Array<Accion> acciones = new Array<Accion>();
+	private int accionAEjecutar = 0;
 
 	public Paso(Element paso) {
 		crearAcciones(paso.getChildrenByNameRecursively("accion"));
@@ -14,5 +15,13 @@ public class Paso {
 		for (int i = 0; i < paso.size; i++) {
 			acciones.add(new Accion(paso.get(i)));
 		}
+	}
+	
+	public int getAccionAEjecutar() {
+		return accionAEjecutar;
+	}
+	
+	public void siguienteAccion() {
+		accionAEjecutar++;
 	}
 }
