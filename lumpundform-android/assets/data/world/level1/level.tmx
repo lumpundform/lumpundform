@@ -25,7 +25,7 @@
   </object>
   <object name="evento2" type="coliseo" x="448" y="448">
    <properties>
-    <property name="limite" value="4"/>
+    <property name="limite" value="10"/>
     <property name="rango" value="50.0"/>
    </properties>
   </object>
