@@ -1,9 +1,10 @@
 package com.lumpundform.lumpundform;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.InputProcessor;
+import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioHelper;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.utilerias.U;
@@ -72,15 +73,18 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		Heroe heroe = escenario.getHeroe();
 		if (keycode == Keys.SPACE) {
 			try {
-				escenario.getHeroe().habilidad("disparar");
+				heroe.habilidad("disparar");
 			} catch (HabilidadInexistenteException e) {
 				U.err(e);
 			}
 			return true;
 		} else if (keycode == Keys.Q) {
-			escenario.getHeroe().usarPocionVida();
+			heroe.usarPocion("vida");
+		} else if (keycode == Keys.E) {
+			heroe.usarPocion("mana");
 		}
 		return false;
 	}

@@ -6,10 +6,12 @@ import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.colision.Rectangulo;
 
 public class PocionBase extends ObjetoActor {
-	public static float cantidad = 20.0f;
+	private String tipo;
 
-	public PocionBase(String nombre, Vector2 posicion) {
-		super(nombre);
+	public PocionBase(Vector2 posicion, String tipo) {
+		super("pocion_" + tipo);
+
+		setTipo(tipo);
 
 		setX(posicion.x);
 		setY(posicion.y);
@@ -26,6 +28,14 @@ public class PocionBase extends ObjetoActor {
 	@Override
 	protected TextureRegion getCuadroActual() {
 		return getAnimacion().get("normal").getKeyFrame(getTiempoTranscurrido(), true);
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 }

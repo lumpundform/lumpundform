@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,6 +29,8 @@ import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.pociones.PocionBase;
+import com.lumpundform.pociones.PocionMana;
+import com.lumpundform.pociones.PocionVida;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -39,12 +42,14 @@ import com.lumpundform.utilerias.U;
  */
 public class EscenarioBase extends Stage {
 	private Poligono piso;
+	private Random random;
 
 	private Array<Evento> eventos;
 	private Array<Escena> escenas;
 
 	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
 		super(width, height, stretch, batch);
+		random = new Random();
 	}
 
 	/**
@@ -67,7 +72,7 @@ public class EscenarioBase extends Stage {
 	 * otro {@link ObjetoActor} del escenario
 	 */
 	void colisionActores() {
-		Heroe heroe = (Heroe) getActores(Heroe.class).get(0);
+		Heroe heroe = getHeroe();
 		heroe.setColisionActores(false);
 		List<Actor> actores = getPersonajes();
 
@@ -81,17 +86,18 @@ public class EscenarioBase extends Stage {
 	}
 
 	void colisionPociones() {
-		Heroe heroe = (Heroe) getActores(Heroe.class).get(0);
+		Heroe heroe = getHeroe();
 
 		for (Actor p : getPociones()) {
 			PocionBase pocion = (PocionBase) p;
 			if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
-				if (heroe.agarrarPocionVida()) {
+				if (heroe.agarrarPocion(pocion.getTipo())) {
 					pocion.remove();
 				}
 			}
 		}
-		U.ds(heroe.getPocionesVida());
+		U.ds(heroe.getPociones().get("vida"));
+		U.ds(heroe.getPociones().get("mana"), 60, 30);
 	}
 
 	void colisionAtaques() {
@@ -378,6 +384,10 @@ public class EscenarioBase extends Stage {
 	}
 
 	public void crearPocion(Vector2 posicion) {
-		addActor(new PocionBase("pocion_vida", posicion));
+		if (random.nextBoolean()) {
+			addActor(new PocionVida(posicion));
+		} else {
+			addActor(new PocionMana(posicion));
+		}
 	}
 }

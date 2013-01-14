@@ -139,13 +139,6 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
-	public void aumentarVida(float cantidad) {
-		setVida(getVida() + cantidad);
-		if (getVida() > getVidaMax()) {
-			setVida(getVidaMax());
-		}
-	}
-
 	public void quitarVida(float dano) {
 		EscenarioBase escenario = (EscenarioBase) getStage();
 		Evento evento = escenario.getEvento(getPerteneceAEvento());
