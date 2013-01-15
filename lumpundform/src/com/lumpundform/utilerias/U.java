@@ -124,11 +124,15 @@ public class U {
 	 *            El mensaje a imprimir en pantalla
 	 */
 	public static void ds(Object mensaje) {
-		ds(mensaje, 30.0f, 30.0f);
+		ds(mensaje, 30.0f, 30.0f, Fuentes.colorDefault);
 	}
 
 	public static void ds(Object mensaje, float escala) {
-		ds(mensaje, 30.0f, 30.0f, escala);
+		ds(mensaje, 30.0f, 30.0f, escala, Fuentes.colorDefault);
+	}
+
+	public static void ds(Object mensaje, float escala, Color color) {
+		ds(mensaje, 30.0f, 30.0f, escala, color);
 	}
 
 	/**
@@ -141,14 +145,18 @@ public class U {
 	 * @param y
 	 *            La y de la posición
 	 */
-	public static void ds(Object mensaje, float x, float y) {
-		ds(mensaje, x, y, 1.0f);
+	public static void ds(Object mensaje, float x, float y, float escala) {
+		ds(mensaje, x, y, escala, Fuentes.colorDefault);
 	}
 
-	public static void ds(Object mensaje, float x, float y, float escala) {
+	public static void ds(Object mensaje, float x, float y, Color color) {
+		ds(mensaje, x, y, 1.0f, color);
+	}
+
+	public static void ds(Object mensaje, float x, float y, float escala, Color color) {
 		CharSequence msg = mensaje + "";
 		sb.begin();
-		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
+		bmf.setColor(color);
 		bmf.setScale(escala);
 		bmf.drawWrapped(sb, msg, x, y, 50.0f);
 		sb.end();

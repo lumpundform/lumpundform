@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
@@ -99,7 +100,7 @@ public class EscenarioBase extends Stage {
 				}
 			}
 		}
-		U.ds(heroe.getPociones().get("vida"), 0.5f);
+		U.ds(heroe.getPociones().get("vida"), 0.5f, new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		U.ds(heroe.getPociones().get("mana"), 60, 30, 0.5f);
 		U.ds((getPorcentajePociones().getValor() * 100) + "%", 90, 30, 0.5f);
 	}
