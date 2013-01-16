@@ -65,7 +65,8 @@ public class Escena {
 	// Acciones para las escenas
 
 	private void hablar(Accion accion, Paso paso, String texto, String posicion) {
-		
+		ctIzq.setTexto(texto);
+		ctIzq.draw();
 	}
 
 	private void caminar(Heroe heroe, float destino, float delta, Paso paso) {

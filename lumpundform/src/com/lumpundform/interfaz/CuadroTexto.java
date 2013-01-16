@@ -8,10 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.utilerias.Fuentes;
 
 public class CuadroTexto {
-	NinePatch np = new NinePatch(new Texture(Gdx.files.internal("ct.png")), 3,
+	private NinePatch np = new NinePatch(new Texture(Gdx.files.internal("ct.png")), 3,
 			3, 3, 3);
 	
-	SpriteBatch batch = new SpriteBatch();
+	private static BitmapFont bmf = Fuentes.regular();
+
+	private Texture retrato = new Texture(Gdx.files.internal("samus_portrait.png"));
+	
+	private SpriteBatch batch = new SpriteBatch();
+	
 	public Boolean dibujar = true;
 
 	private float posicionX;
@@ -23,13 +28,13 @@ public class CuadroTexto {
 	private float posicionRetratoX;
 
 	public boolean terminado = false;
-	public String texto;
+	public boolean continuar = false;
+
 
 	public int index = 0;
+	
+	public String texto;
 	public String newstr = "";
-
-	private static BitmapFont bmf = Fuentes.regular();
-	private Texture retrato = new Texture(Gdx.files.internal("samus_portrait.png"));
 
 	public CuadroTexto(String posicion) {
 		if(posicion == "der") {
@@ -69,33 +74,12 @@ public class CuadroTexto {
 		this.paddingY = paddingY;
 	}
 
-	public void draw(String texto) {
-		if (dibujar) {
-			batch.begin();
-			np.draw(batch, posicionX, posicionY, anchoCuadro, altoCuadro);
-			batch.end();
-			drawString(texto, batch);
-		}
-	}
-
-	public Boolean drawCt() {
-		draw(newstr);
-		if (index < texto.length()) {
-			newstr += texto.substring(index, ++index);
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	private void drawString(Object mensaje, SpriteBatch batch) {
-		CharSequence msg = mensaje + "";
+	public void draw() {
 		batch.begin();
-		bmf.setColor(1.0f, 0.2f, 0.2f, 1.0f);
-		bmf.setScale(0.60f);
-		bmf.drawWrapped(batch, msg, (posicionX + paddingX), (posicionY + altoCuadro - paddingY),
-				(anchoCuadro - paddingX));
+		np.draw(batch, posicionX, posicionY, anchoCuadro, altoCuadro);
+		bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		bmf.setScale(0.50f);
+		bmf.drawWrapped(batch, texto, (posicionX + paddingX), (posicionY + altoCuadro - paddingY), (anchoCuadro - paddingX - retrato.getWidth()));
 		batch.draw(retrato, posicionRetratoX, (posicionY + (altoCuadro - retrato.getHeight() - paddingY)), retrato.getWidth(), retrato.getHeight());
 		batch.end();
 	}
