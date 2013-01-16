@@ -1,15 +1,18 @@
 package com.lumpundform.interfaz;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.lumpundform.CamaraJuego;
+import com.lumpundform.utilerias.Fuentes;
 
 class BotonBase extends Button {
 	private CamaraJuego camara;
 	private float xBase;
 	private float yBase;
+	BitmapFont bmf = Fuentes.regular();
 
 	protected BotonBase(NinePatch patch, EscenarioBase escenario) {
 		super(new NinePatchDrawable(patch));

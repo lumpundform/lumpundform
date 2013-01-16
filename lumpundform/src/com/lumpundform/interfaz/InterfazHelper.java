@@ -15,6 +15,7 @@ public class InterfazHelper {
 		botonMenu();
 		lifebar();
 		manabar();
+		pociones();
 	}
 
 	public void agregarHabilidades(Heroe heroe) {
@@ -34,6 +35,11 @@ public class InterfazHelper {
 
 	private void manabar() {
 		new BotonManabar(escenario);
+	}
+	
+	private void pociones() {
+		new BotonPocionVida(escenario);
+		new BotonPocionMana(escenario);
 	}
 	
 }
