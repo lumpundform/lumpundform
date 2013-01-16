@@ -2,15 +2,12 @@ package com.lumpundform.interfaz;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.lumpundform.escenario.EscenarioBase;
-import com.lumpundform.utilerias.Fuentes;
 
 class BotonMenu extends BotonSuperior {
-	BitmapFont bmf = Fuentes.regular();
 
 	BotonMenu(EscenarioBase escenario) {
 		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1, 1, 1, 1), escenario);
