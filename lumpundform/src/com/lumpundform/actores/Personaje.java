@@ -10,6 +10,7 @@ import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.habilidades.Habilidad;
+import com.lumpundform.interfaz.EtiquetaCantidad;
 
 /**
  * Clase para todos los personajes del juego
@@ -157,6 +158,7 @@ public abstract class Personaje extends ObjetoActor {
 	}
 
 	protected void hacerDano(float dano) {
+		getStage().addActor(new EtiquetaCantidad(dano + "", getEsquina("sup-izq")));
 		setVida(getVida() - dano);
 
 		if (getVida() < 0) {
