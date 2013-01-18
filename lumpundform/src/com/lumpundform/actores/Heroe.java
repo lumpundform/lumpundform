@@ -8,6 +8,7 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.HeroeAction;
@@ -16,6 +17,7 @@ import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.habilidades.HabilidadDisparar;
 import com.lumpundform.habilidades.HabilidadTeletransportar;
+import com.lumpundform.interfaz.EtiquetaCantidad;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
 import com.lumpundform.utilerias.U;
@@ -63,8 +65,8 @@ public class Heroe extends Personaje {
 		setManaMax(100.0f);
 		setManaPorSegundo(5.0f);
 
-		getPociones().put("vida", 0);
-		getPociones().put("mana", 0);
+		getPociones().put("vida", 3);
+		getPociones().put("mana", 3);
 		getPocionesMax().put("vida", 3);
 		getPocionesMax().put("mana", 3);
 
@@ -165,8 +167,17 @@ public class Heroe extends Personaje {
 	public void aumentarValorPocion(String tipo) {
 		if (!tipoValido(tipo))
 			return;
-		float cantidad = tipo.equals("vida") ? PocionVida.cantidad : PocionMana.cantidad;
+		float cantidad;
+		Color colorEtiqueta;
+		if (tipo.equals("vida")) {
+			cantidad = PocionVida.cantidad;
+			colorEtiqueta = Color.GREEN;
+		} else {
+			cantidad = PocionMana.cantidad;
+			colorEtiqueta = Color.BLUE;
+		}
 		setValor(tipo, getValor(tipo) + cantidad);
+		getStage().addActor(new EtiquetaCantidad("+" + cantidad, getEsquina("sup-izq"), colorEtiqueta));
 		if (getValor(tipo) > getValor(tipo, true)) {
 			setValor(tipo, getValor(tipo, true));
 		}

@@ -79,7 +79,6 @@ public class Escena {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private void teletransportarse(Paso paso, Heroe heroe, Vector2 pos) {
 		try {
 			heroe.habilidad("teletransportar", pos);

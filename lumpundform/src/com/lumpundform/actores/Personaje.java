@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
@@ -11,6 +12,7 @@ import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.interfaz.EtiquetaCantidad;
+import com.lumpundform.utilerias.Fuentes;
 
 /**
  * Clase para todos los personajes del juego
@@ -158,7 +160,8 @@ public abstract class Personaje extends ObjetoActor {
 	}
 
 	protected void hacerDano(float dano) {
-		getStage().addActor(new EtiquetaCantidad(dano + "", getEsquina("sup-izq")));
+		Color color = isEnemigo() ? Fuentes.regular().getColor() : Color.RED;
+		getStage().addActor(new EtiquetaCantidad(dano + "", getEsquina("sup-izq"), color));
 		setVida(getVida() - dano);
 
 		if (getVida() < 0) {
