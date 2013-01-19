@@ -11,7 +11,8 @@ import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.habilidades.Habilidad;
-import com.lumpundform.interfaz.EtiquetaCantidad;
+import com.lumpundform.indicadores.BarraVida;
+import com.lumpundform.indicadores.EtiquetaCantidad;
 import com.lumpundform.utilerias.Fuentes;
 
 /**
@@ -38,6 +39,7 @@ public abstract class Personaje extends ObjetoActor {
 	private float vidaMax;
 	private float manaMax;
 	private float manaPorSegundo;
+	private BarraVida barraVida;
 
 	private boolean enemigo;
 
@@ -152,6 +154,7 @@ public abstract class Personaje extends ObjetoActor {
 			}
 			if (isEnemigo()) {
 				escenario.crearPocion(getPosicionCentro());
+				getBarraVida().remove();
 				remove();
 			} else {
 				// TODO: Que hacer cuando el héroe muere
@@ -238,5 +241,13 @@ public abstract class Personaje extends ObjetoActor {
 
 	public void setEnemigo(boolean enemigo) {
 		this.enemigo = enemigo;
+	}
+
+	public BarraVida getBarraVida() {
+		return barraVida;
+	}
+
+	public void setBarraVida(BarraVida barraVida) {
+		this.barraVida = barraVida;
 	}
 }

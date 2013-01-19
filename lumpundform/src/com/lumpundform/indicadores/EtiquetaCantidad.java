@@ -1,4 +1,4 @@
-package com.lumpundform.interfaz;
+package com.lumpundform.indicadores;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
