@@ -17,7 +17,7 @@ import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.habilidades.HabilidadDisparar;
 import com.lumpundform.habilidades.HabilidadTeletransportar;
-import com.lumpundform.interfaz.EtiquetaCantidad;
+import com.lumpundform.indicadores.EtiquetaCantidad;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
 import com.lumpundform.utilerias.U;
