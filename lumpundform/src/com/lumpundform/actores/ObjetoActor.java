@@ -3,7 +3,7 @@ package com.lumpundform.actores;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -13,9 +13,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.acciones.ObjetoActorAction;
 import com.lumpundform.colision.Rectangulo;
-import com.lumpundform.excepciones.DatoInexistenteException;
 import com.lumpundform.utilerias.D;
-import com.lumpundform.utilerias.U;
+import com.lumpundform.utilerias.SpriteSheet;
 
 /**
  * Clase personalizada que extiende a {@link Actor} y le agrega valores
@@ -133,12 +132,8 @@ public abstract class ObjetoActor extends Actor {
 	 * Aqui se inicializan todas las animaciones existentes de la clase
 	 */
 	protected void cargarAnimaciones(String... nombres) {
-		try {
-			for (String nombre : nombres) {
-				getAnimacion().put(nombre, initAnimacion(nombre));
-			}
-		} catch (DatoInexistenteException e) {
-			U.err(e);
+		for (String nombre : nombres) {
+			getAnimacion().put(nombre, initAnimacion(nombre));
 		}
 	}
 
@@ -204,8 +199,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El hitbox
 	 */
 	public Rectangulo getHitbox() {
-		return hitbox.posicionar(getX() + (getWidth() / 2), getY()
-				+ (getHeight() / 2));
+		return hitbox.posicionar(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
 	}
 
 	@Override
@@ -244,23 +238,15 @@ public abstract class ObjetoActor extends Actor {
 	 *            el que obtiene los valores de los diferentes {@link Map}s
 	 * @return La animación en si
 	 */
-	private Animation initAnimacion(String tipoAnimacion)
-			throws DatoInexistenteException {
-		String spriteSheet = D.gs(getName(), "sprite_sheet_" + tipoAnimacion);
-		int columnas = D.gi(getName(), "columnas_" + tipoAnimacion);
-		int renglones = D.gi(getName(), "renglones_" + tipoAnimacion);
+	private Animation initAnimacion(String tipoAnimacion) {
+		SpriteSheet ss = D.ss(getName(), tipoAnimacion);
 
-		int columnasOffset = D
-				.gi(getName(), "columnas_offset_" + tipoAnimacion);
-
-		Texture texturaAnimacion = new Texture(Gdx.files.internal(spriteSheet));
-		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion,
-				(int) getWidth(), (int) getHeight());
-		TextureRegion[] cuadrosAnimacion = new TextureRegion[columnas
-				* renglones];
+		Texture texturaAnimacion = ss.getTextura();
+		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion, (int) getWidth(), (int) getHeight());
+		TextureRegion[] cuadrosAnimacion = new TextureRegion[ss.getColumnas() * ss.getRenglones()];
 		int index = 0;
-		for (int i = 0; i < renglones; i++) {
-			for (int j = columnasOffset; j < columnas + columnasOffset; j++) {
+		for (int i = 0; i < ss.getRenglones(); i++) {
+			for (int j = ss.getColumnasOffset(); j < ss.getColumnas() + ss.getColumnasOffset(); j++) {
 				cuadrosAnimacion[index++] = tmp[i][j];
 			}
 		}

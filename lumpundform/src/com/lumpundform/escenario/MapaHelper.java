@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Heroe;
-import com.lumpundform.excepciones.DatoInexistenteException;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.D;
 import com.lumpundform.utilerias.U;
@@ -37,17 +36,12 @@ class MapaHelper {
 	 * @param nombre
 	 */
 	MapaHelper(String nombre) {
-		try {
-			mapa = TiledLoader.createMap(Gdx.files.internal(D.gs(nombre,
-					"archivo_tmx")));
-			atlas = new TileAtlas(mapa, Gdx.files.internal(D
-					.gs(nombre, "atlas")));
-			renderer = new TileMapRenderer(mapa, atlas, 16, 16);
-			fondo = new Texture(Gdx.files.internal(D.gs(nombre, "fondo")));
-			sb = new SpriteBatch();
-		} catch (DatoInexistenteException e) {
-			U.err(e);
-		}
+		DatosEscenario de = D.de(nombre);
+		mapa = TiledLoader.createMap(Gdx.files.internal(de.getArchivoTmx()));
+		atlas = new TileAtlas(mapa, Gdx.files.internal(de.getAtlas()));
+		renderer = new TileMapRenderer(mapa, atlas, 16, 16);
+		fondo = new Texture(Gdx.files.internal(de.getFondo()));
+		sb = new SpriteBatch();
 	}
 
 	/**
@@ -127,9 +121,8 @@ class MapaHelper {
 		for (int i = 0; i < puntos.length; i++) {
 			String[] punto = puntos[i].split(",");
 
-			vectoresPuntos[i] = U.voltearCoordenadas(
-					Integer.parseInt(punto[0]), (int) puntoInicialObjeto.y
-							+ Integer.parseInt(punto[1]));
+			vectoresPuntos[i] = U.voltearCoordenadas(Integer.parseInt(punto[0]),
+					(int) puntoInicialObjeto.y + Integer.parseInt(punto[1]));
 		}
 		return vectoresPuntos;
 	}
