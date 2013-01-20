@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Datos>
+    <SpriteSheets>
+        <SpriteSheetGrupo nombre="heroe">
+            <SpriteSheet tipo="detenido">
+	            <ruta>heroe_sprite_sheet.png</ruta>
+	            <columnas>1</columnas>
+	            <columnasOffset>0</columnasOffset>
+	            <renglones>1</renglones>
+	            <renglonesOffset>1</renglonesOffset>
+            </SpriteSheet>
+            <SpriteSheet tipo="corriendo">
+                <ruta>heroe_corriendo.png</ruta>
+                <columnas>10</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+            <SpriteSheet tipo="colisionando">
+                <ruta>heroe_colisionando.png</ruta>
+                <columnas>8</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+            <SpriteSheet tipo="cayendo">
+                <ruta>heroe_cayendo.png</ruta>
+                <columnas>1</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
+        <SpriteSheetGrupo nombre="amigo">
+            <SpriteSheet tipo="detenido">
+                <ruta>amigo_sprite_sheet.png</ruta>
+                <columnas>1</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+            <SpriteSheet tipo="corriendo">
+                <ruta>amigo_corriendo.png</ruta>
+                <columnas>10</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
+        <SpriteSheetGrupo nombre="ataque_misil">
+            <SpriteSheet tipo="normal">
+                <ruta>ataque_misil.png</ruta>
+                <columnas>3</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+            <SpriteSheet tipo="explosion">
+                <ruta>ataque_misil.png</ruta>
+                <columnas>10</columnas>
+                <columnasOffset>3</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
+        <SpriteSheetGrupo nombre="pocion_vida">
+            <SpriteSheet tipo="normal">
+                <ruta>pocion_vida.png</ruta>
+                <columnas>1</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
+        <SpriteSheetGrupo nombre="pocion_mana">
+            <SpriteSheet tipo="normal">
+                <ruta>pocion_mana.png</ruta>
+                <columnas>1</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
+    </SpriteSheets>
+    <Escenarios>
+        <Escenario nombre="escenario101">
+            <archivo_tmx>data/world/level1/level.tmx</archivo_tmx>
+            <atlas>data/packer/bosque/</atlas>
+            <fondo>data/background.png</fondo>
+        </Escenario>
+    </Escenarios>
+</Datos>
