@@ -95,7 +95,8 @@ public class Evento {
 				if (activado == false && heroe.getX() > (posicion.x - rango)
 						&& heroe.getX() < (posicion.x + rango)) {
 					activado = true;
-				} else if (activado == true && terminado == false && escena.escenaTerminada == false) {
+				} else if (activado == true && terminado == false
+						&& escena.escenaTerminada == false) {
 					escena.ejecutarEscena(heroe, delta);
 				} else if (activado == true && escena.escenaTerminada == true) {
 					terminado = true;
@@ -117,19 +118,19 @@ public class Evento {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public Escena getEscena() {
 		return escena;
 	}
-	
+
 	public boolean getActivado() {
 		return activado;
 	}
-	
+
 	public boolean getTerminado() {
 		return terminado;
 	}
-	
+
 	public String getTipoEvento() {
 		return tipo;
 	}
