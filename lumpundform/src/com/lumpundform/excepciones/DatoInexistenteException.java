@@ -1,6 +1,6 @@
 package com.lumpundform.excepciones;
 
-public class DatoInexistenteException extends Exception {
+public class DatoInexistenteException extends RuntimeException {
 
 	private static final long serialVersionUID = 3L;
 

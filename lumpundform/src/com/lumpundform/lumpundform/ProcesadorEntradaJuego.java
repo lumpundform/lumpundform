@@ -6,7 +6,6 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioHelper;
-import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -34,11 +33,7 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	public boolean tap(float x, float y, int count, int button) {
 		Vector2 posicion = U.voltearCoordenadas(x, y);
 		if (count >= 2) {
-			try {
-				escenario.getHeroe().habilidad("teletransportar", posicion);
-			} catch (HabilidadInexistenteException e) {
-				U.err(e);
-			}
+			escenario.getHeroe().habilidad("teletransportar", posicion);
 		}
 		return false;
 	}
@@ -75,11 +70,7 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	public boolean keyDown(int keycode) {
 		Heroe heroe = escenario.getHeroe();
 		if (keycode == Keys.SPACE) {
-			try {
-				heroe.habilidad("disparar");
-			} catch (HabilidadInexistenteException e) {
-				U.err(e);
-			}
+			heroe.habilidad("disparar");
 			return true;
 		} else if (keycode == Keys.Q) {
 			heroe.usarPocion("vida");

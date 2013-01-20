@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioBase;
-import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.lumpundform.CamaraJuego;
-import com.lumpundform.utilerias.U;
 
 public class Evento {
 	private Vector2 posicion;
@@ -55,55 +53,44 @@ public class Evento {
 	}
 
 	private void ejecutarEvento(CamaraJuego camara, Heroe heroe, float delta) {
-		try {
-			if (tipo.equals("spawn")) {
-				if (activado == false && heroe.getX() > (posicion.x - rango)
-						&& heroe.getX() < (posicion.x + rango)) {
-					activado = true;
-				} else if (limite > personajesCreados && activado.equals(true)) {
-					escenario.agregarActor("enemigo", new Vector2(
-							posicion.x - 64, posicion.y), getNombre());
-					personajesCreados += 1;
-				}
-				if (limite <= personajesCreados) {
-					terminado = true;
-				}
-			} else if (tipo.equals("coliseo")) {
-				if (activado == false && heroe.getX() > (posicion.x - rango)
-						&& heroe.getX() < (posicion.x + rango)) {
-					activado = true;
-					camara.setBloqueada(true);
-				} else if (limite > personajesCreados && activado.equals(true)) {
-					escenario.agregarActor("enemigo", new Vector2(
-							posicion.x - 64, posicion.y), getNombre());
-					personajesCreados += 1;
-				} else if (limite == personajesMatados) {
-					camara.setBloqueada(false);
-					terminado = true;
-				}
-			} else if (tipo.equals("clima")) {
-				if (activado == false && heroe.getX() > (posicion.x - rango)
-						&& heroe.getX() < (posicion.x + rango)) {
-					activado = true;
-				} else if (activado == true && duracion > tiempoTranscurrido) {
-					// ejecutar lo que haga el evento
-					tiempoTranscurrido += delta;
-				} else if (activado == true && duracion <= tiempoTranscurrido) {
-					terminado = true;
-				}
-			} else if (tipo.equals("escena")) {
-				if (activado == false && heroe.getX() > (posicion.x - rango)
-						&& heroe.getX() < (posicion.x + rango)) {
-					activado = true;
-				} else if (activado == true && terminado == false
-						&& escena.escenaTerminada == false) {
-					escena.ejecutarEscena(heroe, delta);
-				} else if (activado == true && escena.escenaTerminada == true) {
-					terminado = true;
-				}
+		if (tipo.equals("spawn")) {
+			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+				activado = true;
+			} else if (limite > personajesCreados && activado.equals(true)) {
+				escenario.agregarActor("enemigo", new Vector2(posicion.x - 64, posicion.y), getNombre());
+				personajesCreados += 1;
 			}
-		} catch (ActorNoDefinidoException e) {
-			U.err(e);
+			if (limite <= personajesCreados) {
+				terminado = true;
+			}
+		} else if (tipo.equals("coliseo")) {
+			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+				activado = true;
+				camara.setBloqueada(true);
+			} else if (limite > personajesCreados && activado.equals(true)) {
+				escenario.agregarActor("enemigo", new Vector2(posicion.x - 64, posicion.y), getNombre());
+				personajesCreados += 1;
+			} else if (limite == personajesMatados) {
+				camara.setBloqueada(false);
+				terminado = true;
+			}
+		} else if (tipo.equals("clima")) {
+			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+				activado = true;
+			} else if (activado == true && duracion > tiempoTranscurrido) {
+				// ejecutar lo que haga el evento
+				tiempoTranscurrido += delta;
+			} else if (activado == true && duracion <= tiempoTranscurrido) {
+				terminado = true;
+			}
+		} else if (tipo.equals("escena")) {
+			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+				activado = true;
+			} else if (activado == true && terminado == false && escena.escenaTerminada == false) {
+				escena.ejecutarEscena(heroe, delta);
+			} else if (activado == true && escena.escenaTerminada == true) {
+				terminado = true;
+			}
 		}
 	}
 

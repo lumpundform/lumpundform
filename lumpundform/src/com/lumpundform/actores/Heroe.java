@@ -20,10 +20,10 @@ import com.lumpundform.habilidades.HabilidadTeletransportar;
 import com.lumpundform.indicadores.EtiquetaCantidad;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
-import com.lumpundform.utilerias.U;
 
 /**
- * Clase específica para el héroe del juego
+ * El héroe del juego. Sólamente debe haber una instancia de {@link Heroe} en un
+ * momento dado.
  * 
  * @author Sergio
  * 
@@ -38,16 +38,13 @@ public class Heroe extends Personaje {
 	private Map<String, Integer> pocionesMax = new HashMap<String, Integer>();
 
 	/**
-	 * Carga datos específicos del {@link Heroe}, incluyendo su hitbox y su
-	 * estado inicial
+	 * Inicializa al {@link Heroe} con todos sus datos necesarios
 	 * 
-	 * @param nombre
-	 *            El nombre del {@link @ObjetoActor}
 	 * @param puntoOrigen
 	 *            El punto donde se va a originar el {@link ObjetoActor}
 	 */
-	public Heroe(String nombre, Vector2 puntoOrigen) {
-		super(nombre, puntoOrigen);
+	public Heroe(Vector2 puntoOrigen) {
+		super("heroe", puntoOrigen);
 
 		setWidth(125.0f);
 		setHeight(150.0f);
@@ -83,12 +80,8 @@ public class Heroe extends Personaje {
 
 		// TODO: cargar habilidadesInterfaz de los settings
 		setHabilidadesInterfaz(new ArrayList<Habilidad>());
-		try {
-			getHabilidadesInterfaz().add(getHabilidad("disparar"));
-			getHabilidadesInterfaz().add(getHabilidad("teletransportar"));
-		} catch (HabilidadInexistenteException e) {
-			U.err(e);
-		}
+		getHabilidadesInterfaz().add(getHabilidad("disparar"));
+		getHabilidadesInterfaz().add(getHabilidad("teletransportar"));
 	}
 
 	@Override
@@ -100,6 +93,13 @@ public class Heroe extends Personaje {
 		super.draw(batch, alpha);
 	}
 
+	/**
+	 * Alterna la transparencia del {@link Heroe} después de recibir daño para
+	 * indicar que no puede recibir daño por un momento
+	 * 
+	 * @param delta
+	 *            Delta que viene de {@link #act(float)}
+	 */
 	public void actualizarTransparente(float delta) {
 		setDeltaTransparente(getDeltaTransparente() + delta);
 		if (getCooldownDano() <= 0.0f) {
@@ -143,6 +143,14 @@ public class Heroe extends Personaje {
 		}
 	}
 
+	/**
+	 * Intenta agarrar una poción e incrementar su cuenta de pociones si aún no
+	 * está al máximo de pociones permitidas
+	 * 
+	 * @param tipo
+	 *            El tipo de poción a agarrar, "vida" ó "mana"
+	 * @return Si agarró la poción
+	 */
 	public boolean agarrarPocion(String tipo) {
 		if (!tipoValido(tipo))
 			return false;
@@ -155,6 +163,13 @@ public class Heroe extends Personaje {
 		}
 	}
 
+	/**
+	 * Intenta usar una poción si la cantidad de vida ó mana no están a su
+	 * máximo y si tiene pociones del tipo dado
+	 * 
+	 * @param tipo
+	 *            El tipo de poción que se va a usar, "vida" o "mana"
+	 */
 	public void usarPocion(String tipo) {
 		if (getPociones().get(tipo) > 0) {
 			if (getValor(tipo) < getValor(tipo, true)) {
@@ -164,6 +179,12 @@ public class Heroe extends Personaje {
 		}
 	}
 
+	/**
+	 * Aumenta la vida ó mana consecuencia de usar una poción
+	 * 
+	 * @param tipo
+	 *            El tipo de valor que se va a aumentar, "vida" o "mana"
+	 */
 	public void aumentarValorPocion(String tipo) {
 		if (!tipoValido(tipo))
 			return;
@@ -183,19 +204,37 @@ public class Heroe extends Personaje {
 		}
 	}
 
-	public void habilidad(String nombre) throws HabilidadInexistenteException {
+	/**
+	 * Realiza la {@link Habilidad} especificada del {@link Heroe}
+	 * 
+	 * @param nombre
+	 *            El nombre de la habilidad a realizar
+	 */
+	public void habilidad(String nombre) {
 		habilidad(nombre, null);
 	}
 
-	public void habilidad(String nombre, Vector2 pos) throws HabilidadInexistenteException {
-		if (getHabilidades().containsKey(nombre)) {
-			getHabilidades().get(nombre).ejecutar(pos);
-		} else {
-			throw new HabilidadInexistenteException("No existe la habilidad " + nombre + " para el actor " + getName());
-		}
+	/**
+	 * Realiza la {@link Habilidad} especificada del {@link Heroe} en la
+	 * posición dada.
+	 * 
+	 * @param nombre
+	 *            El nombre de la habilidad a realizar
+	 * @param pos
+	 *            La posición en donde se va a realizar la habilidad
+	 */
+	public void habilidad(String nombre, Vector2 pos) {
+		getHabilidad(nombre).ejecutar(pos);
 	}
 
-	private Habilidad getHabilidad(String nombre) throws HabilidadInexistenteException {
+	/**
+	 * Lee la {@link Habilidad} con el nombre dado del {@link Heroe}.
+	 * 
+	 * @param nombre
+	 *            El nombre de la habilidad
+	 * @return La {@link Habilidad}
+	 */
+	private Habilidad getHabilidad(String nombre) {
 		if (getHabilidades().containsKey(nombre)) {
 			return getHabilidades().get(nombre);
 		} else {
@@ -203,14 +242,36 @@ public class Heroe extends Personaje {
 		}
 	}
 
+	/**
+	 * Revisa si el tipo es "vida" o "mana"
+	 * 
+	 * @param tipo
+	 * @return Si es válido
+	 */
 	private boolean tipoValido(String tipo) {
 		return (tipo.equals("mana") || tipo.equals("vida"));
 	}
 
+	/**
+	 * Agarra el valor de la vida o mana. Para usarse con las funciones que usen
+	 * tipo vida o mana
+	 * 
+	 * @param tipo
+	 * @return El valor
+	 */
 	private Float getValor(String tipo) {
 		return getValor(tipo, false);
 	}
 
+	/**
+	 * Agarra el valor de la vida o mana, opcionalmente se puede agarrar el
+	 * valor máximo. Para usarse con las funciones que usen tipo vida o mana.
+	 * 
+	 * @param tipo
+	 * @param max
+	 *            Si se quiere agarrar el valor máximo
+	 * @return El valor
+	 */
 	private Float getValor(String tipo, boolean max) {
 		if (!tipoValido(tipo))
 			return null;
@@ -222,10 +283,25 @@ public class Heroe extends Personaje {
 		}
 	}
 
+	/**
+	 * Poner el valor de la vida o mana.
+	 * 
+	 * @param tipo
+	 * @param valor
+	 * @see #getValor(String)
+	 */
 	private void setValor(String tipo, float valor) {
 		setValor(tipo, valor, false);
 	}
 
+	/**
+	 * Poner el valor de la vida o mana.
+	 * 
+	 * @param tipo
+	 * @param valor
+	 * @param max
+	 * @see #getValor(String, boolean)
+	 */
 	private void setValor(String tipo, float valor, boolean max) {
 		if (tipo.equals("vida")) {
 			if (max)

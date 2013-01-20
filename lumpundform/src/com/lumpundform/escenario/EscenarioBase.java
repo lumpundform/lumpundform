@@ -294,14 +294,14 @@ public class EscenarioBase extends Stage {
 		return null;
 	}
 
-	void agregarActor(String tipo, Vector2 posicion) throws ActorNoDefinidoException {
+	void agregarActor(String tipo, Vector2 posicion) {
 		agregarActor(tipo, posicion, "");
 	}
 
-	public void agregarActor(String tipo, Vector2 posicion, String evento) throws ActorNoDefinidoException {
+	public void agregarActor(String tipo, Vector2 posicion, String evento) {
 		Personaje actor;
 		if (tipo == "heroe") {
-			actor = new Heroe("heroe", posicion);
+			actor = new Heroe(posicion);
 		} else if (tipo == "humanoide") {
 			actor = new Humanoide("amigo", posicion);
 		} else if (tipo == "enemigo") {

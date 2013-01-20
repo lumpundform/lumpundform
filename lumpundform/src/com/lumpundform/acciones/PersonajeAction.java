@@ -7,6 +7,13 @@ import com.lumpundform.actores.Personaje;
 import com.lumpundform.actores.Personaje.Estado;
 import com.lumpundform.indicadores.BarraVida;
 
+/**
+ * Las acciones que realizan los {@link Personaje}s al llamar su función
+ * {@link Personaje#act(float)}
+ * 
+ * @author sergio
+ * 
+ */
 public class PersonajeAction extends Action {
 
 	@Override
@@ -14,7 +21,7 @@ public class PersonajeAction extends Action {
 		Personaje p = (Personaje) getActor();
 
 		if (p != null) {
-			if(p.getBarraVida() == null) {
+			if (p.getBarraVida() == null) {
 				p.setBarraVida(new BarraVida(p));
 			}
 			p.setEstado(p.isColisionPiso() ? Estado.DETENIDO : Estado.CAYENDO);
@@ -27,8 +34,7 @@ public class PersonajeAction extends Action {
 				if (direccion != null) {
 					float distanciaAlejamiento = 200.0f;
 					p.setDireccionX(direccion);
-					if (direccion == Direccion.DERECHA
-							&& (heroe.getXCentro() - p.getXCentro()) > distanciaAlejamiento) {
+					if (direccion == Direccion.DERECHA && (heroe.getXCentro() - p.getXCentro()) > distanciaAlejamiento) {
 						p.moverDerecha(delta);
 					} else if (direccion == Direccion.IZQUIERDA
 							&& (p.getXCentro() - heroe.getXCentro()) > distanciaAlejamiento) {

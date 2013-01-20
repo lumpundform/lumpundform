@@ -53,11 +53,7 @@ public class EscenarioHelper {
 		// Agregar las colisiones del piso
 		escenario.setPiso(new Poligono(mh.getVerticesPlataforma("piso")));
 
-		try {
-			escenario.agregarActor("heroe", mh.getOrigenHeroe());
-		} catch (ActorNoDefinidoException e) {
-			U.err(e);
-		}
+		escenario.agregarActor("heroe", mh.getOrigenHeroe());
 
 		ih.agregarElementos();
 		ih.agregarHabilidades(getHeroe());
