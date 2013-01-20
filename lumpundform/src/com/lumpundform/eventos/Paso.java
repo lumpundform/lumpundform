@@ -26,9 +26,9 @@ public class Paso {
 	}
 
 	public Accion getAccionHablar() {
-		for(int i = 0; i < acciones.size; i++) {
+		for (int i = 0; i < acciones.size; i++) {
 			Accion accion = acciones.get(i);
-			if(accion.objetivo.equals("hablar")) {
+			if (accion.objetivo.equals("hablar")) {
 				return accion;
 			}
 		}

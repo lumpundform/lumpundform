@@ -173,4 +173,24 @@ public class EscenarioHelper {
 		}
 		return null;
 	}
+
+	public boolean hayEscenaActivada() {
+		for(int i = 0; i < escenario.getEventos().size; i++) {
+			Evento evento = escenario.getEventos().get(i);
+			if(evento.getActivado() && !evento.getTerminado() && evento.getTipoEvento().equals("escena")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Evento getEscenaActivada() {
+		for(int i = 0; i < escenario.getEventos().size; i++) {
+			Evento evento = escenario.getEventos().get(i);
+			if(evento.getActivado() && !evento.getTerminado() && evento.getTipoEvento().equals("escena")) {
+				return evento;
+			}
+		}
+		return null;
+	}
 }
