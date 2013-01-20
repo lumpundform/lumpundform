@@ -7,6 +7,7 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.interfaz.CuadroTexto;
+import com.lumpundform.utilerias.U;
 
 public class Escena {
 
@@ -44,14 +45,34 @@ public class Escena {
 	}
 
 	private void revisarAcciones(Heroe heroe, float delta, Paso paso) {
-		if (paso.getAccionAEjecutar() < paso.acciones.size) {
-			ejecutarAccion(paso.acciones.get(paso.getAccionAEjecutar()).getObjetivo(),
-					paso.acciones.get(paso.getAccionAEjecutar()), heroe, delta, paso);
+		if (accionesTerminadas(paso)) {
+			ejecutarAcciones(heroe, delta, paso);
+			//ejecutarAccion(paso.acciones.get(paso.getAccionAEjecutar()).getObjetivo(),
+			//		paso.acciones.get(paso.getAccionAEjecutar()), heroe, delta, paso);
 		} else {
-			this.paso++;
+			siguientePaso();
 		}
 	}
 
+	private void ejecutarAcciones(Heroe heroe, float delta, Paso paso) {
+		for(int i = 0; i < paso.acciones.size; i++) {
+			U.l("Accion terminado", paso.acciones.get(i).getObjetivo() + paso.acciones.get(i).getTerminado());
+			if(!paso.acciones.get(i).getTerminado()) {
+				ejecutarAccion(paso.acciones.get(i), heroe, delta);
+			}
+		}
+	}
+	
+	private void ejecutarAccion(Accion accion, Heroe heroe, float delta) {
+		U.l("accion", accion.getObjetivo());
+		if(accion.getObjetivo().equals("hablar"))
+			hablar(accion);
+		else if(accion.getObjetivo().equals("ir_a"))
+			caminar(heroe, accion.getDestino(), delta, accion);
+		else if(accion.getObjetivo().equals("teletransportarse"))
+			teletransportarse(heroe, accion.getPosicionVector(), accion);
+	}
+/*
 	private void ejecutarAccion(String objetivo, Accion accion, Heroe heroe, float delta, Paso paso) {
 		if(objetivo.equals("hablar")) {
 			hablar(accion, paso, accion.getTexto(), accion.getPosicion());
@@ -61,28 +82,47 @@ public class Escena {
 			teletransportarse(paso, heroe, accion.getPosicionVector());
 		}
 	}
-
-	// Acciones para las escenas
-
-	private void hablar(Accion accion, Paso paso, String texto, String posicion) {
-		ctIzq.setTexto(texto);
-		ctIzq.draw();
+*/
+	public Paso getPasoActual(){
+		return pasosEscena.get(paso);
 	}
 
-	private void caminar(Heroe heroe, float destino, float delta, Paso paso) {
-		heroe.setDestinoX(destino);
-		heroe.setDireccionDestinoX(Direccion.DERECHA);
-		heroe.moverDestino(delta);
-		if((heroe.getDestinoX() > heroe.getX() && heroe.getDireccionDestinoX() == Direccion.IZQUIERDA) ||
-				(heroe.getDestinoX() < heroe.getX() && heroe.getDireccionDestinoX() == Direccion.DERECHA)) {
-			paso.siguienteAccion();
+	private void siguientePaso() {
+		this.paso++;
+	}
+
+	private boolean accionesTerminadas(Paso paso) {
+		for(int i = 0; i < paso.acciones.size; i++) {
+			if(!paso.acciones.get(i).getTerminado())
+				return true;
+		}
+		return false;
+	}
+	// Acciones para las escenas
+
+	private void hablar(Accion accion) {
+		if(!accion.getTerminado()) {
+			ctIzq.setTexto(accion.getTexto());
+			ctIzq.draw();
 		}
 	}
 
-	private void teletransportarse(Paso paso, Heroe heroe, Vector2 pos) {
+	private void caminar(Heroe heroe, float destino, float delta, Accion accion) {
+		if(!accion.getTerminado()) {
+			heroe.setDestinoX(destino);
+			heroe.setDireccionDestinoX(Direccion.DERECHA);
+			heroe.moverDestino(delta);
+		}
+		if((heroe.getDestinoX() > heroe.getX() && heroe.getDireccionDestinoX() == Direccion.IZQUIERDA) ||
+				(heroe.getDestinoX() < heroe.getX() && heroe.getDireccionDestinoX() == Direccion.DERECHA))
+			accion.terminarAccion();
+	}
+
+	@SuppressWarnings("unused")
+	private void teletransportarse(Heroe heroe, Vector2 pos, Accion accion) {
 		try {
 			heroe.habilidad("teletransportar", pos);
-			paso.siguienteAccion();
+			accion.terminarAccion();
 		} catch (HabilidadInexistenteException e) {
 			e.printStackTrace();
 		}

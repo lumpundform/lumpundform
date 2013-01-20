@@ -16,12 +16,22 @@ public class Paso {
 			acciones.add(new Accion(paso.get(i)));
 		}
 	}
-	
+
 	public int getAccionAEjecutar() {
 		return accionAEjecutar;
 	}
-	
+
 	public void siguienteAccion() {
 		accionAEjecutar++;
+	}
+
+	public Accion getAccionHablar() {
+		for(int i = 0; i < acciones.size; i++) {
+			Accion accion = acciones.get(i);
+			if(accion.objetivo.equals("hablar")) {
+				return accion;
+			}
+		}
+		return null;
 	}
 }

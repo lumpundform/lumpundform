@@ -13,8 +13,8 @@ public class Evento {
 	private String nombre;
 	private String tipo;
 	private float rango;
-	private Boolean activado;
-	private Boolean terminado;
+	private Boolean activado = false;
+	private Boolean terminado = false;
 	private EscenarioBase escenario;
 	private int limite;
 
@@ -33,8 +33,6 @@ public class Evento {
 		this.posicion = posicion;
 		this.nombre = objeto.name;
 		this.tipo = objeto.type;
-		this.activado = false;
-		this.terminado = false;
 		this.escenario = escenario;
 
 		if (objeto.properties.containsKey("rango"))
@@ -118,5 +116,17 @@ public class Evento {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public Escena getEscena() {
+		return escena;
+	}
+	
+	public boolean getActivado() {
+		return activado;
+	}
+	
+	public boolean getTerminado() {
+		return terminado;
 	}
 }

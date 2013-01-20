@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.colision.Poligono;
+import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
@@ -153,4 +154,23 @@ public class EscenarioHelper {
 		return escenario;
 	}
 
+	public boolean hayEventoActivado() {
+		for(int i = 0; i < escenario.getEventos().size; i++) {
+			Evento evento = escenario.getEventos().get(i);
+			if(evento.getActivado() && !evento.getTerminado()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Evento getEventoActivado() {
+		for(int i = 0; i < escenario.getEventos().size; i++) {
+			Evento evento = escenario.getEventos().get(i);
+			if(evento.getActivado() && !evento.getTerminado()) {
+				return evento;
+			}
+		}
+		return null;
+	}
 }
