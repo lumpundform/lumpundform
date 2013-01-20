@@ -120,13 +120,8 @@ public class Escena {
 			accion.terminarAccion();
 	}
 
-	@SuppressWarnings("unused")
 	private void teletransportarse(Heroe heroe, Vector2 pos, Accion accion) {
-		try {
-			heroe.habilidad("teletransportar", pos);
-			accion.terminarAccion();
-		} catch (HabilidadInexistenteException e) {
-			e.printStackTrace();
-		}
+		heroe.habilidad("teletransportar", pos);
+		accion.terminarAccion();
 	}
 }

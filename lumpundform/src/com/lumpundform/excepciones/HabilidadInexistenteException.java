@@ -1,6 +1,6 @@
 package com.lumpundform.excepciones;
 
-public class HabilidadInexistenteException extends Exception {
+public class HabilidadInexistenteException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
