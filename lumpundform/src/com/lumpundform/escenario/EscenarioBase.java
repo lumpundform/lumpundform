@@ -404,4 +404,8 @@ public class EscenarioBase extends Stage {
 	public void setPorcentajePociones(Porcentaje porcentajePociones) {
 		this.porcentajePociones = porcentajePociones;
 	}
+	
+	public Array<Evento> getEventos() {
+		return eventos;
+	}
 }

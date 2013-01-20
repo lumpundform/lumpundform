@@ -85,6 +85,12 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 			heroe.usarPocion("vida");
 		} else if (keycode == Keys.E) {
 			heroe.usarPocion("mana");
+		} else if (keycode == Keys.N) {
+			if(escenario.hayEventoActivado()) {
+				if(!escenario.getEventoActivado().getEscena().getPasoActual().getAccionHablar().getTerminado()){
+					escenario.getEventoActivado().getEscena().getPasoActual().getAccionHablar().terminarAccion();
+				}
+			}
 		}
 		return false;
 	}

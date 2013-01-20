@@ -6,7 +6,6 @@
 	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Lorem ipsum dolor sit amet, 
 	            																		consectetur adipiscing elit. 
 	            																		Pellentesque iaculis metus..." />
-	        <accion actor="heroe" objetivo="teletransportarse" x="400" y="400" />
 	    </paso>
 	    <paso numero="2">
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hello world!" />
@@ -16,6 +15,10 @@
 	    </paso>
 	    <paso numero="4">
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="ciao mondo!" />
+	        <accion actor="heroe" objetivo="teletransportarse" x="200" y="400" />
+	    </paso>
+	    <paso numero="5">
+	        <accion actor="heroe" objetivo="ir_a" destino="1300" />
 	    </paso>
 	</escena>
 	

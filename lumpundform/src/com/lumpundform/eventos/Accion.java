@@ -4,14 +4,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class Accion {
-	public Boolean activado = false;
-	public Boolean terminado = false;
+
+	private boolean activado = false;
+	private boolean terminado = false;
+
 	public String actor;
 	public String objetivo;
 	public String destino;
 	public String texto;
+
 	public float x;
 	public float y;
+
 	private String posicion;
 
 	public Accion(Element accion) {
@@ -48,5 +52,13 @@ public class Accion {
 
 	public String getPosicion() {
 		return posicion;
+	}
+	
+	public boolean getTerminado() {
+		return terminado;
+	}
+
+	public void terminarAccion() {
+		terminado = true;
 	}
 }
