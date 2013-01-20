@@ -129,4 +129,8 @@ public class Evento {
 	public boolean getTerminado() {
 		return terminado;
 	}
+	
+	public String getTipoEvento() {
+		return tipo;
+	}
 }
