@@ -24,7 +24,7 @@ import com.lumpundform.utilerias.Fuentes;
  * @author Sergio Valencia
  * 
  */
-public abstract class Personaje extends ObjetoActor {
+public class Personaje extends ObjetoActor {
 	// Valores estáticos de los personajes
 	public static enum Estado {
 		DETENIDO, MOVIMIENTO, CAYENDO, COLISIONANDO;
