@@ -11,7 +11,7 @@ import com.lumpundform.indicadores.BarraVida;
  * Las acciones que realizan los {@link Personaje}s al llamar su función
  * {@link Personaje#act(float)}
  * 
- * @author sergio
+ * @author Sergio Valencia
  * 
  */
 public class PersonajeAction extends Action {
@@ -31,15 +31,13 @@ public class PersonajeAction extends Action {
 			if (p.isEnemigo()) {
 				Heroe heroe = p.getHeroeEscenario();
 				Direccion direccion = p.getDireccionPosicionHeroe();
-				if (direccion != null) {
-					float distanciaAlejamiento = 200.0f;
-					p.setDireccionX(direccion);
-					if (direccion == Direccion.DERECHA && (heroe.getXCentro() - p.getXCentro()) > distanciaAlejamiento) {
-						p.moverDerecha(delta);
-					} else if (direccion == Direccion.IZQUIERDA
-							&& (p.getXCentro() - heroe.getXCentro()) > distanciaAlejamiento) {
-						p.moverIzquierda(delta);
-					}
+				float distanciaAlejamiento = 200.0f;
+				p.setDireccionX(direccion);
+				if (direccion == Direccion.DERECHA && (heroe.getXCentro() - p.getXCentro()) > distanciaAlejamiento) {
+					p.moverDerecha(delta);
+				} else if (direccion == Direccion.IZQUIERDA
+						&& (p.getXCentro() - heroe.getXCentro()) > distanciaAlejamiento) {
+					p.moverIzquierda(delta);
 				}
 			}
 		}

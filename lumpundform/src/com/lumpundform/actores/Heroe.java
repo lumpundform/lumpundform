@@ -13,10 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.HeroeAction;
 import com.lumpundform.colision.Rectangulo;
-import com.lumpundform.excepciones.HabilidadInexistenteException;
+import com.lumpundform.excepciones.TipoInvalidoException;
 import com.lumpundform.habilidades.Habilidad;
-import com.lumpundform.habilidades.HabilidadDisparar;
-import com.lumpundform.habilidades.HabilidadTeletransportar;
 import com.lumpundform.indicadores.EtiquetaCantidad;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
@@ -28,7 +26,7 @@ import com.lumpundform.pociones.PocionVida;
  * @author Sergio
  * 
  */
-public class Heroe extends Personaje {
+public class Heroe extends Mago {
 	private List<Habilidad> habilidadesInterfaz;
 	private float cooldownDano = 0.0f;
 	private float deltaTransparente = 0.0f;
@@ -68,18 +66,18 @@ public class Heroe extends Personaje {
 		getPocionesMax().put("mana", 3);
 
 		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
-		cargarHabilidades();
+		cargarHabilidades("teletransportar", "disparar");
+		setHabilidadesInterfaz();
 
 		addAction(new HeroeAction());
 	}
 
-	@Override
-	protected void cargarHabilidades() {
-		getHabilidades().put("teletransportar", new HabilidadTeletransportar(this, "teletransportar"));
-		getHabilidades().put("disparar", new HabilidadDisparar(this, "disparar"));
-
+	/**
+	 * Carga las habilidades que se van a poner en el UI.
+	 */
+	protected void setHabilidadesInterfaz() {
 		// TODO: cargar habilidadesInterfaz de los settings
-		setHabilidadesInterfaz(new ArrayList<Habilidad>());
+		habilidadesInterfaz = new ArrayList<Habilidad>();
 		getHabilidadesInterfaz().add(getHabilidad("disparar"));
 		getHabilidadesInterfaz().add(getHabilidad("teletransportar"));
 	}
@@ -127,7 +125,7 @@ public class Heroe extends Personaje {
 	 * Mueve al {@link Heroe} al presionar las teclas adecuadas
 	 * 
 	 * @param delta
-	 *            El delta de {@link Screen#render()}
+	 *            El delta de {@link Screen#render(float)}
 	 */
 	public void moverHeroe(float delta) {
 		if (!isTeletransportar() && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D))) {
@@ -152,9 +150,6 @@ public class Heroe extends Personaje {
 	 * @return Si agarró la poción
 	 */
 	public boolean agarrarPocion(String tipo) {
-		if (!tipoValido(tipo))
-			return false;
-
 		if (getPociones().get(tipo) >= getPocionesMax().get(tipo)) {
 			return false;
 		} else {
@@ -186,8 +181,6 @@ public class Heroe extends Personaje {
 	 *            El tipo de valor que se va a aumentar, "vida" o "mana"
 	 */
 	public void aumentarValorPocion(String tipo) {
-		if (!tipoValido(tipo))
-			return;
 		float cantidad;
 		Color colorEtiqueta;
 		if (tipo.equals("vida")) {
@@ -202,54 +195,6 @@ public class Heroe extends Personaje {
 		if (getValor(tipo) > getValor(tipo, true)) {
 			setValor(tipo, getValor(tipo, true));
 		}
-	}
-
-	/**
-	 * Realiza la {@link Habilidad} especificada del {@link Heroe}
-	 * 
-	 * @param nombre
-	 *            El nombre de la habilidad a realizar
-	 */
-	public void habilidad(String nombre) {
-		habilidad(nombre, null);
-	}
-
-	/**
-	 * Realiza la {@link Habilidad} especificada del {@link Heroe} en la
-	 * posición dada.
-	 * 
-	 * @param nombre
-	 *            El nombre de la habilidad a realizar
-	 * @param pos
-	 *            La posición en donde se va a realizar la habilidad
-	 */
-	public void habilidad(String nombre, Vector2 pos) {
-		getHabilidad(nombre).ejecutar(pos);
-	}
-
-	/**
-	 * Lee la {@link Habilidad} con el nombre dado del {@link Heroe}.
-	 * 
-	 * @param nombre
-	 *            El nombre de la habilidad
-	 * @return La {@link Habilidad}
-	 */
-	private Habilidad getHabilidad(String nombre) {
-		if (getHabilidades().containsKey(nombre)) {
-			return getHabilidades().get(nombre);
-		} else {
-			throw new HabilidadInexistenteException("No existe la habilidad " + nombre + " para el actor " + getName());
-		}
-	}
-
-	/**
-	 * Revisa si el tipo es "vida" o "mana"
-	 * 
-	 * @param tipo
-	 * @return Si es válido
-	 */
-	private boolean tipoValido(String tipo) {
-		return (tipo.equals("mana") || tipo.equals("vida"));
 	}
 
 	/**
@@ -273,13 +218,12 @@ public class Heroe extends Personaje {
 	 * @return El valor
 	 */
 	private Float getValor(String tipo, boolean max) {
-		if (!tipoValido(tipo))
-			return null;
-
 		if (tipo.equals("vida")) {
 			return max ? getVidaMax() : getVida();
-		} else {
+		} else if (tipo.equals("mana")) {
 			return max ? getManaMax() : getMana();
+		} else {
+			throw new TipoInvalidoException(tipo);
 		}
 	}
 
@@ -308,20 +252,18 @@ public class Heroe extends Personaje {
 				setVidaMax(valor);
 			else
 				setVida(valor);
-		} else {
+		} else if (tipo.equals("mana")) {
 			if (max)
 				setManaMax(valor);
 			else
 				setMana(valor);
+		} else {
+			throw new TipoInvalidoException(tipo);
 		}
 	}
 
 	public List<Habilidad> getHabilidadesInterfaz() {
 		return habilidadesInterfaz;
-	}
-
-	public void setHabilidadesInterfaz(List<Habilidad> habilidadesInterfaz) {
-		this.habilidadesInterfaz = habilidadesInterfaz;
 	}
 
 	public float getCooldownDano() {

@@ -18,9 +18,9 @@ import com.lumpundform.utilerias.SpriteSheet;
 
 /**
  * Clase personalizada que extiende a {@link Actor} y le agrega valores
- * específicos del juego
+ * específicos del juego.
  * 
- * @author Sergio
+ * @author Sergio Valencia
  * 
  */
 public abstract class ObjetoActor extends Actor {
@@ -53,7 +53,11 @@ public abstract class ObjetoActor extends Actor {
 	private String perteneceAEvento;
 
 	/**
-	 * Inicializa los valores generales de todos los actores
+	 * Inicializa los valores generales de todos los actores. Sólo debe usarse
+	 * por las subclases de {@link ObjetoActor}.
+	 * 
+	 * @param nombre
+	 *            El nombre del {@link Actor} para poderlo referenciar.
 	 */
 	protected ObjetoActor(String nombre) {
 		super();
@@ -69,21 +73,22 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
-	 * Si el héroe esta volteando hacia la derecha
+	 * Si el héroe esta volteando hacia la derecha.
 	 * 
-	 * @return {@link true} o {@link false}
+	 * @return <code>true</code> ó <code>false</code>.
 	 */
 	public boolean derecha() {
 		return getDireccionX() == Direccion.DERECHA;
 	}
 
 	/**
-	 * Regresa el punto especificado del hitbox del {@link ObjetoActor}
+	 * Regresa el punto especificado del hitbox del {@link ObjetoActor}.
 	 * 
 	 * @param nombre
-	 *            El nombre del punto. Puede ser "inf-izq", "inf-der",
-	 *            "sup-izq", "sup-der"
-	 * @return El punto
+	 *            El nombre del punto. Puede ser <code>"inf-izq"</code>,
+	 *            <code>"inf-der"</code>, <code>"sup-izq"</code>,
+	 *            <code>"sup-der"</code>.
+	 * @return El punto.
 	 */
 	public Vector2 getEsquina(String nombre) {
 		if (getHitbox() == null)
@@ -96,12 +101,12 @@ public abstract class ObjetoActor extends Actor {
 
 	/**
 	 * Posiciona al heroe en x tomando como referencia el punto especificado del
-	 * hitbox del {@link ObjetoActor}
+	 * hitbox del {@link ObjetoActor}.
 	 * 
 	 * @param nombre
-	 *            El nombre del punto
+	 *            El nombre del punto igual que en {@link #getEsquina(String)}.
 	 * @param x
-	 *            La posicion x del punto
+	 *            La posicion <code>x</code> del punto.
 	 */
 	public void setEsquinaX(String nombre, float x) {
 		hitbox.setCentrado(false);
@@ -113,12 +118,12 @@ public abstract class ObjetoActor extends Actor {
 
 	/**
 	 * Posiciona al heroe en y tomando como referencia el punto especificado del
-	 * hitbox del {@link ObjetoActor}
+	 * hitbox del {@link ObjetoActor}.
 	 * 
 	 * @param nombre
-	 *            El nombre del punto
+	 *            El nombre del punto igual que en {@link #getEsquina(String)}.
 	 * @param y
-	 *            La posicion y del punto
+	 *            La posicion <code>y</code> del punto.
 	 */
 	public void setEsquinaY(String nombre, float y) {
 		getHitbox().setCentrado(false);
@@ -129,7 +134,11 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
-	 * Aqui se inicializan todas las animaciones existentes de la clase
+	 * Inicializa todas las animaciones existentes de la clase.
+	 * 
+	 * @param nombres
+	 *            Una lista de todos los nombres de la animaciones del
+	 *            {@link ObjetoActor}
 	 */
 	protected void cargarAnimaciones(String... nombres) {
 		for (String nombre : nombres) {
@@ -138,54 +147,60 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
-	 * Calcula la velocidad del {@link ObjetoActor} conforme al delta pasado
+	 * Calcula la velocidad del {@link ObjetoActor} conforme al delta
+	 * transcurrido.
 	 * 
 	 * @param delta
-	 *            El delta que proviene de {@link Screen.render()}
-	 * @return La velocidad
+	 *            El delta que proviene de {@link Screen#render(float)}.
+	 * @return La velocidad calculada.
 	 */
 	public float getVelocidad(float delta) {
 		return delta * velocidad;
 	}
 
 	/**
-	 * Mueve al {@link ObjetoActor} a la izquierda conforme a su velocidad
+	 * Mueve al {@link ObjetoActor} a la izquierda conforme a su velocidad.
 	 * 
 	 * @param delta
-	 *            El delta que proviene de {@link Screen#render()}
+	 *            El delta que proviene de {@link Screen#render(float)}.
 	 */
 	protected void moverIzquierda(float delta) {
 		setX(getX() - getVelocidad(delta));
 	}
 
 	/**
-	 * Mueve al {@link ObjetoActor} a la derecha conforme a su velocidad
+	 * Mueve al {@link ObjetoActor} a la derecha conforme a su velocidad.
 	 * 
 	 * @param delta
-	 *            El delta que proviene de {@link Screen#render()}
+	 *            El delta que proviene de {@link Screen#render(float)}.
 	 */
 	protected void moverDerecha(float delta) {
 		setX(getX() + getVelocidad(delta));
 	}
 
 	/**
-	 * Regresa la posición del centro del {@link ObjetoActor}
+	 * Regresa la posición del centro del {@link ObjetoActor}.
 	 * 
-	 * @return La posición
+	 * @return La posición.
 	 */
 	public Vector2 getPosicionCentro() {
 		return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
 	}
 
+	/**
+	 * Regresa la posición de <code>x</code> del {@link ObjetoActor}.
+	 * 
+	 * @return El valor de <cdoe>x</code>.
+	 */
 	public float getXCentro() {
 		return getPosicionCentro().x;
 	}
 
 	/**
-	 * Posiciona al {@link Heroe} conforme a su punto del centro
+	 * Posiciona al {@link Heroe} conforme a su punto del centro.
 	 * 
 	 * @param pos
-	 *            La posición a donde mover al {@link ObjetoActor}
+	 *            La posición a donde mover al {@link ObjetoActor}.
 	 */
 	public void setPosicionCentro(Vector2 pos) {
 		setX(pos.x - getWidth() / 2);
@@ -194,9 +209,9 @@ public abstract class ObjetoActor extends Actor {
 
 	/**
 	 * Regresa el hitbox del {@link ObjetoActor} en la posición actual de dicho
-	 * {@link ObjetoActor}
+	 * {@link ObjetoActor}.
 	 * 
-	 * @return El hitbox
+	 * @return El hitbox.
 	 */
 	public Rectangulo getHitbox() {
 		return hitbox.posicionar(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
@@ -223,20 +238,20 @@ public abstract class ObjetoActor extends Actor {
 
 	/**
 	 * Regresa el cuadro actual dentro de la animación elegida del
-	 * {@link ObjetoActor}
+	 * {@link ObjetoActor}.
 	 * 
-	 * @return El cuadro actual
+	 * @return El cuadro actual.
 	 */
 	protected abstract TextureRegion getCuadroActual();
 
 	/**
-	 * Inicializa la animación del {@link ObjetoActor}, con la imagen y datos
-	 * proporcionados.
+	 * Se busca en el archivo datos.xml de acuerdo al nombre del
+	 * {@link ObjetoActor} y al tipo de animación para generar la
+	 * {@link Animation} correcta.
 	 * 
 	 * @param tipoAnimacion
-	 *            Una cadena con el nombre del tipo de animación a realizar, con
-	 *            el que obtiene los valores de los diferentes {@link Map}s
-	 * @return La animación en si
+	 *            El nombre de la animación.
+	 * @return La animación en sí.
 	 */
 	private Animation initAnimacion(String tipoAnimacion) {
 		SpriteSheet ss = D.ss(getName(), tipoAnimacion);

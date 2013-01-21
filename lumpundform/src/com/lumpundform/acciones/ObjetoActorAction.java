@@ -7,7 +7,7 @@ import com.lumpundform.actores.ObjetoActor;
  * Las acciones que realizan todos los {@link ObjetoActor}es al llamar su
  * función {@link ObjetoActor#act(float)}
  * 
- * @author sergio
+ * @author Sergio Valencia
  * 
  */
 public class ObjetoActorAction extends Action {

@@ -4,21 +4,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
+import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
+import com.lumpundform.habilidades.Habilidades;
 import com.lumpundform.indicadores.BarraVida;
 import com.lumpundform.indicadores.EtiquetaCantidad;
 import com.lumpundform.utilerias.Fuentes;
 
 /**
- * Clase para todos los personajes del juego
+ * Clase para todos los personajes del juego, amigos y enemigos.
  * 
- * @author Sergio
+ * @author Sergio Valencia
  * 
  */
 public abstract class Personaje extends ObjetoActor {
@@ -43,6 +46,15 @@ public abstract class Personaje extends ObjetoActor {
 
 	private boolean enemigo;
 
+	/**
+	 * Inicializa al {@link Personaje} con todos sus datos necesarios. Sólo debe
+	 * usarse por subclases de {@link Personaje}.
+	 * 
+	 * @param nombre
+	 *            El nombre del {@link ObjetoActor}.
+	 * @param puntoOrigen
+	 *            La posición en donde se va a crear al {@link ObjetoActor}.
+	 */
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
 
@@ -56,8 +68,63 @@ public abstract class Personaje extends ObjetoActor {
 		addAction(new PersonajeAction());
 	}
 
-	protected abstract void cargarHabilidades();
+	/**
+	 * Carga todas las habilidades del {@link Personaje} dado.
+	 * 
+	 * @param habilidades
+	 *            Los nombres de todas las habilidades.
+	 */
+	protected void cargarHabilidades(String... habilidades) {
+		for (String habilidad : habilidades) {
+			getHabilidades().put(habilidad, Habilidades.nueva(this, habilidad));
+		}
+	}
 
+	/**
+	 * Realiza la {@link Habilidad} especificada del {@link Personaje}.
+	 * 
+	 * @param nombre
+	 *            El nombre de la habilidad a realizar.
+	 */
+	public void habilidad(String nombre) {
+		habilidad(nombre, null);
+	}
+
+	/**
+	 * Realiza la {@link Habilidad} especificada del {@link Personaje} en la
+	 * posición dada.
+	 * 
+	 * @param nombre
+	 *            El nombre de la habilidad a realizar.
+	 * @param pos
+	 *            La posición en donde se va a realizar la habilidad.
+	 */
+	public void habilidad(String nombre, Vector2 pos) {
+		getHabilidad(nombre).ejecutar(pos);
+	}
+
+	/**
+	 * Lee la {@link Habilidad} con el nombre dado del {@link Personaje}.
+	 * 
+	 * @param nombre
+	 *            El nombre de la habilidad.
+	 * @return La {@link Habilidad}.
+	 */
+	protected Habilidad getHabilidad(String nombre) {
+		if (getHabilidades().containsKey(nombre)) {
+			return getHabilidades().get(nombre);
+		} else {
+			throw new HabilidadInexistenteException(getName(), nombre);
+		}
+	}
+
+	/**
+	 * Mueve al {@link Personaje} de acuerdo a su velocidad hacia la dirección
+	 * de su destino.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 */
 	public void moverDestino(float delta) {
 		if (getDireccionDestinoX() == Direccion.IZQUIERDA && getX() > getDestinoX()) {
 			moverIzquierda(delta);
@@ -111,22 +178,39 @@ public abstract class Personaje extends ObjetoActor {
 		return getAnimacion().get(nombreAnimacion).getKeyFrame(getTiempoTranscurrido(), true);
 	}
 
+	/**
+	 * Calcula la dirección hacia donde esta el {@link Heroe} con respecto al
+	 * {@link Personaje}.
+	 * 
+	 * @return La {@link com.lumpundform.actores.ObjetoActor.Direccion}
+	 *         correcta.
+	 */
 	public Direccion getDireccionPosicionHeroe() {
 		Heroe heroe = getHeroeEscenario();
-		if (heroe == null) {
-			return null;
-		} else if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
+		if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
 			return Direccion.IZQUIERDA;
 		} else {
 			return Direccion.DERECHA;
 		}
 	}
 
+	/**
+	 * Regresa al {@link Heroe}.
+	 * 
+	 * @return El {@link Heroe}.
+	 */
 	public Heroe getHeroeEscenario() {
 		EscenarioBase escenario = (EscenarioBase) getStage();
 		return escenario.getHeroe();
 	}
 
+	/**
+	 * Reduce el cooldown de todas las {@link Habilidad}es del {@link Personaje}
+	 * .
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 */
 	public void reducirCooldownHabilidades(float delta) {
 		Iterator<Habilidad> i = getHabilidades().values().iterator();
 		while (i.hasNext()) {
@@ -134,6 +218,12 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
+	/**
+	 * Aumenta el mana del {@link Personaje} por tiempo.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 */
 	public void aumentarMana(float delta) {
 		if (getManaPorSegundo() > 0) {
 			setMana(getMana() + (getManaPorSegundo() * delta));
@@ -144,6 +234,13 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
+	/**
+	 * Quita vida a un {@link Personaje}. Se encarga de que hacer con el
+	 * {@link Personaje} cuando haya muerto.
+	 * 
+	 * @param dano
+	 *            La cantidad de vida a quitar.
+	 */
 	public void quitarVida(float dano) {
 		EscenarioBase escenario = (EscenarioBase) getStage();
 		Evento evento = escenario.getEvento(getPerteneceAEvento());
@@ -162,6 +259,13 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
+	/**
+	 * Quita vida a un {@link Personaje} y muestra la cantidad de daño que se
+	 * hizo con un número arriba del {@link Personaje}.
+	 * 
+	 * @param dano
+	 *            La cantidad de daño a hacer.
+	 */
 	protected void hacerDano(float dano) {
 		Color color = isEnemigo() ? Fuentes.regular().getColor() : Color.RED;
 		getStage().addActor(new EtiquetaCantidad(dano + "", getEsquina("sup-izq"), color));
@@ -172,6 +276,12 @@ public abstract class Personaje extends ObjetoActor {
 		}
 	}
 
+	/**
+	 * Quita mana a un {@link Personaje}.
+	 * 
+	 * @param mana
+	 *            La cantidad de mana a quitar.
+	 */
 	public void quitarMana(float mana) {
 		this.setMana(this.getMana() - mana);
 		if (this.getMana() <= 0.0f) {

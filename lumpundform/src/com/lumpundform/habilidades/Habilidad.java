@@ -11,11 +11,15 @@ public abstract class Habilidad {
 	private float cooldownDefault;
 
 	private float mana;
-
+	
 	protected Habilidad(Personaje actor, String nombre, float cooldownDefault) {
+		this(actor, nombre, 0.0f, cooldownDefault);
+	}
+
+	protected Habilidad(Personaje actor, String nombre, float coolDown, float cooldownDefault) {
 		this.setActor(actor);
 		this.setNombre(nombre);
-		this.setCooldown(0.0f);
+		this.setCooldown(coolDown);
 		this.setCooldownDefault(cooldownDefault);
 	}
 

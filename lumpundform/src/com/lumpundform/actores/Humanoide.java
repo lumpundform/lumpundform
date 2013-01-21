@@ -1,20 +1,19 @@
 package com.lumpundform.actores;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.lumpundform.acciones.HumanoideAction;
 import com.lumpundform.colision.Rectangulo;
-import com.lumpundform.habilidades.HabilidadDisparar;
 
 /**
- * Clase específica para los humanoides del juego
+ * Humanoides del juego. Pueden tener o no tener magia.
  * 
- * @author Sergio
+ * @author Sergio Valencia
  * 
  */
 public class Humanoide extends Personaje {
 
 	/**
-	 * Carga datos específicos de {@link Humanoide}
+	 * Inicializa al {@link Humanoide} con todos sus datos necesarios
 	 * 
 	 * @param nombre
 	 *            El nombre del {@link ObjetoActor}
@@ -40,36 +39,9 @@ public class Humanoide extends Personaje {
 		setManaMax(100.0f);
 
 		cargarAnimaciones("detenido", "corriendo");
-		cargarHabilidades();
-	}
+		cargarHabilidades("disparar");
 
-	@Override
-	protected void cargarHabilidades() {
-		HabilidadDisparar habDisparar = new HabilidadDisparar(this, "disparar");
-		habDisparar.setCooldownDefault(4.0f);
-		habDisparar.setCooldown(2.0f);
-		getHabilidades().put("disparar", habDisparar);
-	}
-
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-
-		if (!isEnemigo()) {
-			if (getX() <= 0) {
-				setDireccionX(Direccion.DERECHA);
-			} else if (getX() + getWidth() >= Gdx.graphics.getWidth()) {
-				setDireccionX(Direccion.IZQUIERDA);
-			}
-
-			if (derecha()) {
-				moverDerecha(delta);
-			} else {
-				moverIzquierda(delta);
-			}
-		} else {
-			getHabilidades().get("disparar").ejecutar(null);
-		}
+		addAction(new HumanoideAction());
 	}
 
 }
