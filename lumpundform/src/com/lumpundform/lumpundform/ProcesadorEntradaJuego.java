@@ -74,13 +74,25 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 			return true;
 		} else if (keycode == Keys.Q) {
 			heroe.usarPocion("vida");
+			return true;
 		} else if (keycode == Keys.E) {
 			heroe.usarPocion("mana");
+			return true;
 		} else if (keycode == Keys.N) {
-			if(escenario.hayEventoActivado() && escenario.hayEscenaActivada()) {
-				if(!escenario.getEscenaActivada().getEscena().getPasoActual().getAccionHablar().getTerminado()){
+			if (escenario.hayEventoActivado() && escenario.hayEscenaActivada()) {
+				if (!escenario.getEscenaActivada().getEscena().getPasoActual().getAccionHablar().getTerminado()) {
 					escenario.getEscenaActivada().getEscena().getPasoActual().getAccionHablar().terminarAccion();
+					return true;
 				}
+			}
+		} else if (keycode == Keys.A || keycode == Keys.D) {
+			if (heroe.getMovimiento() == 0) {
+				if (keycode == Keys.A) {
+					heroe.setMovimiento(-1);
+				} else {
+					heroe.setMovimiento(1);
+				}
+				return true;
 			}
 		}
 		return false;
@@ -88,6 +100,10 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		Heroe heroe = escenario.getHeroe();
+		if ((keycode == Keys.A && heroe.getMovimiento() == -1) || (keycode == Keys.D && heroe.getMovimiento() == 1)) {
+			heroe.setMovimiento(0);
+		}
 		return false;
 	}
 

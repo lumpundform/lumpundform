@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,6 +29,7 @@ public class Heroe extends Mago {
 	private float cooldownDano = 0.0f;
 	private float deltaTransparente = 0.0f;
 	private boolean transparente = false;
+	private int movimiento = 0;
 
 	private Map<String, Integer> pociones = new HashMap<String, Integer>();
 	private Map<String, Integer> pocionesMax = new HashMap<String, Integer>();
@@ -126,16 +125,18 @@ public class Heroe extends Mago {
 	 * 
 	 * @param delta
 	 *            El delta de {@link Screen#render(float)}
+	 * @param direccion
+	 *            La dirección a la que se está moviendo el {@link Heroe}
 	 */
-	public void moverHeroe(float delta) {
-		if (!isTeletransportar() && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.D))) {
+	public void moverHeroe(float delta, String direccion) {
+		if (!isTeletransportar()) {
 			float d = delta;
 			if (!isColisionPiso()) {
 				d = delta * 0.75f;
 			}
-			if (Gdx.input.isKeyPressed(Keys.A)) {
+			if (direccion.equals("izquierda")) {
 				moverIzquierda(d);
-			} else if (Gdx.input.isKeyPressed(Keys.D)) {
+			} else if (direccion.equals("derecha")) {
 				moverDerecha(d);
 			}
 		}
@@ -296,5 +297,13 @@ public class Heroe extends Mago {
 
 	public Map<String, Integer> getPocionesMax() {
 		return pocionesMax;
+	}
+
+	public int getMovimiento() {
+		return movimiento;
+	}
+
+	public void setMovimiento(int movimiento) {
+		this.movimiento = movimiento;
 	}
 }

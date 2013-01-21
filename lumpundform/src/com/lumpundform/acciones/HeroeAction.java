@@ -21,7 +21,11 @@ public class HeroeAction extends Action {
 
 			h.actualizarTransparente(delta);
 
-			h.moverHeroe(delta);
+			if (h.getMovimiento() == 1) {
+				h.moverHeroe(delta, "derecha");
+			} else if (h.getMovimiento() == -1) {
+				h.moverHeroe(delta, "izquierda");
+			}
 		}
 
 		return false;
