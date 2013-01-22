@@ -69,23 +69,23 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		Heroe heroe = escenario.getHeroe();
-		if (keycode == Keys.SPACE) {
+		if (keycode == Keys.SPACE) { /* Disparar */
 			heroe.habilidad("disparar");
 			return true;
-		} else if (keycode == Keys.Q) {
+		} else if (keycode == Keys.Q) { /* Usar poción vida */
 			heroe.usarPocion("vida");
 			return true;
-		} else if (keycode == Keys.E) {
+		} else if (keycode == Keys.E) { /* Usar poción mana */
 			heroe.usarPocion("mana");
 			return true;
-		} else if (keycode == Keys.N) {
+		} else if (keycode == Keys.N) { /* Avanzar texto en diálogos */
 			if (escenario.hayEventoActivado() && escenario.hayEscenaActivada()) {
 				if (!escenario.getEscenaActivada().getEscena().getPasoActual().getAccionHablar().getTerminado()) {
 					escenario.getEscenaActivada().getEscena().getPasoActual().getAccionHablar().terminarAccion();
 					return true;
 				}
 			}
-		} else if (keycode == Keys.A || keycode == Keys.D) {
+		} else if (keycode == Keys.A || keycode == Keys.D) { /* Mover al héroe */
 			if (heroe.getMovimiento() == 0) {
 				if (keycode == Keys.A) {
 					heroe.setMovimiento(-1);
@@ -94,8 +94,10 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				}
 				return true;
 			}
-		} else if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) {
+		} else if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) { /* Usar habilidades de interfaz */
 			escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
+		} else if (keycode == Keys.BACKSPACE) { /* Toggle líneas de colisión */
+			escenario.setDibujarColision(!escenario.isDibujarColision());
 		}
 		return false;
 	}

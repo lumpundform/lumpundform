@@ -23,6 +23,7 @@ public class EscenarioHelper {
 	private MapaHelper mh;
 	private InterfazHelper interfazHelper;
 	private EscenarioBase escenario;
+	private boolean dibujarColision;
 
 	/**
 	 * Inicializa el escenario, el mapa, las colisiones y el {@link Heroe} para
@@ -91,7 +92,9 @@ public class EscenarioHelper {
 		escenario.acomodarHeroe(camara);
 
 		// Debug líneas colisión
-		escenario.dibujarLineasColision(camara);
+		if (isDibujarColision()) {
+			escenario.dibujarLineasColision(camara);
+		}
 
 		// Dibujar los actores del escenario
 		escenario.draw();
@@ -194,5 +197,13 @@ public class EscenarioHelper {
 
 	public void setInterfazHelper(InterfazHelper interfazHelper) {
 		this.interfazHelper = interfazHelper;
+	}
+
+	public boolean isDibujarColision() {
+		return dibujarColision;
+	}
+
+	public void setDibujarColision(boolean dibujarColision) {
+		this.dibujarColision = dibujarColision;
 	}
 }
