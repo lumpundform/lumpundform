@@ -159,6 +159,21 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
+	 * Mueve al {@link ObjetoActor} en la dirección en la que está volteando
+	 * actualmente.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 */
+	public void moverEnDireccion(float delta) {
+		if (derecha()) {
+			moverDerecha(delta);
+		} else {
+			moverIzquierda(delta);
+		}
+	}
+
+	/**
 	 * Mueve al {@link ObjetoActor} a la izquierda conforme a su velocidad.
 	 * 
 	 * @param delta

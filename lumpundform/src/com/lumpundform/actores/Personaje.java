@@ -43,6 +43,9 @@ public class Personaje extends ObjetoActor {
 	private float manaMax;
 	private float manaPorSegundo;
 	private BarraVida barraVida;
+	
+	// Movimiento
+	private float distanciaAlejamiento;
 
 	private boolean enemigo;
 
@@ -176,6 +179,27 @@ public class Personaje extends ObjetoActor {
 		}
 
 		return getAnimacion().get(nombreAnimacion).getKeyFrame(getTiempoTranscurrido(), true);
+	}
+
+	/**
+	 * Cambia la dirección del {@link Personaje} hacia donde se encuentra el
+	 * {@link Heroe} en el escenario.
+	 */
+	public void voltearHaciaHeroe() {
+		setDireccionX(getDireccionPosicionHeroe());
+	}
+
+	/**
+	 * Calcula si la distancia entre el {@link Personaje} y el {@link Heroe} es
+	 * mayor a su máxima distancia de separación.
+	 * 
+	 * @return <code>true</code> si la distancia es mayor a la máxima,
+	 *         <code>false</code> si no.
+	 */
+	public boolean lejosDeHeroe() {
+		Heroe heroe = getHeroeEscenario();
+		return ((derecha() && (heroe.getXCentro() - getXCentro()) > getDistanciaAlejamiento()) ||
+				((getXCentro() - heroe.getXCentro()) > getDistanciaAlejamiento()));
 	}
 
 	/**
@@ -359,5 +383,13 @@ public class Personaje extends ObjetoActor {
 
 	public void setBarraVida(BarraVida barraVida) {
 		this.barraVida = barraVida;
+	}
+
+	public float getDistanciaAlejamiento() {
+		return distanciaAlejamiento;
+	}
+
+	public void setDistanciaAlejamiento(float distanciaAlejamiento) {
+		this.distanciaAlejamiento = distanciaAlejamiento;
 	}
 }

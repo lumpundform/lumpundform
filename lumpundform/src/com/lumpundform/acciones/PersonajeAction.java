@@ -1,8 +1,6 @@
 package com.lumpundform.acciones;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.lumpundform.actores.Heroe;
-import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.actores.Personaje.Estado;
 import com.lumpundform.indicadores.BarraVida;
@@ -29,15 +27,9 @@ public class PersonajeAction extends Action {
 			p.aumentarMana(delta);
 
 			if (p.isEnemigo()) {
-				Heroe heroe = p.getHeroeEscenario();
-				Direccion direccion = p.getDireccionPosicionHeroe();
-				float distanciaAlejamiento = 200.0f;
-				p.setDireccionX(direccion);
-				if (direccion == Direccion.DERECHA && (heroe.getXCentro() - p.getXCentro()) > distanciaAlejamiento) {
-					p.moverDerecha(delta);
-				} else if (direccion == Direccion.IZQUIERDA
-						&& (p.getXCentro() - heroe.getXCentro()) > distanciaAlejamiento) {
-					p.moverIzquierda(delta);
+				p.voltearHaciaHeroe();
+				if (p.lejosDeHeroe()) {
+					p.moverEnDireccion(delta);
 				}
 			}
 		}

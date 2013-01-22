@@ -32,6 +32,8 @@ public class Humanoide extends Personaje {
 		setDestinoX(getX());
 		setDireccionX(Direccion.DERECHA);
 		setVelocidad(200);
+		
+		setDistanciaAlejamiento(200.0f);
 
 		setVida(100.0f);
 		setVidaMax(100.0f);
