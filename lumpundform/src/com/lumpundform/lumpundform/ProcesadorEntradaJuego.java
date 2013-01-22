@@ -94,6 +94,8 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				}
 				return true;
 			}
+		} else if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) {
+			escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
 		}
 		return false;
 	}

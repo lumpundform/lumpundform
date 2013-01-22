@@ -1,6 +1,8 @@
 package com.lumpundform.utilerias;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -48,8 +50,8 @@ public class U {
 	}
 
 	/**
-	 * Manda llamar a {@link #voltearCoordenadas(CamaraJuego, Vector2)} con los
-	 * valores X y Y especificados
+	 * Manda llamar a {@link #voltearCoordenadas(Vector2)} con los valores X y Y
+	 * especificados
 	 * 
 	 * @param x
 	 *            La x del punto
@@ -84,19 +86,22 @@ public class U {
 	}
 
 	/**
-	 * Manda llamar a {@link U#dibujarLineasColision(Poligono, Color)} con un
+	 * Manda llamar a
+	 * {@link U#dibujarLineasColision(Poligono, CamaraJuego, Color)} con un
 	 * color predeterminado de {@link Color#WHITE}
 	 * 
 	 * @param poligono
 	 *            El {@link Poligono} del cuál se van a dibujar las líneas de
 	 *            colisión
+	 * @param camara
+	 *            La {@link CamaraJuego} actual
 	 */
 	public static void dibujarLineasColision(Poligono poligono, CamaraJuego camara) {
 		dibujarLineasColision(poligono, camara, Color.WHITE);
 	}
 
 	/**
-	 * Función atajo de {@link Gdx#app#log()}
+	 * Función atajo de {@link Application#log(String, String)}
 	 * 
 	 * @param tag
 	 *            La etiqueta
@@ -144,6 +149,8 @@ public class U {
 	 *            La x de la posición
 	 * @param y
 	 *            La y de la posición
+	 * @param escala
+	 *            A que escala dibujar el texto
 	 */
 	public static void ds(Object mensaje, float x, float y, float escala) {
 		ds(mensaje, x, y, escala, Fuentes.colorDefault);
@@ -160,5 +167,24 @@ public class U {
 		bmf.setScale(escala);
 		bmf.drawWrapped(sb, msg, x, y, 50.0f);
 		sb.end();
+	}
+
+	public static int numeroConKeycode(int keycode) {
+		switch (keycode) {
+		case Keys.NUM_1:
+			return 1;
+		case Keys.NUM_2:
+			return 2;
+		case Keys.NUM_3:
+			return 3;
+		case Keys.NUM_4:
+			return 4;
+		case Keys.NUM_5:
+			return 5;
+		case Keys.NUM_6:
+			return 6;
+		default:
+			return 0;
+		}
 	}
 }

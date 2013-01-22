@@ -14,11 +14,13 @@ import com.lumpundform.utilerias.U;
 
 class BotonHabilidad extends BotonSuperior {
 	private Habilidad habilidad;
+	private int posicion;
 
 	BotonHabilidad(EscenarioBase escenario, Habilidad habilidad, int posicion) {
 		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1, 1, 1, 1), escenario);
 
-		this.habilidad = habilidad;
+		setHabilidad(habilidad);
+		setPosicion(posicion);
 
 		setWidth(anchoBoton());
 		setHeight(UI.altoBoton);
@@ -57,6 +59,22 @@ class BotonHabilidad extends BotonSuperior {
 			alpha = parentAlpha * 0.5f;
 		}
 		super.draw(batch, alpha);
+	}
+
+	public int getPosicion() {
+		return posicion;
+	}
+
+	public void setPosicion(int posicion) {
+		this.posicion = posicion;
+	}
+
+	public Habilidad getHabilidad() {
+		return habilidad;
+	}
+
+	public void setHabilidad(Habilidad habilidad) {
+		this.habilidad = habilidad;
 	}
 
 }

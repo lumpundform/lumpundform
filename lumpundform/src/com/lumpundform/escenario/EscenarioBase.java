@@ -344,7 +344,7 @@ public class EscenarioBase extends Stage {
 		return getActores(PocionBase.class);
 	}
 
-	private List<Actor> getActores(Class<?> clase) {
+	public List<Actor> getActores(Class<?> clase) {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
 		while (i.hasNext()) {

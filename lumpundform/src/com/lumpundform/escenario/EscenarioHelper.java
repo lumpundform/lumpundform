@@ -7,11 +7,9 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Evento;
-import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.D;
-import com.lumpundform.utilerias.U;
 
 /**
  * Clase que ayuda con las funciones de los escenarios, como cargar el mapa, los
@@ -23,6 +21,7 @@ import com.lumpundform.utilerias.U;
 public class EscenarioHelper {
 	private CamaraJuego camara;
 	private MapaHelper mh;
+	private InterfazHelper interfazHelper;
 	private EscenarioBase escenario;
 
 	/**
@@ -43,7 +42,7 @@ public class EscenarioHelper {
 
 		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch);
 
-		InterfazHelper ih = new InterfazHelper(escenario);
+		interfazHelper = new InterfazHelper(escenario);
 
 		escenario.cargarEscenas("1");
 		escenario.cargarEventos(mh.eventosMapa());
@@ -55,8 +54,7 @@ public class EscenarioHelper {
 
 		escenario.agregarActor("heroe", mh.getOrigenHeroe());
 
-		ih.agregarElementos();
-		ih.agregarHabilidades(getHeroe());
+		interfazHelper.agregarElementos();
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class EscenarioHelper {
 	 * las líneas de colisión
 	 * 
 	 * @param delta
-	 *            Proviene de {@link Screen#render()}
+	 *            Proviene de {@link Screen#render(float)}
 	 */
 	public void actuarDibujar(float delta) {
 
@@ -188,5 +186,13 @@ public class EscenarioHelper {
 			}
 		}
 		return null;
+	}
+
+	public InterfazHelper getInterfazHelper() {
+		return interfazHelper;
+	}
+
+	public void setInterfazHelper(InterfazHelper interfazHelper) {
+		this.interfazHelper = interfazHelper;
 	}
 }
