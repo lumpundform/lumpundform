@@ -209,15 +209,13 @@ public class Linea {
 	 * @return {@link true} si es recta, {@link false} si no
 	 */
 	private boolean esRecta() {
-		String direccionLinea = direccionLinea();
-		return direccionLinea == "x" || direccionLinea == "-x"
-				|| direccionLinea == "y" || direccionLinea == "-y";
+		return esHorizontal() || esVertical();
 	}
 
 	/**
 	 * Dice si la {@link Linea} es horizontal
 	 * 
-	 * @return {@link true} si es horizontal, {@link false} si no
+	 * @return <code>true</code> si es horizontal, <code>false</code> si no
 	 */
 	public boolean esHorizontal() {
 		String direccionLinea = direccionLinea();
@@ -227,7 +225,7 @@ public class Linea {
 	/**
 	 * Dice si la {@link Linea} es vertical
 	 * 
-	 * @return {@link true} si es vertical, {@link false} si no
+	 * @return <code>true</code> si es vertical, <code>false</code> si no
 	 */
 	public boolean esVertical() {
 		String direccionLinea = direccionLinea();

@@ -20,7 +20,7 @@ public class Poligono {
 	 * 
 	 * @param punto
 	 *            El punto a revisar para la colisión
-	 * @return {@link true} si hay colisión, {@link false} si no
+	 * @return <code>true</code> si hay colisión, <code>false</code> si no
 	 */
 	public boolean estaColisionando(Vector2 punto) {
 		Linea izq = null;
@@ -43,7 +43,8 @@ public class Poligono {
 	 * @param poligono
 	 *            El {@link Poligono} con el cual se quiere revisar si está
 	 *            colisionando
-	 * @return {@link true} si sí está colisionando, {@link false} si no
+	 * @return <code>true</code> si sí está colisionando, <code>false</code> si
+	 *         no
 	 */
 	public boolean estaColisionando(Poligono poligono) {
 		// TODO: Hacer que la colisión no funcione únicamente con rectángulos
@@ -57,13 +58,15 @@ public class Poligono {
 
 	/**
 	 * Regresa la {@link Linea} de la posición dada para el {@link Poligono} con
-	 * el punto dado
+	 * el punto dado.
 	 * 
 	 * @param nombre
-	 *            El nombre de la posición de la {@link Linea}
+	 *            El nombre de la posición de la {@link Linea}. Puede ser
+	 *            <code>"derecha"</code>, <code>"abajo"</code>,
+	 *            <code>"izquierda"</code> ó <code>"arriba"</code>.
 	 * @param punto
-	 *            El punto a revisar
-	 * @return La {@link Linea} o {@link null} si no existe
+	 *            El punto a revisar.
+	 * @return La {@link Linea} o <code>null</code> si no existe
 	 */
 	public Linea linea(String nombre, Vector2 punto) {
 		Linea[] lineas = lineasPoligono(punto);
@@ -93,32 +96,20 @@ public class Poligono {
 			Vector2 p1 = getVertices()[i];
 			Vector2 p2 = getVertices()[i2];
 			Linea lin = new Linea(p1, p2);
-			if (lin.getX("menor") <= punto.x
-					&& lin.getX("mayor") >= punto.x
-					&& lin.yEnX(punto) >= punto.y
-					&& (lineas[0] == null || (lineas[0].yEnX(punto) > lin
-							.yEnX(punto)))) {
+			if (lin.getX("menor") <= punto.x && lin.getX("mayor") >= punto.x && lin.yEnX(punto) >= punto.y
+					&& (lineas[0] == null || (lineas[0].yEnX(punto) > lin.yEnX(punto)))) {
 				lineas[0] = lin;
 			}
-			if (lin.getX("menor") <= punto.x
-					&& lin.getX("mayor") >= punto.x
-					&& lin.yEnX(punto) <= punto.y
-					&& (lineas[1] == null || (lineas[1].yEnX(punto) < lin
-							.yEnX(punto)))) {
+			if (lin.getX("menor") <= punto.x && lin.getX("mayor") >= punto.x && lin.yEnX(punto) <= punto.y
+					&& (lineas[1] == null || (lineas[1].yEnX(punto) < lin.yEnX(punto)))) {
 				lineas[1] = lin;
 			}
-			if (lin.getY("menor") <= punto.y
-					&& lin.getY("mayor") >= punto.y
-					&& lin.xEnY(punto) >= punto.x
-					&& (lineas[3] == null || (lineas[3].xEnY(punto) > lin
-							.xEnY(punto)))) {
+			if (lin.getY("menor") <= punto.y && lin.getY("mayor") >= punto.y && lin.xEnY(punto) >= punto.x
+					&& (lineas[3] == null || (lineas[3].xEnY(punto) > lin.xEnY(punto)))) {
 				lineas[3] = lin;
 			}
-			if (lin.getY("menor") <= punto.y
-					&& lin.getY("mayor") >= punto.y
-					&& lin.xEnY(punto) <= punto.x
-					&& (lineas[2] == null || (lineas[2].xEnY(punto) < lin
-							.xEnY(punto)))) {
+			if (lin.getY("menor") <= punto.y && lin.getY("mayor") >= punto.y && lin.xEnY(punto) <= punto.x
+					&& (lineas[2] == null || (lineas[2].xEnY(punto) < lin.xEnY(punto)))) {
 				lineas[2] = lin;
 			}
 		}

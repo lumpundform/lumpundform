@@ -20,9 +20,6 @@ public class Rectangulo extends Poligono {
 	 *            El alto del {@link Rectangulo}
 	 * @param ancho
 	 *            El ancho del {@link Rectangulo}
-	 * @param centrado
-	 *            Si el punto de referencia debe ser el centro del
-	 *            {@link Rectangulo}
 	 */
 	public Rectangulo(float alto, float ancho) {
 		super(new Vector2[4]);
@@ -116,8 +113,7 @@ public class Rectangulo extends Poligono {
 	 * @return El punto
 	 */
 	public Vector2 getCentro() {
-		return new Vector2((punto("inf-izq").x + punto("inf-der").x) / 2,
-				(punto("inf-izq").y + punto("sup-izq").y) / 2);
+		return new Vector2((punto("inf-izq").x + punto("inf-der").x) / 2, (punto("inf-izq").y + punto("sup-izq").y) / 2);
 	}
 
 	public boolean isCentrado() {
