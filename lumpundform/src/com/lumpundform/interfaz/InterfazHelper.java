@@ -1,8 +1,5 @@
 package com.lumpundform.interfaz;
 
-import java.util.List;
-
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.BotonHabilidadInexistenteException;
@@ -41,11 +38,9 @@ public class InterfazHelper {
 	}
 
 	private BotonHabilidad getBotonHabilidad(int posicion) throws BotonHabilidadInexistenteException {
-		List<Actor> habilidades = escenario.getActores(BotonHabilidad.class);
-		for (Actor a : habilidades) {
-			BotonHabilidad bh = (BotonHabilidad) a;
-			if (bh.getPosicion() == posicion) {
-				return bh;
+		for (BotonHabilidad boton : escenario.getActores(BotonHabilidad.class)) {
+			if (boton.getPosicion() == posicion) {
+				return boton;
 			}
 		}
 		throw new BotonHabilidadInexistenteException("No hay una habilidad en la posición " + posicion);

@@ -2,14 +2,12 @@ package com.lumpundform.actores;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.escenario.EscenarioBase;
@@ -329,10 +327,8 @@ public class Personaje extends ObjetoActor {
 		float xSimulacion = derecha() ? getX() + getVelocidad(delta) : getX() - getVelocidad(delta);
 		Rectangulo hitbox = getHitbox(xSimulacion, getY());
 		EscenarioBase escenario = (EscenarioBase) getStage();
-		List<Actor> personajes = escenario.getActoresPersonajes();
 
-		for (Actor a : personajes) {
-			Personaje p = (Personaje) a;
+		for (Personaje p : escenario.getActores(Personaje.class)) {
 			if (p.isEnemigo() && (p.getId() < getId()) && p.getHitbox().estaColisionando(hitbox)) {
 				colision = true;
 			}

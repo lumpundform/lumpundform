@@ -55,7 +55,7 @@ public class EscenarioBase extends Stage {
 		random = new Random();
 		setPorcentajePociones(new Porcentaje());
 	}
-	
+
 	@Override
 	public void addActor(Actor actor) {
 		if (ObjetoActor.class.isInstance(actor)) {
@@ -70,10 +70,7 @@ public class EscenarioBase extends Stage {
 	 * {@link ObjetoActor}es que se encuentran en el escenario
 	 */
 	void dibujarLineasColision(CamaraJuego camara) {
-		List<Actor> actores = getActores(ObjetoActor.class);
-
-		for (int i = 0; i < actores.size(); i++) {
-			ObjetoActor actor = (ObjetoActor) actores.get(i);
+		for (ObjetoActor actor : getActores(ObjetoActor.class)) {
 			U.dibujarLineasColision(actor.getHitbox(), camara);
 		}
 
@@ -87,11 +84,9 @@ public class EscenarioBase extends Stage {
 	void colisionActores() {
 		Heroe heroe = getHeroe();
 		heroe.setColisionActores(false);
-		List<Actor> actores = getActoresPersonajes();
 
-		for (Actor a : actores) {
-			ObjetoActor actor = (ObjetoActor) a;
-			if (actor.getName() != "heroe" && heroe.getHitbox().estaColisionando(actor.getHitbox())) {
+		for (Personaje personaje : getActores(Personaje.class)) {
+			if (personaje.getName() != "heroe" && heroe.getHitbox().estaColisionando(personaje.getHitbox())) {
 				heroe.setColisionActores(true);
 				break;
 			}
@@ -101,8 +96,7 @@ public class EscenarioBase extends Stage {
 	void colisionPociones() {
 		Heroe heroe = getHeroe();
 
-		for (Actor p : getActoresPociones()) {
-			PocionBase pocion = (PocionBase) p;
+		for (PocionBase pocion : getActores(PocionBase.class)) {
 			if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
 				if (heroe.agarrarPocion(pocion.getTipo())) {
 					pocion.remove();
@@ -112,13 +106,8 @@ public class EscenarioBase extends Stage {
 	}
 
 	void colisionAtaques() {
-		List<Actor> ataques = getActoresAtaques();
-		List<Actor> personajes = getActoresPersonajes();
-
-		for (int i = 0; i < ataques.size(); i++) {
-			Ataque ataque = (Ataque) ataques.get(i);
-			for (int j = 0; j < personajes.size(); j++) {
-				Personaje personaje = (Personaje) personajes.get(j);
+		for (Ataque ataque : getActores(Ataque.class)) {
+			for (Personaje personaje : getActores(Personaje.class)) {
 				if (personaje.isEnemigo() != ataque.getPersonaje().isEnemigo()
 						&& personaje.getHitbox().estaColisionando(ataque.getHitbox())) {
 					if (ataque.isHaceDano()) {
@@ -136,8 +125,7 @@ public class EscenarioBase extends Stage {
 	void colisionPiso() {
 		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
 
-		for (Actor a : getTodosActores()) {
-			ObjetoActor actor = (ObjetoActor) a;
+		for (ObjetoActor actor : getActores(ObjetoActor.class)) {
 			caidaLibre.put(actor.getName(), false);
 
 			// Datos para cuando va hacia derecha o izquierda
@@ -214,25 +202,23 @@ public class EscenarioBase extends Stage {
 	 *            El ancho del {@link EscenarioBase}
 	 */
 	void acomodarActores(float width) {
-		List<Actor> actores = getActoresPersonajes();
 
-		for (int i = 0; i < actores.size(); i++) {
-			ObjetoActor actor = (ObjetoActor) actores.get(i);
-			if (actor.getEsquina("inf-izq").x < 0)
-				actor.setEsquinaX("inf-izq", 0.0f);
-			if (actor.getEsquina("inf-der").x > width)
-				actor.setEsquinaX("inf-izq", (width - actor.getHitbox().getAncho()));
+		for (Personaje personaje : getActores(Personaje.class)) {
+			if (personaje.getEsquina("inf-izq").x < 0)
+				personaje.setEsquinaX("inf-izq", 0.0f);
+			if (personaje.getEsquina("inf-der").x > width)
+				personaje.setEsquinaX("inf-izq", (width - personaje.getHitbox().getAncho()));
 
 			// Detecta colisión con paredes
 			Vector2 pc = null;
 			String lineaLateral;
 			Double yPunto = null;
-			if (actor.derecha()) {
-				pc = actor.getEsquina("inf-der");
+			if (personaje.derecha()) {
+				pc = personaje.getEsquina("inf-der");
 				lineaLateral = "izquierda";
 				yPunto = Math.floor(pc.y);
 			} else {
-				pc = actor.getEsquina("inf-izq");
+				pc = personaje.getEsquina("inf-izq");
 				lineaLateral = "derecha";
 				yPunto = Math.floor(pc.y) + 10.0f;
 			}
@@ -244,11 +230,11 @@ public class EscenarioBase extends Stage {
 				if (linea != null) {
 					Float xLinea = null;
 					if (lineaLateral == "izquierda") {
-						xLinea = linea.xEnY(pc) - actor.getHitbox().getAncho() - 1;
+						xLinea = linea.xEnY(pc) - personaje.getHitbox().getAncho() - 1;
 					} else {
 						xLinea = linea.xEnY(pc) + 1;
 					}
-					actor.setEsquinaX("inf-izq", xLinea);
+					personaje.setEsquinaX("inf-izq", xLinea);
 				}
 			}
 		}
@@ -330,35 +316,20 @@ public class EscenarioBase extends Stage {
 	 * @return El héroe
 	 */
 	public Heroe getHeroe() {
-		List<Actor> actores = getActores(Heroe.class);
+		List<Heroe> actores = getActores(Heroe.class);
 		if (actores.size() == 0) {
 			return null;
 		} else {
-			return (Heroe) actores.get(0);
+			return actores.get(0);
 		}
 	}
 
-	private List<Actor> getTodosActores() {
-		return getActores(ObjetoActor.class);
-	}
-
-	public List<Actor> getActoresPersonajes() {
-		return getActores(Personaje.class);
-	}
-
-	private List<Actor> getActoresAtaques() {
-		return getActores(Ataque.class);
-	}
-
-	private List<Actor> getActoresPociones() {
-		return getActores(PocionBase.class);
-	}
-
-	public List<Actor> getActores(Class<? extends Actor> clase) {
-		Iterator<Actor> i = getActors().iterator();
-		List<Actor> actores = new ArrayList<Actor>();
+	public <T> List<T> getActores(Class<T> clase) {
+		@SuppressWarnings("unchecked")
+		Iterator<T> i = (Iterator<T>) getActors().iterator();
+		List<T> actores = new ArrayList<T>();
 		while (i.hasNext()) {
-			Actor actor = i.next();
+			T actor = i.next();
 			if (clase.isInstance(actor)) {
 				actores.add(actor);
 			}
@@ -367,8 +338,7 @@ public class EscenarioBase extends Stage {
 	}
 
 	void destruirAtaques(CamaraJuego camara) {
-		for (int i = 0; i < getActoresAtaques().size(); i++) {
-			Actor ataque = getActoresAtaques().get(i);
+		for (Ataque ataque : getActores(Ataque.class)) {
 			if ((ataque.getX() + ataque.getWidth()) < camara.getPosicionOrigen().x
 					|| ataque.getX() > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
 				ataque.remove();
