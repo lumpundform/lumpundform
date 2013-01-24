@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
@@ -26,12 +26,12 @@ import com.lumpundform.utilerias.Fuentes;
  */
 public class Personaje extends ObjetoActor {
 	// Valores estáticos de los personajes
-	public static enum Estado {
-		DETENIDO, MOVIMIENTO, CAYENDO, COLISIONANDO;
+	public class Estado {
+		public static final String DETENIDO = "detenido";
+		public static final String MOVIMIENTO = "corriendo";
+		public static final String CAYENDO = "cayendo";
+		public static final String COLISIONANDO = "colisionando";
 	}
-
-	// Estado
-	private Estado estado;
 
 	// Habilidades
 	private Map<String, Habilidad> habilidades;
@@ -69,6 +69,14 @@ public class Personaje extends ObjetoActor {
 		setCaer(true);
 
 		addAction(new PersonajeAction());
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		if (isColisionActores()) {
+			setEstado(Estado.COLISIONANDO);
+		}
+		super.draw(batch, parentAlpha);
 	}
 
 	/**
@@ -152,33 +160,6 @@ public class Personaje extends ObjetoActor {
 			setEstado(Estado.MOVIMIENTO);
 			setDireccionX(Direccion.IZQUIERDA);
 		}
-	}
-
-	@Override
-	protected TextureRegion getCuadroActual() {
-		// Revisar de cual animación se va a agarrar el cuadro actual
-		String nombreAnimacion;
-		switch (getEstado()) {
-		case DETENIDO:
-		default:
-			nombreAnimacion = "detenido";
-			break;
-		case MOVIMIENTO:
-			nombreAnimacion = "corriendo";
-			break;
-		case CAYENDO:
-			nombreAnimacion = "cayendo";
-			break;
-		}
-		if (isColisionActores()) {
-			nombreAnimacion = "colisionando";
-		}
-
-		if (!getAnimacion().containsKey(nombreAnimacion)) {
-			nombreAnimacion = "detenido";
-		}
-
-		return getAnimacion().get(nombreAnimacion).getKeyFrame(getTiempoTranscurrido(), true);
 	}
 
 	/**
@@ -314,7 +295,7 @@ public class Personaje extends ObjetoActor {
 	}
 
 	/**
-	 * Calcula si el enemigo colisionaría con otros enemigos al moverse.
+	 * Calcula si el enemigo está colisionando con otros enemigos.
 	 * 
 	 * @param delta
 	 *            El delta de {@link Screen#render(float)}.
@@ -332,14 +313,6 @@ public class Personaje extends ObjetoActor {
 		}
 
 		return colision;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
 	}
 
 	public float getVida() {

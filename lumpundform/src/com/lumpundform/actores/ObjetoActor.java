@@ -29,12 +29,16 @@ public abstract class ObjetoActor extends Actor {
 		IZQUIERDA, DERECHA, ARRIBA, ABAJO
 	}
 
+	// Estado
+	private String estado;
+
 	// ID
 	private int id;
 
 	// Animaciones
-	private Map<String, Animation> animacion;
+	private Map<String, Animation> animaciones;
 	private float tiempoTranscurrido;
+	private boolean loopAnimacion;
 
 	// Estado, Posición y Tamaño
 	private Direccion direccionX;
@@ -68,7 +72,8 @@ public abstract class ObjetoActor extends Actor {
 		setName(nombre);
 
 		sensores = new HashMap<String, Vector2>();
-		setAnimacion(new HashMap<String, Animation>());
+		setAnimaciones(new HashMap<String, Animation>());
+		setLoopAnimacion(true);
 
 		setTiempoTranscurrido(0f);
 
@@ -145,7 +150,7 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	protected void cargarAnimaciones(String... nombres) {
 		for (String nombre : nombres) {
-			getAnimacion().put(nombre, initAnimacion(nombre));
+			getAnimaciones().put(nombre, initAnimacion(nombre));
 		}
 	}
 
@@ -270,7 +275,7 @@ public abstract class ObjetoActor extends Actor {
 		TextureRegion cuadroActual = getCuadroActual();
 
 		// Si está caminando al revés, voltea el sprite
-		if (getDireccionX() == Direccion.IZQUIERDA) {
+		if (!derecha()) {
 			cuadroActual.flip(true, false);
 			flip = true;
 		}
@@ -289,7 +294,9 @@ public abstract class ObjetoActor extends Actor {
 	 * 
 	 * @return El cuadro actual.
 	 */
-	protected abstract TextureRegion getCuadroActual();
+	protected TextureRegion getCuadroActual() {
+		return getAnimacion(getEstado()).getKeyFrame(getTiempoTranscurrido(), isLoopAnimacion());
+	}
 
 	/**
 	 * Se busca en el archivo datos.xml de acuerdo al nombre del
@@ -331,12 +338,24 @@ public abstract class ObjetoActor extends Actor {
 		this.colisionActores = colisionActores;
 	}
 
-	public Map<String, Animation> getAnimacion() {
-		return animacion;
+	public Map<String, Animation> getAnimaciones() {
+		return animaciones;
 	}
 
-	public void setAnimacion(Map<String, Animation> animacion) {
-		this.animacion = animacion;
+	protected Animation getAnimacion(String nombre) {
+		return getAnimaciones().get(nombre);
+	}
+
+	public void setAnimaciones(Map<String, Animation> animacion) {
+		this.animaciones = animacion;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public float getTiempoTranscurrido() {
@@ -413,6 +432,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public boolean isLoopAnimacion() {
+		return loopAnimacion;
+	}
+
+	public void setLoopAnimacion(boolean loopAnimacion) {
+		this.loopAnimacion = loopAnimacion;
 	}
 
 }

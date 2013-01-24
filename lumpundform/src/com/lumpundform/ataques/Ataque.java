@@ -1,21 +1,19 @@
 package com.lumpundform.ataques;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
 
 public abstract class Ataque extends ObjetoActor {
 	// Valores estáticos de los personajes
-	protected static enum Estado {
-		NORMAL, EXPLOTANDO
+	protected class Estado {
+		public static final String NORMAL = "normal";
+		public static final String EXPLOTANDO = "explosion";
 	}
-	
+
 	// Personaje
 	private Personaje personaje;
-	
-	// Estado
-	private Estado estado;
-	
+
 	private boolean destruir = false;
 	private float dano;
 	private boolean haceDano = true;
@@ -28,44 +26,20 @@ public abstract class Ataque extends ObjetoActor {
 	}
 
 	@Override
-	protected TextureRegion getCuadroActual() {
-		// Revisar de cual animación se va a agarrar el cuadro actual
-		String nombreAnimacion;
-		boolean loop;
-		switch (getEstado()) {
-		case NORMAL:
-		default:
-			nombreAnimacion = "normal";
-			loop = true;
-			break;
-		case EXPLOTANDO:
-			nombreAnimacion = "explosion";
-			loop = false;
-			if (getTiempoTranscurrido() > getAnimacion().get(nombreAnimacion).frameDuration * 10) {
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		if (getEstado() == Estado.EXPLOTANDO) {
+			setLoopAnimacion(false);
+			if (getTiempoTranscurrido() > getAnimacion(getEstado()).frameDuration * 10) {
 				remove();
 			}
-			break;
-		}
 
-		if (!getAnimacion().containsKey(nombreAnimacion)) {
-			nombreAnimacion = "normal";
 		}
-
-		return getAnimacion().get(nombreAnimacion).getKeyFrame(getTiempoTranscurrido(),
-				loop);
+		super.draw(batch, parentAlpha);
 	}
 
 	public void destruir() {
 		setHaceDano(false);
 		setDestruir(true);
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
 	}
 
 	public float getDano() {
