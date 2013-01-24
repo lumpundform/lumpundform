@@ -45,6 +45,7 @@ public class EscenarioBase extends Stage {
 	private Poligono piso;
 	private Random random;
 	private Porcentaje porcentajePociones;
+	private int contador = 0;
 
 	private Array<Evento> eventos;
 	private Array<Escena> escenas;
@@ -53,6 +54,15 @@ public class EscenarioBase extends Stage {
 		super(width, height, stretch, batch);
 		random = new Random();
 		setPorcentajePociones(new Porcentaje());
+	}
+	
+	@Override
+	public void addActor(Actor actor) {
+		if (ObjetoActor.class.isInstance(actor)) {
+			ObjetoActor oa = (ObjetoActor) actor;
+			oa.setId(contador++);
+		}
+		super.addActor(actor);
 	}
 
 	/**
@@ -332,7 +342,7 @@ public class EscenarioBase extends Stage {
 		return getActores(ObjetoActor.class);
 	}
 
-	private List<Actor> getActoresPersonajes() {
+	public List<Actor> getActoresPersonajes() {
 		return getActores(Personaje.class);
 	}
 
@@ -344,7 +354,7 @@ public class EscenarioBase extends Stage {
 		return getActores(PocionBase.class);
 	}
 
-	public List<Actor> getActores(Class<?> clase) {
+	public List<Actor> getActores(Class<? extends Actor> clase) {
 		Iterator<Actor> i = getActors().iterator();
 		List<Actor> actores = new ArrayList<Actor>();
 		while (i.hasNext()) {
@@ -404,7 +414,7 @@ public class EscenarioBase extends Stage {
 	public void setPorcentajePociones(Porcentaje porcentajePociones) {
 		this.porcentajePociones = porcentajePociones;
 	}
-	
+
 	public Array<Evento> getEventos() {
 		return eventos;
 	}

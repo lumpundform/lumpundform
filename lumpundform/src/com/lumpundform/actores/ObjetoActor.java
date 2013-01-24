@@ -29,6 +29,9 @@ public abstract class ObjetoActor extends Actor {
 		IZQUIERDA, DERECHA, ARRIBA, ABAJO
 	}
 
+	// ID
+	private int id;
+
 	// Animaciones
 	private Map<String, Animation> animacion;
 	private float tiempoTranscurrido;
@@ -174,6 +177,21 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
+	 * Mueve al {@link ObjetoActor} en la dirección opuesta en la que está
+	 * volteando actualmente.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 */
+	public void moverEnDireccionOpuesta(float delta) {
+		if (derecha()) {
+			moverIzquierda(delta);
+		} else {
+			moverDerecha(delta);
+		}
+	}
+
+	/**
 	 * Mueve al {@link ObjetoActor} a la izquierda conforme a su velocidad.
 	 * 
 	 * @param delta
@@ -229,7 +247,21 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El hitbox.
 	 */
 	public Rectangulo getHitbox() {
+		// TODO: posicionar el hitbox fuera de esta función
 		return hitbox.posicionar(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+	}
+
+	/**
+	 * Regresa el hitbox del {@link ObjetoActor} en la posición especificada.
+	 * 
+	 * @param x
+	 *            posición X.
+	 * @param y
+	 *            posición Y.
+	 * @return El hitbox.
+	 */
+	protected Rectangulo getHitbox(float x, float y) {
+		return hitbox.posicionar(x, y);
 	}
 
 	@Override
@@ -373,6 +405,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setCaer(boolean caer) {
 		this.caer = caer;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

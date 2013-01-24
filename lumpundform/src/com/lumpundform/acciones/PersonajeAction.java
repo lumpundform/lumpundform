@@ -28,7 +28,7 @@ public class PersonajeAction extends Action {
 
 			if (p.isEnemigo()) {
 				p.voltearHaciaHeroe();
-				if (p.lejosDeHeroe()) {
+				if (p.lejosDeHeroe() && !p.colisionariaConEnemigos(delta)) {
 					p.moverEnDireccion(delta);
 				}
 			}

@@ -2,13 +2,16 @@ package com.lumpundform.actores;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.acciones.PersonajeAction;
+import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
@@ -43,7 +46,7 @@ public class Personaje extends ObjetoActor {
 	private float manaMax;
 	private float manaPorSegundo;
 	private BarraVida barraVida;
-	
+
 	// Movimiento
 	private float distanciaAlejamiento;
 
@@ -198,8 +201,8 @@ public class Personaje extends ObjetoActor {
 	 */
 	public boolean lejosDeHeroe() {
 		Heroe heroe = getHeroeEscenario();
-		return ((derecha() && (heroe.getXCentro() - getXCentro()) > getDistanciaAlejamiento()) ||
-				((getXCentro() - heroe.getXCentro()) > getDistanciaAlejamiento()));
+		return ((derecha() && (heroe.getXCentro() - getXCentro()) > getDistanciaAlejamiento()) || ((getXCentro() - heroe
+				.getXCentro()) > getDistanciaAlejamiento()));
 	}
 
 	/**
@@ -311,6 +314,31 @@ public class Personaje extends ObjetoActor {
 		if (this.getMana() <= 0.0f) {
 			this.setMana(0.0f);
 		}
+	}
+
+	/**
+	 * Calcula si el enemigo colisionaría con otros enemigos al moverse.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 * @return <code>true</code> si sí colisionaría, <code>false</code> si no.
+	 */
+	public boolean colisionariaConEnemigos(float delta) {
+		boolean colision = false;
+
+		float xSimulacion = derecha() ? getX() + getVelocidad(delta) : getX() - getVelocidad(delta);
+		Rectangulo hitbox = getHitbox(xSimulacion, getY());
+		EscenarioBase escenario = (EscenarioBase) getStage();
+		List<Actor> personajes = escenario.getActoresPersonajes();
+
+		for (Actor a : personajes) {
+			Personaje p = (Personaje) a;
+			if (p.isEnemigo() && (p.getId() < getId()) && p.getHitbox().estaColisionando(hitbox)) {
+				colision = true;
+			}
+		}
+
+		return colision;
 	}
 
 	public Estado getEstado() {
