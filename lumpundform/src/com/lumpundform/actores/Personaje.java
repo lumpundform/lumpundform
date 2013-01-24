@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
-import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
@@ -321,15 +320,13 @@ public class Personaje extends ObjetoActor {
 	 *            El delta de {@link Screen#render(float)}.
 	 * @return <code>true</code> si sí colisionaría, <code>false</code> si no.
 	 */
-	public boolean colisionariaConEnemigos(float delta) {
+	public boolean colisionConEnemigos(float delta) {
 		boolean colision = false;
 
-		float xSimulacion = derecha() ? getX() + getVelocidad(delta) : getX() - getVelocidad(delta);
-		Rectangulo hitbox = getHitbox(xSimulacion, getY());
 		EscenarioBase escenario = (EscenarioBase) getStage();
 
 		for (Personaje p : escenario.getActores(Personaje.class)) {
-			if (p.isEnemigo() && (p.getId() < getId()) && p.getHitbox().estaColisionando(hitbox)) {
+			if (p.isEnemigo() && (p.getId() < getId()) && getHitbox().estaColisionando(p.getHitbox())) {
 				colision = true;
 			}
 		}
