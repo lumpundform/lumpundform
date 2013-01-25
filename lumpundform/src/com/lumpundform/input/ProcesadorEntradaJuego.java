@@ -1,4 +1,4 @@
-package com.lumpundform.lumpundform;
+package com.lumpundform.input;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -94,7 +94,12 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				}
 				return true;
 			}
-		} else if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) { /* Usar habilidades de interfaz */
+		} else if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) { /*
+																	 * Usar
+																	 * habilidades
+																	 * de
+																	 * interfaz
+																	 */
 			escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
 		} else if (keycode == Keys.BACKSPACE) { /* Toggle líneas de colisión */
 			escenario.setDibujarColision(!escenario.isDibujarColision());

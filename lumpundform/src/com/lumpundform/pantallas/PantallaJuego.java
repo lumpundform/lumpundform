@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.lumpundform.escenario.EscenarioHelper;
+import com.lumpundform.input.ProcesadorEntradaJuego;
 import com.lumpundform.lumpundform.CamaraJuego;
-import com.lumpundform.lumpundform.ProcesadorEntradaJuego;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -17,7 +17,7 @@ import com.lumpundform.utilerias.U;
  * @author Sergio
  * 
  */
-public class PantallaJuego implements Screen {
+public class PantallaJuego extends PantallaBase {
 	private CamaraJuego camara;
 	private SpriteBatch batch;
 	private EscenarioHelper escenario;
@@ -27,20 +27,14 @@ public class PantallaJuego implements Screen {
 	 * {@link SpriteBatch} y un nuevo escenario
 	 */
 	public PantallaJuego() {
-		camara = new CamaraJuego();
-		getCamara().setToOrtho(false);
-		
-		U.init(camara);
+		setCamara();
 
 		batch = new SpriteBatch();
 
 		// TODO: hacer que se cargue dinamicamente el escenario
 		escenario = new EscenarioHelper(batch, getCamara(), "escenario101");
 
-		Gdx.input.setInputProcessor(new InputMultiplexer(escenario
-				.getEscenario(), new GestureDetector(
-				new ProcesadorEntradaJuego(escenario)), new ProcesadorEntradaJuego(
-				escenario)));
+		setInputProcessor();
 	}
 
 	@Override
@@ -92,6 +86,25 @@ public class PantallaJuego implements Screen {
 	@Override
 	public void dispose() {
 		batch.dispose();
+	}
+
+	@Override
+	public void reset() {
+		setCamara();
+		escenario = new EscenarioHelper(batch, getCamara(), "escenario101");
+		setInputProcessor();
+	}
+
+	private void setInputProcessor() {
+		Gdx.input.setInputProcessor(new InputMultiplexer(Gdx.input.getInputProcessor(), escenario.getEscenario(),
+				new GestureDetector(new ProcesadorEntradaJuego(escenario)), new ProcesadorEntradaJuego(escenario)));
+	}
+
+	private void setCamara() {
+		camara = new CamaraJuego();
+		getCamara().setToOrtho(false);
+
+		U.init(camara);
 	}
 
 }
