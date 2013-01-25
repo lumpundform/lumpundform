@@ -3,8 +3,21 @@ package com.lumpundform.ataques;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.colision.Rectangulo;
 
+/**
+ * El {@link Ataque} tipo misil.
+ * 
+ * @author Sergio Valencia
+ * 
+ */
 public class AtaqueMisil extends Ataque {
 
+	/**
+	 * Inicializa el {@link AtaqueMisil} así como todas sus características
+	 * necesarias para su comportamiento.
+	 * 
+	 * @param personaje
+	 *            El {@link Personaje} al que pertenece el {@link Ataque}.
+	 */
 	public AtaqueMisil(Personaje personaje) {
 		super("ataque_misil", personaje);
 

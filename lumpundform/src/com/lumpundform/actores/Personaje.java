@@ -28,6 +28,7 @@ public class Personaje extends ObjetoActor {
 	// Valores estáticos de los personajes
 	public class Estado {
 		public static final String DETENIDO = "detenido";
+		public static final String DEFAULT = "detenido";
 		public static final String MOVIMIENTO = "corriendo";
 		public static final String CAYENDO = "cayendo";
 		public static final String COLISIONANDO = "colisionando";
@@ -60,6 +61,8 @@ public class Personaje extends ObjetoActor {
 	 */
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
+		
+		setEstadoDefault(Estado.DEFAULT);
 
 		setHabilidades(new HashMap<String, Habilidad>());
 
@@ -200,9 +203,7 @@ public class Personaje extends ObjetoActor {
 	}
 
 	/**
-	 * Regresa al {@link Heroe}.
-	 * 
-	 * @return El {@link Heroe}.
+	 * @return El {@link Heroe} del {@link EscenarioBase}.
 	 */
 	public Heroe getHeroeEscenario() {
 		EscenarioBase escenario = (EscenarioBase) getStage();

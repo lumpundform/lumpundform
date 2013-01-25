@@ -13,12 +13,12 @@ import com.lumpundform.colision.Rectangulo;
 public class Humanoide extends Personaje {
 
 	/**
-	 * Inicializa al {@link Humanoide} con todos sus datos necesarios
+	 * Inicializa al {@link Humanoide} con todos sus datos necesarios.
 	 * 
 	 * @param nombre
-	 *            El nombre del {@link ObjetoActor}
+	 *            El nombre del {@link ObjetoActor}.
 	 * @param puntoOrigen
-	 *            En donde se va a originar el {@link ObjetoActor}
+	 *            En donde se va a originar el {@link ObjetoActor}.
 	 */
 	public Humanoide(String nombre, Vector2 puntoOrigen) {
 		super(nombre, puntoOrigen);
@@ -32,7 +32,7 @@ public class Humanoide extends Personaje {
 		setDestinoX(getX());
 		setDireccionX(Direccion.DERECHA);
 		setVelocidad(200);
-		
+
 		setDistanciaAlejamiento(200.0f);
 
 		setVida(100.0f);

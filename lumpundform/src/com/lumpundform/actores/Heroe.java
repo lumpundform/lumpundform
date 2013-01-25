@@ -21,7 +21,7 @@ import com.lumpundform.pociones.PocionVida;
  * El héroe del juego. Sólamente debe haber una instancia de {@link Heroe} en un
  * momento dado.
  * 
- * @author Sergio
+ * @author Sergio Valencia
  * 
  */
 public class Heroe extends Mago {
@@ -35,10 +35,10 @@ public class Heroe extends Mago {
 	private Map<String, Integer> pocionesMax = new HashMap<String, Integer>();
 
 	/**
-	 * Inicializa al {@link Heroe} con todos sus datos necesarios
+	 * Inicializa al {@link Heroe} con todos sus datos necesarios.
 	 * 
 	 * @param puntoOrigen
-	 *            El punto donde se va a originar el {@link ObjetoActor}
+	 *            El punto donde se va a originar el {@link ObjetoActor}.
 	 */
 	public Heroe(Vector2 puntoOrigen) {
 		super("heroe", puntoOrigen);
@@ -92,10 +92,10 @@ public class Heroe extends Mago {
 
 	/**
 	 * Alterna la transparencia del {@link Heroe} después de recibir daño para
-	 * indicar que no puede recibir daño por un momento
+	 * indicar que no puede recibir daño por un momento.
 	 * 
 	 * @param delta
-	 *            Delta que viene de {@link #act(float)}
+	 *            Delta que viene de {@link #act(float)}.
 	 */
 	public void actualizarTransparente(float delta) {
 		setDeltaTransparente(getDeltaTransparente() + delta);
@@ -121,12 +121,12 @@ public class Heroe extends Mago {
 	}
 
 	/**
-	 * Mueve al {@link Heroe} al presionar las teclas adecuadas
+	 * Mueve al {@link Heroe} al presionar las teclas adecuadas.
 	 * 
 	 * @param delta
-	 *            El delta de {@link Screen#render(float)}
+	 *            El delta de {@link Screen#render(float)}.
 	 * @param direccion
-	 *            La dirección a la que se está moviendo el {@link Heroe}
+	 *            La dirección a la que se está moviendo el {@link Heroe}.
 	 */
 	public void moverHeroe(float delta, String direccion) {
 		if (!isTeletransportar()) {
@@ -144,11 +144,12 @@ public class Heroe extends Mago {
 
 	/**
 	 * Intenta agarrar una poción e incrementar su cuenta de pociones si aún no
-	 * está al máximo de pociones permitidas
+	 * está al máximo de pociones permitidas.
 	 * 
 	 * @param tipo
-	 *            El tipo de poción a agarrar, "vida" ó "mana"
-	 * @return Si agarró la poción
+	 *            El tipo de poción a agarrar, <code>"vida"</code> ó
+	 *            <code>"mana"</code>.
+	 * @return Si agarró la poción.
 	 */
 	public boolean agarrarPocion(String tipo) {
 		if (getPociones().get(tipo) >= getPocionesMax().get(tipo)) {
@@ -161,10 +162,11 @@ public class Heroe extends Mago {
 
 	/**
 	 * Intenta usar una poción si la cantidad de vida ó mana no están a su
-	 * máximo y si tiene pociones del tipo dado
+	 * máximo y si tiene pociones del tipo dado.
 	 * 
 	 * @param tipo
-	 *            El tipo de poción que se va a usar, "vida" o "mana"
+	 *            El tipo de poción que se va a usar, <code>"vida"</code> o
+	 *            <code>"mana"</code>.
 	 */
 	public void usarPocion(String tipo) {
 		if (getPociones().get(tipo) > 0) {
@@ -176,10 +178,11 @@ public class Heroe extends Mago {
 	}
 
 	/**
-	 * Aumenta la vida ó mana consecuencia de usar una poción
+	 * Aumenta la vida ó mana consecuencia de usar una poción.
 	 * 
 	 * @param tipo
-	 *            El tipo de valor que se va a aumentar, "vida" o "mana"
+	 *            El tipo de valor que se va a aumentar, <code>"vida"</code> o
+	 *            <code>"mana"</code>.
 	 */
 	public void aumentarValorPocion(String tipo) {
 		float cantidad;
@@ -200,10 +203,10 @@ public class Heroe extends Mago {
 
 	/**
 	 * Agarra el valor de la vida o mana. Para usarse con las funciones que usen
-	 * tipo vida o mana
+	 * tipo vida o mana.
 	 * 
 	 * @param tipo
-	 * @return El valor
+	 * @return El valor.
 	 */
 	private Float getValor(String tipo) {
 		return getValor(tipo, false);
@@ -215,8 +218,8 @@ public class Heroe extends Mago {
 	 * 
 	 * @param tipo
 	 * @param max
-	 *            Si se quiere agarrar el valor máximo
-	 * @return El valor
+	 *            Si se quiere agarrar el valor máximo.
+	 * @return El valor.
 	 */
 	private Float getValor(String tipo, boolean max) {
 		if (tipo.equals("vida")) {

@@ -5,7 +5,7 @@ import com.lumpundform.actores.Heroe;
 
 /**
  * Las acciones que realiza el {@link Heroe} cada vez que se manda llamar
- * {@link Heroe#act(float)}
+ * {@link Heroe#act(float)}.
  * 
  * @author Sergio Valencia
  * 

@@ -36,9 +36,9 @@ import com.lumpundform.utilerias.U;
 
 /**
  * La base para los escenarios, extiende a {@link Stage} y agrega funciones y
- * valores específicos del juego
+ * valores específicos del juego.
  * 
- * @author Sergio
+ * @author Sergio Valencia & Luis Gutiérrez
  * 
  */
 public class EscenarioBase extends Stage {
@@ -50,6 +50,20 @@ public class EscenarioBase extends Stage {
 	private Array<Evento> eventos;
 	private Array<Escena> escenas;
 
+	/**
+	 * Inicializa un nuevo escenario con los datos dados. Se inicializa un nuevo
+	 * contador aleatorio para las pociones.
+	 * 
+	 * @param width
+	 *            El ancho del escenario.
+	 * @param height
+	 *            El alto del escenario.
+	 * @param stretch
+	 *            Si se debe estirar.
+	 * @param batch
+	 *            El {@link SpriteBatch} con el que se van a dibujar los
+	 *            {@link Actor}es.
+	 */
 	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
 		super(width, height, stretch, batch);
 		random = new Random();
@@ -58,6 +72,7 @@ public class EscenarioBase extends Stage {
 
 	@Override
 	public void addActor(Actor actor) {
+		/** Asigna un ID a todos los {@link ObjetoActor} agregados al escenario. */
 		if (ObjetoActor.class.isInstance(actor)) {
 			ObjetoActor oa = (ObjetoActor) actor;
 			oa.setId(contador++);
@@ -67,7 +82,7 @@ public class EscenarioBase extends Stage {
 
 	/**
 	 * Dibuja las líneas de colisión del piso del escenario y de todos los
-	 * {@link ObjetoActor}es que se encuentran en el escenario
+	 * {@link ObjetoActor}es que se encuentran en el escenario.
 	 */
 	void dibujarLineasColision(CamaraJuego camara) {
 		for (ObjetoActor actor : getActores(ObjetoActor.class)) {
@@ -78,8 +93,8 @@ public class EscenarioBase extends Stage {
 	}
 
 	/**
-	 * Cambia el estado del {@link Heroe} si este está colisionando con algún
-	 * otro {@link ObjetoActor} del escenario
+	 * Revisa si el {@link Heroe} está colisionando con algún otro
+	 * {@link Personaje} en el escenario.
 	 */
 	void colisionActores() {
 		Heroe heroe = getHeroe();
@@ -93,6 +108,10 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Revisa si el {@link Heroe} está tocando una {@link PocionBase} para ver
+	 * si la agarra.
+	 */
 	void colisionPociones() {
 		Heroe heroe = getHeroe();
 
@@ -105,6 +124,10 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Revisa le colisión de los {@link Ataque}s del escenario con los
+	 * {@link Personaje}s del mismo para hacer daño.
+	 */
 	void colisionAtaques() {
 		for (Ataque ataque : getActores(Ataque.class)) {
 			for (Personaje personaje : getActores(Personaje.class)) {
@@ -120,7 +143,7 @@ public class EscenarioBase extends Stage {
 	}
 
 	/**
-	 * Detecta la colisión de todos los {@link ObjetoActor}es con el piso
+	 * Detecta la colisión de todos los {@link ObjetoActor}es con el piso.
 	 */
 	void colisionPiso() {
 		Map<String, Boolean> caidaLibre = new HashMap<String, Boolean>();
@@ -196,10 +219,10 @@ public class EscenarioBase extends Stage {
 
 	/**
 	 * Limita las posiciones de los {@link ObjetoActor}es del escenario para que
-	 * no se salgan del mismo
+	 * no se salgan del mismo.
 	 * 
 	 * @param width
-	 *            El ancho del {@link EscenarioBase}
+	 *            El ancho del {@link EscenarioBase}.
 	 */
 	void acomodarActores(float width) {
 
@@ -240,6 +263,11 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Acomoda al {@link Heroe} para que no se salga de la {@link CamaraJuego}.
+	 * 
+	 * @param camara
+	 */
 	void acomodarHeroe(CamaraJuego camara) {
 		float min = camara.getPosicionOrigen().x;
 		float max = camara.getPosicionOrigen().x + camara.viewportWidth;

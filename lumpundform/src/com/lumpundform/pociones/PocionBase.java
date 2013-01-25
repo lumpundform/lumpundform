@@ -7,6 +7,7 @@ import com.lumpundform.colision.Rectangulo;
 public class PocionBase extends ObjetoActor {
 	public class Estado {
 		public static final String NORMAL = "normal";
+		public static final String DEFAULT = "normal";
 	}
 
 	private String tipo;
@@ -17,6 +18,7 @@ public class PocionBase extends ObjetoActor {
 		setTipo(tipo);
 
 		setEstado(Estado.NORMAL);
+		setEstadoDefault(Estado.DEFAULT);
 
 		setX(posicion.x);
 		setY(posicion.y);

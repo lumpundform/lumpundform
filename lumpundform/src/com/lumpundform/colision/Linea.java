@@ -4,9 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Contiene los dos puntos que forman una línea, para hacer comparaciones con
- * otros puntos
+ * otros puntos. Se utiliza únicamente para calcular la colisión de
+ * {@link Poligono}s.
  * 
- * @author Sergio
+ * @author Sergio Valencia
  * 
  */
 public class Linea {
@@ -18,6 +19,14 @@ public class Linea {
 	private float xMenor;
 	private float xMayor;
 
+	/**
+	 * Inicializa la {@link Linea} con los dos puntos especificados.
+	 * 
+	 * @param p1
+	 *            El primer punto.
+	 * @param p2
+	 *            El segundo putno.
+	 */
 	Linea(Vector2 p1, Vector2 p2) {
 		this.p1 = p1;
 		this.p2 = p2;
@@ -29,11 +38,11 @@ public class Linea {
 	}
 
 	/**
-	 * Regresa el valor X de una {@link Linea} para una Y dada
+	 * Regresa el valor X de una {@link Linea} para una Y dada.
 	 * 
 	 * @param punto
-	 *            El punto que tiene la coordenada en Y
-	 * @return El punto en X para la Y dada
+	 *            El punto que tiene la coordenada en Y.
+	 * @return El punto en X para la Y dada.
 	 */
 	public float xEnY(Vector2 punto) {
 		if (direccionLinea() == ".") {
@@ -44,8 +53,7 @@ public class Linea {
 		} else if (esRecta()) {
 			if (p1.x == p2.x && punto.y >= yMenor && punto.y <= yMayor)
 				return p1.x; // Líneas verticales
-			if (p1.y == p2.y && punto.y == p1.y && punto.x >= xMenor
-					&& punto.x <= xMayor)
+			if (p1.y == p2.y && punto.y == p1.y && punto.x >= xMenor && punto.x <= xMayor)
 				return punto.x; // Líneas horizontales
 		} else if (esDiagonal()) {
 			float proporcion = longitudY(punto) / longitudY();
@@ -61,11 +69,11 @@ public class Linea {
 	}
 
 	/**
-	 * Regresa el valor Y de una {@link Linea} para una X dada
+	 * Regresa el valor Y de una {@link Linea} para una X dada.
 	 * 
 	 * @param punto
-	 *            El punto que tiene la coordenada en X
-	 * @return El punto en Y para la X dada
+	 *            El punto que tiene la coordenada en X.
+	 * @return El punto en Y para la X dada.
 	 */
 	public float yEnX(Vector2 punto) {
 		if (direccionLinea() == ".") {
@@ -76,8 +84,7 @@ public class Linea {
 		} else if (esRecta()) {
 			if (p1.y == p2.y && punto.x >= xMenor && punto.x <= xMayor)
 				return p1.y; // Líneas horizontales
-			if (p1.x == p2.x && punto.x == p1.y && punto.y >= yMenor
-					&& punto.y <= yMayor)
+			if (p1.x == p2.x && punto.x == p1.y && punto.y >= yMenor && punto.y <= yMayor)
 				return punto.y; // Líneas verticales
 		} else if (esDiagonal()) {
 			float proporcion = longitudX(punto) / longitudX();
@@ -93,9 +100,9 @@ public class Linea {
 	}
 
 	/**
-	 * Si la diagonal va hacia arriba o hacia abajo
+	 * Si la diagonal va hacia arriba o hacia abajo.
 	 * 
-	 * @return La dirección de la diagonal de la {@link Linea}
+	 * @return <code>"arriba"</code> o <code>"abajo"</code>.
 	 */
 	public String direccionDiagonal() {
 		if (direccionLinea() == "xy" || direccionLinea() == "-x-y")
@@ -105,9 +112,9 @@ public class Linea {
 	}
 
 	/**
-	 * Regresa la paneidnete de la {@link Linea}
+	 * Regresa la paneidnete de la {@link Linea}.
 	 * 
-	 * @return El valor de la pendiente
+	 * @return El valor de la pendiente.
 	 */
 	public Float pendiente() {
 		if (longitudX() == 0)
@@ -116,9 +123,7 @@ public class Linea {
 	}
 
 	/**
-	 * Cuanto mide la {@link Linea} horizontalmente
-	 * 
-	 * @return La medida
+	 * @return La medida de la {@link Linea} horizontalmente.
 	 */
 	private float longitudX() {
 		return xMayor - xMenor;
@@ -126,20 +131,18 @@ public class Linea {
 
 	/**
 	 * Cuanto mide la {@link Linea} horizontalmente desde el comienzo hasta un
-	 * punto dado
+	 * punto dado.
 	 * 
 	 * @param punto
-	 *            El punto para sacar la distancia
-	 * @return La medida
+	 *            El punto para sacar la distancia.
+	 * @return La medida.
 	 */
 	private float longitudX(Vector2 punto) {
 		return punto.x - xMenor;
 	}
 
 	/**
-	 * Cuanto mide la {@link Linea} verticalmente
-	 * 
-	 * @return La medida
+	 * @return Cuanto mide la {@link Linea} verticalmente.
 	 */
 	private float longitudY() {
 		return yMayor - yMenor;
@@ -147,42 +150,42 @@ public class Linea {
 
 	/**
 	 * Cuanto mide la {@link Linea} verticalmente desde el comienzo hasta un
-	 * punto dado
+	 * punto dado.
 	 * 
 	 * @param punto
-	 *            El punto para sacar la distancia
-	 * @return La medida
+	 *            El punto para sacar la distancia.
+	 * @return La medida.
 	 */
 	private float longitudY(Vector2 punto) {
 		return punto.y - yMenor;
 	}
 
 	/**
-	 * Regresa x menor o mayor
+	 * Regresa x menor o mayor.
 	 * 
 	 * @param nombre
-	 *            "menor" o "mayor"
-	 * @return El valor de la x
+	 *            <code>"menor"</code> ó <code>"mayor"</code>.
+	 * @return El valor de la x.
 	 */
 	float getX(String nombre) {
 		return nombre == "mayor" ? xMayor : xMenor;
 	}
 
 	/**
-	 * Regresa y menor o mayor
+	 * Regresa y menor o mayor.
 	 * 
 	 * @param nombre
-	 *            "menor" o "mayor"
-	 * @return El valor de la y
+	 *            <code>"menor"</code> o <code>"mayor"</code>.
+	 * @return El valor de la y.
 	 */
 	float getY(String nombre) {
 		return nombre == "mayor" ? yMayor : yMenor;
 	}
 
 	/**
-	 * El valor Y del punto con la X menor
+	 * El valor Y del punto con la X menor.
 	 * 
-	 * @return El valor Y
+	 * @return El valor Y.
 	 */
 	private float yDeXMenor() {
 		if (xMenor == p1.x)
@@ -192,9 +195,9 @@ public class Linea {
 	}
 
 	/**
-	 * El valor X del punto con la Y menor
+	 * El valor X del punto con la Y menor.
 	 * 
-	 * @return El valor Y
+	 * @return El valor Y.
 	 */
 	private float xDeYMenor() {
 		if (yMenor == p1.y)
@@ -204,18 +207,14 @@ public class Linea {
 	}
 
 	/**
-	 * Dice si la {@link Linea} es una recta
-	 * 
-	 * @return {@link true} si es recta, {@link false} si no
+	 * @return Si la {@link Linea} es recta.
 	 */
 	private boolean esRecta() {
 		return esHorizontal() || esVertical();
 	}
 
 	/**
-	 * Dice si la {@link Linea} es horizontal
-	 * 
-	 * @return <code>true</code> si es horizontal, <code>false</code> si no
+	 * @return Si la {@link Linea} es horizontal.
 	 */
 	public boolean esHorizontal() {
 		String direccionLinea = direccionLinea();
@@ -223,9 +222,7 @@ public class Linea {
 	}
 
 	/**
-	 * Dice si la {@link Linea} es vertical
-	 * 
-	 * @return <code>true</code> si es vertical, <code>false</code> si no
+	 * @return Si la {@link Linea} es vertical.
 	 */
 	public boolean esVertical() {
 		String direccionLinea = direccionLinea();
@@ -233,14 +230,11 @@ public class Linea {
 	}
 
 	/**
-	 * Dice si la {@link Linea} es diagonal
-	 * 
-	 * @return {@link true} si es diagonal, {@link false} si no
+	 * @return Si la {@link Linea} es diagonal.
 	 */
 	private boolean esDiagonal() {
 		String direccionLinea = direccionLinea();
-		if (direccionLinea == "xy" || direccionLinea == "-xy"
-				|| direccionLinea == "x-y" || direccionLinea == "-x-y") {
+		if (direccionLinea == "xy" || direccionLinea == "-xy" || direccionLinea == "x-y" || direccionLinea == "-x-y") {
 			return true;
 		} else {
 			return false;
@@ -249,14 +243,16 @@ public class Linea {
 
 	/**
 	 * Regresa la dirección de la {@link Linea} desde el primer punto hacia el
-	 * segundo punto. Regresa "." si es un punto, "x" y "-x" si es línea
-	 * horizontal hacia la derecha o izquierda respectivamente, "y" y "-y" si es
-	 * línea vertical hacia arriba o abajo respectivamente, "xy" si es diagonal
-	 * hacia arriba a la derecha, "-xy" si es diagonal hacia arriba a la
-	 * izquierda, "-x-y" si es diagonal hacia abajo a la izquierda y "x-y" si es
-	 * diagonal hacia abajo a la derecha.
+	 * segundo punto.
 	 * 
-	 * @return El nombre de la dirección
+	 * @return <code>"."</code> si es un punto, <code>"x"</code> y
+	 *         <code>"-x"</code> si es línea horizontal hacia la derecha o
+	 *         izquierda respectivamente, <code>"y"</code> y <code>"-y"</code>
+	 *         si es línea vertical hacia arriba o abajo respectivamente,
+	 *         <code>"xy"</code> si es diagonal hacia arriba a la derecha,
+	 *         <code>"-xy"</code> si es diagonal hacia arriba a la izquierda,
+	 *         <code>"-x-y"</code> si es diagonal hacia abajo a la izquierda y
+	 *         <code>"x-y"</code> si es diagonal hacia abajo a la derecha.
 	 */
 	public String direccionLinea() {
 		String nombre = "";

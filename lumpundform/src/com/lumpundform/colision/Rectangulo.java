@@ -3,9 +3,9 @@ package com.lumpundform.colision;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Un {@link Poligono} de tipo rectángulo
+ * Un {@link Poligono} de tipo rectángulo.
  * 
- * @author Sergio
+ * @author Sergio Valencia
  * 
  */
 public class Rectangulo extends Poligono {
@@ -14,12 +14,12 @@ public class Rectangulo extends Poligono {
 	private boolean centrado;
 
 	/**
-	 * Inicializa un {@link Rectangulo} del alto y ancho dados
+	 * Inicializa un {@link Rectangulo} del alto y ancho dados.
 	 * 
 	 * @param alto
-	 *            El alto del {@link Rectangulo}
+	 *            El alto del {@link Rectangulo}.
 	 * @param ancho
-	 *            El ancho del {@link Rectangulo}
+	 *            El ancho del {@link Rectangulo}.
 	 */
 	public Rectangulo(float alto, float ancho) {
 		super(new Vector2[4]);
@@ -28,11 +28,6 @@ public class Rectangulo extends Poligono {
 		this.setCentrado(true);
 	}
 
-	/**
-	 * Regresa el ancho del {@link Rectangulo}
-	 * 
-	 * @return El ancho
-	 */
 	public float getAncho() {
 		return ancho;
 	}
@@ -43,13 +38,13 @@ public class Rectangulo extends Poligono {
 
 	/**
 	 * Posiciona al {@link Rectangulo} en el punto dado tomando en cuenta si el
-	 * {@link Rectangulo} tiene punto de referencia centrado o no
+	 * {@link Rectangulo} tiene punto de referencia centrado o no.
 	 * 
 	 * @param x
-	 *            La x del punto
+	 *            La x del punto.
 	 * @param y
-	 *            La y del punto
-	 * @return El {@link Rectangulo} en la posición dada
+	 *            La y del punto.
+	 * @return El {@link Rectangulo} en la posición dada.
 	 */
 	public Rectangulo posicionar(float x, float y) {
 		if (isCentrado()) {
@@ -67,11 +62,11 @@ public class Rectangulo extends Poligono {
 	}
 
 	/**
-	 * Regresa el punto del {@link Rectangulo} especificado
+	 * Regresa el punto del {@link Rectangulo} especificado.
 	 * 
 	 * @param nombre
-	 *            El nombre del punto a buscar
-	 * @return El punto
+	 *            El nombre del punto a buscar.
+	 * @return El punto.
 	 */
 	public Vector2 punto(String nombre) {
 		float xTemp = getVertices()[0].x;
@@ -108,9 +103,9 @@ public class Rectangulo extends Poligono {
 	}
 
 	/**
-	 * Regresa el punto del centro del {@link Rectangulo}
+	 * Regresa el punto del centro del {@link Rectangulo}.
 	 * 
-	 * @return El punto
+	 * @return El punto.
 	 */
 	public Vector2 getCentro() {
 		return new Vector2((punto("inf-izq").x + punto("inf-der").x) / 2, (punto("inf-izq").y + punto("sup-izq").y) / 2);

@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.acciones.ObjetoActorAction;
 import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.excepciones.AnimacionInexistenteException;
 import com.lumpundform.utilerias.D;
 import com.lumpundform.utilerias.SpriteSheet;
 
@@ -31,6 +32,7 @@ public abstract class ObjetoActor extends Actor {
 
 	// Estado
 	private String estado;
+	private String estadoDefault;
 
 	// ID
 	private int id;
@@ -146,7 +148,7 @@ public abstract class ObjetoActor extends Actor {
 	 * 
 	 * @param nombres
 	 *            Una lista de todos los nombres de la animaciones del
-	 *            {@link ObjetoActor}
+	 *            {@link ObjetoActor}.
 	 */
 	protected void cargarAnimaciones(String... nombres) {
 		for (String nombre : nombres) {
@@ -343,7 +345,13 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	protected Animation getAnimacion(String nombre) {
-		return getAnimaciones().get(nombre);
+		if (getAnimaciones().containsKey(nombre)) {
+			return getAnimaciones().get(nombre);
+		} else if (nombre != getEstadoDefault()) {
+			return getAnimacion(getEstadoDefault());
+		} else {
+			throw new AnimacionInexistenteException(getName(), nombre);
+		}
 	}
 
 	public void setAnimaciones(Map<String, Animation> animacion) {
@@ -356,6 +364,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public String getEstadoDefault() {
+		return estadoDefault;
+	}
+
+	public void setEstadoDefault(String estadoDefault) {
+		this.estadoDefault = estadoDefault;
 	}
 
 	public float getTiempoTranscurrido() {

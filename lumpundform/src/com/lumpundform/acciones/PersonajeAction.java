@@ -7,7 +7,7 @@ import com.lumpundform.indicadores.BarraVida;
 
 /**
  * Las acciones que realizan los {@link Personaje}s al llamar su función
- * {@link Personaje#act(float)}
+ * {@link Personaje#act(float)}.
  * 
  * @author Sergio Valencia
  * 

@@ -5,7 +5,7 @@ import com.lumpundform.actores.Humanoide;
 
 /**
  * Las acciones que realiza el {@link Humanoide} cada vez que se manda llamar
- * {@link Humanoide#act(float)}
+ * {@link Humanoide#act(float)}.
  * 
  * @author Sergio Valencia
  * 

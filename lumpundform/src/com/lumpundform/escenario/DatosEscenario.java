@@ -1,5 +1,12 @@
 package com.lumpundform.escenario;
 
+/**
+ * Clase que almacena los datos de un {@link EscenarioBase} leídos del archivo
+ * de datos XML.
+ * 
+ * @author Sergio Valencia
+ * 
+ */
 public class DatosEscenario {
 	private String archivoTmx;
 	private String atlas;

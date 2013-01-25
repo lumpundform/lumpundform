@@ -3,24 +3,30 @@ package com.lumpundform.colision;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Define un poligono basado en los vértices dados
+ * Define un poligono basado en los vértices dados.
  * 
- * @author Sergio
+ * @author Sergio Valencia
  * 
  */
 public class Poligono {
 	private Vector2[] vertices;
 
+	/**
+	 * Crea un {@link Poligono} con los vértices dados.
+	 * 
+	 * @param vertices
+	 *            Un arreglo de los vertices que conforman el {@link Poligono}.
+	 */
 	public Poligono(Vector2[] vertices) {
 		this.vertices = vertices;
 	}
 
 	/**
-	 * Regresa si existe una colisión del {@link Poligono} con el punto dado
+	 * Regresa si existe una colisión del {@link Poligono} con el punto dado.
 	 * 
 	 * @param punto
-	 *            El punto a revisar para la colisión
-	 * @return <code>true</code> si hay colisión, <code>false</code> si no
+	 *            El punto a revisar para la colisión.
+	 * @return <code>true</code> si hay colisión, <code>false</code> si no.
 	 */
 	public boolean estaColisionando(Vector2 punto) {
 		Linea izq = null;
@@ -38,13 +44,13 @@ public class Poligono {
 	}
 
 	/**
-	 * Calcula si está colisionando con otro {@link Poligono}
+	 * Calcula si está colisionando con otro {@link Poligono}.
 	 * 
 	 * @param poligono
 	 *            El {@link Poligono} con el cual se quiere revisar si está
-	 *            colisionando
+	 *            colisionando.
 	 * @return <code>true</code> si sí está colisionando, <code>false</code> si
-	 *         no
+	 *         no.
 	 */
 	public boolean estaColisionando(Poligono poligono) {
 		// TODO: Hacer que la colisión no funcione únicamente con rectángulos
@@ -66,7 +72,7 @@ public class Poligono {
 	 *            <code>"izquierda"</code> ó <code>"arriba"</code>.
 	 * @param punto
 	 *            El punto a revisar.
-	 * @return La {@link Linea} o <code>null</code> si no existe
+	 * @return La {@link Linea} o <code>null</code> si no existe.
 	 */
 	public Linea linea(String nombre, Vector2 punto) {
 		Linea[] lineas = lineasPoligono(punto);
@@ -82,11 +88,11 @@ public class Poligono {
 	}
 
 	/**
-	 * [0] = arriba [1] = abajo [2] = izquierda [3] = derecha
+	 * [0] = arriba [1] = abajo [2] = izquierda [3] = derecha.
 	 * 
 	 * @param punto
-	 *            El punto para revisar las {@link Linea}s
-	 * @return Un arreglo de {@link Linea}s
+	 *            El punto para revisar las {@link Linea}s.
+	 * @return Un arreglo de {@link Linea}s.
 	 */
 	private Linea[] lineasPoligono(Vector2 punto) {
 		Linea[] lineas = { null, null, null, null };
@@ -117,11 +123,6 @@ public class Poligono {
 		return lineas;
 	}
 
-	/**
-	 * Regresa la lista de vertices
-	 * 
-	 * @return Arreglo de vertices
-	 */
 	public Vector2[] getVertices() {
 		return vertices;
 	}
