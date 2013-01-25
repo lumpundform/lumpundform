@@ -16,6 +16,8 @@ public class D {
 	}
 
 	public static SpriteSheet ss(String nombre, String tipo) {
+		// TODO: Hacer que lea únicamente el archivo XML si no loa ha leído
+		// antes para el mismo personaje.
 		Element spriteSheetGrupo = getSpriteGrupo(nombre);
 		Element spriteSheet = getSpriteSheetTipo(spriteSheetGrupo, tipo);
 

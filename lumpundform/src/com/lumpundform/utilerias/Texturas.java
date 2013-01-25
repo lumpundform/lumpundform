@@ -18,6 +18,14 @@ import com.badlogic.gdx.graphics.Texture;
 public class Texturas {
 	private static Map<String, Texture> texturas = new HashMap<String, Texture>();
 
+	/**
+	 * Regresa la textura existente o una nueva instancia en caso de que ya
+	 * exista.
+	 * 
+	 * @param ruta
+	 *            La ruta de la imagen para la textura.
+	 * @return La textura.
+	 */
 	public static Texture get(String ruta) {
 		Texture textura = texturas.get(ruta);
 		if (textura == null) {
