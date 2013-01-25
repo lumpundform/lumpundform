@@ -258,7 +258,7 @@ public class Personaje extends ObjetoActor {
 			if (isEnemigo()) {
 				escenario.crearPocion(getPosicionCentro());
 				getBarraVida().remove();
-				remove();
+				quitar();
 			} else {
 				// TODO: Que hacer cuando el héroe muere
 			}

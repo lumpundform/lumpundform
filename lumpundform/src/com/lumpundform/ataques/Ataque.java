@@ -48,7 +48,7 @@ public class Ataque extends ObjetoActor {
 		if (getEstado() == Estado.EXPLOTANDO) {
 			setLoopAnimacion(false);
 			if (getTiempoTranscurrido() > getAnimacion(getEstado()).frameDuration * 10) {
-				remove();
+				quitar();
 			}
 
 		}

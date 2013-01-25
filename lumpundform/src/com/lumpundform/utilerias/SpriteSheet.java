@@ -1,10 +1,6 @@
 package com.lumpundform.utilerias;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 public class SpriteSheet {
-	private Texture textura;
 	private String ruta;
 	private int columnas;
 	private int columnasOffset;
@@ -17,13 +13,6 @@ public class SpriteSheet {
 		setColumnasOffset(columnasOffset);
 		setRenglones(renglones);
 		setRenglonesOffset(renglonesOffset);
-	}
-
-	public Texture getTextura() {
-		if (textura == null) {
-			textura = new Texture(Gdx.files.internal(ruta));
-		}
-		return textura;
 	}
 
 	public String getRuta() {

@@ -352,7 +352,7 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	public <T> List<T> getActores(Class<T> clase) {
+	public <T extends Actor> List<T> getActores(Class<T> clase) {
 		@SuppressWarnings("unchecked")
 		Iterator<T> i = (Iterator<T>) getActors().iterator();
 		List<T> actores = new ArrayList<T>();
@@ -369,7 +369,7 @@ public class EscenarioBase extends Stage {
 		for (Ataque ataque : getActores(Ataque.class)) {
 			if ((ataque.getX() + ataque.getWidth()) < camara.getPosicionOrigen().x
 					|| ataque.getX() > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
-				ataque.remove();
+				ataque.quitar();
 			}
 		}
 	}

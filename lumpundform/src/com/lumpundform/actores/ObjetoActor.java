@@ -16,6 +16,7 @@ import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.excepciones.AnimacionInexistenteException;
 import com.lumpundform.utilerias.D;
 import com.lumpundform.utilerias.SpriteSheet;
+import com.lumpundform.utilerias.Texturas;
 
 /**
  * Clase personalizada que extiende a {@link Actor} y le agrega valores
@@ -80,6 +81,15 @@ public abstract class ObjetoActor extends Actor {
 		setTiempoTranscurrido(0f);
 
 		addAction(new ObjetoActorAction());
+	}
+
+	/**
+	 * Quita al actor del {@link com.lumpundform.escenario.EscenarioBase} al que
+	 * pertenece y borra sus acciones.
+	 */
+	public void quitar() {
+		remove();
+		clearActions();
 	}
 
 	/**
@@ -312,7 +322,7 @@ public abstract class ObjetoActor extends Actor {
 	private Animation initAnimacion(String tipoAnimacion) {
 		SpriteSheet ss = D.ss(getName(), tipoAnimacion);
 
-		Texture texturaAnimacion = ss.getTextura();
+		Texture texturaAnimacion = Texturas.get(ss.getRuta());
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion, (int) getWidth(), (int) getHeight());
 		TextureRegion[] cuadrosAnimacion = new TextureRegion[ss.getColumnas() * ss.getRenglones()];
 		int index = 0;
