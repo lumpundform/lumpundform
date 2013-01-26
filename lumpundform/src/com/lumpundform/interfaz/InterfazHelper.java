@@ -62,5 +62,4 @@ public class InterfazHelper {
 		new BotonPocionVida(escenario);
 		new BotonPocionMana(escenario);
 	}
-
 }

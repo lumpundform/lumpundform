@@ -54,7 +54,7 @@ public class Evento {
 
 	private void ejecutarEvento(CamaraJuego camara, Heroe heroe, float delta) {
 		if (tipo.equals("spawn")) {
-			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
 			} else if (limite > personajesCreados && activado.equals(true)) {
 				escenario.agregarActor("enemigo", new Vector2(posicion.x - 64, posicion.y), getNombre());
@@ -64,7 +64,7 @@ public class Evento {
 				terminado = true;
 			}
 		} else if (tipo.equals("coliseo")) {
-			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
 				camara.setBloqueada(true);
 			} else if (limite > personajesCreados && activado.equals(true)) {
@@ -75,20 +75,20 @@ public class Evento {
 				terminado = true;
 			}
 		} else if (tipo.equals("clima")) {
-			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
-			} else if (activado == true && duracion > tiempoTranscurrido) {
+			} else if (activado && duracion > tiempoTranscurrido) {
 				// ejecutar lo que haga el evento
 				tiempoTranscurrido += delta;
-			} else if (activado == true && duracion <= tiempoTranscurrido) {
+			} else if (activado && duracion <= tiempoTranscurrido) {
 				terminado = true;
 			}
 		} else if (tipo.equals("escena")) {
-			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
+			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
-			} else if (activado == true && terminado == false && escena.getTerminada() == false) {
+			} else if (activado && !terminado && !escena.getTerminada()) {
 				escena.ejecutarEscena(heroe, delta);
-			} else if (activado == true && escena.getTerminada() == true) {
+			} else if (activado && escena.getTerminada()) {
 				terminado = true;
 			}
 		}
