@@ -1,5 +1,8 @@
 package com.lumpundform.utilerias;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
@@ -9,6 +12,7 @@ import com.lumpundform.escenario.DatosEscenario;
 public class D {
 	private static String nombreArchivo = "data/datos.xml";
 	private static Element datos;
+	private static Map<String, SpriteSheet> spriteSheets = new HashMap<String, SpriteSheet>();
 
 	private static void init() {
 		XmlReader reader = new XmlReader();
@@ -16,18 +20,22 @@ public class D {
 	}
 
 	public static SpriteSheet ss(String nombre, String tipo) {
-		// TODO: Hacer que lea únicamente el archivo XML si no loa ha leído
-		// antes para el mismo personaje.
-		Element spriteSheetGrupo = getSpriteGrupo(nombre);
-		Element spriteSheet = getSpriteSheetTipo(spriteSheetGrupo, tipo);
+		String key = nombre + "_" + tipo;
+		SpriteSheet spriteSheet = spriteSheets.get(key);
+		if (spriteSheet == null) {
+			Element spriteSheetGrupo = getSpriteGrupo(nombre);
+			Element spriteSheetElement = getSpriteSheetTipo(spriteSheetGrupo, tipo);
 
-		String ruta = spriteSheet.getChildByName("ruta").getText();
-		int columnas = Integer.parseInt(spriteSheet.getChildByName("columnas").getText());
-		int columnasOffset = Integer.parseInt(spriteSheet.getChildByName("columnasOffset").getText());
-		int renglones = Integer.parseInt(spriteSheet.getChildByName("renglones").getText());
-		int renglonesOffset = Integer.parseInt(spriteSheet.getChildByName("renglonesOffset").getText());
+			String ruta = spriteSheetElement.getChildByName("ruta").getText();
+			int columnas = Integer.parseInt(spriteSheetElement.getChildByName("columnas").getText());
+			int columnasOffset = Integer.parseInt(spriteSheetElement.getChildByName("columnasOffset").getText());
+			int renglones = Integer.parseInt(spriteSheetElement.getChildByName("renglones").getText());
+			int renglonesOffset = Integer.parseInt(spriteSheetElement.getChildByName("renglonesOffset").getText());
 
-		return new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset);
+			spriteSheet = new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset);
+			spriteSheets.put(key, spriteSheet);
+		}
+		return spriteSheet;
 	}
 
 	public static DatosEscenario de(String nombre) {
