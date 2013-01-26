@@ -5,17 +5,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor.Direccion;
-import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.interfaz.CuadroTexto;
-import com.lumpundform.utilerias.U;
 
 public class Escena {
 
 	// Elementos de la escena
-	private Array<Paso> pasosEscena = new Array<Paso>();
-	public String nombreEscena;
+	private Array<Paso> pasos = new Array<Paso>();
+	private String nombre;
 	private int paso = 0;
-	public boolean escenaTerminada = false;
+	private boolean terminado = false;
 
 	// Cuadros de texto
 	CuadroTexto ctDer = new CuadroTexto("der");
@@ -23,12 +21,12 @@ public class Escena {
 
 	public Escena(Element escena, String nombreEscena) {
 		crearPasos(escena.getChildrenByNameRecursively("paso"));
-		this.nombreEscena = nombreEscena;
+		this.nombre = nombreEscena;
 	}
 
 	private void crearPasos(Array<Element> pasos) {
 		for (int i = 0; i < pasos.size; i++) {
-			pasosEscena.add(new Paso(pasos.get(i)));
+			this.pasos.add(new Paso(pasos.get(i)));
 		}
 	}
 
@@ -37,19 +35,16 @@ public class Escena {
 	}
 
 	private void revisarPasos(Heroe heroe, float delta) {
-		if (paso < pasosEscena.size) {
-			revisarAcciones(heroe, delta, pasosEscena.get(paso));
+		if (paso < pasos.size) {
+			revisarAcciones(heroe, delta, pasos.get(paso));
 		} else {
-			escenaTerminada = true;
+			terminado = true;
 		}
 	}
 
 	private void revisarAcciones(Heroe heroe, float delta, Paso paso) {
 		if (accionesTerminadas(paso)) {
 			ejecutarAcciones(heroe, delta, paso);
-			// ejecutarAccion(paso.acciones.get(paso.getAccionAEjecutar()).getObjetivo(),
-			// paso.acciones.get(paso.getAccionAEjecutar()), heroe, delta,
-			// paso);
 		} else {
 			siguientePaso();
 		}
@@ -57,8 +52,6 @@ public class Escena {
 
 	private void ejecutarAcciones(Heroe heroe, float delta, Paso paso) {
 		for (int i = 0; i < paso.acciones.size; i++) {
-			U.l("Accion terminado", paso.acciones.get(i).getObjetivo()
-					+ paso.acciones.get(i).getTerminado());
 			if (!paso.acciones.get(i).getTerminado()) {
 				ejecutarAccion(paso.acciones.get(i), heroe, delta);
 			}
@@ -66,25 +59,12 @@ public class Escena {
 	}
 
 	private void ejecutarAccion(Accion accion, Heroe heroe, float delta) {
-		U.l("accion", accion.getObjetivo());
 		if (accion.getObjetivo().equals("hablar"))
 			hablar(accion);
 		else if (accion.getObjetivo().equals("ir_a"))
 			caminar(heroe, accion.getDestino(), delta, accion);
 		else if (accion.getObjetivo().equals("teletransportarse"))
 			teletransportarse(heroe, accion.getPosicionVector(), accion);
-	}
-
-	/*
-	 * private void ejecutarAccion(String objetivo, Accion accion, Heroe heroe,
-	 * float delta, Paso paso) { if(objetivo.equals("hablar")) { hablar(accion,
-	 * paso, accion.getTexto(), accion.getPosicion()); } else if
-	 * (objetivo.equals("ir_a")) { caminar(heroe, accion.getDestino(), delta,
-	 * paso); } else if (objetivo.equals("teletransportarse")) {
-	 * teletransportarse(paso, heroe, accion.getPosicionVector()); } }
-	 */
-	public Paso getPasoActual() {
-		return pasosEscena.get(paso);
 	}
 
 	private void siguientePaso() {
@@ -117,11 +97,31 @@ public class Escena {
 		if ((heroe.getDestinoX() > heroe.getX() && heroe.getDireccionDestinoX() == Direccion.IZQUIERDA)
 				|| (heroe.getDestinoX() < heroe.getX() && heroe
 						.getDireccionDestinoX() == Direccion.DERECHA))
-			accion.terminarAccion();
+			accion.terminar();
 	}
 
 	private void teletransportarse(Heroe heroe, Vector2 pos, Accion accion) {
 		heroe.habilidad("teletransportar", pos);
-		accion.terminarAccion();
+		accion.terminar();
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public boolean getTerminada() {
+		return terminado;
+	}
+
+	public void continuarConversacion() {
+		Paso pasoActual = getPasoActual();
+		if(pasoActual != null && pasoActual.tieneAccionHablar())
+			pasoActual.terminarAccionHablar();
+	}
+	
+	private Paso getPasoActual() {
+		if(paso < pasos.size)
+			return pasos.get(paso);
+		return null;
 	}
 }

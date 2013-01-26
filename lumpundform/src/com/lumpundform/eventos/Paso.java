@@ -25,7 +25,23 @@ public class Paso {
 		accionAEjecutar++;
 	}
 
-	public Accion getAccionHablar() {
+	public boolean tieneAccionHablar() {
+		for (int i = 0; i < acciones.size; i++) {
+			Accion accion = acciones.get(i);
+			if (accion.getObjetivo().equals("hablar") && !accion.getTerminado()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void terminarAccionHablar() {
+		Accion accionHablar = getAccionHablar();
+		if (accionHablar != null)
+			accionHablar.terminar();
+	}
+
+	private Accion getAccionHablar() {
 		for (int i = 0; i < acciones.size; i++) {
 			Accion accion = acciones.get(i);
 			if (accion.objetivo.equals("hablar")) {
@@ -34,4 +50,5 @@ public class Paso {
 		}
 		return null;
 	}
+
 }

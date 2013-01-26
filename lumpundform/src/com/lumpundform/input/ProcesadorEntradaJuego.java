@@ -79,12 +79,8 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 			heroe.usarPocion("mana");
 			return true;
 		} else if (keycode == Keys.N) { /* Avanzar texto en diálogos */
-			if (escenario.hayEventoActivado() && escenario.hayEscenaActivada()) {
-				if (!escenario.getEscenaActivada().getEscena().getPasoActual().getAccionHablar().getTerminado()) {
-					escenario.getEscenaActivada().getEscena().getPasoActual().getAccionHablar().terminarAccion();
-					return true;
-				}
-			}
+			escenario.siguienteCuadroTexto();
+			return true;
 		} else if (keycode == Keys.A || keycode == Keys.D) { /* Mover al héroe */
 			if (heroe.getMovimiento() == 0) {
 				if (keycode == Keys.A) {

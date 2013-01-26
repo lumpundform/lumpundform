@@ -132,7 +132,8 @@ public class EscenarioBase extends Stage {
 		for (Ataque ataque : getActores(Ataque.class)) {
 			for (Personaje personaje : getActores(Personaje.class)) {
 				if (personaje.isEnemigo() != ataque.getPersonaje().isEnemigo()
-						&& personaje.getHitbox().estaColisionando(ataque.getHitbox())) {
+						&& personaje.getHitbox().estaColisionando(
+								ataque.getHitbox())) {
 					if (ataque.isHaceDano()) {
 						personaje.quitarVida(ataque.getDano());
 					}
@@ -181,7 +182,8 @@ public class EscenarioBase extends Stage {
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 25);
 				altura = actor.getY();
 				direccionDiagonal = direccionDiagonalDer;
-			} else if (getPiso().estaColisionando(actor.getEsquina(puntoColision))) {
+			} else if (getPiso().estaColisionando(
+					actor.getEsquina(puntoColision))) {
 				p = actor.getEsquina(puntoColision);
 				altura = actor.getY() + 25;
 				direccionDiagonal = direccionDiagonalIzq;
@@ -194,8 +196,12 @@ public class EscenarioBase extends Stage {
 
 				// Posiciona al actor sobre la línea si la linea tiene una
 				// pendiente menor a 1
-				if (l != null && l.pendiente() != null && l.pendiente() <= 1.0001d && l.yEnX(p) <= altura
-						&& (l.direccionDiagonal() == direccionDiagonal || l.direccionLinea() == direccionLinea)) {
+				if (l != null
+						&& l.pendiente() != null
+						&& l.pendiente() <= 1.0001d
+						&& l.yEnX(p) <= altura
+						&& (l.direccionDiagonal() == direccionDiagonal || l
+								.direccionLinea() == direccionLinea)) {
 					caidaLibre.put(actor.getName(), false);
 					actor.setY(l.yEnX(p));
 				}
@@ -246,9 +252,11 @@ public class EscenarioBase extends Stage {
 				yPunto = Math.floor(pc.y) + 10.0f;
 			}
 
-			if (getPiso().estaColisionando(pc) && getPiso().linea("arriba", pc).esHorizontal()
+			if (getPiso().estaColisionando(pc)
+					&& getPiso().linea("arriba", pc).esHorizontal()
 					&& getPiso().linea(lineaLateral, pc).esVertical()
-					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(pc))) {
+					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(
+							pc))) {
 				Linea linea = getPiso().linea(lineaLateral, pc);
 				if (linea != null) {
 					Float xLinea = null;
@@ -300,7 +308,8 @@ public class EscenarioBase extends Stage {
 		Element xmlE;
 
 		xmlF = new XmlReader();
-		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml").readString();
+		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml")
+				.readString();
 		xmlE = xmlF.parse(xmlS);
 
 		Array<Element> escena = xmlE.getChildrenByNameRecursively("escena");
@@ -312,8 +321,9 @@ public class EscenarioBase extends Stage {
 
 	public Escena getEscena(String nombre) {
 		for (int i = 0; i < escenas.size; i++) {
-			if (escenas.get(i).nombreEscena.equals(nombre))
-				return escenas.get(i);
+			Escena escena = escenas.get(i);
+			if (escena.getNombre().equals(nombre))
+				return escena;
 		}
 		return null;
 	}
@@ -332,7 +342,8 @@ public class EscenarioBase extends Stage {
 			actor = new Humanoide("amigo", posicion);
 			actor.setEnemigo(true);
 		} else {
-			throw new ActorNoDefinidoException("El Actor " + tipo + " no esta definido");
+			throw new ActorNoDefinidoException("El Actor " + tipo
+					+ " no esta definido");
 		}
 		actor.setPerteneceAEvento(evento);
 		addActor(actor);
@@ -415,5 +426,14 @@ public class EscenarioBase extends Stage {
 
 	public Array<Evento> getEventos() {
 		return eventos;
+	}
+
+	public void continuarConversacionActual(String nombre) {
+		for (int i = 0; i < eventos.size; i++) {
+			Evento evento = eventos.get(i);
+			if (evento.getNombre().equals(nombre)) {
+				evento.continuarConversacionEnEscena();
+			}
+		}
 	}
 }

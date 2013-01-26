@@ -86,9 +86,9 @@ public class Evento {
 		} else if (tipo.equals("escena")) {
 			if (activado == false && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
-			} else if (activado == true && terminado == false && escena.escenaTerminada == false) {
+			} else if (activado == true && terminado == false && escena.getTerminada() == false) {
 				escena.ejecutarEscena(heroe, delta);
-			} else if (activado == true && escena.escenaTerminada == true) {
+			} else if (activado == true && escena.getTerminada() == true) {
 				terminado = true;
 			}
 		}
@@ -120,5 +120,13 @@ public class Evento {
 
 	public String getTipoEvento() {
 		return tipo;
+	}
+
+	public boolean esEscenaActivada() {
+		return (activado && !terminado && tipo.equals("escena"));
+	}
+	
+	public void continuarConversacionEnEscena() {
+		escena.continuarConversacion();
 	}
 }

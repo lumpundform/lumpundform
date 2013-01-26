@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class Accion {
 
-	private boolean activado = false;
 	private boolean terminado = false;
 
 	public String actor;
@@ -58,7 +57,7 @@ public class Accion {
 		return terminado;
 	}
 
-	public void terminarAccion() {
+	public void terminar() {
 		terminado = true;
 	}
 }

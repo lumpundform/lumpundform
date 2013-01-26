@@ -46,7 +46,7 @@
     	<property name="rango" value="80.0"/>
   	</properties>
   </object>
-  <object name="evento5" type="escena" x="1700" y="512">
+  <object name="evento6" type="escena" x="1700" y="512">
   	<properties>
   		<property name="escena" value="102"/>
     	<property name="rango" value="80.0"/>

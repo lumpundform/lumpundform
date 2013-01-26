@@ -41,7 +41,8 @@ public class EscenarioHelper {
 
 		mh = new MapaHelper(nombre);
 
-		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch);
+		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
+				batch);
 
 		interfazHelper = new InterfazHelper(escenario);
 
@@ -115,17 +116,23 @@ public class EscenarioHelper {
 		float destinoCamara;
 
 		if (heroe.derecha()) {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2
+					+ camara.viewportWidth / 6;
 			if (camara.position.x < destinoCamara) {
-				camara.setPosicion((float) (camara.position.x + heroe.getVelocidad(delta) * factor), camara.position.y);
+				camara.setPosicion(
+						(float) (camara.position.x + heroe.getVelocidad(delta)
+								* factor), camara.position.y);
 			}
 			if (camara.position.x >= destinoCamara) {
 				camara.setPosicion(destinoCamara, camara.position.y);
 			}
 		} else {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2
+					- camara.viewportWidth / 6;
 			if (camara.position.x > destinoCamara) {
-				camara.setPosicion((float) (camara.position.x - heroe.getVelocidad(delta) * factor), camara.position.y);
+				camara.setPosicion(
+						(float) (camara.position.x - heroe.getVelocidad(delta)
+								* factor), camara.position.y);
 			}
 			if (camara.position.x <= destinoCamara) {
 				camara.setPosicion(destinoCamara, camara.position.y);
@@ -135,7 +142,8 @@ public class EscenarioHelper {
 		if (camara.getPosicionOrigen().x < 0)
 			camara.setPosicionOrigen(0, camara.getPosicionOrigen().y);
 		if (camara.getPosicionOrigen().x + camara.viewportWidth > mh.getWidth())
-			camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth, camara.getPosicionOrigen().y);
+			camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth,
+					camara.getPosicionOrigen().y);
 	}
 
 	/**
@@ -151,40 +159,17 @@ public class EscenarioHelper {
 		return escenario;
 	}
 
-	public boolean hayEventoActivado() {
-		for(int i = 0; i < escenario.getEventos().size; i++) {
-			Evento evento = escenario.getEventos().get(i);
-			if(evento.getActivado() && !evento.getTerminado()) {
-				return true;
-			}
+	public void siguienteCuadroTexto() {
+		Evento evento = conversacionEnCurso();
+		if (evento != null) {
+			escenario.continuarConversacionActual(evento.getNombre());
 		}
-		return false;
 	}
 
-	public Evento getEventoActivado() {
-		for(int i = 0; i < escenario.getEventos().size; i++) {
+	private Evento conversacionEnCurso() {
+		for (int i = 0; i < escenario.getEventos().size; i++) {
 			Evento evento = escenario.getEventos().get(i);
-			if(evento.getActivado() && !evento.getTerminado()) {
-				return evento;
-			}
-		}
-		return null;
-	}
-
-	public boolean hayEscenaActivada() {
-		for(int i = 0; i < escenario.getEventos().size; i++) {
-			Evento evento = escenario.getEventos().get(i);
-			if(evento.getActivado() && !evento.getTerminado() && evento.getTipoEvento().equals("escena")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public Evento getEscenaActivada() {
-		for(int i = 0; i < escenario.getEventos().size; i++) {
-			Evento evento = escenario.getEventos().get(i);
-			if(evento.getActivado() && !evento.getTerminado() && evento.getTipoEvento().equals("escena")) {
+			if (evento.esEscenaActivada()) {
 				return evento;
 			}
 		}
