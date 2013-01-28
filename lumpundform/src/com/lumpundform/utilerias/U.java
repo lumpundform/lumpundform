@@ -169,7 +169,7 @@ public class U {
 		sb.begin();
 		bmf.setColor(color);
 		bmf.setScale(escala);
-		bmf.drawWrapped(sb, msg, x, y, 50.0f);
+		bmf.drawWrapped(sb, msg, x, y, Gdx.graphics.getWidth() - (x * 2));
 		sb.end();
 	}
 
