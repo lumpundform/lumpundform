@@ -221,6 +221,15 @@ public class Personaje extends ObjetoActor {
 		return escenario.getHeroe();
 	}
 
+	public boolean hayHeroeEscenario() {
+		try {
+			((EscenarioBase) getStage()).getHeroe();
+			return true;
+		} catch (EscenarioSinHeroeException e) {
+			return false;
+		}
+	}
+
 	/**
 	 * Reduce el cooldown de todas las {@link Habilidad}es del {@link Personaje}
 	 * .

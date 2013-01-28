@@ -17,7 +17,7 @@ public class HumanoideAction extends Action {
 		Humanoide h = (Humanoide) getActor();
 
 		if (h != null) {
-			if (h.isEnemigo()) {
+			if (h.isEnemigo() && h.hayHeroeEscenario()) {
 				h.habilidad("disparar");
 			}
 		}
