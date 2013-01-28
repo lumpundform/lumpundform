@@ -43,6 +43,10 @@ public class PantallaJuego extends PantallaBase {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		getEscenarioHelper().actuarDibujar(delta);
+
+		if (isHeroeMuerto()) {
+			U.ds("Has muerto, jajaja. Presiona cualquier tecla para reiniciar el juego", 30, 300, 1.5f);
+		}
 	}
 
 	public boolean isHeroeMuerto() {
@@ -58,7 +62,8 @@ public class PantallaJuego extends PantallaBase {
 
 	private void setInputProcessor() {
 		Gdx.input.setInputProcessor(new InputMultiplexer(Gdx.input.getInputProcessor(), escenarioHelper.getEscenario(),
-				new GestureDetector(new ProcesadorEntradaJuego(escenarioHelper)), new ProcesadorEntradaJuego(escenarioHelper)));
+				new GestureDetector(new ProcesadorEntradaJuego(escenarioHelper)), new ProcesadorEntradaJuego(
+						escenarioHelper)));
 	}
 
 	private void setCamara() {
