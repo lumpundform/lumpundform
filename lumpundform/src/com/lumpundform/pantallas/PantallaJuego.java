@@ -20,8 +20,7 @@ import com.lumpundform.utilerias.U;
 public class PantallaJuego extends PantallaBase {
 	private CamaraJuego camara;
 	private SpriteBatch batch;
-	private EscenarioHelper escenario;
-	private boolean heroeMuerto = false;
+	private EscenarioHelper escenarioHelper;
 
 	/**
 	 * Inicializa la {@link PantallaJuego} y crea una {@link CamaraJuego}, un
@@ -33,7 +32,7 @@ public class PantallaJuego extends PantallaBase {
 		batch = new SpriteBatch();
 
 		// TODO: hacer que se cargue dinamicamente el escenario
-		escenario = new EscenarioHelper(batch, getCamara(), "escenario101", this);
+		escenarioHelper = new EscenarioHelper(batch, getCamara(), "escenario101");
 
 		setInputProcessor();
 	}
@@ -43,7 +42,30 @@ public class PantallaJuego extends PantallaBase {
 		// Limpiar pantalla
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		getEscenario().actuarDibujar(delta);
+		getEscenarioHelper().actuarDibujar(delta);
+	}
+
+	public boolean isHeroeMuerto() {
+		return getEscenarioHelper().getEscenario().isHeroeMuerto();
+	}
+
+	@Override
+	public void reset() {
+		setCamara();
+		escenarioHelper = new EscenarioHelper(batch, getCamara(), "escenario101");
+		setInputProcessor();
+	}
+
+	private void setInputProcessor() {
+		Gdx.input.setInputProcessor(new InputMultiplexer(Gdx.input.getInputProcessor(), escenarioHelper.getEscenario(),
+				new GestureDetector(new ProcesadorEntradaJuego(escenarioHelper)), new ProcesadorEntradaJuego(escenarioHelper)));
+	}
+
+	private void setCamara() {
+		camara = new CamaraJuego();
+		getCamara().setToOrtho(false);
+
+		U.init(camara);
 	}
 
 	/**
@@ -60,8 +82,8 @@ public class PantallaJuego extends PantallaBase {
 	 * 
 	 * @return El {@link EscenarioHelper}
 	 */
-	public EscenarioHelper getEscenario() {
-		return escenario;
+	public EscenarioHelper getEscenarioHelper() {
+		return escenarioHelper;
 	}
 
 	@Override
@@ -87,34 +109,6 @@ public class PantallaJuego extends PantallaBase {
 	@Override
 	public void dispose() {
 		batch.dispose();
-	}
-
-	@Override
-	public void reset() {
-		setCamara();
-		setHeroeMuerto(false);
-		escenario = new EscenarioHelper(batch, getCamara(), "escenario101", this);
-		setInputProcessor();
-	}
-
-	private void setInputProcessor() {
-		Gdx.input.setInputProcessor(new InputMultiplexer(Gdx.input.getInputProcessor(), escenario.getEscenario(),
-				new GestureDetector(new ProcesadorEntradaJuego(escenario)), new ProcesadorEntradaJuego(escenario)));
-	}
-
-	private void setCamara() {
-		camara = new CamaraJuego();
-		getCamara().setToOrtho(false);
-
-		U.init(camara);
-	}
-
-	public boolean isHeroeMuerto() {
-		return heroeMuerto;
-	}
-
-	public void setHeroeMuerto(boolean heroeMuerto) {
-		this.heroeMuerto = heroeMuerto;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.lumpundform.interfaz;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.BotonHabilidadInexistenteException;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.utilerias.U;
 
@@ -22,10 +23,13 @@ public class InterfazHelper {
 	}
 
 	private void agregarHabilidades() {
-		Heroe heroe = escenario.getHeroe();
-		for (int i = 0; i < heroe.getHabilidadesInterfaz().size(); i++) {
-			Habilidad habilidad = heroe.getHabilidadesInterfaz().get(i);
-			new BotonHabilidad(escenario, habilidad, i + 1);
+		try {
+			Heroe heroe = escenario.getHeroe();
+			for (int i = 0; i < heroe.getHabilidadesInterfaz().size(); i++) {
+				Habilidad habilidad = heroe.getHabilidadesInterfaz().get(i);
+				new BotonHabilidad(escenario, habilidad, i + 1);
+			}
+		} catch (EscenarioSinHeroeException e) {
 		}
 	}
 
@@ -34,6 +38,7 @@ public class InterfazHelper {
 			escenario.getHeroe().habilidad(getBotonHabilidad(posicion).getHabilidad().getNombre());
 		} catch (BotonHabilidadInexistenteException e) {
 			U.err(e);
+		} catch (EscenarioSinHeroeException e) {
 		}
 	}
 

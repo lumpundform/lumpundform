@@ -27,8 +27,8 @@ import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.lumpundform.CamaraJuego;
-import com.lumpundform.pantallas.PantallaJuego;
 import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
@@ -43,11 +43,11 @@ import com.lumpundform.utilerias.U;
  * 
  */
 public class EscenarioBase extends Stage {
-	private PantallaJuego pantalla;
 	private Poligono piso;
 	private Random random;
 	private Porcentaje porcentajePociones;
 	private int contador = 0;
+	private boolean heroeMuerto;
 
 	private Array<Evento> eventos;
 	private Array<Escena> escenas;
@@ -66,9 +66,8 @@ public class EscenarioBase extends Stage {
 	 *            El {@link SpriteBatch} con el que se van a dibujar los
 	 *            {@link Actor}es.
 	 */
-	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch, PantallaJuego pantalla) {
+	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
 		super(width, height, stretch, batch);
-		setPantalla(pantalla);
 		random = new Random();
 		setPorcentajePociones(new Porcentaje());
 	}
@@ -100,14 +99,17 @@ public class EscenarioBase extends Stage {
 	 * {@link Personaje} en el escenario.
 	 */
 	void colisionActores() {
-		Heroe heroe = getHeroe();
-		heroe.setColisionActores(false);
+		try {
+			Heroe heroe = getHeroe();
+			heroe.setColisionActores(false);
 
-		for (Personaje personaje : getActores(Personaje.class)) {
-			if (personaje.getName() != "heroe" && heroe.getHitbox().estaColisionando(personaje.getHitbox())) {
-				heroe.setColisionActores(true);
-				break;
+			for (Personaje personaje : getActores(Personaje.class)) {
+				if (personaje.getName() != "heroe" && heroe.getHitbox().estaColisionando(personaje.getHitbox())) {
+					heroe.setColisionActores(true);
+					break;
+				}
 			}
+		} catch (EscenarioSinHeroeException e) {
 		}
 	}
 
@@ -116,14 +118,17 @@ public class EscenarioBase extends Stage {
 	 * si la agarra.
 	 */
 	void colisionPociones() {
-		Heroe heroe = getHeroe();
+		try {
+			Heroe heroe = getHeroe();
 
-		for (PocionBase pocion : getActores(PocionBase.class)) {
-			if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
-				if (heroe.agarrarPocion(pocion.getTipo())) {
-					pocion.remove();
+			for (PocionBase pocion : getActores(PocionBase.class)) {
+				if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
+					if (heroe.agarrarPocion(pocion.getTipo())) {
+						pocion.remove();
+					}
 				}
 			}
+		} catch (EscenarioSinHeroeException e) {
 		}
 	}
 
@@ -135,8 +140,7 @@ public class EscenarioBase extends Stage {
 		for (Ataque ataque : getActores(Ataque.class)) {
 			for (Personaje personaje : getActores(Personaje.class)) {
 				if (personaje.isEnemigo() != ataque.getPersonaje().isEnemigo()
-						&& personaje.getHitbox().estaColisionando(
-								ataque.getHitbox())) {
+						&& personaje.getHitbox().estaColisionando(ataque.getHitbox())) {
 					if (ataque.isHaceDano()) {
 						personaje.quitarVida(ataque.getDano());
 					}
@@ -185,8 +189,7 @@ public class EscenarioBase extends Stage {
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 25);
 				altura = actor.getY();
 				direccionDiagonal = direccionDiagonalDer;
-			} else if (getPiso().estaColisionando(
-					actor.getEsquina(puntoColision))) {
+			} else if (getPiso().estaColisionando(actor.getEsquina(puntoColision))) {
 				p = actor.getEsquina(puntoColision);
 				altura = actor.getY() + 25;
 				direccionDiagonal = direccionDiagonalIzq;
@@ -199,12 +202,8 @@ public class EscenarioBase extends Stage {
 
 				// Posiciona al actor sobre la línea si la linea tiene una
 				// pendiente menor a 1
-				if (l != null
-						&& l.pendiente() != null
-						&& l.pendiente() <= 1.0001d
-						&& l.yEnX(p) <= altura
-						&& (l.direccionDiagonal() == direccionDiagonal || l
-								.direccionLinea() == direccionLinea)) {
+				if (l != null && l.pendiente() != null && l.pendiente() <= 1.0001d && l.yEnX(p) <= altura
+						&& (l.direccionDiagonal() == direccionDiagonal || l.direccionLinea() == direccionLinea)) {
 					caidaLibre.put(actor.getName(), false);
 					actor.setY(l.yEnX(p));
 				}
@@ -255,11 +254,9 @@ public class EscenarioBase extends Stage {
 				yPunto = Math.floor(pc.y) + 10.0f;
 			}
 
-			if (getPiso().estaColisionando(pc)
-					&& getPiso().linea("arriba", pc).esHorizontal()
+			if (getPiso().estaColisionando(pc) && getPiso().linea("arriba", pc).esHorizontal()
 					&& getPiso().linea(lineaLateral, pc).esVertical()
-					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(
-							pc))) {
+					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(pc))) {
 				Linea linea = getPiso().linea(lineaLateral, pc);
 				if (linea != null) {
 					Float xLinea = null;
@@ -280,13 +277,16 @@ public class EscenarioBase extends Stage {
 	 * @param camara
 	 */
 	void acomodarHeroe(CamaraJuego camara) {
-		float min = camara.getPosicionOrigen().x;
-		float max = camara.getPosicionOrigen().x + camara.viewportWidth;
-		Heroe heroe = getHeroe();
-		if (heroe.getEsquina("inf-izq").x < min)
-			heroe.setEsquinaX("inf-izq", min);
-		if (heroe.getEsquina("inf-der").x > max)
-			heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox().getAncho()));
+		try {
+			float min = camara.getPosicionOrigen().x;
+			float max = camara.getPosicionOrigen().x + camara.viewportWidth;
+			Heroe heroe = getHeroe();
+			if (heroe.getEsquina("inf-izq").x < min)
+				heroe.setEsquinaX("inf-izq", min);
+			if (heroe.getEsquina("inf-der").x > max)
+				heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox().getAncho()));
+		} catch (EscenarioSinHeroeException e) {
+		}
 	}
 
 	void cargarEventos(TiledObjectGroup tog) {
@@ -298,8 +298,11 @@ public class EscenarioBase extends Stage {
 	}
 
 	void revisarEventos(CamaraJuego camara, float delta) {
-		for (int i = 0; i < eventos.size; i++) {
-			eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+		try {
+			for (int i = 0; i < eventos.size; i++) {
+				eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+			}
+		} catch (EscenarioSinHeroeException e) {
 		}
 	}
 
@@ -311,8 +314,7 @@ public class EscenarioBase extends Stage {
 		Element xmlE;
 
 		xmlF = new XmlReader();
-		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml")
-				.readString();
+		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml").readString();
 		xmlE = xmlF.parse(xmlS);
 
 		Array<Element> escena = xmlE.getChildrenByNameRecursively("escena");
@@ -339,28 +341,30 @@ public class EscenarioBase extends Stage {
 		Personaje actor;
 		if (tipo == "heroe") {
 			actor = new Heroe(posicion);
+			setHeroeMuerto(false);
 		} else if (tipo == "humanoide") {
 			actor = new Humanoide("amigo", posicion);
 		} else if (tipo == "enemigo") {
 			actor = new Humanoide("amigo", posicion);
 			actor.setEnemigo(true);
 		} else {
-			throw new ActorNoDefinidoException("El Actor " + tipo
-					+ " no esta definido");
+			throw new ActorNoDefinidoException("El Actor " + tipo + " no esta definido");
 		}
 		actor.setPerteneceAEvento(evento);
 		addActor(actor);
 	}
 
 	/**
-	 * Regresa al {@link Heroe} del escenario
+	 * Regresa al {@link Heroe} del escenario.
 	 * 
-	 * @return El héroe
+	 * @return El héroe.
+	 * @throws EscenarioSinHeroeException
+	 *             Cuando el {@link EscenarioBase} no tiene {@link Heroe}.
 	 */
-	public Heroe getHeroe() {
+	public Heroe getHeroe() throws EscenarioSinHeroeException {
 		List<Heroe> actores = getActores(Heroe.class);
 		if (actores.size() == 0) {
-			return null;
+			throw new EscenarioSinHeroeException("No hay héroe en el escenario.");
 		} else {
 			return actores.get(0);
 		}
@@ -440,11 +444,11 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	public PantallaJuego getPantalla() {
-		return pantalla;
+	public boolean isHeroeMuerto() {
+		return heroeMuerto;
 	}
 
-	public void setPantalla(PantallaJuego pantalla) {
-		this.pantalla = pantalla;
+	public void setHeroeMuerto(boolean heroeMuerto) {
+		this.heroeMuerto = heroeMuerto;
 	}
 }

@@ -3,6 +3,7 @@ package com.lumpundform.interfaz;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.escenario.EscenarioBase;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 
 public class BotonPocionBase extends BotonBase {
 	private String tipo;
@@ -10,15 +11,19 @@ public class BotonPocionBase extends BotonBase {
 
 	protected BotonPocionBase(NinePatch ninePatch, EscenarioBase escenario) {
 		super(ninePatch, escenario);
-		setyBase(getCamara().viewportHeight - UI.margen * 2 - UI.margenMediano - UI.altoBoton - UI.altoBarra - UI.altoPocion);
+		setyBase(getCamara().viewportHeight - UI.margen * 2 - UI.margenMediano - UI.altoBoton - UI.altoBarra
+				- UI.altoPocion);
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		setCantidad(((EscenarioBase) getStage()).getHeroe().getPociones().get(getTipo()));
+		try {
+			setCantidad(((EscenarioBase) getStage()).getHeroe().getPociones().get(getTipo()));
+		} catch (EscenarioSinHeroeException e) {
+		}
 	}
-	
+
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
@@ -28,11 +33,11 @@ public class BotonPocionBase extends BotonBase {
 		float yCant = getY() + bmf.getCapHeight();
 		bmf.draw(batch, getCantidad() + "", xCant, yCant);
 	}
-	
+
 	public String getTipo() {
 		return tipo;
 	}
-	
+
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}

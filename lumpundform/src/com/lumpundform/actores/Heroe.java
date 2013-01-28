@@ -204,8 +204,8 @@ public class Heroe extends Mago {
 	
 	@Override
 	public void quitar() {
-		((EscenarioBase) getStage()).getPantalla().setHeroeMuerto(true);
-		setVisible(false);
+		((EscenarioBase) getStage()).setHeroeMuerto(true);
+		super.quitar();
 	}
 
 	/**

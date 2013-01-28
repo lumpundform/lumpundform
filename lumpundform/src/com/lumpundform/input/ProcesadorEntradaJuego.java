@@ -6,6 +6,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioHelper;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.utilerias.U;
 
 /**
@@ -33,7 +34,10 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	public boolean tap(float x, float y, int count, int button) {
 		Vector2 posicion = U.voltearCoordenadas(x, y);
 		if (count >= 2) {
-			escenario.getHeroe().habilidad("teletransportar", posicion);
+			try {
+				escenario.getHeroe().habilidad("teletransportar", posicion);
+			} catch (EscenarioSinHeroeException e) {
+			}
 		}
 		return false;
 	}
@@ -68,36 +72,47 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		Heroe heroe = escenario.getHeroe();
-		if (keycode == Keys.SPACE) { /* Disparar */
-			heroe.habilidad("disparar");
-			return true;
-		} else if (keycode == Keys.Q) { /* Usar poción vida */
-			heroe.usarPocion("vida");
-			return true;
-		} else if (keycode == Keys.E) { /* Usar poción mana */
-			heroe.usarPocion("mana");
-			return true;
-		} else if (keycode == Keys.N) { /* Avanzar texto en diálogos */
-			escenario.siguienteCuadroTexto();
-			return true;
-		} else if (keycode == Keys.A || keycode == Keys.D) { /* Mover al héroe */
-			if (heroe.getMovimiento() == 0) {
-				if (keycode == Keys.A) {
-					heroe.setMovimiento(-1);
-				} else {
-					heroe.setMovimiento(1);
-				}
+		try {
+			Heroe heroe = escenario.getHeroe();
+			/* Disparar */
+			if (keycode == Keys.SPACE) {
+				heroe.habilidad("disparar");
 				return true;
 			}
-		} else if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) { /*
-																	 * Usar
-																	 * habilidades
-																	 * de
-																	 * interfaz
-																	 */
+			/* Usar poción vida */
+			if (keycode == Keys.Q) {
+				heroe.usarPocion("vida");
+				return true;
+			}
+			/* Usar poción mana */
+			if (keycode == Keys.E) {
+				heroe.usarPocion("mana");
+				return true;
+			}
+			/* Mover al héroe */
+			if (keycode == Keys.A || keycode == Keys.D) {
+				if (heroe.getMovimiento() == 0) {
+					if (keycode == Keys.A) {
+						heroe.setMovimiento(-1);
+					} else {
+						heroe.setMovimiento(1);
+					}
+					return true;
+				}
+			}
+		} catch (EscenarioSinHeroeException e) {
+		}
+		/* Avanzar texto en diálogos */
+		if (keycode == Keys.N) {
+			escenario.siguienteCuadroTexto();
+			return true;
+		}
+		/* Usar habilidades de interfaz */
+		if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) {
 			escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
-		} else if (keycode == Keys.BACKSPACE) { /* Toggle líneas de colisión */
+		}
+		/* Toggle líneas de colisión */
+		if (keycode == Keys.BACKSPACE) {
 			escenario.setDibujarColision(!escenario.isDibujarColision());
 		}
 		return false;
@@ -105,9 +120,12 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		Heroe heroe = escenario.getHeroe();
-		if ((keycode == Keys.A && heroe.getMovimiento() == -1) || (keycode == Keys.D && heroe.getMovimiento() == 1)) {
-			heroe.setMovimiento(0);
+		try {
+			Heroe heroe = escenario.getHeroe();
+			if ((keycode == Keys.A && heroe.getMovimiento() == -1) || (keycode == Keys.D && heroe.getMovimiento() == 1)) {
+				heroe.setMovimiento(0);
+			}
+		} catch (EscenarioSinHeroeException e) {
 		}
 		return false;
 	}
