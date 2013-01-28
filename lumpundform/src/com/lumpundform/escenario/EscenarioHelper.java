@@ -7,9 +7,9 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Evento;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
-import com.lumpundform.pantallas.PantallaJuego;
 import com.lumpundform.utilerias.D;
 
 /**
@@ -36,15 +36,13 @@ public class EscenarioHelper {
 	 *            La {@link CamaraJuego} de la pantalla actual
 	 * @param nombre
 	 *            El nombre del escenario para referenciarlo en {@link D}
-	 * @param pantalla
-	 *            La pantalla a la que pertenece el {@link EscenarioHelper}
 	 */
-	public EscenarioHelper(SpriteBatch batch, CamaraJuego cam, String nombre, PantallaJuego pantalla) {
+	public EscenarioHelper(SpriteBatch batch, CamaraJuego cam, String nombre) {
 		camara = cam;
 
 		mh = new MapaHelper(nombre);
 
-		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch, pantalla);
+		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch);
 
 		interfazHelper = new InterfazHelper(escenario);
 
@@ -113,41 +111,48 @@ public class EscenarioHelper {
 	 *            El delta de {@link Screen#render(float)}
 	 */
 	private void moverCamara(float delta) {
-		Heroe heroe = getHeroe();
-		float factor = 1.7f;
-		float destinoCamara;
+		try {
+			Heroe heroe = getHeroe();
+			float factor = 1.7f;
+			float destinoCamara;
 
-		if (heroe.derecha()) {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
-			if (camara.position.x < destinoCamara) {
-				camara.setPosicion((float) (camara.position.x + heroe.getVelocidad(delta) * factor), camara.position.y);
+			if (heroe.derecha()) {
+				destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
+				if (camara.position.x < destinoCamara) {
+					camara.setPosicion((float) (camara.position.x + heroe.getVelocidad(delta) * factor),
+							camara.position.y);
+				}
+				if (camara.position.x >= destinoCamara) {
+					camara.setPosicion(destinoCamara, camara.position.y);
+				}
+			} else {
+				destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
+				if (camara.position.x > destinoCamara) {
+					camara.setPosicion((float) (camara.position.x - heroe.getVelocidad(delta) * factor),
+							camara.position.y);
+				}
+				if (camara.position.x <= destinoCamara) {
+					camara.setPosicion(destinoCamara, camara.position.y);
+				}
 			}
-			if (camara.position.x >= destinoCamara) {
-				camara.setPosicion(destinoCamara, camara.position.y);
-			}
-		} else {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
-			if (camara.position.x > destinoCamara) {
-				camara.setPosicion((float) (camara.position.x - heroe.getVelocidad(delta) * factor), camara.position.y);
-			}
-			if (camara.position.x <= destinoCamara) {
-				camara.setPosicion(destinoCamara, camara.position.y);
-			}
+
+			if (camara.getPosicionOrigen().x < 0)
+				camara.setPosicionOrigen(0, camara.getPosicionOrigen().y);
+			if (camara.getPosicionOrigen().x + camara.viewportWidth > mh.getWidth())
+				camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth, camara.getPosicionOrigen().y);
+		} catch (EscenarioSinHeroeException e) {
 		}
-
-		if (camara.getPosicionOrigen().x < 0)
-			camara.setPosicionOrigen(0, camara.getPosicionOrigen().y);
-		if (camara.getPosicionOrigen().x + camara.viewportWidth > mh.getWidth())
-			camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth, camara.getPosicionOrigen().y);
 	}
 
 	/**
-	 * Regresa al {@link Heroe} del escenario
+	 * Regresa al {@link Heroe} del escenario.
 	 * 
-	 * @return El héroe
+	 * @return El héroe.
+	 * @throws EscenarioSinHeroeException
+	 *             No hay {@link Heroe} en el {@link EscenarioBase}.
 	 */
-	public Heroe getHeroe() {
-		return (Heroe) escenario.getHeroe();
+	public Heroe getHeroe() throws EscenarioSinHeroeException {
+		return escenario.getHeroe();
 	}
 
 	public EscenarioBase getEscenario() {

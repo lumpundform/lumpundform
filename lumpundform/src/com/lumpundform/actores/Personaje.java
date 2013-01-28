@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.eventos.Evento;
+import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.excepciones.HabilidadInexistenteException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.habilidades.Habilidades;
@@ -61,7 +62,7 @@ public class Personaje extends ObjetoActor {
 	 */
 	protected Personaje(String nombre, Vector2 puntoOrigen) {
 		super(nombre);
-		
+
 		setEstadoDefault(Estado.DEFAULT);
 
 		setHabilidades(new HashMap<String, Habilidad>());
@@ -181,9 +182,13 @@ public class Personaje extends ObjetoActor {
 	 *         <code>false</code> si no.
 	 */
 	public boolean lejosDeHeroe() {
-		Heroe heroe = getHeroeEscenario();
-		return ((derecha() && (heroe.getXCentro() - getXCentro()) > getDistanciaAlejamiento()) || ((getXCentro() - heroe
-				.getXCentro()) > getDistanciaAlejamiento()));
+		try {
+			Heroe heroe = getHeroeEscenario();
+			return ((derecha() && (heroe.getXCentro() - getXCentro()) > getDistanciaAlejamiento()) || ((getXCentro() - heroe
+					.getXCentro()) > getDistanciaAlejamiento()));
+		} catch (EscenarioSinHeroeException e) {
+			return false;
+		}
 	}
 
 	/**
@@ -194,18 +199,24 @@ public class Personaje extends ObjetoActor {
 	 *         correcta.
 	 */
 	public Direccion getDireccionPosicionHeroe() {
-		Heroe heroe = getHeroeEscenario();
-		if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
-			return Direccion.IZQUIERDA;
-		} else {
-			return Direccion.DERECHA;
+		try {
+			Heroe heroe = getHeroeEscenario();
+			if (heroe.getPosicionCentro().x < getPosicionCentro().x) {
+				return Direccion.IZQUIERDA;
+			} else {
+				return Direccion.DERECHA;
+			}
+		} catch (EscenarioSinHeroeException e) {
+			return getDireccionX();
 		}
 	}
 
 	/**
 	 * @return El {@link Heroe} del {@link EscenarioBase}.
+	 * @throws EscenarioSinHeroeException
+	 *             No hay {@link Heroe} en el {@link EscenarioBase}.
 	 */
-	public Heroe getHeroeEscenario() {
+	public Heroe getHeroeEscenario() throws EscenarioSinHeroeException {
 		EscenarioBase escenario = (EscenarioBase) getStage();
 		return escenario.getHeroe();
 	}
