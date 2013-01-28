@@ -21,6 +21,7 @@ class BotonLifebar extends BotonBarra {
 			Heroe heroe = ((EscenarioBase) getStage()).getHeroe();
 			setHeight(UI.altoBarra * heroe.getVida() / heroe.getVidaMax());
 		} catch (EscenarioSinHeroeException e) {
+			setHeight(0);
 		}
 	}
 }
