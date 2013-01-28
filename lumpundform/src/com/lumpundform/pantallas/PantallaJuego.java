@@ -21,6 +21,7 @@ public class PantallaJuego extends PantallaBase {
 	private CamaraJuego camara;
 	private SpriteBatch batch;
 	private EscenarioHelper escenario;
+	private boolean heroeMuerto = false;
 
 	/**
 	 * Inicializa la {@link PantallaJuego} y crea una {@link CamaraJuego}, un
@@ -32,7 +33,7 @@ public class PantallaJuego extends PantallaBase {
 		batch = new SpriteBatch();
 
 		// TODO: hacer que se cargue dinamicamente el escenario
-		escenario = new EscenarioHelper(batch, getCamara(), "escenario101");
+		escenario = new EscenarioHelper(batch, getCamara(), "escenario101", this);
 
 		setInputProcessor();
 	}
@@ -91,7 +92,8 @@ public class PantallaJuego extends PantallaBase {
 	@Override
 	public void reset() {
 		setCamara();
-		escenario = new EscenarioHelper(batch, getCamara(), "escenario101");
+		setHeroeMuerto(false);
+		escenario = new EscenarioHelper(batch, getCamara(), "escenario101", this);
 		setInputProcessor();
 	}
 
@@ -105,6 +107,14 @@ public class PantallaJuego extends PantallaBase {
 		getCamara().setToOrtho(false);
 
 		U.init(camara);
+	}
+
+	public boolean isHeroeMuerto() {
+		return heroeMuerto;
+	}
+
+	public void setHeroeMuerto(boolean heroeMuerto) {
+		this.heroeMuerto = heroeMuerto;
 	}
 
 }

@@ -28,8 +28,8 @@ public class Linea {
 	 *            El segundo putno.
 	 */
 	Linea(Vector2 p1, Vector2 p2) {
-		this.p1 = p1;
-		this.p2 = p2;
+		this.setP1(p1);
+		this.setP2(p2);
 
 		yMenor = p1.y < p2.y ? p1.y : p2.y;
 		yMayor = p1.y > p2.y ? p1.y : p2.y;
@@ -46,14 +46,14 @@ public class Linea {
 	 */
 	public float xEnY(Vector2 punto) {
 		if (direccionLinea() == ".") {
-			if (p1.x == punto.x)
-				return p1.x;
+			if (getP1().x == punto.x)
+				return getP1().x;
 			// TODO: Que escriba en un archivo si le estamos pasando un punto
 			// como línea
 		} else if (esRecta()) {
-			if (p1.x == p2.x && punto.y >= yMenor && punto.y <= yMayor)
-				return p1.x; // Líneas verticales
-			if (p1.y == p2.y && punto.y == p1.y && punto.x >= xMenor && punto.x <= xMayor)
+			if (getP1().x == getP2().x && punto.y >= yMenor && punto.y <= yMayor)
+				return getP1().x; // Líneas verticales
+			if (getP1().y == getP2().y && punto.y == getP1().y && punto.x >= xMenor && punto.x <= xMayor)
 				return punto.x; // Líneas horizontales
 		} else if (esDiagonal()) {
 			float proporcion = longitudY(punto) / longitudY();
@@ -64,7 +64,6 @@ public class Linea {
 				return xDeYMenor() - longitudLineaCorta;
 			}
 		}
-		// TODO: Hacer que regrese un error, en vez de -1000
 		return -1000;
 	}
 
@@ -77,14 +76,14 @@ public class Linea {
 	 */
 	public float yEnX(Vector2 punto) {
 		if (direccionLinea() == ".") {
-			if (p1.x == punto.x)
-				return p1.y;
+			if (getP1().x == punto.x)
+				return getP1().y;
 			// TODO: Que escriba en un archivo si le estamos pasando un punto
 			// como línea
 		} else if (esRecta()) {
-			if (p1.y == p2.y && punto.x >= xMenor && punto.x <= xMayor)
-				return p1.y; // Líneas horizontales
-			if (p1.x == p2.x && punto.x == p1.y && punto.y >= yMenor && punto.y <= yMayor)
+			if (getP1().y == getP2().y && punto.x >= xMenor && punto.x <= xMayor)
+				return getP1().y; // Líneas horizontales
+			if (getP1().x == getP2().x && punto.x == getP1().y && punto.y >= yMenor && punto.y <= yMayor)
 				return punto.y; // Líneas verticales
 		} else if (esDiagonal()) {
 			float proporcion = longitudX(punto) / longitudX();
@@ -95,7 +94,6 @@ public class Linea {
 				return yDeXMenor() - longitudLineaCorta;
 			}
 		}
-		// TODO: Hacer que regrese un error en vez de -1000
 		return -1000;
 	}
 
@@ -188,10 +186,10 @@ public class Linea {
 	 * @return El valor Y.
 	 */
 	private float yDeXMenor() {
-		if (xMenor == p1.x)
-			return p1.y;
+		if (xMenor == getP1().x)
+			return getP1().y;
 		else
-			return p2.y;
+			return getP2().y;
 	}
 
 	/**
@@ -200,10 +198,10 @@ public class Linea {
 	 * @return El valor Y.
 	 */
 	private float xDeYMenor() {
-		if (yMenor == p1.y)
-			return p1.x;
+		if (yMenor == getP1().y)
+			return getP1().x;
 		else
-			return p2.x;
+			return getP2().x;
 	}
 
 	/**
@@ -258,30 +256,46 @@ public class Linea {
 		String nombre = "";
 
 		// Punto
-		if (p1.x == p2.x && p1.y == p2.y) {
+		if (getP1().x == getP2().x && getP1().y == getP2().y) {
 			nombre = ".";
 
 			// Rectas
-		} else if (p1.y == p2.y && p1.x < p2.x) {
+		} else if (getP1().y == getP2().y && getP1().x < getP2().x) {
 			nombre = "x";
-		} else if (p1.y == p2.y && p1.x > p2.x) {
+		} else if (getP1().y == getP2().y && getP1().x > getP2().x) {
 			nombre = "-x";
-		} else if (p1.x == p2.x && p1.y < p2.y) {
+		} else if (getP1().x == getP2().x && getP1().y < getP2().y) {
 			nombre = "y";
-		} else if (p1.x == p2.x && p1.y > p2.y) {
+		} else if (getP1().x == getP2().x && getP1().y > getP2().y) {
 			nombre = "-y";
 
 			// Diagonales
-		} else if (p1.y > p2.y && p1.x < p2.x) {
+		} else if (getP1().y > getP2().y && getP1().x < getP2().x) {
 			nombre = "x-y";
-		} else if (p1.y > p2.y && p1.x > p2.x) {
+		} else if (getP1().y > getP2().y && getP1().x > getP2().x) {
 			nombre = "-x-y";
-		} else if (p1.y < p2.y && p1.x < p2.x) {
+		} else if (getP1().y < getP2().y && getP1().x < getP2().x) {
 			nombre = "xy";
-		} else if (p1.y < p2.y && p1.x > p2.x) {
+		} else if (getP1().y < getP2().y && getP1().x > getP2().x) {
 			nombre = "-xy";
 		}
 
 		return nombre;
+	}
+
+	public Vector2 getP1() {
+		return p1;
+	}
+
+	public void setP1(Vector2 p1) {
+		this.p1 = p1;
+	}
+
+	public Vector2 getP2() {
+		return p2;
+	}
+
+	public void setP2(Vector2 p2) {
+		this.p2 = p2;
 	}
 }
