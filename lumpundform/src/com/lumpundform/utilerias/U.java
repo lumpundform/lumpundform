@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.colision.Poligono;
+import com.lumpundform.excepciones.CamaraNoInicializadaException;
 import com.lumpundform.lumpundform.CamaraJuego;
 
 /**
@@ -33,8 +34,11 @@ public class U {
 	}
 
 	private static CamaraJuego getCamara() {
-		// TODO: Agregar detección de error en caso de que camara sea null
-		return U.camara;
+		if (U.camara == null) {
+			throw new CamaraNoInicializadaException();
+		} else {
+			return U.camara;
+		}
 	}
 
 	/**

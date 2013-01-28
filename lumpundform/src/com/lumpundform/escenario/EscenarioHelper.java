@@ -9,6 +9,7 @@ import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
+import com.lumpundform.pantallas.PantallaJuego;
 import com.lumpundform.utilerias.D;
 
 /**
@@ -35,14 +36,15 @@ public class EscenarioHelper {
 	 *            La {@link CamaraJuego} de la pantalla actual
 	 * @param nombre
 	 *            El nombre del escenario para referenciarlo en {@link D}
+	 * @param pantalla
+	 *            La pantalla a la que pertenece el {@link EscenarioHelper}
 	 */
-	public EscenarioHelper(SpriteBatch batch, CamaraJuego cam, String nombre) {
+	public EscenarioHelper(SpriteBatch batch, CamaraJuego cam, String nombre, PantallaJuego pantalla) {
 		camara = cam;
 
 		mh = new MapaHelper(nombre);
 
-		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
-				batch);
+		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch, pantalla);
 
 		interfazHelper = new InterfazHelper(escenario);
 
@@ -116,23 +118,17 @@ public class EscenarioHelper {
 		float destinoCamara;
 
 		if (heroe.derecha()) {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2
-					+ camara.viewportWidth / 6;
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
 			if (camara.position.x < destinoCamara) {
-				camara.setPosicion(
-						(float) (camara.position.x + heroe.getVelocidad(delta)
-								* factor), camara.position.y);
+				camara.setPosicion((float) (camara.position.x + heroe.getVelocidad(delta) * factor), camara.position.y);
 			}
 			if (camara.position.x >= destinoCamara) {
 				camara.setPosicion(destinoCamara, camara.position.y);
 			}
 		} else {
-			destinoCamara = heroe.getX() + heroe.getWidth() / 2
-					- camara.viewportWidth / 6;
+			destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
 			if (camara.position.x > destinoCamara) {
-				camara.setPosicion(
-						(float) (camara.position.x - heroe.getVelocidad(delta)
-								* factor), camara.position.y);
+				camara.setPosicion((float) (camara.position.x - heroe.getVelocidad(delta) * factor), camara.position.y);
 			}
 			if (camara.position.x <= destinoCamara) {
 				camara.setPosicion(destinoCamara, camara.position.y);
@@ -142,8 +138,7 @@ public class EscenarioHelper {
 		if (camara.getPosicionOrigen().x < 0)
 			camara.setPosicionOrigen(0, camara.getPosicionOrigen().y);
 		if (camara.getPosicionOrigen().x + camara.viewportWidth > mh.getWidth())
-			camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth,
-					camara.getPosicionOrigen().y);
+			camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth, camara.getPosicionOrigen().y);
 	}
 
 	/**

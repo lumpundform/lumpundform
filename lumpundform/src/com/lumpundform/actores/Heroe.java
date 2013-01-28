@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.HeroeAction;
 import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.TipoInvalidoException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.indicadores.EtiquetaCantidad;
@@ -35,11 +36,7 @@ public class Heroe extends Mago {
 	private Map<String, Integer> pocionesMax = new HashMap<String, Integer>();
 
 	/**
-<<<<<<< HEAD
 	 * Inicializa al {@link Heroe} con todos sus datos necesarios.
-=======
-	 * Inicializa al {@link Heroe} con todos sus datos necesarios
->>>>>>> 388e50ad9cb0558a3b2e54f4c5e01fee93a0ea40
 	 * 
 	 * @param puntoOrigen
 	 *            El punto donde se va a originar el {@link ObjetoActor}.
@@ -203,6 +200,12 @@ public class Heroe extends Mago {
 		if (getValor(tipo) > getValor(tipo, true)) {
 			setValor(tipo, getValor(tipo, true));
 		}
+	}
+	
+	@Override
+	public void quitar() {
+		((EscenarioBase) getStage()).getPantalla().setHeroeMuerto(true);
+		setVisible(false);
 	}
 
 	/**

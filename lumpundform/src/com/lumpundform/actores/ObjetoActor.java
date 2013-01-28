@@ -264,7 +264,6 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El hitbox.
 	 */
 	public Rectangulo getHitbox() {
-		// TODO: posicionar el hitbox fuera de esta función
 		return hitbox.posicionar(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
 	}
 

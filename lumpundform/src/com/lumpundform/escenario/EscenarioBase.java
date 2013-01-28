@@ -28,6 +28,7 @@ import com.lumpundform.eventos.Escena;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.lumpundform.CamaraJuego;
+import com.lumpundform.pantallas.PantallaJuego;
 import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
@@ -42,6 +43,7 @@ import com.lumpundform.utilerias.U;
  * 
  */
 public class EscenarioBase extends Stage {
+	private PantallaJuego pantalla;
 	private Poligono piso;
 	private Random random;
 	private Porcentaje porcentajePociones;
@@ -64,8 +66,9 @@ public class EscenarioBase extends Stage {
 	 *            El {@link SpriteBatch} con el que se van a dibujar los
 	 *            {@link Actor}es.
 	 */
-	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
+	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch, PantallaJuego pantalla) {
 		super(width, height, stretch, batch);
+		setPantalla(pantalla);
 		random = new Random();
 		setPorcentajePociones(new Porcentaje());
 	}
@@ -435,5 +438,13 @@ public class EscenarioBase extends Stage {
 				evento.continuarConversacionEnEscena();
 			}
 		}
+	}
+
+	public PantallaJuego getPantalla() {
+		return pantalla;
+	}
+
+	public void setPantalla(PantallaJuego pantalla) {
+		this.pantalla = pantalla;
 	}
 }
