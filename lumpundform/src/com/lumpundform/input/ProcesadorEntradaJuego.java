@@ -129,6 +129,10 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 			Heroe heroe = escenario.getHeroe();
 			if ((keycode == Keys.A && heroe.getMovimiento() == -1) || (keycode == Keys.D && heroe.getMovimiento() == 1)) {
 				heroe.setMovimiento(0);
+				return true;
+			}
+			if (keycode == Keys.SHIFT_LEFT) {
+				heroe.detenerHabilidad("escudo");
 			}
 		} catch (EscenarioSinHeroeException e) {
 		}

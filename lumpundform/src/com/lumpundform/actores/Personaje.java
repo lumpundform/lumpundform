@@ -119,6 +119,17 @@ public class Personaje extends ObjetoActor {
 	}
 
 	/**
+	 * Detiene la {@link Habilidad} especificada. Usada para habilidades que se
+	 * sostienen por un periodo de tiempo.
+	 * 
+	 * @param nombre
+	 *            El nombre de la habilidad a detener.
+	 */
+	public void detenerHabilidad(String nombre) {
+		getHabilidad(nombre).detener();
+	}
+
+	/**
 	 * Lee la {@link Habilidad} con el nombre dado del {@link Personaje}.
 	 * 
 	 * @param nombre

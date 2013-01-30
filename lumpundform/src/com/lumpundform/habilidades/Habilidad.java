@@ -12,7 +12,7 @@ public abstract class Habilidad {
 	private float cooldownDefault;
 
 	private float mana;
-	
+
 	protected Habilidad(Personaje actor, String nombre, float cooldownDefault) {
 		this(actor, nombre, 0.0f, cooldownDefault);
 	}
@@ -25,7 +25,14 @@ public abstract class Habilidad {
 	}
 
 	public abstract void ejecutar(Vector2 pos);
-	
+
+	/**
+	 * Detiene la habilidad. Por default no hace nada. Hacer override en las
+	 * habilidades que se sotengan por un tiempo definido.
+	 */
+	public void detener() {
+	}
+
 	protected void crearAtaque(Ataque ataque) {
 		getActor().quitarMana(getMana());
 		getActor().getStage().addActor(ataque);
