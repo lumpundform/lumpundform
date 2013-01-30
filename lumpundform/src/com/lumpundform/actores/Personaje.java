@@ -46,7 +46,7 @@ public class Personaje extends ObjetoActor {
 	private float manaMax;
 	private float manaPorSegundo;
 	private BarraVida barraVida;
-	private boolean regenerarrMana;
+	private boolean regenerarMana;
 
 	// Movimiento
 	private float distanciaAlejamiento;
@@ -427,10 +427,10 @@ public class Personaje extends ObjetoActor {
 	}
 
 	public boolean isRegenerarMana() {
-		return regenerarrMana;
+		return regenerarMana;
 	}
 
-	public void setRegenerarMana(boolean recuperarMana) {
-		this.regenerarrMana = recuperarMana;
+	public void setRegenerarMana(boolean regenerarMana) {
+		this.regenerarMana = regenerarMana;
 	}
 }
