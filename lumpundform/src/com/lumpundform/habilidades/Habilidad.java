@@ -3,6 +3,7 @@ package com.lumpundform.habilidades;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.ataques.Ataque;
+import com.lumpundform.escenario.EscenarioBase;
 
 public abstract class Habilidad {
 	private Personaje actor;
@@ -12,16 +13,18 @@ public abstract class Habilidad {
 	private float cooldownDefault;
 
 	private float mana;
+	private boolean sostenido;
 
 	protected Habilidad(Personaje actor, String nombre, float cooldownDefault) {
 		this(actor, nombre, 0.0f, cooldownDefault);
 	}
 
 	protected Habilidad(Personaje actor, String nombre, float coolDown, float cooldownDefault) {
-		this.setActor(actor);
-		this.setNombre(nombre);
-		this.setCooldown(coolDown);
-		this.setCooldownDefault(cooldownDefault);
+		setActor(actor);
+		setNombre(nombre);
+		setCooldown(coolDown);
+		setCooldownDefault(cooldownDefault);
+		setSostenido(false);
 	}
 
 	public abstract void ejecutar(Vector2 pos);
@@ -33,8 +36,15 @@ public abstract class Habilidad {
 	public void detener() {
 	}
 
+	/**
+	 * Quita el mana que usa la {@link Habilidad} y agrega el ataque al
+	 * escenario del {@link Personaje}.
+	 * 
+	 * @param ataque
+	 *            El ataque que se va a agregar al {@link EscenarioBase}.
+	 */
 	protected void crearAtaque(Ataque ataque) {
-		getActor().quitarMana(getMana());
+		getActor().quitarMana(getMana(), isSostenido());
 		getActor().getStage().addActor(ataque);
 
 		setCooldown(getCooldownDefault());
@@ -94,6 +104,14 @@ public abstract class Habilidad {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public boolean isSostenido() {
+		return sostenido;
+	}
+
+	public void setSostenido(boolean sostenido) {
+		this.sostenido = sostenido;
 	}
 
 }

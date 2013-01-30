@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,6 +46,7 @@ public class Personaje extends ObjetoActor {
 	private float manaMax;
 	private float manaPorSegundo;
 	private BarraVida barraVida;
+	private boolean regenerarrMana;
 
 	// Movimiento
 	private float distanciaAlejamiento;
@@ -71,6 +73,8 @@ public class Personaje extends ObjetoActor {
 		setY(puntoOrigen.y);
 
 		setCaer(true);
+
+		setRegenerarMana(true);
 
 		addAction(new PersonajeAction());
 	}
@@ -262,12 +266,14 @@ public class Personaje extends ObjetoActor {
 	 *            El delta de {@link Screen#render(float)}.
 	 */
 	public void aumentarMana(float delta) {
-		if (getManaPorSegundo() > 0) {
-			setMana(getMana() + (getManaPorSegundo() * delta));
-		}
+		if (isRegenerarMana()) {
+			if (getManaPorSegundo() > 0) {
+				setMana(getMana() + (getManaPorSegundo() * delta));
+			}
 
-		if (getMana() >= getManaMax()) {
-			setMana(getManaMax());
+			if (getMana() >= getManaMax()) {
+				setMana(getManaMax());
+			}
 		}
 	}
 
@@ -316,9 +322,12 @@ public class Personaje extends ObjetoActor {
 	 * 
 	 * @param mana
 	 *            La cantidad de mana a quitar.
+	 * @param sostenido
+	 *            Si la cantidad a quitar va a ser por segundo o total.
 	 */
-	public void quitarMana(float mana) {
-		this.setMana(this.getMana() - mana);
+	public void quitarMana(float mana, boolean sostenido) {
+		float cantidad = sostenido ? mana * Gdx.graphics.getDeltaTime() : mana;
+		this.setMana(this.getMana() - cantidad);
 		if (this.getMana() <= 0.0f) {
 			this.setMana(0.0f);
 		}
@@ -415,5 +424,13 @@ public class Personaje extends ObjetoActor {
 
 	public void setDistanciaAlejamiento(float distanciaAlejamiento) {
 		this.distanciaAlejamiento = distanciaAlejamiento;
+	}
+
+	public boolean isRegenerarMana() {
+		return regenerarrMana;
+	}
+
+	public void setRegenerarMana(boolean recuperarMana) {
+		this.regenerarrMana = recuperarMana;
 	}
 }

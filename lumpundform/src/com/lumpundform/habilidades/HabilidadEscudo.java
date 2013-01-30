@@ -16,16 +16,18 @@ public class HabilidadEscudo extends Habilidad {
 
 	protected HabilidadEscudo(Personaje actor, String nombre) {
 		super(actor, nombre, 0.0f);
+		setSostenido(true);
+		setMana(10.0f);
 	}
 
 	@Override
 	public void ejecutar(Vector2 pos) {
 		if (sePuedeEjecutar()) {
-			ataque = new AtaqueEscudo(getActor());
+			ataque = new AtaqueEscudo(getActor(), this);
 			crearAtaque(ataque);
 		}
 	}
-	
+
 	@Override
 	public void detener() {
 		ataque.quitar();
