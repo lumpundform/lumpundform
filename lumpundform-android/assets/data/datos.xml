@@ -63,6 +63,15 @@
                 <renglonesOffset>0</renglonesOffset>
             </SpriteSheet>
         </SpriteSheetGrupo>
+        <SpriteSheetGrupo nombre="ataque_escudo">
+            <SpriteSheet tipo="normal">
+                <ruta>escudo_120x71.png</ruta>
+                <columnas>5</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>3</renglones>
+                <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="pocion_vida">
             <SpriteSheet tipo="normal">
                 <ruta>pocion_vida.png</ruta>
