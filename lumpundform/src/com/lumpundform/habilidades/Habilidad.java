@@ -2,6 +2,7 @@ package com.lumpundform.habilidades;
 
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Personaje;
+import com.lumpundform.ataques.Ataque;
 
 public abstract class Habilidad {
 	private Personaje actor;
@@ -24,6 +25,13 @@ public abstract class Habilidad {
 	}
 
 	public abstract void ejecutar(Vector2 pos);
+	
+	protected void crearAtaque(Ataque ataque) {
+		getActor().quitarMana(getMana());
+		getActor().getStage().addActor(ataque);
+
+		setCooldown(getCooldownDefault());
+	}
 
 	public void reducirCooldown(float delta) {
 		setCooldown(getCooldown() - delta);

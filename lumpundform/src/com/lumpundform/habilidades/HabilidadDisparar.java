@@ -21,10 +21,7 @@ public class HabilidadDisparar extends Habilidad {
 	@Override
 	public void ejecutar(Vector2 pos) {
 		if (sePuedeEjecutar()) {
-			getActor().quitarMana(getMana());
-			getActor().getStage().addActor(new AtaqueMisil(getActor()));
-
-			setCooldown(getCooldownDefault());
+			crearAtaque(new AtaqueMisil(getActor()));
 		}
 	}
 

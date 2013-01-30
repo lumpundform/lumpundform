@@ -28,6 +28,8 @@ public class Habilidades {
 			return new HabilidadTeletransportar(personaje, nombre);
 		} else if (nombre.equals("disparar")) {
 			return new HabilidadDisparar(personaje, nombre);
+		} else if (nombre.equals("escudo")) {
+			return new HabilidadEscudo(personaje, nombre);
 		} else {
 			throw new HabilidadInexistenteException(personaje.getName(), nombre);
 		}

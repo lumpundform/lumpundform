@@ -79,6 +79,11 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				heroe.habilidad("disparar");
 				return true;
 			}
+			/* Usar escudo */
+			if (keycode == Keys.SHIFT_LEFT) {
+				heroe.habilidad("escudo");
+				return true;
+			}
 			/* Usar poción vida */
 			if (keycode == Keys.Q) {
 				heroe.usarPocion("vida");

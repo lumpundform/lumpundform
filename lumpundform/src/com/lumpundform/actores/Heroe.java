@@ -66,7 +66,7 @@ public class Heroe extends Mago {
 		getPocionesMax().put("mana", 3);
 
 		cargarAnimaciones("detenido", "corriendo", "colisionando", "cayendo");
-		cargarHabilidades("teletransportar", "disparar");
+		cargarHabilidades("teletransportar", "disparar", "escudo");
 		setHabilidadesInterfaz();
 
 		addAction(new HeroeAction());
