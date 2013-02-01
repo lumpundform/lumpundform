@@ -86,10 +86,12 @@ public class Evento {
 		} else if (tipo.equals("escena")) {
 			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
+				escenario.esconderUI(false);
 			} else if (activado && !terminado && !escena.getTerminada()) {
 				escena.ejecutarEscena(heroe, delta);
 			} else if (activado && escena.getTerminada()) {
 				terminado = true;
+				escenario.esconderUI(true);
 			}
 		}
 	}

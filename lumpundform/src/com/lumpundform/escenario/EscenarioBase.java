@@ -451,4 +451,31 @@ public class EscenarioBase extends Stage {
 	public void setHeroeMuerto(boolean heroeMuerto) {
 		this.heroeMuerto = heroeMuerto;
 	}
+
+	public void toggleUI() {
+		Array<Actor> actores = getActors();
+
+		for (int i = 0; i < actores.size; i++) {
+			Actor actor = actores.get(i);
+			if (actor.getClass().getSimpleName().contains("Boton")
+					|| actor.getClass().getSimpleName().contains("Barra")) {
+				if(actor.isVisible())
+					actor.setVisible(false);
+				else
+					actor.setVisible(true);
+			}
+		}
+	}
+
+	public void esconderUI(boolean setVisible) {
+		Array<Actor> actores = getActors();
+
+		for (int i = 0; i < actores.size; i++) {
+			Actor actor = actores.get(i);
+			if (actor.getClass().getSimpleName().contains("Boton")
+					|| actor.getClass().getSimpleName().contains("Barra")) {
+				actor.setVisible(setVisible);
+			}
+		}
+	}
 }

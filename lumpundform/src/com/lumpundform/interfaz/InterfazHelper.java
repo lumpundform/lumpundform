@@ -35,20 +35,23 @@ public class InterfazHelper {
 
 	public void ejecutarHabilidad(int posicion) {
 		try {
-			escenario.getHeroe().habilidad(getBotonHabilidad(posicion).getHabilidad().getNombre());
+			escenario.getHeroe().habilidad(
+					getBotonHabilidad(posicion).getHabilidad().getNombre());
 		} catch (BotonHabilidadInexistenteException e) {
 			U.err(e);
 		} catch (EscenarioSinHeroeException e) {
 		}
 	}
 
-	private BotonHabilidad getBotonHabilidad(int posicion) throws BotonHabilidadInexistenteException {
+	private BotonHabilidad getBotonHabilidad(int posicion)
+			throws BotonHabilidadInexistenteException {
 		for (BotonHabilidad boton : escenario.getActores(BotonHabilidad.class)) {
 			if (boton.getPosicion() == posicion) {
 				return boton;
 			}
 		}
-		throw new BotonHabilidadInexistenteException("No hay una habilidad en la posición " + posicion);
+		throw new BotonHabilidadInexistenteException(
+				"No hay una habilidad en la posición " + posicion);
 	}
 
 	private void botonMenu() {

@@ -120,6 +120,9 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 		if (keycode == Keys.BACKSPACE) {
 			escenario.setDibujarColision(!escenario.isDibujarColision());
 		}
+		if (keycode == Keys.T) {
+			escenario.getEscenario().toggleUI();
+		}
 		return false;
 	}
 
