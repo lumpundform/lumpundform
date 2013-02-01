@@ -42,8 +42,7 @@ public class EscenarioHelper {
 
 		mh = new MapaHelper(nombre);
 
-		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true,
-				batch);
+		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch);
 
 		interfazHelper = new InterfazHelper(escenario);
 
