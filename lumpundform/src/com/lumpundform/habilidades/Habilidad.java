@@ -65,8 +65,7 @@ public abstract class Habilidad {
 	public boolean sePuedeEjecutar() {
 		if (getCooldown() > 0.0f)
 			return false;
-		if ((!isSostenido() && (getMana() > getActor().getMana()))
-				|| (isSostenido() && (getManaMinimo() > getActor().getMana())))
+		if (getManaMinimo() > getActor().getMana())
 			return false;
 
 		return true;
