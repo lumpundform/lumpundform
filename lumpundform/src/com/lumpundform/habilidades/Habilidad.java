@@ -13,6 +13,7 @@ public abstract class Habilidad {
 	private float cooldownDefault;
 
 	private float mana;
+	private float manaMinimo;
 	private boolean sostenido;
 
 	protected Habilidad(Personaje actor, String nombre, float cooldownDefault) {
@@ -57,10 +58,15 @@ public abstract class Habilidad {
 		}
 	}
 
+	/**
+	 * @return Si la habilidad se puede usar dependiendo del cooldown y el mana
+	 *         del {@link Personaje}.
+	 */
 	public boolean sePuedeEjecutar() {
 		if (getCooldown() > 0.0f)
 			return false;
-		if (getMana() > getActor().getMana())
+		if ((!isSostenido() && (getMana() > getActor().getMana()))
+				|| (isSostenido() && (getManaMinimo() > getActor().getMana())))
 			return false;
 
 		return true;
@@ -72,6 +78,9 @@ public abstract class Habilidad {
 
 	public void setMana(float mana) {
 		this.mana = mana;
+		if (!isSostenido()) {
+			setManaMinimo(mana);
+		}
 	}
 
 	public Personaje getActor() {
@@ -112,6 +121,14 @@ public abstract class Habilidad {
 
 	public void setSostenido(boolean sostenido) {
 		this.sostenido = sostenido;
+	}
+
+	public float getManaMinimo() {
+		return manaMinimo;
+	}
+
+	public void setManaMinimo(float manaMinimo) {
+		this.manaMinimo = manaMinimo;
 	}
 
 }
