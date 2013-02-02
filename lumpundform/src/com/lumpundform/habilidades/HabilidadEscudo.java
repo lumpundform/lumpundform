@@ -17,7 +17,7 @@ public class HabilidadEscudo extends Habilidad {
 	protected HabilidadEscudo(Personaje actor, String nombre) {
 		super(actor, nombre, 0.0f);
 		setSostenido(true);
-		setMana(10.0f);
+		setMana(50.0f);
 	}
 
 	@Override
@@ -30,8 +30,10 @@ public class HabilidadEscudo extends Habilidad {
 
 	@Override
 	public void detener() {
-		ataque.quitar();
-		ataque = null;
+		if (ataque != null) {
+			ataque.quitar();
+			ataque = null;
+		}
 	}
 
 }

@@ -29,6 +29,9 @@ public class AtaqueEscudo extends Ataque {
 		super.act(delta);
 		actualizarPosicion();
 		getPersonaje().quitarMana(getHabilidad().getMana(), getHabilidad().isSostenido());
+		if (getPersonaje().getMana() <= 0) {
+			getHabilidad().detener();
+		}
 	}
 
 	@Override
