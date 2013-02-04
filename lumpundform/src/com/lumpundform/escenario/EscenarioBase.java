@@ -478,4 +478,23 @@ public class EscenarioBase extends Stage {
 			}
 		}
 	}
+
+	public ObjetoActor getActor(String nombreActor) {
+		return getActor(nombreActor, new Vector2(0,0));
+	}
+	
+	public ObjetoActor getActor(String nombreActor, Vector2 posicion) {
+		ObjetoActor personaje = null;
+		for (ObjetoActor personajeTemporal : getActores(ObjetoActor.class)) {
+			if(personajeTemporal.getName().equals(nombreActor)) {
+				personaje = personajeTemporal;
+				break;
+			}
+		}
+		if(personaje == null) {
+			addActor(new Humanoide(nombreActor, posicion));
+			personaje = (Personaje) getActor(nombreActor);
+		}
+		return personaje;
+	}
 }

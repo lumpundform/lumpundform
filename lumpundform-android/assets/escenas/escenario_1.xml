@@ -24,17 +24,23 @@
 	
 	<escena nombre="102">
 	    <paso numero="1">
-	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hola Mundo2!" />
+	        <accion actor="amigo" objetivo="hablar" destino="600" texto="Amigo Hola Mundo2!" posicionX="1600" posicionY="400" />
 	    </paso>
 	    
 	    <paso numero="2">
-	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hello world2!" />
+	        <accion actor="amigo" objetivo="hablar" destino="600" texto="Amigo Hello world2!" />
 	    </paso>
 	    <paso numero="3">
-	        <accion actor="heroe" objetivo="hablar" destino="600" texto="Hallo Welt2!" />
+	        <accion actor="amigo" objetivo="hablar" destino="600" texto="Amigo Hallo Welt2!" />
 	    </paso>
 	    <paso numero="4">
-	        <accion actor="heroe" objetivo="hablar" destino="600" texto="ciao mondo2!" />
+	        <accion actor="amigo" objetivo="hablar" destino="600" texto="Amigo ciao mondo2!" />
+	    </paso>
+	    <paso numero="5">
+	        <acccion actor="amigo" objetivo="ir_a" destino="1900"/>
+	    </paso>
+	    <paso numero="6">
+	        <accion actor="amigo" objetivo="teletransportarse" x="200" y="400" />
 	    </paso>
 	</escena>
 	

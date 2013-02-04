@@ -88,7 +88,7 @@ public class Evento {
 				activado = true;
 				escenario.esconderUI(false);
 			} else if (activado && !terminado && !escena.getTerminada()) {
-				escena.ejecutarEscena(heroe, delta);
+				escena.ejecutarEscena(delta, escenario);
 			} else if (activado && escena.getTerminada()) {
 				terminado = true;
 				escenario.esconderUI(true);

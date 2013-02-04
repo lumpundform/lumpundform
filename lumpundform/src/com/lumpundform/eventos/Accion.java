@@ -7,30 +7,30 @@ public class Accion {
 
 	private boolean terminado = false;
 
-	public String actor;
+	public String nombreActor;
 	public String objetivo;
 	public String destino;
 	public String texto;
 
-	public float x;
-	public float y;
-
-	private String posicion;
+	public float posicionX = 0.0f;
+	public float posicionY = 0.0f;
 
 	public Accion(Element accion) {
-		this.actor = accion.get("actor");
+		this.nombreActor = accion.get("actor");
 		this.objetivo = accion.get("objetivo");
 
 		if (accion.getAttributes().containsKey("destino"))
 			this.destino = accion.get("destino");
 		if (accion.getAttributes().containsKey("texto"))
 			this.texto = accion.get("texto");
-		if (accion.getAttributes().containsKey("x"))
-			this.x = Float.parseFloat(accion.get("x"));
-		if (accion.getAttributes().containsKey("y"))
-			this.y = Float.parseFloat(accion.get("y"));
-		if (accion.getAttributes().containsKey("posicion"))
-			this.posicion = accion.get("posicion");
+		if (accion.getAttributes().containsKey("posicionX"))
+			this.posicionX = Float.parseFloat(accion.get("posicionX"));
+		if (accion.getAttributes().containsKey("posicionY"))
+			this.posicionY = Float.parseFloat(accion.get("posicionY"));
+	}
+
+	public String getNombreActor() {
+		return nombreActor;
 	}
 
 	public String getObjetivo() {
@@ -44,15 +44,11 @@ public class Accion {
 	public float getDestino() {
 		return Float.parseFloat(destino);
 	}
-	
-	public Vector2 getPosicionVector() {
-		return new Vector2(x,y);
+
+	public Vector2 getPosicion() {
+		return new Vector2(posicionX, posicionY);
 	}
 
-	public String getPosicion() {
-		return posicion;
-	}
-	
 	public boolean getTerminado() {
 		return terminado;
 	}

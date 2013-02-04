@@ -3,9 +3,12 @@ package com.lumpundform.eventos;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.lumpundform.actores.Heroe;
+import com.lumpundform.actores.Humanoide;
 import com.lumpundform.actores.ObjetoActor.Direccion;
+import com.lumpundform.actores.Personaje;
+import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.interfaz.CuadroTexto;
+import com.lumpundform.utilerias.U;
 
 public class Escena {
 
@@ -14,6 +17,8 @@ public class Escena {
 	private String nombre;
 	private int paso = 0;
 	private boolean terminado = false;
+
+	private EscenarioBase escenario;
 
 	// Cuadros de texto
 	CuadroTexto ctDer = new CuadroTexto("der");
@@ -30,41 +35,45 @@ public class Escena {
 		}
 	}
 
-	public void ejecutarEscena(Heroe heroe, float delta) {
-		revisarPasos(heroe, delta);
+	public void ejecutarEscena(float delta, EscenarioBase escenario) {
+		this.escenario = escenario;
+		revisarPasos(delta);
 	}
 
-	private void revisarPasos(Heroe heroe, float delta) {
+	private void revisarPasos(float delta) {
 		if (paso < pasos.size) {
-			revisarAcciones(heroe, delta, pasos.get(paso));
+			revisarAcciones(delta, pasos.get(paso));
 		} else {
 			terminado = true;
 		}
 	}
 
-	private void revisarAcciones(Heroe heroe, float delta, Paso paso) {
+	private void revisarAcciones(float delta, Paso paso) {
 		if (accionesTerminadas(paso)) {
-			ejecutarAcciones(heroe, delta, paso);
+			ejecutarAcciones(delta, paso);
 		} else {
 			siguientePaso();
 		}
 	}
 
-	private void ejecutarAcciones(Heroe heroe, float delta, Paso paso) {
+	private void ejecutarAcciones(float delta, Paso paso) {
 		for (int i = 0; i < paso.acciones.size; i++) {
 			if (!paso.acciones.get(i).getTerminado()) {
-				ejecutarAccion(paso.acciones.get(i), heroe, delta);
+				ejecutarAccion(paso.acciones.get(i), delta,
+						(Personaje) escenario.getActor(paso.acciones.get(i)
+								.getNombreActor(), paso.acciones.get(i)
+								.getPosicion()));
 			}
 		}
 	}
 
-	private void ejecutarAccion(Accion accion, Heroe heroe, float delta) {
+	private void ejecutarAccion(Accion accion, float delta, Personaje personaje) {
 		if (accion.getObjetivo().equals("hablar"))
 			hablar(accion);
 		else if (accion.getObjetivo().equals("ir_a"))
-			caminar(heroe, accion.getDestino(), delta, accion);
+			caminar(accion.getDestino(), delta, accion, personaje);
 		else if (accion.getObjetivo().equals("teletransportarse"))
-			teletransportarse(heroe, accion.getPosicionVector(), accion);
+			teletransportarse(accion.getPosicion(), accion, personaje);
 	}
 
 	private void siguientePaso() {
@@ -88,39 +97,43 @@ public class Escena {
 		}
 	}
 
-	private void caminar(Heroe heroe, float destino, float delta, Accion accion) {
+	private void caminar(float destino, float delta, Accion accion,
+			Personaje personaje) {
+
+		U.l("actor", personaje.getName());
 		if (!accion.getTerminado()) {
-			heroe.setDestinoX(destino);
-			heroe.setDireccionDestinoX(Direccion.DERECHA);
-			heroe.moverDestino(delta);
+			personaje.setDestinoX(destino);
+			personaje.setDireccionDestinoX(Direccion.DERECHA);
+			personaje.moverDestino(delta);
 		}
-		if ((heroe.getDestinoX() > heroe.getX() && heroe.getDireccionDestinoX() == Direccion.IZQUIERDA)
-				|| (heroe.getDestinoX() < heroe.getX() && heroe
+		if ((personaje.getDestinoX() > personaje.getX() && personaje
+				.getDireccionDestinoX() == Direccion.IZQUIERDA)
+				|| (personaje.getDestinoX() < personaje.getX() && personaje
 						.getDireccionDestinoX() == Direccion.DERECHA))
 			accion.terminar();
+
 	}
 
-	private void teletransportarse(Heroe heroe, Vector2 pos, Accion accion) {
-		heroe.habilidad("teletransportar", pos);
-		accion.terminar();
+	private void teletransportarse(Vector2 pos, Accion accion, Personaje personaje) {
+		// personaje.habilidad("teletransportar", pos); accion.terminar();
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
-	
+
 	public boolean getTerminada() {
 		return terminado;
 	}
 
 	public void continuarConversacion() {
 		Paso pasoActual = getPasoActual();
-		if(pasoActual != null && pasoActual.tieneAccionHablar())
+		if (pasoActual != null && pasoActual.tieneAccionHablar())
 			pasoActual.terminarAccionHablar();
 	}
-	
+
 	private Paso getPasoActual() {
-		if(paso < pasos.size)
+		if (paso < pasos.size)
 			return pasos.get(paso);
 		return null;
 	}
