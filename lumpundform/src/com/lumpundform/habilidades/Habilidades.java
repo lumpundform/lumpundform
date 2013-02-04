@@ -31,7 +31,7 @@ public class Habilidades {
 		} else if (nombre.equals("escudo")) {
 			return new HabilidadEscudo(personaje, nombre);
 		} else {
-			throw new HabilidadInexistenteException(personaje.getName(), nombre);
+			throw new HabilidadInexistenteException(personaje.getClass().toString(), nombre);
 		}
 	}
 
