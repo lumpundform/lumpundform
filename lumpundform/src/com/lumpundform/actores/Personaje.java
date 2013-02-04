@@ -144,7 +144,7 @@ public class Personaje extends ObjetoActor {
 		if (getHabilidades().containsKey(nombre)) {
 			return getHabilidades().get(nombre);
 		} else {
-			throw new HabilidadInexistenteException(getName(), nombre);
+			throw new HabilidadInexistenteException(getClass().getSimpleName(), nombre);
 		}
 	}
 
