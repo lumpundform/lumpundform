@@ -10,10 +10,12 @@ public class AtaqueEscudo extends Ataque {
 	public AtaqueEscudo(Personaje personaje, Habilidad habilidad) {
 		super("ataque_escudo", personaje);
 
-		setWidth(120.0f);
-		setHeight(71.0f);
+		setWidth(240.0f);
+		setWidthTextura(120.0f);
+		setHeight(150.0f);
+		setHeightTextura(71.0f);
 
-		setHitbox(new Rectangulo(getHeight(), getWidth()));
+		setHitbox(new Rectangulo(getHeight(), getWidth() * 0.65f));
 
 		setHabilidad(habilidad);
 
@@ -41,8 +43,10 @@ public class AtaqueEscudo extends Ataque {
 	}
 
 	private void actualizarPosicion() {
+		float mitadPersonaje = getPersonaje().getHitbox().getAncho() / 2;
+		float mitadAtaque = getHitbox().getAncho() / 2;
 		setY(getPersonaje().getY());
-		setX(getPersonaje().getX());
+		setX(getPersonaje().getX() + mitadPersonaje - mitadAtaque);
 	}
 
 	public Habilidad getHabilidad() {

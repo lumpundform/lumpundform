@@ -17,7 +17,7 @@ public class HabilidadEscudo extends Habilidad {
 	protected HabilidadEscudo(Personaje actor, String nombre) {
 		super(actor, nombre, 0.0f);
 		setSostenido(true);
-		setMana(50.0f);
+		setMana(20.0f);
 		setManaMinimo(5.0f);
 	}
 

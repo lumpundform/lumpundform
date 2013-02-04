@@ -42,6 +42,8 @@ public abstract class ObjetoActor extends Actor {
 	private Map<String, Animation> animaciones;
 	private float tiempoTranscurrido;
 	private boolean loopAnimacion;
+	private float widthTextura;
+	private float heightTextura;
 
 	// Estado, Posición y Tamaño
 	private Direccion direccionX;
@@ -293,7 +295,7 @@ public abstract class ObjetoActor extends Actor {
 
 		Color color = batch.getColor();
 		batch.setColor(color.r, color.g, color.b, parentAlpha);
-		batch.draw(cuadroActual, getX(), getY());
+		batch.draw(cuadroActual, getX(), getY(), getWidth(), getHeight());
 
 		if (flip)
 			cuadroActual.flip(true, false);
@@ -322,7 +324,8 @@ public abstract class ObjetoActor extends Actor {
 		SpriteSheet ss = D.ss(getName(), tipoAnimacion);
 
 		Texture texturaAnimacion = Texturas.get(ss.getRuta());
-		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion, (int) getWidth(), (int) getHeight());
+		TextureRegion[][] tmp = TextureRegion
+				.split(texturaAnimacion, (int) getWidthTextura(), (int) getHeightTextura());
 		TextureRegion[] cuadrosAnimacion = new TextureRegion[ss.getColumnas() * ss.getRenglones()];
 		int index = 0;
 		for (int i = 0; i < ss.getRenglones(); i++) {
@@ -465,6 +468,38 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setLoopAnimacion(boolean loopAnimacion) {
 		this.loopAnimacion = loopAnimacion;
+	}
+
+	@Override
+	public void setWidth(float width) {
+		super.setWidth(width);
+		if (getWidthTextura() == 0.0f) {
+			setWidthTextura(width);
+		}
+	}
+
+	@Override
+	public void setHeight(float height) {
+		super.setHeight(height);
+		if (getHeightTextura() == 0.0f) {
+			setHeightTextura(height);
+		}
+	}
+
+	public float getWidthTextura() {
+		return widthTextura;
+	}
+
+	public void setWidthTextura(float widthTextura) {
+		this.widthTextura = widthTextura;
+	}
+
+	public float getHeightTextura() {
+		return heightTextura;
+	}
+
+	public void setHeightTextura(float heightTextura) {
+		this.heightTextura = heightTextura;
 	}
 
 }
