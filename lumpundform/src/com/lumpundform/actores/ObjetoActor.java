@@ -6,12 +6,12 @@ import java.util.Map;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.acciones.ObjetoActorAction;
+import com.lumpundform.animacion.Animacion;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.excepciones.AnimacionInexistenteException;
 import com.lumpundform.utilerias.D;
@@ -39,7 +39,7 @@ public abstract class ObjetoActor extends Actor {
 	private int id;
 
 	// Animaciones
-	private Map<String, Animation> animaciones;
+	private Map<String, Animacion> animaciones;
 	private float tiempoTranscurrido;
 	private boolean loopAnimacion;
 	private float widthTextura;
@@ -77,7 +77,7 @@ public abstract class ObjetoActor extends Actor {
 		setName(nombre);
 
 		sensores = new HashMap<String, Vector2>();
-		setAnimaciones(new HashMap<String, Animation>());
+		setAnimaciones(new HashMap<String, Animacion>());
 		setLoopAnimacion(true);
 
 		setTiempoTranscurrido(0f);
@@ -314,13 +314,13 @@ public abstract class ObjetoActor extends Actor {
 	/**
 	 * Se busca en el archivo datos.xml de acuerdo al nombre del
 	 * {@link ObjetoActor} y al tipo de animación para generar la
-	 * {@link Animation} correcta.
+	 * {@link Animacion} correcta.
 	 * 
 	 * @param tipoAnimacion
 	 *            El nombre de la animación.
 	 * @return La animación en sí.
 	 */
-	private Animation initAnimacion(String tipoAnimacion) {
+	private Animacion initAnimacion(String tipoAnimacion) {
 		SpriteSheet ss = D.ss(getName(), tipoAnimacion);
 
 		Texture texturaAnimacion = Texturas.get(ss.getRuta());
@@ -333,7 +333,7 @@ public abstract class ObjetoActor extends Actor {
 				cuadrosAnimacion[index++] = tmp[i][j];
 			}
 		}
-		return new Animation(0.05f, cuadrosAnimacion);
+		return new Animacion(0.05f, cuadrosAnimacion);
 	}
 
 	public boolean isColisionPiso() {
@@ -352,11 +352,11 @@ public abstract class ObjetoActor extends Actor {
 		this.colisionActores = colisionActores;
 	}
 
-	public Map<String, Animation> getAnimaciones() {
+	public Map<String, Animacion> getAnimaciones() {
 		return animaciones;
 	}
 
-	protected Animation getAnimacion(String nombre) {
+	protected Animacion getAnimacion(String nombre) {
 		if (getAnimaciones().containsKey(nombre)) {
 			return getAnimaciones().get(nombre);
 		} else if (nombre != getEstadoDefault()) {
@@ -366,7 +366,7 @@ public abstract class ObjetoActor extends Actor {
 		}
 	}
 
-	public void setAnimaciones(Map<String, Animation> animacion) {
+	public void setAnimaciones(Map<String, Animacion> animacion) {
 		this.animaciones = animacion;
 	}
 
