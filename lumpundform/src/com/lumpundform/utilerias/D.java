@@ -31,8 +31,13 @@ public class D {
 			int columnasOffset = Integer.parseInt(spriteSheetElement.getChildByName("columnasOffset").getText());
 			int renglones = Integer.parseInt(spriteSheetElement.getChildByName("renglones").getText());
 			int renglonesOffset = Integer.parseInt(spriteSheetElement.getChildByName("renglonesOffset").getText());
+			Element cuadrosInicioElement = spriteSheetElement.getChildByName("cuadrosInicio");
+			int cuadrosInicio = cuadrosInicioElement == null ? 0 : Integer.parseInt(cuadrosInicioElement.getText());
+			Element cuadrosFinElement = spriteSheetElement.getChildByName("cuadrosInicio");
+			int cuadrosFin = cuadrosFinElement == null ? 0 : Integer.parseInt(cuadrosFinElement.getText());
 
-			spriteSheet = new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset);
+			spriteSheet = new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset, cuadrosInicio,
+					cuadrosFin);
 			spriteSheets.put(key, spriteSheet);
 		}
 		return spriteSheet;

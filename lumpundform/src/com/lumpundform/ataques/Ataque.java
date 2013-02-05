@@ -47,7 +47,7 @@ public class Ataque extends ObjetoActor {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		if (getEstado() == Estado.EXPLOTANDO) {
 			setLoopAnimacion(false);
-			if (getTiempoTranscurrido() > getAnimacion(getEstado()).frameDuration * 10) {
+			if (getTiempoTranscurrido() > getAnimacionActual(getEstado()).frameDuration * 10) {
 				quitar();
 			}
 

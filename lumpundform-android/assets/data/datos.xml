@@ -70,6 +70,8 @@
                 <columnasOffset>0</columnasOffset>
                 <renglones>3</renglones>
                 <renglonesOffset>0</renglonesOffset>
+                <cuadrosInicio>4</cuadrosInicio>
+                <cuadrosFin>3</cuadrosFin>
             </SpriteSheet>
         </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="pocion_vida">

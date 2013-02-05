@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -14,9 +14,6 @@ import com.lumpundform.acciones.ObjetoActorAction;
 import com.lumpundform.animacion.Animacion;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.excepciones.AnimacionInexistenteException;
-import com.lumpundform.utilerias.D;
-import com.lumpundform.utilerias.SpriteSheet;
-import com.lumpundform.utilerias.Texturas;
 
 /**
  * Clase personalizada que extiende a {@link Actor} y le agrega valores
@@ -164,7 +161,7 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	protected void cargarAnimaciones(String... nombres) {
 		for (String nombre : nombres) {
-			getAnimaciones().put(nombre, initAnimacion(nombre));
+			getAnimaciones().put(nombre, new Animacion(this, nombre));
 		}
 	}
 
@@ -308,32 +305,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El cuadro actual.
 	 */
 	protected TextureRegion getCuadroActual() {
-		return getAnimacion(getEstado()).getKeyFrame(getTiempoTranscurrido(), isLoopAnimacion());
-	}
-
-	/**
-	 * Se busca en el archivo datos.xml de acuerdo al nombre del
-	 * {@link ObjetoActor} y al tipo de animación para generar la
-	 * {@link Animacion} correcta.
-	 * 
-	 * @param tipoAnimacion
-	 *            El nombre de la animación.
-	 * @return La animación en sí.
-	 */
-	private Animacion initAnimacion(String tipoAnimacion) {
-		SpriteSheet ss = D.ss(getName(), tipoAnimacion);
-
-		Texture texturaAnimacion = Texturas.get(ss.getRuta());
-		TextureRegion[][] tmp = TextureRegion
-				.split(texturaAnimacion, (int) getWidthTextura(), (int) getHeightTextura());
-		TextureRegion[] cuadrosAnimacion = new TextureRegion[ss.getColumnas() * ss.getRenglones()];
-		int index = 0;
-		for (int i = 0; i < ss.getRenglones(); i++) {
-			for (int j = ss.getColumnasOffset(); j < ss.getColumnas() + ss.getColumnasOffset(); j++) {
-				cuadrosAnimacion[index++] = tmp[i][j];
-			}
-		}
-		return new Animacion(0.05f, cuadrosAnimacion);
+		return getAnimacionActual(getEstado()).getKeyFrame(getTiempoTranscurrido(), isLoopAnimacion());
 	}
 
 	public boolean isColisionPiso() {
@@ -356,11 +328,11 @@ public abstract class ObjetoActor extends Actor {
 		return animaciones;
 	}
 
-	protected Animacion getAnimacion(String nombre) {
+	protected Animation getAnimacionActual(String nombre) {
 		if (getAnimaciones().containsKey(nombre)) {
-			return getAnimaciones().get(nombre);
+			return getAnimaciones().get(nombre).actual();
 		} else if (nombre != getEstadoDefault()) {
-			return getAnimacion(getEstadoDefault());
+			return getAnimacionActual(getEstadoDefault());
 		} else {
 			throw new AnimacionInexistenteException(getName(), nombre);
 		}
