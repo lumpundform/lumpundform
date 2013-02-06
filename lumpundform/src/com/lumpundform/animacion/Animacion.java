@@ -3,6 +3,7 @@ package com.lumpundform.animacion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.utilerias.D;
 import com.lumpundform.utilerias.SpriteSheet;
@@ -16,7 +17,9 @@ import com.lumpundform.utilerias.Texturas;
  * 
  */
 public class Animacion {
+	private Animation animacionInicio;
 	private Animation animacionLoop;
+	private Animation animacionFin;
 
 	/**
 	 * Se busca en el archivo datos.xml de acuerdo al nombre del
@@ -29,22 +32,42 @@ public class Animacion {
 	 *            El nombre de la animación.
 	 */
 	public Animacion(ObjetoActor actor, String tipo) {
+		float tiempoPorCuadro = 0.05f;
+
 		SpriteSheet ss = D.ss(actor.getName(), tipo);
 
 		Texture texturaAnimacion = Texturas.get(ss.getRuta());
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion, (int) actor.getWidthTextura(),
 				(int) actor.getHeightTextura());
-		TextureRegion[] cuadrosAnimacion = new TextureRegion[ss.getColumnas() * ss.getRenglones()];
-		int index = 0;
+		Array<TextureRegion> cuadrosAnimacion = new Array<TextureRegion>();
 		for (int i = 0; i < ss.getRenglones(); i++) {
 			for (int j = ss.getColumnasOffset(); j < ss.getColumnas() + ss.getColumnasOffset(); j++) {
-				cuadrosAnimacion[index++] = tmp[i][j];
+				cuadrosAnimacion.add(tmp[i][j]);
 			}
 		}
-		
-		this.animacionLoop = new Animation(0.05f, cuadrosAnimacion);
+
+		if (ss.getCuadrosInicio() > 0) {
+			Array<TextureRegion> cuadrosInicio = new Array<TextureRegion>();
+			for (int i = 0; i < ss.getCuadrosInicio(); i++) {
+				cuadrosInicio.add(cuadrosAnimacion.get(i));
+			}
+			this.animacionInicio = new Animation(tiempoPorCuadro, cuadrosInicio);
+			cuadrosAnimacion.removeAll(cuadrosInicio, true);
+			cuadrosAnimacion.shrink();
+		}
+		if (ss.getCuadrosFin() > 0) {
+			int cuadros = ss.getCuadrosFin();
+			Array<TextureRegion> cuadrosFin = new Array<TextureRegion>();
+			for (int cf = 0; cf < cuadros; cf++) {
+				cuadrosFin.add(cuadrosAnimacion.get(cuadrosAnimacion.size - (cuadros - cf)));
+			}
+			this.animacionFin = new Animation(tiempoPorCuadro, cuadrosFin);
+			cuadrosAnimacion.removeAll(cuadrosFin, true);
+			cuadrosAnimacion.shrink();
+		}
+		this.animacionLoop = new Animation(tiempoPorCuadro, cuadrosAnimacion);
 	}
-	
+
 	public Animation actual() {
 		return this.animacionLoop;
 	}
