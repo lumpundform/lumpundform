@@ -1,6 +1,5 @@
 package com.lumpundform.ataques;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
 
@@ -41,18 +40,6 @@ public class Ataque extends ObjetoActor {
 
 		setPersonaje(personaje);
 		setPosicionCentro(personaje.getPosicionCentro());
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		if (getEstado() == Estado.EXPLOTANDO) {
-			setLoopAnimacion(false);
-			if (getTiempoTranscurrido() > getAnimacionActual().frameDuration * 10) {
-				quitar();
-			}
-
-		}
-		super.draw(batch, parentAlpha);
 	}
 
 	/**

@@ -33,7 +33,7 @@ public class D {
 			int renglonesOffset = Integer.parseInt(spriteSheetElement.getChildByName("renglonesOffset").getText());
 			Element cuadrosInicioElement = spriteSheetElement.getChildByName("cuadrosInicio");
 			int cuadrosInicio = cuadrosInicioElement == null ? 0 : Integer.parseInt(cuadrosInicioElement.getText());
-			Element cuadrosFinElement = spriteSheetElement.getChildByName("cuadrosInicio");
+			Element cuadrosFinElement = spriteSheetElement.getChildByName("cuadrosFin");
 			int cuadrosFin = cuadrosFinElement == null ? 0 : Integer.parseInt(cuadrosFinElement.getText());
 
 			spriteSheet = new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset, cuadrosInicio,

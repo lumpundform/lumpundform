@@ -10,6 +10,7 @@ import com.lumpundform.colision.Rectangulo;
  * 
  */
 public class AtaqueMisil extends Ataque {
+	private boolean movimiento;
 
 	/**
 	 * Inicializa el {@link AtaqueMisil} así como todas sus características
@@ -20,6 +21,8 @@ public class AtaqueMisil extends Ataque {
 	 */
 	public AtaqueMisil(Personaje personaje) {
 		super("ataque_misil", personaje);
+
+		movimiento = true;
 
 		setWidth(100.0f);
 		setHeight(100.0f);
@@ -42,14 +45,16 @@ public class AtaqueMisil extends Ataque {
 		}
 		setEsquinaX("inf-izq", xNueva);
 
-		cargarAnimaciones("normal", "explosion");
+		setQuitarConAnimacion(true);
+
+		cargarAnimaciones("normal");
 	}
 
 	@Override
 	public void act(float delta) {
 		super.act(delta);
 
-		if (getEstado() == Estado.NORMAL) {
+		if (movimiento) {
 			if (derecha()) {
 				moverDerecha(delta);
 			} else {
@@ -62,8 +67,8 @@ public class AtaqueMisil extends Ataque {
 	public void destruir() {
 		if (!isDestruir()) {
 			super.destruir();
-			setTiempoTranscurrido(0.0f);
-			setEstado(Estado.EXPLOTANDO);
+			movimiento = false;
+			getAnimacion().terminar();
 		}
 	}
 

@@ -50,17 +50,11 @@
         <SpriteSheetGrupo nombre="ataque_misil">
             <SpriteSheet tipo="normal">
                 <ruta>ataque_misil.png</ruta>
-                <columnas>3</columnas>
+                <columnas>13</columnas>
                 <columnasOffset>0</columnasOffset>
                 <renglones>1</renglones>
                 <renglonesOffset>0</renglonesOffset>
-            </SpriteSheet>
-            <SpriteSheet tipo="explosion">
-                <ruta>ataque_misil.png</ruta>
-                <columnas>10</columnas>
-                <columnasOffset>3</columnasOffset>
-                <renglones>1</renglones>
-                <renglonesOffset>0</renglonesOffset>
+                <cuadrosFin>10</cuadrosFin>
             </SpriteSheet>
         </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="ataque_escudo">
