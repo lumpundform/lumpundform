@@ -17,9 +17,17 @@ import com.lumpundform.utilerias.Texturas;
  * 
  */
 public class Animacion {
+	private float tiempoPorCuadro;
+
+	// Animaciones
 	private Animation animacionInicio;
 	private Animation animacionLoop;
 	private Animation animacionFin;
+
+	// Cuadros
+	private Array<TextureRegion> cuadrosInicio;
+	private Array<TextureRegion> cuadrosLoop;
+	private Array<TextureRegion> cuadrosFin;
 
 	/**
 	 * Se busca en el archivo datos.xml de acuerdo al nombre del
@@ -32,44 +40,56 @@ public class Animacion {
 	 *            El nombre de la animación.
 	 */
 	public Animacion(ObjetoActor actor, String tipo) {
-		float tiempoPorCuadro = 0.05f;
+		tiempoPorCuadro = 0.05f;
 
 		SpriteSheet ss = D.ss(actor.getName(), tipo);
 
 		Texture texturaAnimacion = Texturas.get(ss.getRuta());
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion, (int) actor.getWidthTextura(),
 				(int) actor.getHeightTextura());
-		Array<TextureRegion> cuadrosAnimacion = new Array<TextureRegion>();
+		cuadrosLoop = new Array<TextureRegion>();
 		for (int i = 0; i < ss.getRenglones(); i++) {
 			for (int j = ss.getColumnasOffset(); j < ss.getColumnas() + ss.getColumnasOffset(); j++) {
-				cuadrosAnimacion.add(tmp[i][j]);
+				cuadrosLoop.add(tmp[i][j]);
 			}
 		}
 
 		if (ss.getCuadrosInicio() > 0) {
-			Array<TextureRegion> cuadrosInicio = new Array<TextureRegion>();
+			cuadrosInicio = new Array<TextureRegion>();
 			for (int i = 0; i < ss.getCuadrosInicio(); i++) {
-				cuadrosInicio.add(cuadrosAnimacion.get(i));
+				cuadrosInicio.add(cuadrosLoop.get(i));
 			}
 			this.animacionInicio = new Animation(tiempoPorCuadro, cuadrosInicio);
-			cuadrosAnimacion.removeAll(cuadrosInicio, true);
-			cuadrosAnimacion.shrink();
+			cuadrosLoop.removeAll(cuadrosInicio, true);
+			cuadrosLoop.shrink();
 		}
 		if (ss.getCuadrosFin() > 0) {
 			int cuadros = ss.getCuadrosFin();
-			Array<TextureRegion> cuadrosFin = new Array<TextureRegion>();
+			cuadrosFin = new Array<TextureRegion>();
 			for (int cf = 0; cf < cuadros; cf++) {
-				cuadrosFin.add(cuadrosAnimacion.get(cuadrosAnimacion.size - (cuadros - cf)));
+				cuadrosFin.add(cuadrosLoop.get(cuadrosLoop.size - (cuadros - cf)));
 			}
 			this.animacionFin = new Animation(tiempoPorCuadro, cuadrosFin);
-			cuadrosAnimacion.removeAll(cuadrosFin, true);
-			cuadrosAnimacion.shrink();
+			cuadrosLoop.removeAll(cuadrosFin, true);
+			cuadrosLoop.shrink();
 		}
-		this.animacionLoop = new Animation(tiempoPorCuadro, cuadrosAnimacion);
+		this.animacionLoop = new Animation(tiempoPorCuadro, cuadrosLoop);
 	}
 
-	public Animation actual() {
-		return this.animacionLoop;
+	/**
+	 * Calcula cuál es la animación a usar (inicio, loop o fin) dependiendo del
+	 * tiempo transcurrido.
+	 * 
+	 * @param tiempo
+	 *            El tiempoTranscurrido.
+	 * @return La {@link Animation} a usar.
+	 */
+	public Animation actual(float tiempo) {
+		if (animacionInicio != null && tiempo <= tiempoPorCuadro * cuadrosInicio.size) {
+			return animacionInicio;
+		} else {
+			return this.animacionLoop;
+		}
 	}
 
 }

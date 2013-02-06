@@ -330,7 +330,7 @@ public abstract class ObjetoActor extends Actor {
 
 	protected Animation getAnimacionActual(String nombre) {
 		if (getAnimaciones().containsKey(nombre)) {
-			return getAnimaciones().get(nombre).actual();
+			return getAnimaciones().get(nombre).actual(getTiempoTranscurrido());
 		} else if (nombre != getEstadoDefault()) {
 			return getAnimacionActual(getEstadoDefault());
 		} else {
