@@ -15,7 +15,7 @@
 	    </paso>
 	    <paso numero="4">
 	        <accion actor="heroe" objetivo="hablar" destino="600" texto="ciao mondo!" />
-	        <accion actor="heroe" objetivo="teletransportarse" x="200" y="400" />
+	        <accion actor="heroe" objetivo="teletransportarse" posicionX="200" posicionY="400" />
 	    </paso>
 	    <paso numero="5">
 	        <accion actor="heroe" objetivo="ir_a" destino="1300" />
@@ -37,10 +37,10 @@
 	        <accion actor="amigo" objetivo="hablar" destino="600" texto="Amigo ciao mondo2!" />
 	    </paso>
 	    <paso numero="5">
-	        <acccion actor="amigo" objetivo="ir_a" destino="1900"/>
+	        <accion actor="amigo" objetivo="teletransportarse" posicionX="600" posicionY="800" />
 	    </paso>
 	    <paso numero="6">
-	        <accion actor="amigo" objetivo="teletransportarse" x="200" y="400" />
+	        <accion actor="amigo" objetivo="ir_a" destino="1900"/>
 	    </paso>
 	</escena>
 	

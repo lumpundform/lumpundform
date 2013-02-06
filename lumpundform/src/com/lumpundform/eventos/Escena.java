@@ -3,12 +3,10 @@ package com.lumpundform.eventos;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.lumpundform.actores.Humanoide;
 import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.interfaz.CuadroTexto;
-import com.lumpundform.utilerias.U;
 
 public class Escena {
 
@@ -100,7 +98,6 @@ public class Escena {
 	private void caminar(float destino, float delta, Accion accion,
 			Personaje personaje) {
 
-		U.l("actor", personaje.getName());
 		if (!accion.getTerminado()) {
 			personaje.setDestinoX(destino);
 			personaje.setDireccionDestinoX(Direccion.DERECHA);
@@ -115,7 +112,8 @@ public class Escena {
 	}
 
 	private void teletransportarse(Vector2 pos, Accion accion, Personaje personaje) {
-		// personaje.habilidad("teletransportar", pos); accion.terminar();
+		personaje.habilidad("teletransportar", pos);
+		accion.terminar();
 	}
 
 	public String getNombre() {

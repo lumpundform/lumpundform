@@ -39,9 +39,9 @@ public class Humanoide extends Personaje {
 		setVidaMax(100.0f);
 		setMana(100.0f);
 		setManaMax(100.0f);
-
+		
 		cargarAnimaciones("detenido", "corriendo");
-		cargarHabilidades("disparar");
+		cargarHabilidades("disparar", "teletransportar");
 
 		addAction(new HumanoideAction());
 	}
