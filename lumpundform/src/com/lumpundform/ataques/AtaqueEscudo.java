@@ -23,6 +23,8 @@ public class AtaqueEscudo extends Ataque {
 
 		actualizarPosicion();
 
+		setQuitarConAnimacion(true);
+
 		cargarAnimaciones("normal");
 	}
 

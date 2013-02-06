@@ -41,6 +41,7 @@ public abstract class ObjetoActor extends Actor {
 	private boolean loopAnimacion;
 	private float widthTextura;
 	private float heightTextura;
+	private boolean quitarConAnimacion;
 
 	// Estado, Posición y Tamaño
 	private Direccion direccionX;
@@ -78,6 +79,8 @@ public abstract class ObjetoActor extends Actor {
 		setLoopAnimacion(true);
 
 		setTiempoTranscurrido(0f);
+
+		setQuitarConAnimacion(false);
 
 		addAction(new ObjetoActorAction());
 	}
@@ -305,7 +308,7 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El cuadro actual.
 	 */
 	protected TextureRegion getCuadroActual() {
-		return getAnimacionActual(getEstado()).getKeyFrame(getTiempoTranscurrido(), isLoopAnimacion());
+		return getAnimacionActual().getKeyFrame(getTiempoTranscurrido(), isLoopAnimacion());
 	}
 
 	public boolean isColisionPiso() {
@@ -328,14 +331,22 @@ public abstract class ObjetoActor extends Actor {
 		return animaciones;
 	}
 
-	protected Animation getAnimacionActual(String nombre) {
+	public Animacion getAnimacion() {
+		return getAnimacion(getEstado());
+	}
+
+	public Animacion getAnimacion(String nombre) {
 		if (getAnimaciones().containsKey(nombre)) {
-			return getAnimaciones().get(nombre).actual(getTiempoTranscurrido());
+			return getAnimaciones().get(nombre);
 		} else if (nombre != getEstadoDefault()) {
-			return getAnimacionActual(getEstadoDefault());
+			return getAnimacion(getEstadoDefault());
 		} else {
 			throw new AnimacionInexistenteException(getName(), nombre);
 		}
+	}
+
+	protected Animation getAnimacionActual() {
+		return getAnimacion().actual();
 	}
 
 	public void setAnimaciones(Map<String, Animacion> animacion) {
@@ -472,6 +483,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setHeightTextura(float heightTextura) {
 		this.heightTextura = heightTextura;
+	}
+
+	public boolean isQuitarConAnimacion() {
+		return quitarConAnimacion;
+	}
+
+	public void setQuitarConAnimacion(boolean quitarConAnimacion) {
+		this.quitarConAnimacion = quitarConAnimacion;
 	}
 
 }

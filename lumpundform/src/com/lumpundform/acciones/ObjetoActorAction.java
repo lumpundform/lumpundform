@@ -18,6 +18,9 @@ public class ObjetoActorAction extends Action {
 
 		if (a != null) {
 			a.setTiempoTranscurrido(a.getTiempoTranscurrido() + delta);
+			if (a.getAnimacion().isTerminada() && a.isQuitarConAnimacion()) {
+				a.quitar();
+			}
 		}
 
 		return false;

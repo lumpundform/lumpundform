@@ -31,10 +31,7 @@ public class HabilidadEscudo extends Habilidad {
 
 	@Override
 	public void detener() {
-		if (ataque != null) {
-			ataque.quitar();
-			ataque = null;
-		}
+		ataque.getAnimacion().terminar();
 	}
 
 }
