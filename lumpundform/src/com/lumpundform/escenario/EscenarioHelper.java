@@ -117,24 +117,18 @@ public class EscenarioHelper {
 			float destinoCamara;
 
 			if (heroe.derecha()) {
-				destinoCamara = heroe.getX() + heroe.getWidth() / 2
-						+ camara.viewportWidth / 6;
+				destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
 				if (camara.position.x < destinoCamara) {
-					camara.setPosicion(
-							(float) (camara.position.x + heroe
-									.getVelocidad(delta) * factor),
+					camara.setPosicion((float) (camara.position.x + heroe.getVelocidad(delta) * factor),
 							camara.position.y);
 				}
 				if (camara.position.x >= destinoCamara) {
 					camara.setPosicion(destinoCamara, camara.position.y);
 				}
 			} else {
-				destinoCamara = heroe.getX() + heroe.getWidth() / 2
-						- camara.viewportWidth / 6;
+				destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
 				if (camara.position.x > destinoCamara) {
-					camara.setPosicion(
-							(float) (camara.position.x - heroe
-									.getVelocidad(delta) * factor),
+					camara.setPosicion((float) (camara.position.x - heroe.getVelocidad(delta) * factor),
 							camara.position.y);
 				}
 				if (camara.position.x <= destinoCamara) {
@@ -144,10 +138,8 @@ public class EscenarioHelper {
 
 			if (camara.getPosicionOrigen().x < 0)
 				camara.setPosicionOrigen(0, camara.getPosicionOrigen().y);
-			if (camara.getPosicionOrigen().x + camara.viewportWidth > mh
-					.getWidth())
-				camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth,
-						camara.getPosicionOrigen().y);
+			if (camara.getPosicionOrigen().x + camara.viewportWidth > mh.getWidth())
+				camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth, camara.getPosicionOrigen().y);
 		} catch (EscenarioSinHeroeException e) {
 		}
 	}
@@ -198,5 +190,13 @@ public class EscenarioHelper {
 
 	public void setDibujarColision(boolean dibujarColision) {
 		this.dibujarColision = dibujarColision;
+	}
+
+	public boolean getInterfazBloqueada() {
+		return escenario.getInterfazBloqueada();
+	}
+
+	public void setInterfazBloqueada(boolean estado) {
+		this.escenario.setInterfazBloqueada(estado);
 	}
 }

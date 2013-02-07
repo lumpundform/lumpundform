@@ -57,10 +57,8 @@ public class Escena {
 	private void ejecutarAcciones(float delta, Paso paso) {
 		for (int i = 0; i < paso.acciones.size; i++) {
 			if (!paso.acciones.get(i).getTerminado()) {
-				ejecutarAccion(paso.acciones.get(i), delta,
-						(Personaje) escenario.getActor(paso.acciones.get(i)
-								.getNombreActor(), paso.acciones.get(i)
-								.getPosicion()));
+				ejecutarAccion(paso.acciones.get(i), delta, (Personaje) escenario.getActor(paso.acciones.get(i)
+						.getNombreActor(), paso.acciones.get(i).getPosicion()));
 			}
 		}
 	}
@@ -95,18 +93,15 @@ public class Escena {
 		}
 	}
 
-	private void caminar(float destino, float delta, Accion accion,
-			Personaje personaje) {
+	private void caminar(float destino, float delta, Accion accion, Personaje personaje) {
 
 		if (!accion.getTerminado()) {
 			personaje.setDestinoX(destino);
 			personaje.setDireccionDestinoX(Direccion.DERECHA);
 			personaje.moverDestino(delta);
 		}
-		if ((personaje.getDestinoX() > personaje.getX() && personaje
-				.getDireccionDestinoX() == Direccion.IZQUIERDA)
-				|| (personaje.getDestinoX() < personaje.getX() && personaje
-						.getDireccionDestinoX() == Direccion.DERECHA))
+		if ((personaje.getDestinoX() > personaje.getX() && personaje.getDireccionDestinoX() == Direccion.IZQUIERDA)
+				|| (personaje.getDestinoX() < personaje.getX() && personaje.getDireccionDestinoX() == Direccion.DERECHA))
 			accion.terminar();
 
 	}

@@ -72,57 +72,59 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		try {
-			Heroe heroe = escenario.getHeroe();
-			/* Disparar */
-			if (keycode == Keys.SPACE) {
-				heroe.habilidad("disparar");
-				return true;
-			}
-			/* Usar escudo */
-			if (keycode == Keys.SHIFT_LEFT) {
-				heroe.habilidad("escudo");
-				return true;
-			}
-			/* Usar poción vida */
-			if (keycode == Keys.Q) {
-				heroe.usarPocion("vida");
-				return true;
-			}
-			/* Usar poción mana */
-			if (keycode == Keys.E) {
-				heroe.usarPocion("mana");
-				return true;
-			}
-			/* Mover al héroe */
-			if (keycode == Keys.A || keycode == Keys.D) {
-				if (heroe.getMovimiento() == 0) {
-					if (keycode == Keys.A) {
-						heroe.setMovimiento(-1);
-					} else {
-						heroe.setMovimiento(1);
-					}
+		if(!escenario.getInterfazBloqueada() || keycode == Keys.N){
+			try {
+				Heroe heroe = escenario.getHeroe();
+				/* Disparar */
+				if (keycode == Keys.SPACE) {
+					heroe.habilidad("disparar");
 					return true;
 				}
+				/* Usar escudo */
+				if (keycode == Keys.SHIFT_LEFT) {
+					heroe.habilidad("escudo");
+					return true;
+				}
+				/* Usar poción vida */
+				if (keycode == Keys.Q) {
+					heroe.usarPocion("vida");
+					return true;
+				}
+				/* Usar poción mana */
+				if (keycode == Keys.E) {
+					heroe.usarPocion("mana");
+					return true;
+				}
+				/* Mover al héroe */
+				if (keycode == Keys.A || keycode == Keys.D) {
+					if (heroe.getMovimiento() == 0) {
+						if (keycode == Keys.A) {
+							heroe.setMovimiento(-1);
+						} else {
+							heroe.setMovimiento(1);
+						}
+						return true;
+					}
+				}
+			} catch (EscenarioSinHeroeException e) {
 			}
-		} catch (EscenarioSinHeroeException e) {
-		}
-		/* Avanzar texto en diálogos */
-		if (keycode == Keys.N) {
-			escenario.siguienteCuadroTexto();
-			return true;
-		}
-		/* Usar habilidades de interfaz */
-		if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) {
-			escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
-		}
-		/* Toggle líneas de colisión */
-		if (keycode == Keys.BACKSPACE) {
-			escenario.setDibujarColision(!escenario.isDibujarColision());
-		}
-		/* Toggle UI */
-		if (keycode == Keys.T) {
-			escenario.getEscenario().toggleUI();
+			/* Avanzar texto en diálogos */
+			if (keycode == Keys.N) {
+				escenario.siguienteCuadroTexto();
+				return true;
+			}
+			/* Usar habilidades de interfaz */
+			if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) {
+				escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
+			}
+			/* Toggle líneas de colisión */
+			if (keycode == Keys.BACKSPACE) {
+				escenario.setDibujarColision(!escenario.isDibujarColision());
+			}
+			/* Toggle UI */
+			if (keycode == Keys.T) {
+				escenario.getEscenario().toggleUI();
+			}
 		}
 		return false;
 	}

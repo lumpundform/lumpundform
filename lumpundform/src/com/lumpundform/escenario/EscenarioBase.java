@@ -52,6 +52,8 @@ public class EscenarioBase extends Stage {
 	private Array<Evento> eventos;
 	private Array<Escena> escenas;
 
+	private boolean interfazBloqueada = false;
+
 	/**
 	 * Inicializa un nuevo escenario con los datos dados. Se inicializa un nuevo
 	 * contador aleatorio para las pociones.
@@ -459,7 +461,7 @@ public class EscenarioBase extends Stage {
 			Actor actor = actores.get(i);
 			if (actor.getClass().getSimpleName().contains("Boton")
 					|| actor.getClass().getSimpleName().contains("Barra")) {
-				if(actor.isVisible())
+				if (actor.isVisible())
 					actor.setVisible(false);
 				else
 					actor.setVisible(true);
@@ -480,21 +482,29 @@ public class EscenarioBase extends Stage {
 	}
 
 	public ObjetoActor getActor(String nombreActor) {
-		return getActor(nombreActor, new Vector2(0,0));
+		return getActor(nombreActor, new Vector2(0, 0));
 	}
-	
+
 	public ObjetoActor getActor(String nombreActor, Vector2 posicion) {
 		ObjetoActor personaje = null;
 		for (ObjetoActor personajeTemporal : getActores(ObjetoActor.class)) {
-			if(personajeTemporal.getName().equals(nombreActor)) {
+			if (personajeTemporal.getName().equals(nombreActor)) {
 				personaje = personajeTemporal;
 				break;
 			}
 		}
-		if(personaje == null) {
+		if (personaje == null) {
 			addActor(new Humanoide(nombreActor, posicion));
 			personaje = (Personaje) getActor(nombreActor);
 		}
 		return personaje;
+	}
+
+	public boolean getInterfazBloqueada() {
+		return interfazBloqueada;
+	}
+
+	public void setInterfazBloqueada(boolean bloquear) {
+		this.interfazBloqueada = bloquear;
 	}
 }

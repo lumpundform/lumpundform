@@ -87,11 +87,13 @@ public class Evento {
 			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
 				escenario.esconderUI(false);
+				escenario.setInterfazBloqueada(true);
 			} else if (activado && !terminado && !escena.getTerminada()) {
 				escena.ejecutarEscena(delta, escenario);
 			} else if (activado && escena.getTerminada()) {
 				terminado = true;
 				escenario.esconderUI(true);
+				escenario.setInterfazBloqueada(false);
 			}
 		}
 	}
@@ -127,7 +129,7 @@ public class Evento {
 	public boolean esEscenaActivada() {
 		return (activado && !terminado && tipo.equals("escena"));
 	}
-	
+
 	public void continuarConversacionEnEscena() {
 		escena.continuarConversacion();
 	}
