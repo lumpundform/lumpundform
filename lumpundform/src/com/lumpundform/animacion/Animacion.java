@@ -25,6 +25,7 @@ public class Animacion {
 	private float tiempoPorCuadro;
 
 	private boolean terminada;
+	private boolean marcadaTerminar;
 
 	// Animaciones
 	private String animacionAnterior;
@@ -119,11 +120,14 @@ public class Animacion {
 	 * terminar.
 	 */
 	public void terminar() {
-		if (animaciones.get("fin") != null) {
-			animacionActual = "fin";
-			actor.setTiempoTranscurrido(0.0f);
-		} else {
-			terminada = true;
+		if (!marcadaTerminar) {
+			if (animaciones.get("fin") != null) {
+				animacionActual = "fin";
+				actor.setTiempoTranscurrido(0.0f);
+			} else {
+				terminada = true;
+			}
+			marcadaTerminar = true;
 		}
 	}
 
