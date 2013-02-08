@@ -16,7 +16,7 @@ class BotonHabilidad extends BotonSuperior {
 	private int posicion;
 
 	BotonHabilidad(EscenarioBase escenario, Habilidad habilidad, int posicion) {
-		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1, 1, 1, 1), escenario);
+		super(new NinePatch(new Texture(Gdx.files.internal("texturas/manabar.png")), 1, 1, 1, 1), escenario);
 
 		setHabilidad(habilidad);
 		setPosicion(posicion);

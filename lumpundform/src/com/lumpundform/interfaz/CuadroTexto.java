@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.utilerias.Fuentes;
 
 public class CuadroTexto {
-	private NinePatch np = new NinePatch(new Texture(Gdx.files.internal("ct.png")), 3,
+	private NinePatch np = new NinePatch(new Texture(Gdx.files.internal("texturas/ct.png")), 3,
 			3, 3, 3);
 	
 	private static BitmapFont bmf = Fuentes.regular();
 
-	private Texture retrato = new Texture(Gdx.files.internal("samus_portrait.png"));
+	private Texture retrato = new Texture(Gdx.files.internal("personajes/samus_portrait.png"));
 	
 	private SpriteBatch batch = new SpriteBatch();
 	

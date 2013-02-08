@@ -12,7 +12,7 @@ class BotonBarra extends BotonBase {
 	protected BotonBarra(NinePatch ninePatch, EscenarioBase escenario) {
 		super(ninePatch, escenario);
 		setyBase(getCamara().viewportHeight - UI.margen - UI.altoBoton - UI.margen - UI.altoBarra);
-		barBackground = new NinePatch(new Texture(Gdx.files.internal("bar_background.png")), 1, 1, 1, 1);
+		barBackground = new NinePatch(new Texture(Gdx.files.internal("texturas/bar_background.png")), 1, 1, 1, 1);
 	}
 
 	@Override

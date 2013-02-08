@@ -17,8 +17,8 @@ public class BarraVida extends Actor {
 	public BarraVida(Personaje personaje) {
 		this.personaje = personaje;
 		
-		vida = new NinePatch(new Texture(Gdx.files.internal("lifebar.png")), 1, 1, 1, 1);
-		fondo = new NinePatch(new Texture(Gdx.files.internal("bar_background.png")), 1, 1, 1, 1);
+		vida = new NinePatch(new Texture(Gdx.files.internal("texturas/lifebar.png")), 1, 1, 1, 1);
+		fondo = new NinePatch(new Texture(Gdx.files.internal("texturas/bar_background.png")), 1, 1, 1, 1);
 		
 		setHeight(alto);
 		anchoTotal = personaje.getHitbox().getAncho();

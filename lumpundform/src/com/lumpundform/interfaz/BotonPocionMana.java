@@ -9,7 +9,7 @@ import com.lumpundform.excepciones.EscenarioSinHeroeException;
 public class BotonPocionMana extends BotonPocionBase {
 
 	protected BotonPocionMana(EscenarioBase escenario) {
-		super(new NinePatch(new Texture(Gdx.files.internal("pocion_mana.png")), 0, 0, 0, 0), escenario);
+		super(new NinePatch(new Texture(Gdx.files.internal("texturas/pocion_mana.png")), 0, 0, 0, 0), escenario);
 		setxBase(getCamara().viewportWidth - UI.anchoBarra - UI.margen);
 		setTipo("mana");
 		try {

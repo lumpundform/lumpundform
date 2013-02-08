@@ -9,7 +9,7 @@ import com.lumpundform.excepciones.EscenarioSinHeroeException;
 public class BotonPocionVida extends BotonPocionBase {
 
 	protected BotonPocionVida(EscenarioBase escenario) {
-		super(new NinePatch(new Texture(Gdx.files.internal("pocion_vida.png")), 0, 0, 0, 0), escenario);
+		super(new NinePatch(new Texture(Gdx.files.internal("texturas/pocion_vida.png")), 0, 0, 0, 0), escenario);
 		setxBase(UI.margen);
 		setTipo("vida");
 		try {

@@ -10,7 +10,7 @@ import com.lumpundform.escenario.EscenarioBase;
 class BotonMenu extends BotonSuperior {
 
 	BotonMenu(EscenarioBase escenario) {
-		super(new NinePatch(new Texture(Gdx.files.internal("manabar.png")), 1, 1, 1, 1), escenario);
+		super(new NinePatch(new Texture(Gdx.files.internal("texturas/manabar.png")), 1, 1, 1, 1), escenario);
 		setWidth(anchoBoton());
 		setHeight(UI.altoBoton);
 		setxBase((getCamara().viewportWidth / 2) - (anchoBoton() / 2));
