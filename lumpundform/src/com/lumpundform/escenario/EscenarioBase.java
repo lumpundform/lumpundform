@@ -14,6 +14,9 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -461,10 +464,18 @@ public class EscenarioBase extends Stage {
 			Actor actor = actores.get(i);
 			if (actor.getClass().getSimpleName().contains("Boton")
 					|| actor.getClass().getSimpleName().contains("Barra")) {
-				if (actor.isVisible())
-					actor.setVisible(false);
-				else
-					actor.setVisible(true);
+				if (actor.isVisible()) {
+					SequenceAction sequence = new SequenceAction();
+					sequence.addAction(Actions.fadeOut(0.30f));
+					sequence.addAction(Actions.delay(0.30f));
+					sequence.addAction(Actions.hide());
+					actor.addAction(sequence);
+				} else {
+					SequenceAction sequence = new SequenceAction();
+					sequence.addAction(Actions.show());
+					sequence.addAction(Actions.fadeIn(0.30f));
+					actor.addAction(sequence);
+				}
 			}
 		}
 	}
@@ -476,7 +487,18 @@ public class EscenarioBase extends Stage {
 			Actor actor = actores.get(i);
 			if (actor.getClass().getSimpleName().contains("Boton")
 					|| actor.getClass().getSimpleName().contains("Barra")) {
-				actor.setVisible(setVisible);
+				if (!setVisible) {
+					SequenceAction sequence = new SequenceAction();
+					sequence.addAction(Actions.fadeOut(0.30f));
+					sequence.addAction(Actions.delay(0.30f));
+					sequence.addAction(Actions.hide());
+					actor.addAction(sequence);
+				} else {
+					SequenceAction sequence = new SequenceAction();
+					sequence.addAction(Actions.show());
+					sequence.addAction(Actions.fadeIn(0.30f));
+					actor.addAction(sequence);
+				}
 			}
 		}
 	}
