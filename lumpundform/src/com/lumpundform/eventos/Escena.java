@@ -1,5 +1,8 @@
 package com.lumpundform.eventos;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -19,6 +22,7 @@ public class Escena {
 	private EscenarioBase escenario;
 
 	// Cuadros de texto
+	Map<Personaje, CuadroTexto> cuadrosTexto = new HashMap<Personaje, CuadroTexto>();
 	CuadroTexto ctDer = new CuadroTexto("der");
 	CuadroTexto ctIzq = new CuadroTexto("izq");
 
@@ -65,7 +69,7 @@ public class Escena {
 
 	private void ejecutarAccion(Accion accion, Personaje personaje) {
 		if (accion.getObjetivo().equals("hablar"))
-			hablar(accion);
+			hablar(accion, personaje);
 		else if (accion.getObjetivo().equals("ir_a"))
 			caminar(accion.getDestino(), accion, personaje);
 		else if (accion.getObjetivo().equals("teletransportarse"))
@@ -86,8 +90,13 @@ public class Escena {
 
 	// Acciones para las escenas
 
-	private void hablar(Accion accion) {
+	private void hablar(Accion accion, Personaje personaje) {
 		if (!accion.getTerminado()) {
+			if(cuadrosTexto.containsKey(personaje)) {
+				cuadrosTexto.get(personaje).setTexto(accion.getTexto());
+			} else {
+				cuadrosTexto.put(personaje, new CuadroTexto("izq"));
+			}
 			ctIzq.setTexto(accion.getTexto());
 			ctIzq.draw();
 		}
