@@ -14,7 +14,9 @@ public abstract class Habilidad {
 
 	private float mana;
 	private float manaMinimo;
+
 	private boolean sostenido;
+	private boolean ejecutandose;
 
 	protected Habilidad(Personaje actor, String nombre, float cooldownDefault) {
 		this(actor, nombre, 0.0f, cooldownDefault);
@@ -26,6 +28,7 @@ public abstract class Habilidad {
 		setCooldown(coolDown);
 		setCooldownDefault(cooldownDefault);
 		setSostenido(false);
+		setEjecutandose(false);
 	}
 
 	public abstract void ejecutar(Vector2 pos);
@@ -67,6 +70,9 @@ public abstract class Habilidad {
 			return false;
 		if (getManaMinimo() > getActor().getMana())
 			return false;
+		if (isSostenido() && isEjecutandose()) {
+			return false;
+		}
 
 		return true;
 	}
@@ -128,6 +134,14 @@ public abstract class Habilidad {
 
 	public void setManaMinimo(float manaMinimo) {
 		this.manaMinimo = manaMinimo;
+	}
+
+	public boolean isEjecutandose() {
+		return ejecutandose;
+	}
+
+	public void setEjecutandose(boolean ejecutandose) {
+		this.ejecutandose = ejecutandose;
 	}
 
 }

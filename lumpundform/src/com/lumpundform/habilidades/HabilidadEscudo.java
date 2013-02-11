@@ -26,12 +26,14 @@ public class HabilidadEscudo extends Habilidad {
 		if (sePuedeEjecutar()) {
 			ataque = new AtaqueEscudo(getActor(), this);
 			crearAtaque(ataque);
+			setEjecutandose(true);
 		}
 	}
 
 	@Override
 	public void detener() {
 		ataque.getAnimacion().terminar();
+		setEjecutandose(false);
 	}
 
 }
