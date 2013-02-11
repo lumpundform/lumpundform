@@ -7,13 +7,14 @@ public class Accion {
 
 	private boolean terminado = false;
 
-	public String nombreActor;
-	public String objetivo;
-	public String destino;
-	public String texto;
+	private String nombreActor;
+	private String objetivo;
+	private String destino;
+	private String texto;
+	private String posicionTexto;
 
-	public float posicionX = 0.0f;
-	public float posicionY = 0.0f;
+	private float posicionX = 0.0f;
+	private float posicionY = 0.0f;
 
 	public Accion(Element accion) {
 		this.nombreActor = accion.get("actor");
@@ -23,6 +24,8 @@ public class Accion {
 			this.destino = accion.get("destino");
 		if (accion.getAttributes().containsKey("texto"))
 			this.texto = accion.get("texto");
+		if(accion.getAttributes().containsKey("posicion"))
+			this.posicionTexto = accion.get("posicion");
 		if (accion.getAttributes().containsKey("posicionX"))
 			this.posicionX = Float.parseFloat(accion.get("posicionX"));
 		if (accion.getAttributes().containsKey("posicionY"))
@@ -51,6 +54,10 @@ public class Accion {
 
 	public boolean getTerminado() {
 		return terminado;
+	}
+	
+	public String getPosicionTexto() {
+		return posicionTexto;
 	}
 
 	public void terminar() {

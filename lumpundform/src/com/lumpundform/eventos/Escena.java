@@ -10,6 +10,7 @@ import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.interfaz.CuadroTexto;
+import com.lumpundform.utilerias.U;
 
 public class Escena {
 
@@ -22,9 +23,7 @@ public class Escena {
 	private EscenarioBase escenario;
 
 	// Cuadros de texto
-	Map<Personaje, CuadroTexto> cuadrosTexto = new HashMap<Personaje, CuadroTexto>();
-	CuadroTexto ctDer = new CuadroTexto("der");
-	CuadroTexto ctIzq = new CuadroTexto("izq");
+	Map<String, CuadroTexto> cuadrosTexto = new HashMap<String, CuadroTexto>();
 
 	public Escena(Element escena, String nombreEscena) {
 		crearPasos(escena.getChildrenByNameRecursively("paso"));
@@ -92,14 +91,14 @@ public class Escena {
 
 	private void hablar(Accion accion, Personaje personaje) {
 		if (!accion.getTerminado()) {
-			if(cuadrosTexto.containsKey(personaje)) {
-				cuadrosTexto.get(personaje).setTexto(accion.getTexto());
-			} else {
-				cuadrosTexto.put(personaje, new CuadroTexto("izq"));
+			if (!cuadrosTexto.containsKey(personaje.getName())) {
+				U.l("dir", accion.getPosicionTexto());
+				CuadroTexto tempCT = new CuadroTexto(accion.getPosicionTexto());
+				tempCT.setTexto(accion.getTexto());
+				cuadrosTexto.put(personaje.getName(), tempCT);
 			}
-			ctIzq.setTexto(accion.getTexto());
-			ctIzq.draw();
 		}
+		dibujarTexto(personaje.getName());
 	}
 
 	private void caminar(float destino, Accion accion, Personaje personaje) {
@@ -112,7 +111,6 @@ public class Escena {
 		if ((personaje.getDestinoX() > personaje.getX() && personaje.getDireccionDestinoX() == Direccion.IZQUIERDA)
 				|| (personaje.getDestinoX() < personaje.getX() && personaje.getDireccionDestinoX() == Direccion.DERECHA))
 			accion.terminar();
-
 	}
 
 	private void teletransportarse(Vector2 pos, Accion accion, Personaje personaje) {
@@ -138,5 +136,10 @@ public class Escena {
 		if (paso < pasos.size)
 			return pasos.get(paso);
 		return null;
+	}
+
+	private void dibujarTexto(String nombrePersonaje) {
+		CuadroTexto ct = cuadrosTexto.get(nombrePersonaje);
+		ct.draw();
 	}
 }

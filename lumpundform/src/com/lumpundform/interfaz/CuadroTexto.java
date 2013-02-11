@@ -19,7 +19,7 @@ public class CuadroTexto {
 	
 	public Boolean dibujar = true;
 
-	private float posicionX;
+	public float posicionX;
 	private float posicionY = 400.0f;
 	private float anchoCuadro = 300.0f;
 	private float altoCuadro = 60.0f;
@@ -40,7 +40,7 @@ public class CuadroTexto {
 		if(posicion == "der") {
 			this.posicionX = Gdx.graphics.getWidth() - this.anchoCuadro - 10.0f;
 			this.posicionRetratoX = (posicionX - paddingX);
-		} else if (posicion == "izq") {
+		} else {
 			this.posicionX = 10.0f;
 			this.posicionRetratoX = (posicionX + (anchoCuadro - retrato.getWidth() - paddingX));
 		}
