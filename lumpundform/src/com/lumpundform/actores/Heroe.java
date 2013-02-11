@@ -79,6 +79,7 @@ public class Heroe extends Mago {
 		// TODO: cargar habilidadesInterfaz de los settings
 		habilidadesInterfaz = new ArrayList<Habilidad>();
 		getHabilidadesInterfaz().add(getHabilidad("disparar"));
+		getHabilidadesInterfaz().add(getHabilidad("escudo"));
 		getHabilidadesInterfaz().add(getHabilidad("teletransportar"));
 	}
 
