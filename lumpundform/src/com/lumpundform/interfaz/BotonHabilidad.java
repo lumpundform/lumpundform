@@ -28,13 +28,21 @@ class BotonHabilidad extends BotonSuperior {
 
 		addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				try {
 					BotonHabilidad boton = (BotonHabilidad) event.getListenerActor();
 					Heroe heroe = ((EscenarioBase) boton.getStage()).getHeroe();
 					heroe.habilidad(boton.habilidad.getNombre());
 				} catch (EscenarioSinHeroeException e) {
 				}
+				return super.touchDown(event, x, y, pointer, button);
+			}
+			
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				BotonHabilidad boton = (BotonHabilidad) event.getListenerActor();
+				boton.habilidad.detener();
+				super.touchUp(event, x, y, pointer, button);
 			}
 		});
 	}
