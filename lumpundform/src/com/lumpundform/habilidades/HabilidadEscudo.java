@@ -2,7 +2,6 @@ package com.lumpundform.habilidades;
 
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Personaje;
-import com.lumpundform.ataques.Ataque;
 import com.lumpundform.ataques.AtaqueEscudo;
 
 /**
@@ -11,29 +10,20 @@ import com.lumpundform.ataques.AtaqueEscudo;
  * @author Sergio Valencia
  * 
  */
-public class HabilidadEscudo extends Habilidad {
-	private Ataque ataque;
+public class HabilidadEscudo extends HabilidadSostenida {
 
-	protected HabilidadEscudo(Personaje actor, String nombre) {
-		super(actor, nombre, 0.0f);
-		setSostenido(true);
-		setMana(20.0f);
-		setManaMinimo(5.0f);
+	protected HabilidadEscudo(Personaje actor) {
+		super(actor, "escudo", 0.0f, 5.0f);
+		setMana(10.0f);
 	}
 
 	@Override
 	public void ejecutar(Vector2 pos) {
-		if (sePuedeEjecutar()) {
-			ataque = new AtaqueEscudo(getActor(), this);
-			crearAtaque(ataque);
-			setEjecutandose(true);
-		}
-	}
+		if (!sePuedeEjecutar())
+			return;
 
-	@Override
-	public void detener() {
-		ataque.getAnimacion().terminar();
-		setEjecutandose(false);
+		ataque = new AtaqueEscudo(getActor(), this);
+		super.ejecutar(pos);
 	}
 
 }
