@@ -72,7 +72,7 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if(!escenario.getInterfazBloqueada() || keycode == Keys.N){
+		if (!escenario.getInterfazBloqueada() || keycode == Keys.N) {
 			try {
 				Heroe heroe = escenario.getHeroe();
 				/* Disparar */
@@ -83,6 +83,11 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				/* Usar escudo */
 				if (keycode == Keys.SHIFT_LEFT) {
 					heroe.habilidad("escudo");
+					return true;
+				}
+				/* Usar blizzard */
+				if (keycode == Keys.C) {
+					heroe.habilidad("blizzard");
 					return true;
 				}
 				/* Usar poción vida */
