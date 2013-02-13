@@ -56,7 +56,7 @@ public abstract class ObjetoActor extends Actor {
 
 	// Colisión
 	private Rectangulo hitbox;
-	private Map<String, Vector2> sensores;
+	private Map<String, Vector2> esquinas;
 	private boolean colisionActores = false;
 	private boolean colisionPiso = false;
 
@@ -75,7 +75,7 @@ public abstract class ObjetoActor extends Actor {
 
 		setName(nombre);
 
-		sensores = new HashMap<String, Vector2>();
+		esquinas = new HashMap<String, Vector2>();
 		setAnimaciones(new HashMap<String, Animacion>());
 		setLoopAnimacion(true);
 
@@ -117,9 +117,9 @@ public abstract class ObjetoActor extends Actor {
 		if (getHitbox() == null)
 			return null;
 
-		sensores.remove(nombre);
-		sensores.put(nombre, getHitbox().punto(nombre));
-		return sensores.get(nombre);
+		esquinas.remove(nombre);
+		esquinas.put(nombre, getHitbox().punto(nombre));
+		return esquinas.get(nombre);
 	}
 
 	/**
