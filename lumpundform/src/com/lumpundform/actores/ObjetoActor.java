@@ -169,6 +169,15 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
+	 * Calcula la velocidad del {@link ObjetoActor} con el delta default.
+	 * 
+	 * @return La velocidad calculada.
+	 */
+	public float velDelta() {
+		return velDelta(Gdx.graphics.getDeltaTime());
+	}
+
+	/**
 	 * Calcula la velocidad del {@link ObjetoActor} conforme al delta
 	 * transcurrido.
 	 * 
@@ -176,38 +185,27 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render(float)}.
 	 * @return La velocidad calculada.
 	 */
-	public float getVelocidad(float delta) {
+	public float velDelta(float delta) {
 		return delta * velocidad;
 	}
 
 	/**
 	 * Mueve al {@link ObjetoActor} en la dirección en la que está volteando
 	 * actualmente.
-	 * 
-	 * @param delta
-	 *            El delta de {@link Screen#render(float)}.
 	 */
-	public void moverEnDireccion(float delta) {
+	public void moverEnDireccion() {
 		if (derecha()) {
-			moverDerecha(delta);
+			moverDerecha();
 		} else {
-			moverIzquierda(delta);
+			moverIzquierda();
 		}
 	}
 
 	/**
-	 * Mueve al {@link ObjetoActor} en la dirección opuesta en la que está
-	 * volteando actualmente.
-	 * 
-	 * @param delta
-	 *            El delta de {@link Screen#render(float)}.
+	 * Mueve al {@link ObjetoActor} a la izquierda con el delta default.
 	 */
-	public void moverEnDireccionOpuesta(float delta) {
-		if (derecha()) {
-			moverIzquierda(delta);
-		} else {
-			moverDerecha(delta);
-		}
+	protected void moverIzquierda() {
+		moverIzquierda(Gdx.graphics.getDeltaTime());
 	}
 
 	/**
@@ -217,7 +215,14 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render(float)}.
 	 */
 	protected void moverIzquierda(float delta) {
-		setX(getX() - getVelocidad(delta));
+		setX(getX() - velDelta(delta));
+	}
+
+	/**
+	 * Mueve al {@link ObjetoActor} a la derecha con el delta default.
+	 */
+	protected void moverDerecha() {
+		moverDerecha(Gdx.graphics.getDeltaTime());
 	}
 
 	/**
@@ -227,7 +232,7 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render(float)}.
 	 */
 	protected void moverDerecha(float delta) {
-		setX(getX() + getVelocidad(delta));
+		setX(getX() + velDelta(delta));
 	}
 
 	/**

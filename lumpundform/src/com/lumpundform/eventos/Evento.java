@@ -89,7 +89,7 @@ public class Evento {
 				escenario.esconderUI(false);
 				escenario.setInterfazBloqueada(true);
 			} else if (activado && !terminado && !escena.getTerminada()) {
-				escena.ejecutarEscena(delta, escenario);
+				escena.ejecutarEscena(escenario);
 			} else if (activado && escena.getTerminada()) {
 				terminado = true;
 				escenario.esconderUI(true);

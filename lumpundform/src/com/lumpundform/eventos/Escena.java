@@ -33,41 +33,41 @@ public class Escena {
 		}
 	}
 
-	public void ejecutarEscena(float delta, EscenarioBase escenario) {
+	public void ejecutarEscena(EscenarioBase escenario) {
 		this.escenario = escenario;
-		revisarPasos(delta);
+		revisarPasos();
 	}
 
-	private void revisarPasos(float delta) {
+	private void revisarPasos() {
 		if (paso < pasos.size) {
-			revisarAcciones(delta, pasos.get(paso));
+			revisarAcciones(pasos.get(paso));
 		} else {
 			terminado = true;
 		}
 	}
 
-	private void revisarAcciones(float delta, Paso paso) {
+	private void revisarAcciones(Paso paso) {
 		if (accionesTerminadas(paso)) {
-			ejecutarAcciones(delta, paso);
+			ejecutarAcciones(paso);
 		} else {
 			siguientePaso();
 		}
 	}
 
-	private void ejecutarAcciones(float delta, Paso paso) {
+	private void ejecutarAcciones(Paso paso) {
 		for (int i = 0; i < paso.acciones.size; i++) {
 			if (!paso.acciones.get(i).getTerminado()) {
-				ejecutarAccion(paso.acciones.get(i), delta, (Personaje) escenario.getActor(paso.acciones.get(i)
+				ejecutarAccion(paso.acciones.get(i), (Personaje) escenario.getActor(paso.acciones.get(i)
 						.getNombreActor(), paso.acciones.get(i).getPosicion()));
 			}
 		}
 	}
 
-	private void ejecutarAccion(Accion accion, float delta, Personaje personaje) {
+	private void ejecutarAccion(Accion accion, Personaje personaje) {
 		if (accion.getObjetivo().equals("hablar"))
 			hablar(accion);
 		else if (accion.getObjetivo().equals("ir_a"))
-			caminar(accion.getDestino(), delta, accion, personaje);
+			caminar(accion.getDestino(), accion, personaje);
 		else if (accion.getObjetivo().equals("teletransportarse"))
 			teletransportarse(accion.getPosicion(), accion, personaje);
 	}
@@ -93,12 +93,12 @@ public class Escena {
 		}
 	}
 
-	private void caminar(float destino, float delta, Accion accion, Personaje personaje) {
+	private void caminar(float destino, Accion accion, Personaje personaje) {
 
 		if (!accion.getTerminado()) {
 			personaje.setDestinoX(destino);
 			personaje.setDireccionDestinoX(Direccion.DERECHA);
-			personaje.moverDestino(delta);
+			personaje.moverDestino();
 		}
 		if ((personaje.getDestinoX() > personaje.getX() && personaje.getDireccionDestinoX() == Direccion.IZQUIERDA)
 				|| (personaje.getDestinoX() < personaje.getX() && personaje.getDireccionDestinoX() == Direccion.DERECHA))

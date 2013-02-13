@@ -56,9 +56,9 @@ public class AtaqueMisil extends Ataque {
 
 		if (movimiento) {
 			if (derecha()) {
-				moverDerecha(delta);
+				moverDerecha();
 			} else {
-				moverIzquierda(delta);
+				moverIzquierda();
 			}
 		}
 	}

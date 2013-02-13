@@ -151,15 +151,12 @@ public class Personaje extends ObjetoActor {
 	/**
 	 * Mueve al {@link Personaje} de acuerdo a su velocidad hacia la dirección
 	 * de su destino.
-	 * 
-	 * @param delta
-	 *            El delta de {@link Screen#render(float)}.
 	 */
-	public void moverDestino(float delta) {
+	public void moverDestino() {
 		if (getDireccionDestinoX() == Direccion.IZQUIERDA && getX() > getDestinoX()) {
-			moverIzquierda(delta);
+			moverIzquierda();
 		} else if (getDireccionDestinoX() == Direccion.DERECHA && getX() < getDestinoX()) {
-			moverDerecha(delta);
+			moverDerecha();
 		}
 	}
 
