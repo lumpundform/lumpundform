@@ -3,6 +3,7 @@ package com.lumpundform.actores;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -182,7 +183,7 @@ public abstract class ObjetoActor extends Actor {
 	 * transcurrido.
 	 * 
 	 * @param delta
-	 *            El delta que proviene de {@link Screen#render(float)}.
+	 *            El delta de {@link Screen#render(float)}.
 	 * @return La velocidad calculada.
 	 */
 	public float velDelta(float delta) {
@@ -275,18 +276,10 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
-	 * Regresa el hitbox del {@link ObjetoActor} en la posición especificada.
-	 * 
-	 * @param x
-	 *            posición X.
-	 * @param y
-	 *            posición Y.
-	 * @return El hitbox.
+	 * Dibuja al {@link ObjetoActor} en su posición actual. Calcula el cuadro
+	 * que debe dibujar de entre las animaciones del {@link ObjetoActor}
+	 * dependiendo de su estado y el tiempo transcurrido.
 	 */
-	protected Rectangulo getHitbox(float x, float y) {
-		return hitbox.posicionar(x, y);
-	}
-
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		boolean flip = false;
@@ -307,8 +300,8 @@ public abstract class ObjetoActor extends Actor {
 	}
 
 	/**
-	 * Regresa el cuadro actual dentro de la animación elegida del
-	 * {@link ObjetoActor}.
+	 * Regresa el cuadro actual del {@link ObjetoActor} dependiendo de su
+	 * animación actual.
 	 * 
 	 * @return El cuadro actual.
 	 */
@@ -336,10 +329,24 @@ public abstract class ObjetoActor extends Actor {
 		return animaciones;
 	}
 
+	/**
+	 * Regresa la {@link Animacion} del {@link ObjetoActor} dependiendo de su
+	 * estado actual.
+	 * 
+	 * @return La {@link Animacion}.
+	 */
 	public Animacion getAnimacion() {
 		return getAnimacion(getEstado());
 	}
 
+	/**
+	 * Regresa la {@link Animacion} del {@link ObjetoActor} dependiendo del
+	 * nombre que se especificó.
+	 * 
+	 * @param nombre
+	 *            El nombre de la animación.
+	 * @return La {@link Animacion}.
+	 */
 	public Animacion getAnimacion(String nombre) {
 		if (getAnimaciones().containsKey(nombre)) {
 			return getAnimaciones().get(nombre);
@@ -350,6 +357,12 @@ public abstract class ObjetoActor extends Actor {
 		}
 	}
 
+	/**
+	 * Regresa la {@link Animation} que corresponde actualmente a la
+	 * {@link Animacion}.
+	 * 
+	 * @return La {@link Animation}.
+	 */
 	protected Animation getAnimacionActual() {
 		return getAnimacion().actual();
 	}
@@ -458,6 +471,10 @@ public abstract class ObjetoActor extends Actor {
 		this.loopAnimacion = loopAnimacion;
 	}
 
+	/**
+	 * Si no se ha especificado el ancho de la textura, se inicializa igual que
+	 * el ancho del {@link Actor}.
+	 */
 	@Override
 	public void setWidth(float width) {
 		super.setWidth(width);
@@ -466,6 +483,10 @@ public abstract class ObjetoActor extends Actor {
 		}
 	}
 
+	/**
+	 * Si no se ha especificado el alto de la textura, se inicializa igual que
+	 * el alto del {@link Actor}.
+	 */
 	@Override
 	public void setHeight(float height) {
 		super.setHeight(height);

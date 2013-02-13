@@ -123,7 +123,8 @@ public class Heroe extends Mago {
 	}
 
 	/**
-	 * Mueve al {@link Heroe} al presionar las teclas adecuadas.
+	 * Mueve al {@link Heroe} en la dirección especificada. Se encarga de
+	 * modificar la velocidad de movimiento si está cayendo.
 	 * 
 	 * @param delta
 	 *            El delta de {@link Screen#render(float)}.
@@ -202,7 +203,7 @@ public class Heroe extends Mago {
 			setValor(tipo, getValor(tipo, true));
 		}
 	}
-	
+
 	@Override
 	public void quitar() {
 		((EscenarioBase) getStage()).setHeroeMuerto(true);

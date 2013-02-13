@@ -100,7 +100,8 @@ public class Personaje extends ObjetoActor {
 	}
 
 	/**
-	 * Realiza la {@link Habilidad} especificada del {@link Personaje}.
+	 * Realiza la {@link Habilidad} especificada del {@link Personaje}. Usar
+	 * para habilidades que no requieran de posición.
 	 * 
 	 * @param nombre
 	 *            El nombre de la habilidad a realizar.
@@ -233,6 +234,10 @@ public class Personaje extends ObjetoActor {
 		return escenario.getHeroe();
 	}
 
+	/**
+	 * @return Si hay {@link Heroe} en el escenario donde está el
+	 *         {@link Personaje}.
+	 */
 	public boolean hayHeroeEscenario() {
 		try {
 			((EscenarioBase) getStage()).getHeroe();
