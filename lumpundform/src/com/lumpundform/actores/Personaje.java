@@ -7,7 +7,6 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.PersonajeAction;
 import com.lumpundform.escenario.EscenarioBase;
@@ -77,14 +76,6 @@ public class Personaje extends ObjetoActor {
 		setRegenerarMana(true);
 
 		addAction(new PersonajeAction());
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		if (isColisionActores()) {
-			setEstado(Estado.COLISIONANDO);
-		}
-		super.draw(batch, parentAlpha);
 	}
 
 	/**

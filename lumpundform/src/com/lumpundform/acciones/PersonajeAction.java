@@ -32,6 +32,10 @@ public class PersonajeAction extends Action {
 					p.moverEnDireccion();
 				}
 			}
+
+			if (p.isColisionActores()) {
+				p.setEstado(Estado.COLISIONANDO);
+			}
 		}
 
 		return false;
