@@ -68,6 +68,15 @@
                 <cuadrosFin>3</cuadrosFin>
             </SpriteSheet>
         </SpriteSheetGrupo>
+        <SpriteSheetGrupo nombre="ataque_blizzard">
+            <SpriteSheet tipo="normal">
+                <ruta>ataques/blizzard_28x28.png</ruta>
+                <columnas>5</columnas>
+                <renglones>1</renglones>
+                <cuadrosInicio>2</cuadrosInicio>
+                <cuadrosFin>2</cuadrosFin>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="pocion_vida">
             <SpriteSheet tipo="normal">
                 <ruta>texturas/pocion_vida.png</ruta>
