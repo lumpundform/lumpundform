@@ -177,8 +177,12 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render(float)}.
 	 * @return La velocidad calculada.
 	 */
-	public float getVelocidad(float delta) {
+	public float calcVelocidad(float delta) {
 		return delta * velocidad;
+	}
+
+	public float calcVelocidadVertical(float delta) {
+		return delta * velocidadVertical;
 	}
 
 	/**
@@ -218,7 +222,7 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render(float)}.
 	 */
 	protected void moverIzquierda(float delta) {
-		setX(getX() - getVelocidad(delta));
+		setX(getX() - calcVelocidad(delta));
 	}
 
 	/**
@@ -228,7 +232,11 @@ public abstract class ObjetoActor extends Actor {
 	 *            El delta que proviene de {@link Screen#render(float)}.
 	 */
 	protected void moverDerecha(float delta) {
-		setX(getX() + getVelocidad(delta));
+		setX(getX() + calcVelocidad(delta));
+	}
+
+	protected void moverAbajo(float delta) {
+		setY(getY() - calcVelocidadVertical(delta));
 	}
 
 	/**

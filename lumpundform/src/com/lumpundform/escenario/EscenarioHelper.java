@@ -119,7 +119,7 @@ public class EscenarioHelper {
 			if (heroe.derecha()) {
 				destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
 				if (camara.position.x < destinoCamara) {
-					camara.setPosicion((float) (camara.position.x + heroe.getVelocidad(delta) * factor),
+					camara.setPosicion((float) (camara.position.x + heroe.calcVelocidad(delta) * factor),
 							camara.position.y);
 				}
 				if (camara.position.x >= destinoCamara) {
@@ -128,7 +128,7 @@ public class EscenarioHelper {
 			} else {
 				destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
 				if (camara.position.x > destinoCamara) {
-					camara.setPosicion((float) (camara.position.x - heroe.getVelocidad(delta) * factor),
+					camara.setPosicion((float) (camara.position.x - heroe.calcVelocidad(delta) * factor),
 							camara.position.y);
 				}
 				if (camara.position.x <= destinoCamara) {
