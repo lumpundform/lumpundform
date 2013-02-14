@@ -14,7 +14,17 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 
 		setHitbox(new Rectangulo(getWidth(), getHeight()));
 
+		setVelocidad(35.0f);
+		setVelocidadVertical(85.0f);
+
 		cargarAnimaciones("normal");
+	}
+
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		moverDerecha(delta);
+		moverAbajo(delta);
 	}
 
 }
