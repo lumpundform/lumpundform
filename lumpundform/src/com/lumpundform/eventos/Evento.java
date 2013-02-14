@@ -1,10 +1,12 @@
 package com.lumpundform.eventos;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.lumpundform.CamaraJuego;
+import com.lumpundform.utilerias.U;
 
 public class Evento {
 	private Vector2 posicion;
@@ -45,14 +47,14 @@ public class Evento {
 			escena = escenario.getEscena(objeto.properties.get("escena"));
 	}
 
-	public void revisarEvento(CamaraJuego camara, Heroe heroe, float delta) {
+	public void revisarEvento(Heroe heroe) {
 		if (!activado || !terminado) {
-			ejecutarEvento(camara, heroe, delta);
+			ejecutarEvento(heroe);
 		}
 
 	}
 
-	private void ejecutarEvento(CamaraJuego camara, Heroe heroe, float delta) {
+	private void ejecutarEvento(Heroe heroe) {
 		if (tipo.equals("spawn")) {
 			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
@@ -64,6 +66,7 @@ public class Evento {
 				terminado = true;
 			}
 		} else if (tipo.equals("coliseo")) {
+			CamaraJuego camara = U.getCamara();
 			if (!activado && heroe.getX() > (posicion.x - rango) && heroe.getX() < (posicion.x + rango)) {
 				activado = true;
 				camara.setBloqueada(true);
@@ -79,7 +82,7 @@ public class Evento {
 				activado = true;
 			} else if (activado && duracion > tiempoTranscurrido) {
 				// ejecutar lo que haga el evento
-				tiempoTranscurrido += delta;
+				tiempoTranscurrido += Gdx.graphics.getDeltaTime();
 			} else if (activado && duracion <= tiempoTranscurrido) {
 				terminado = true;
 			}

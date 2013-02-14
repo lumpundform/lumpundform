@@ -4,8 +4,8 @@ import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
 
 /**
- * La base para todos los ataques. Todos los {@link Ataque} inicializados tienen
- * que ser una sublcase de esta clase.
+ * La base para todos los ataques. Todos los {@link Ataque}s inicializados
+ * tienen que ser una sublcase de esta clase.
  * 
  * @author Sergio Valencia
  * 
@@ -21,8 +21,11 @@ public class Ataque extends ObjetoActor {
 	// Personaje
 	private Personaje personaje;
 
-	private boolean destruir = false;
+	// Daño
 	private float dano;
+
+	// Banderas
+	private boolean destruir = false;
 	private boolean haceDano = true;
 
 	/**

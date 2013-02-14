@@ -4,6 +4,14 @@ import com.lumpundform.actores.Personaje;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.habilidades.Habilidad;
 
+/**
+ * El ataque para la habilidad
+ * {@link com.lumpundform.habilidades.HabilidadEscudo}. Aunque no sea un ataque
+ * en sí, se inicializa ya que tiene animación, posición y tamaño.
+ * 
+ * @author Sergio Valencia
+ * 
+ */
 public class AtaqueEscudo extends Ataque {
 	private Habilidad habilidad;
 
@@ -44,6 +52,10 @@ public class AtaqueEscudo extends Ataque {
 		super.quitar();
 	}
 
+	/**
+	 * Actualiza la posición del ataque. Permite que el personaje se pueda mover
+	 * sin "dejar atras" al escudo.
+	 */
 	private void actualizarPosicion() {
 		float mitadPersonaje = getPersonaje().getHitbox().getAncho() / 2;
 		float mitadAtaque = getHitbox().getAncho() / 2;

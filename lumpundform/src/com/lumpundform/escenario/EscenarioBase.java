@@ -73,13 +73,17 @@ public class EscenarioBase extends Stage {
 	 */
 	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
 		super(width, height, stretch, batch);
+		eventos = new Array<Evento>();
 		random = new Random();
 		setPorcentajePociones(new Porcentaje());
 	}
 
 	@Override
 	public void addActor(Actor actor) {
-		/** Asigna un ID a todos los {@link ObjetoActor} agregados al escenario. */
+		/**
+		 * Asigna un ID a todos los {@link ObjetoActor}es agregados al
+		 * escenario.
+		 */
 		if (ObjetoActor.class.isInstance(actor)) {
 			ObjetoActor oa = (ObjetoActor) actor;
 			oa.setId(contador++);
@@ -101,7 +105,8 @@ public class EscenarioBase extends Stage {
 
 	/**
 	 * Revisa si el {@link Heroe} está colisionando con algún otro
-	 * {@link Personaje} en el escenario.
+	 * {@link Personaje} en el escenario. Marca al {@link Heroe} como
+	 * colisionando.
 	 */
 	void colisionActores() {
 		try {
@@ -286,11 +291,10 @@ public class EscenarioBase extends Stage {
 
 	/**
 	 * Acomoda al {@link Heroe} para que no se salga de la {@link CamaraJuego}.
-	 * 
-	 * @param camara
 	 */
-	void acomodarHeroe(CamaraJuego camara) {
+	void acomodarHeroe() {
 		try {
+			CamaraJuego camara = U.getCamara();
 			float min = camara.getPosicionOrigen().x;
 			float max = camara.getPosicionOrigen().x + camara.viewportWidth;
 			Heroe heroe = getHeroe();
@@ -302,23 +306,39 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Carga todos los eventos al {@link EscenarioBase} que se encuentran el
+	 * archivo .tmx.
+	 * 
+	 * @param tog
+	 *            El {@link TiledObjectGroup} donde se encuentran todos los
+	 *            eventos.
+	 */
 	void cargarEventos(TiledObjectGroup tog) {
-		eventos = new Array<Evento>();
-		for (int i = 0; i < tog.objects.size(); i++) {
-			TiledObject to = tog.objects.get(i);
+		for (TiledObject to : tog.objects) {
 			eventos.add(new Evento(U.voltearCoordenadas(to.x, to.y), to, this));
 		}
 	}
 
-	void revisarEventos(CamaraJuego camara, float delta) {
+	/**
+	 * Revisa todos los eventos del {@link EscenarioBase} para ver si se
+	 * ejecutan.
+	 */
+	void revisarEventos() {
 		try {
 			for (int i = 0; i < eventos.size; i++) {
-				eventos.get(i).revisarEvento(camara, getHeroe(), delta);
+				eventos.get(i).revisarEvento(getHeroe());
 			}
 		} catch (EscenarioSinHeroeException e) {
 		}
 	}
 
+	/**
+	 * Carga todas las {@link Escena}s del escenario especificado.
+	 * 
+	 * @param escenario
+	 *            El nombre del escenario del cual cargar las escenas.
+	 */
 	void cargarEscenas(String escenario) {
 		escenas = new Array<Escena>();
 
@@ -332,24 +352,48 @@ public class EscenarioBase extends Stage {
 
 		Array<Element> escena = xmlE.getChildrenByNameRecursively("escena");
 
-		for (int i = 0; i < escena.size; i++) {
-			escenas.add(new Escena(escena.get(i), escena.get(i).get("nombre")));
+		for (Element e : escena) {
+			escenas.add(new Escena(e, e.get("nombre")));
 		}
 	}
 
+	/**
+	 * @param nombre
+	 *            El nombre de la {@link Escena} a buscar.
+	 * @return La {@link Escena} con el nombre dado o <code>null</code> si no se
+	 *         encontró.
+	 */
 	public Escena getEscena(String nombre) {
-		for (int i = 0; i < escenas.size; i++) {
-			Escena escena = escenas.get(i);
+		for (Escena escena : escenas) {
 			if (escena.getNombre().equals(nombre))
 				return escena;
 		}
 		return null;
 	}
 
+	/**
+	 * Agrega a un actor sin evento.
+	 * 
+	 * @param tipo
+	 * @param posicion
+	 * @see #agregarActor(String, Vector2, String)
+	 */
 	void agregarActor(String tipo, Vector2 posicion) {
 		agregarActor(tipo, posicion, "");
 	}
 
+	/**
+	 * Agrega un actor al {@link EscenarioBase} en la posición y del tipo
+	 * especificado. También se inicializa el evento al que pertenece.
+	 * 
+	 * @param tipo
+	 *            El tipo de {@link ObjetoActor} a agregar.
+	 * @param posicion
+	 *            La posición en donde agregarlo.
+	 * @param evento
+	 *            El evento al que pertenece el {@link ObjetoActor}. Si no
+	 *            pertenece a ningún evento, pasar <code>""</code>.
+	 */
 	public void agregarActor(String tipo, Vector2 posicion, String evento) {
 		Personaje actor;
 		if (tipo == "heroe") {
@@ -383,6 +427,15 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Busca a todos los actores dentro del escenario de la clase dada.
+	 * 
+	 * @param <T>
+	 *            La clase a buscar. Tiene que heredar de {@link Actor}.
+	 * @param clase
+	 *            Llamar .class de la clase
+	 * @return Una lista de los actores tipo <T>.
+	 */
 	public <T extends Actor> List<T> getActores(Class<T> clase) {
 		@SuppressWarnings("unchecked")
 		Iterator<T> i = (Iterator<T>) getActors().iterator();
@@ -396,7 +449,12 @@ public class EscenarioBase extends Stage {
 		return actores;
 	}
 
-	void destruirAtaques(CamaraJuego camara) {
+	/**
+	 * Quita todos los ataques que no están dentro de la vista de la
+	 * {@link CamaraJuego}.
+	 */
+	void destruirAtaques() {
+		CamaraJuego camara = U.getCamara();
 		for (Ataque ataque : getActores(Ataque.class)) {
 			if ((ataque.getX() + ataque.getWidth()) < camara.getPosicionOrigen().x
 					|| ataque.getX() > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
@@ -405,24 +463,28 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Busca el {@link Evento} del nombre dado.
+	 * 
+	 * @param nombreEvento
+	 *            El nombre del {@link Evento}.
+	 * @return El {@link Evento} encontrado o null si no se encontró.
+	 */
 	public Evento getEvento(String nombreEvento) {
-		Evento evento = null;
-		for (int i = 0; i < eventos.size; i++) {
-			if (eventos.get(i).getNombre().equals(nombreEvento)) {
-				evento = eventos.get(i);
+		for (Evento evento : eventos) {
+			if (evento.getNombre().equals(nombreEvento)) {
+				return evento;
 			}
 		}
-		return evento;
+		return null;
 	}
 
-	public Poligono getPiso() {
-		return piso;
-	}
-
-	public void setPiso(Poligono piso) {
-		this.piso = piso;
-	}
-
+	/**
+	 * Crea una {@link PocionBase} si cumple las condiciones de probabilidad.
+	 * 
+	 * @param posicion
+	 *            La posición de la poción de ser creada.
+	 */
 	public void crearPocion(Vector2 posicion) {
 		if (random.nextFloat() < getPorcentajePociones().getValor()) {
 			if (random.nextBoolean()) {
@@ -436,40 +498,25 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
-	public Porcentaje getPorcentajePociones() {
-		return porcentajePociones;
-	}
-
-	public void setPorcentajePociones(Porcentaje porcentajePociones) {
-		this.porcentajePociones = porcentajePociones;
-	}
-
-	public Array<Evento> getEventos() {
-		return eventos;
-	}
-
+	/**
+	 * Continúa la conversación del evento con nombre <code>nombre</code>.
+	 * 
+	 * @param nombre
+	 *            El nombre del {@link Evento}.
+	 */
 	public void continuarConversacionActual(String nombre) {
-		for (int i = 0; i < eventos.size; i++) {
-			Evento evento = eventos.get(i);
+		for (Evento evento : eventos) {
 			if (evento.getNombre().equals(nombre)) {
 				evento.continuarConversacionEnEscena();
 			}
 		}
 	}
 
-	public boolean isHeroeMuerto() {
-		return heroeMuerto;
-	}
-
-	public void setHeroeMuerto(boolean heroeMuerto) {
-		this.heroeMuerto = heroeMuerto;
-	}
-
+	/**
+	 * Hace un toggle del UI. Si está visible, la esconde, si no, la muestra.
+	 */
 	public void toggleUI() {
-		Array<Actor> actores = getActors();
-
-		for (int i = 0; i < actores.size; i++) {
-			Actor actor = actores.get(i);
+		for (Actor actor : getActors()) {
 			if (actor.getClass().getSimpleName().contains("Boton")
 					|| actor.getClass().getSimpleName().contains("Barra")) {
 				if (actor.isVisible()) {
@@ -488,11 +535,14 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Esconde o muestra la UI.
+	 * 
+	 * @param setVisible
+	 *            Si se va a esconder o a mostrar.
+	 */
 	public void esconderUI(boolean setVisible) {
-		Array<Actor> actores = getActors();
-
-		for (int i = 0; i < actores.size; i++) {
-			Actor actor = actores.get(i);
+		for (Actor actor : getActors()) {
 			if (actor.getClass().getSimpleName().contains("Boton")
 					|| actor.getClass().getSimpleName().contains("Barra")) {
 				if (!setVisible) {
@@ -511,10 +561,28 @@ public class EscenarioBase extends Stage {
 		}
 	}
 
+	/**
+	 * Busca o crea un {@link Actor} en posición 0,0.
+	 * 
+	 * @param nombreActor
+	 * @return
+	 * @see #getActor(String, Vector2)
+	 */
+	@SuppressWarnings("javadoc")
 	public ObjetoActor getActor(String nombreActor) {
 		return getActor(nombreActor, new Vector2(0, 0));
 	}
 
+	/**
+	 * Busca al {@link Actor} del nombre dado. Si no lo encuentra crea uno nuevo
+	 * en la posición especificada y lo regresa.
+	 * 
+	 * @param nombreActor
+	 *            El nombre del {@link Actor}.
+	 * @param posicion
+	 *            La posición donde crearlo de no existir.
+	 * @return El {@link Actor} encontrado o creado.
+	 */
 	public ObjetoActor getActor(String nombreActor, Vector2 posicion) {
 		ObjetoActor personaje = null;
 		for (ObjetoActor personajeTemporal : getActores(ObjetoActor.class)) {
@@ -528,6 +596,34 @@ public class EscenarioBase extends Stage {
 			personaje = (Personaje) getActor(nombreActor);
 		}
 		return personaje;
+	}
+
+	public Poligono getPiso() {
+		return piso;
+	}
+
+	public void setPiso(Poligono piso) {
+		this.piso = piso;
+	}
+
+	public Porcentaje getPorcentajePociones() {
+		return porcentajePociones;
+	}
+
+	public void setPorcentajePociones(Porcentaje porcentajePociones) {
+		this.porcentajePociones = porcentajePociones;
+	}
+
+	public Array<Evento> getEventos() {
+		return eventos;
+	}
+
+	public boolean isHeroeMuerto() {
+		return heroeMuerto;
+	}
+
+	public void setHeroeMuerto(boolean heroeMuerto) {
+		this.heroeMuerto = heroeMuerto;
 	}
 
 	public boolean getInterfazBloqueada() {

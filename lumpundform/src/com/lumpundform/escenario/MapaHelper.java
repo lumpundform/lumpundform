@@ -98,8 +98,7 @@ class MapaHelper {
 	}
 
 	TiledObjectGroup eventosMapa() {
-		TiledObjectGroup eventos = tiledObjectGroup("eventos");
-		return eventos;
+		return tiledObjectGroup("eventos");
 	}
 
 	/**

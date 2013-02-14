@@ -33,7 +33,7 @@ public class U {
 		U.camara = camara;
 	}
 
-	private static CamaraJuego getCamara() {
+	public static CamaraJuego getCamara() {
 		if (U.camara == null) {
 			throw new CamaraNoInicializadaException();
 		} else {

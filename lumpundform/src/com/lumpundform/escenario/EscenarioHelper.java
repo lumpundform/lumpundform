@@ -85,12 +85,12 @@ public class EscenarioHelper {
 		escenario.act(delta);
 
 		// Eventos
-		escenario.revisarEventos(camara, delta);
+		escenario.revisarEventos();
 		// escenario.revisarEscena();
-		escenario.destruirAtaques(camara);
+		escenario.destruirAtaques();
 
 		escenario.acomodarActores(mh.getWidth());
-		escenario.acomodarHeroe(camara);
+		escenario.acomodarHeroe();
 
 		// Debug líneas colisión
 		if (isDibujarColision()) {
@@ -116,8 +116,7 @@ public class EscenarioHelper {
 			if (heroe.derecha()) {
 				destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
 				if (camara.position.x < destinoCamara) {
-					camara.setPosicion((float) (camara.position.x + heroe.velDelta() * factor),
-							camara.position.y);
+					camara.setPosicion((float) (camara.position.x + heroe.velDelta() * factor), camara.position.y);
 				}
 				if (camara.position.x >= destinoCamara) {
 					camara.setPosicion(destinoCamara, camara.position.y);
@@ -125,8 +124,7 @@ public class EscenarioHelper {
 			} else {
 				destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
 				if (camara.position.x > destinoCamara) {
-					camara.setPosicion((float) (camara.position.x - heroe.velDelta() * factor),
-							camara.position.y);
+					camara.setPosicion((float) (camara.position.x - heroe.velDelta() * factor), camara.position.y);
 				}
 				if (camara.position.x <= destinoCamara) {
 					camara.setPosicion(destinoCamara, camara.position.y);
