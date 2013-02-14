@@ -19,9 +19,6 @@ public class HabilidadEscudo extends HabilidadSostenida {
 
 	@Override
 	public void ejecutar(Vector2 pos) {
-		if (!sePuedeEjecutar())
-			return;
-
 		ataque = new AtaqueEscudo(getActor(), this);
 		super.ejecutar(pos);
 	}

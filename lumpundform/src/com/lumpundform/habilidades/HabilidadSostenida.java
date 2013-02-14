@@ -15,14 +15,23 @@ public class HabilidadSostenida extends Habilidad {
 
 	@Override
 	public void ejecutar(Vector2 pos) {
+		if (!sePuedeEjecutar()) {
+			ataque = null;
+			return;
+		}
+
+		getActor().setRegenerarMana(false);
 		crearAtaque(ataque);
 		setEjecutandose(true);
 	}
-	
+
 	@Override
 	public void detener() {
-		ataque.getAnimacion().terminar();
-		setEjecutandose(false);
+		if (ataque != null) {
+			ataque.getAnimacion().terminar();
+			getActor().setRegenerarMana(true);
+			setEjecutandose(false);
+		}
 	}
 
 }
