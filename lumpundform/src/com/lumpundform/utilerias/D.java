@@ -84,7 +84,7 @@ public class D {
 	}
 
 	private static String getChildOpcional(Element spriteSheetElement, String string, String omision) {
-		Element valor = spriteSheetElement.getChildByName("columnasOffset");
+		Element valor = spriteSheetElement.getChildByName(string);
 		return (valor == null) ? omision : valor.getText();
 	}
 
