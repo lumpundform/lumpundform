@@ -144,6 +144,11 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 			}
 			if (keycode == Keys.SHIFT_LEFT) {
 				heroe.detenerHabilidad("escudo");
+				return true;
+			}
+			if (keycode == Keys.C) {
+				heroe.detenerHabilidad("blizzard");
+				return true;
 			}
 		} catch (EscenarioSinHeroeException e) {
 		}
