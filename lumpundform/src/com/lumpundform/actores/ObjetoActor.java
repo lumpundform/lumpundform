@@ -50,6 +50,7 @@ public abstract class ObjetoActor extends Actor {
 	private float destinoX;
 	private Direccion direccionDestinoX;
 	private float velocidad;
+	private float velocidadVertical;
 	private boolean teletransportar = false;
 	private boolean caer = false;
 
@@ -491,6 +492,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setQuitarConAnimacion(boolean quitarConAnimacion) {
 		this.quitarConAnimacion = quitarConAnimacion;
+	}
+
+	public float getVelocidadVertical() {
+		return velocidadVertical;
+	}
+
+	public void setVelocidadVertical(float velocidadVertical) {
+		this.velocidadVertical = velocidadVertical;
 	}
 
 }
