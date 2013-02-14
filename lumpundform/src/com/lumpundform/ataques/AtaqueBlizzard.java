@@ -23,8 +23,12 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		moverDerecha(delta);
-		moverAbajo(delta);
+		if (isColisionPiso()) {
+			getHabilidad().detener();
+		} else {
+			moverDerecha(delta);
+			moverAbajo(delta);
+		}
 	}
 
 }
