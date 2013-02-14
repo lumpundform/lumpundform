@@ -181,6 +181,14 @@ public abstract class ObjetoActor extends Actor {
 		return delta * velocidad;
 	}
 
+	/**
+	 * Calcula la velocidad vertical del {@link ObjetoActor} conforme al delta
+	 * transcurrido.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 * @return La velocidad vertical calculada.
+	 */
 	public float calcVelocidadVertical(float delta) {
 		return delta * velocidadVertical;
 	}
@@ -235,6 +243,13 @@ public abstract class ObjetoActor extends Actor {
 		setX(getX() + calcVelocidad(delta));
 	}
 
+	/**
+	 * Mueve al {@link ObjetoActor} hacia abajo conforme a su velocidad
+	 * vertical.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 */
 	protected void moverAbajo(float delta) {
 		setY(getY() - calcVelocidadVertical(delta));
 	}
