@@ -78,6 +78,9 @@ public class EscenarioBase extends Stage {
 		setPorcentajePociones(new Porcentaje());
 	}
 
+	/**
+	 * Agregar a un actor y además le asigna un id para control interior.
+	 */
 	@Override
 	public void addActor(Actor actor) {
 		/**

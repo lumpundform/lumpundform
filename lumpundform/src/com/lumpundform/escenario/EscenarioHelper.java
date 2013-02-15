@@ -16,7 +16,7 @@ import com.lumpundform.utilerias.D;
  * Clase que ayuda con las funciones de los escenarios, como cargar el mapa, los
  * actores, las líneas de colisión y hace que actúen y se dibujen los actores
  * 
- * @author Sergio
+ * @author Sergio Valencia & Luis Gutiérrez
  * 
  */
 public class EscenarioHelper {
@@ -150,10 +150,9 @@ public class EscenarioHelper {
 		return escenario.getHeroe();
 	}
 
-	public EscenarioBase getEscenario() {
-		return escenario;
-	}
-
+	/**
+	 * Avanza al siguiente cuadro de texto de la conversación actual.
+	 */
 	public void siguienteCuadroTexto() {
 		Evento evento = conversacionEnCurso();
 		if (evento != null) {
@@ -161,6 +160,11 @@ public class EscenarioHelper {
 		}
 	}
 
+	/**
+	 * Busca la conversación que se está llevando a cabo.
+	 * 
+	 * @return La conversación en forma de {@link Evento} o null si no hay.
+	 */
 	private Evento conversacionEnCurso() {
 		for (int i = 0; i < escenario.getEventos().size; i++) {
 			Evento evento = escenario.getEventos().get(i);
@@ -169,6 +173,10 @@ public class EscenarioHelper {
 			}
 		}
 		return null;
+	}
+
+	public EscenarioBase getEscenario() {
+		return escenario;
 	}
 
 	public InterfazHelper getInterfazHelper() {
