@@ -1,5 +1,11 @@
 package com.lumpundform.excepciones;
 
+/**
+ * Cuando se quiere leer o dibujar una animación que no existe.
+ * 
+ * @author Sergio Valencia
+ * 
+ */
 public class AnimacionInexistenteException extends RuntimeException {
 
 	private static final long serialVersionUID = 7L;

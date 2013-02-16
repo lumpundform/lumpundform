@@ -17,9 +17,9 @@ import com.lumpundform.utilerias.D;
 import com.lumpundform.utilerias.U;
 
 /**
- * Clase que contiene funciones necesarias para cargar el mapa en el juego
+ * Clase que contiene funciones necesarias para leer información sobre el mapa.
  * 
- * @author Sergio
+ * @author Sergio Valencia & Luis Gutiérrez
  * 
  */
 class MapaHelper {
@@ -31,9 +31,10 @@ class MapaHelper {
 
 	/**
 	 * Lee los archivos necesarios y crea las variables necesarias para el
-	 * funcionamiento de la clase
+	 * funcionamiento de la clase.
 	 * 
 	 * @param nombre
+	 *            El nombre del mapa.
 	 */
 	MapaHelper(String nombre) {
 		DatosEscenario de = D.de(nombre);
@@ -45,17 +46,17 @@ class MapaHelper {
 	}
 
 	/**
-	 * Dibuja el mapa
+	 * Dibuja el mapa.
 	 */
 	void renderMapa(CamaraJuego camara) {
 		renderer.render(camara);
 	}
 
 	/**
-	 * Dibuja el fondo del mapa
+	 * Dibuja el fondo del mapa.
 	 * 
 	 * @param camara
-	 *            La {@link CamaraJuego} con la que se va a dibujar el fondo
+	 *            La {@link CamaraJuego} con la que se va a dibujar el fondo.
 	 */
 	void renderFondo(Camera camara) {
 		float fondo_x = (camara.viewportWidth / 2) - camara.position.x;
@@ -67,49 +68,40 @@ class MapaHelper {
 	}
 
 	/**
-	 * Regresa el ancho total del mapa
-	 * 
-	 * @return El ancho
+	 * @return El ancho total del mapa.
 	 */
 	int getWidth() {
 		return mapa.width * mapa.tileWidth;
 	}
 
 	/**
-	 * Regresa el alto total del mapa
-	 * 
-	 * @return El alto
+	 * @return El alto total del mapa.
 	 */
 	int getHeight() {
 		return mapa.height * mapa.tileHeight;
 	}
 
 	/**
-	 * Regresa el punto de origen del {@link Heroe}
-	 * 
-	 * @param camara
-	 *            La {@link CamaraJuego} a referenciar para las coordenadas del
-	 *            punto
-	 * @return El punto de origen
+	 * @return El punto de origen del {@link Heroe}.
 	 */
 	Vector2 getOrigenHeroe() {
 		TiledObject objeto = tiledObject("origenes", "heroe");
 		return U.voltearCoordenadas(objeto.x, objeto.y);
 	}
 
+	/**
+	 * @return Regresa los eventos del mapa.
+	 */
 	TiledObjectGroup eventosMapa() {
 		return tiledObjectGroup("eventos");
 	}
 
 	/**
-	 * Carga las colisiones del mapa del objeto referenciado por nombreObjeto
+	 * Carga las colisiones del mapa del objeto referenciado por nombreObjeto.
 	 * 
-	 * @param camara
-	 *            La {@link CamaraJuego} a referenciar para las coordenadas del
-	 *            punto
 	 * @param nombreObjeto
-	 *            El nombre del objeto del cuál se quieren saber sus vértices
-	 * @return Un arreglo de todos los vertices del objeto
+	 *            El nombre del objeto del cuál se quieren saber sus vértices.
+	 * @return Un arreglo de todos los vertices del objeto.
 	 */
 	Vector2[] getVerticesPlataforma(String nombreObjeto) {
 		TiledObject objeto = tiledObject("plataformas", nombreObjeto);
@@ -127,13 +119,13 @@ class MapaHelper {
 	}
 
 	/**
-	 * Carga el {@link TiledObject} del grupo y objeto dados del archivo *.tmx
+	 * Carga el {@link TiledObject} del grupo y objeto dados del archivo *.tmx.
 	 * 
 	 * @param nombreGrupo
-	 *            El nombre del grupo
+	 *            El nombre del grupo.
 	 * @param nombreObjeto
-	 *            El nombre del objeto
-	 * @return El objeto
+	 *            El nombre del objeto.
+	 * @return El objeto.
 	 */
 	private TiledObject tiledObject(String nombreGrupo, String nombreObjeto) {
 		TiledObjectGroup objetoGrupo = tiledObjectGroup(nombreGrupo);
@@ -146,11 +138,11 @@ class MapaHelper {
 	}
 
 	/**
-	 * Carga el {@link TiledObjectGroup} del nombre dado del archivo *.tmx
+	 * Carga el {@link TiledObjectGroup} del nombre dado del archivo *.tmx.
 	 * 
 	 * @param nombre
-	 *            El nombre del {@link TiledObjectGroup}
-	 * @return El objectGroup
+	 *            El nombre del {@link TiledObjectGroup}.
+	 * @return El objectGroup.
 	 */
 	TiledObjectGroup tiledObjectGroup(String nombre) {
 		for (int i = 0; i < mapa.objectGroups.size(); i++) {
