@@ -3,10 +3,11 @@
 	<escena nombre="101">
 	    <paso numero="1">
 	        <accion actor="heroe" objetivo="ir_a" destino="1200" />
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Lorem ipsum dolor sit amet" />
+	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Lorem ipsum dolor sit ametl" />
+	        <accion actor="amigo" objetivo="hablar" posicion="der" destino="600" texto="Lorem ipsum dolor sit ametl" />
 	    </paso>
 	    <paso numero="2">
-	        <accion actor="amigo" objetivo="hablar" posicion="der" destino="600" texto="Amigo Hallo Welt2!" />
+	        <accion actor="amigo" objetivo="hablar" posicion="der" destino="600" texto="Lorem ipsum dolor sit ametl" />
 	    </paso>
 	    <paso numero="3">
 	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Hallo Welt!" />

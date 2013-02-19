@@ -506,9 +506,8 @@ public class EscenarioBase extends Stage {
 	 */
 	public void continuarConversacionActual(String nombre) {
 		for (Evento evento : eventos) {
-			if (evento.getNombre().equals(nombre)) {
+			if (evento.getNombre().equals(nombre))
 				evento.continuarConversacionEnEscena();
-			}
 		}
 	}
 

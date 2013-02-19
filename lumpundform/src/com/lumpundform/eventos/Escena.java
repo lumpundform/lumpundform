@@ -21,7 +21,7 @@ public class Escena {
 	private boolean terminado = false;
 
 	private EscenarioBase escenario;
-
+	
 	// Cuadros de texto
 	Map<String, CuadroTexto> cuadrosTexto = new HashMap<String, CuadroTexto>();
 
@@ -139,7 +139,6 @@ public class Escena {
 	}
 
 	private void dibujarTexto(String nombrePersonaje) {
-		CuadroTexto ct = cuadrosTexto.get(nombrePersonaje);
-		ct.draw();
+		cuadrosTexto.get(nombrePersonaje).draw();
 	}
 }

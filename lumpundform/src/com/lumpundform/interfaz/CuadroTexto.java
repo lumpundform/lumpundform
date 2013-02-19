@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.utilerias.Fuentes;
+import com.lumpundform.utilerias.U;
 
 public class CuadroTexto {
 	private NinePatch np = new NinePatch(new Texture(Gdx.files.internal("texturas/ct.png")), 3,
@@ -23,8 +24,9 @@ public class CuadroTexto {
 	private float posicionY = 400.0f;
 	private float anchoCuadro = 300.0f;
 	private float altoCuadro = 60.0f;
-	private float paddingX = 10.0f;
+	private float paddingX = 7.0f;
 	private float paddingY = 5.0f;
+	private float posicionTextoX;
 	private float posicionRetratoX;
 
 	public boolean terminado = false;
@@ -35,14 +37,18 @@ public class CuadroTexto {
 	
 	public String texto;
 	public String newstr = "";
+	
 
 	public CuadroTexto(String posicion) {
-		if(posicion == "der") {
+		if(posicion.equals("der")) {
 			this.posicionX = Gdx.graphics.getWidth() - this.anchoCuadro - 10.0f;
-			this.posicionRetratoX = (posicionX - paddingX);
+			this.posicionRetratoX = (posicionX + paddingX);
+			this.posicionTextoX = posicionX + (paddingX * 2) + retrato.getWidth(); 
+			
 		} else {
 			this.posicionX = 10.0f;
 			this.posicionRetratoX = (posicionX + (anchoCuadro - retrato.getWidth() - paddingX));
+			this.posicionTextoX = posicionX + paddingX;
 		}
 	}
 
@@ -79,7 +85,7 @@ public class CuadroTexto {
 		np.draw(batch, posicionX, posicionY, anchoCuadro, altoCuadro);
 		bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		bmf.setScale(0.50f);
-		bmf.drawWrapped(batch, texto, (posicionX + paddingX), (posicionY + altoCuadro - paddingY), (anchoCuadro - paddingX - retrato.getWidth()));
+		bmf.drawWrapped(batch, texto, posicionTextoX, (posicionY + altoCuadro - paddingY), (anchoCuadro - (paddingX * 2) - retrato.getWidth()));
 		batch.draw(retrato, posicionRetratoX, (posicionY + (altoCuadro - retrato.getHeight() - paddingY)), retrato.getWidth(), retrato.getHeight());
 		batch.end();
 	}
