@@ -10,7 +10,6 @@ import com.lumpundform.actores.ObjetoActor.Direccion;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.interfaz.CuadroTexto;
-import com.lumpundform.utilerias.U;
 
 public class Escena {
 
@@ -21,7 +20,7 @@ public class Escena {
 	private boolean terminado = false;
 
 	private EscenarioBase escenario;
-	
+
 	// Cuadros de texto
 	Map<String, CuadroTexto> cuadrosTexto = new HashMap<String, CuadroTexto>();
 
@@ -92,10 +91,11 @@ public class Escena {
 	private void hablar(Accion accion, Personaje personaje) {
 		if (!accion.getTerminado()) {
 			if (!cuadrosTexto.containsKey(personaje.getName())) {
-				U.l("dir", accion.getPosicionTexto());
 				CuadroTexto tempCT = new CuadroTexto(accion.getPosicionTexto());
 				tempCT.setTexto(accion.getTexto());
 				cuadrosTexto.put(personaje.getName(), tempCT);
+			} else {
+				cuadrosTexto.get(personaje.getName()).setTexto(accion.getTexto());
 			}
 		}
 		dibujarTexto(personaje.getName());
@@ -128,8 +128,12 @@ public class Escena {
 
 	public void continuarConversacion() {
 		Paso pasoActual = getPasoActual();
-		if (pasoActual != null && pasoActual.tieneAccionHablar())
-			pasoActual.terminarAccionHablar();
+		if (pasoActual != null && pasoActual.tieneAccionHablar()) {
+			if (accionHablarTermino()) {
+				siguienteCuadroTexto();
+				pasoActual.terminarAccionHablar();
+			}
+		}
 	}
 
 	private Paso getPasoActual() {
@@ -138,7 +142,22 @@ public class Escena {
 		return null;
 	}
 
+	private boolean accionHablarTermino() {
+		for (CuadroTexto cuadroTexto : cuadrosTexto.values()) {
+			if (!cuadroTexto.terminado())
+				return false;
+		}
+		return true;
+	}
+
+	private void siguienteCuadroTexto() {
+		for (CuadroTexto cuadroTexto : cuadrosTexto.values()) {
+			cuadroTexto.continuar();
+		}
+	}
+
 	private void dibujarTexto(String nombrePersonaje) {
-		cuadrosTexto.get(nombrePersonaje).draw();
+		CuadroTexto cuadroTexto = cuadrosTexto.get(nombrePersonaje);
+		cuadroTexto.draw();
 	}
 }

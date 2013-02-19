@@ -3,40 +3,40 @@
 	<escena nombre="101">
 	    <paso numero="1">
 	        <accion actor="heroe" objetivo="ir_a" destino="1200" />
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Lorem ipsum dolor sit ametl" />
-	        <accion actor="amigo" objetivo="hablar" posicion="der" destino="600" texto="Lorem ipsum dolor sit ametl" />
+	        <accion actor="heroe" objetivo="hablar" posicionTexto="izq" destino="600" texto="Lorem ipsum dolor sit ametl" />
+	        <accion actor="amigo" objetivo="hablar" posicionTexto="der" destino="600" texto="blargsl" />
 	    </paso>
 	    <paso numero="2">
-	        <accion actor="amigo" objetivo="hablar" posicion="der" destino="600" texto="Lorem ipsum dolor sit ametl" />
+	        <accion actor="amigo" objetivo="hablar" posicionTexto="der" destino="600" texto="Lorem ipsum dolor sit ametl" />
 	    </paso>
 	    <paso numero="3">
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Hallo Welt!" />
+	        <accion actor="heroe" objetivo="hablar" posicionTexto="izq" destino="600" texto="Hallo Welt!" />
 	    </paso>
 	    <paso numero="4">
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="ciao mondo!" />
+	        <accion actor="heroe" objetivo="hablar" posicionTexto="izq" destino="600" texto="ciao mondo!" />
 	        <accion actor="heroe" objetivo="teletransportarse" posicionX="200" posicionY="400" />
 	    </paso>
 	    <paso numero="5">
 	        <accion actor="heroe" objetivo="ir_a" destino="1300" />
 	    </paso>
 	    <paso numero="5">
-	        <accion actor="amigo" objetivo="hablar" posicion="der" destino="600" texto="Amigo Hallo Welt5!" />
+	        <accion actor="amigo" objetivo="hablar" posicionTexto="der" destino="600" texto="Amigo Hallo Welt5!" />
 	    </paso>
 	</escena>
 	
 	<escena nombre="102">
 	    <paso numero="1">
-	        <accion actor="amigo" objetivo="hablar" posicion="izq" destino="600" texto="Amigo Hola Mundo2!" posicionX="1600" posicionY="400" />
+	        <accion actor="amigo" objetivo="hablar" posicionTexto="izq" destino="600" texto="Amigo Hola Mundo2!" posicionX="1600" posicionY="400" />
 	    </paso>
 	    
 	    <paso numero="2">
-	        <accion actor="amigo" objetivo="hablar" posicion="izq" destino="600" texto="Amigo Hello world2!" />
+	        <accion actor="amigo" objetivo="hablar" posicionTexto="izq" destino="600" texto="Amigo Hello world2!" />
 	    </paso>
 	    <paso numero="3">
-	        <accion actor="amigo" objetivo="hablar" posicion="izq" destino="600" texto="Amigo Hallo Welt2!" />
+	        <accion actor="amigo" objetivo="hablar" posicionTexto="izq" destino="600" texto="Amigo Hallo Welt2!" />
 	    </paso>
 	    <paso numero="4">
-	        <accion actor="amigo" objetivo="hablar" posicion="izq" destino="600" texto="Amigo ciao mondo2!" />
+	        <accion actor="amigo" objetivo="hablar" posicionTexto="izq" destino="600" texto="Amigo ciao mondo2!" />
 	    </paso>
 	    <paso numero="5">
 	        <accion actor="amigo" objetivo="teletransportarse" posicionX="600" posicionY="800" />
@@ -48,17 +48,17 @@
 	
 	<escena nombre="103">
 	    <paso numero="1">
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Hola Mundo3!" />
+	        <accion actor="heroe" objetivo="hablar" posicionTexto="izq" destino="600" texto="Hola Mundo3!" />
 	    </paso>
 	    
 	    <paso numero="2">
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Hello world3!" />
+	        <accion actor="heroe" objetivo="hablar" posicionTexto="izq" destino="600" texto="Hello world3!" />
 	    </paso>
 	    <paso numero="3">
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="Hallo Welt3!" />
+	        <accion actor="heroe" objetivo="hablar" posicionTexto="izq" destino="600" texto="Hallo Welt3!" />
 	    </paso>
 	    <paso numero="4">
-	        <accion actor="heroe" objetivo="hablar" posicion="izq" destino="600" texto="ciao mondo3!" />
+	        <accion actor="heroe" objetivo="hablar" posicionTexto="izq" destino="600" texto="ciao mondo3!" />
 	    </paso>
 	</escena>
 </escenas>
