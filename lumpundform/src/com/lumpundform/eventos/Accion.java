@@ -24,8 +24,8 @@ public class Accion {
 			this.destino = accion.get("destino");
 		if (accion.getAttributes().containsKey("texto"))
 			this.texto = accion.get("texto");
-		if(accion.getAttributes().containsKey("posicion"))
-			this.posicionTexto = accion.get("posicion");
+		if(accion.getAttributes().containsKey("posicionTexto"))
+			this.posicionTexto = accion.get("posicionTexto");
 		if (accion.getAttributes().containsKey("posicionX"))
 			this.posicionX = Float.parseFloat(accion.get("posicionX"));
 		if (accion.getAttributes().containsKey("posicionY"))

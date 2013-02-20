@@ -36,18 +36,18 @@ public class Paso {
 	}
 
 	public void terminarAccionHablar() {
-		Accion accionHablar = getAccionHablar();
-		if (accionHablar != null)
-			accionHablar.terminar();
+		Array<Accion> accionesHablar = getAccionesHablar();
+		for (Accion accion : accionesHablar) {
+			accion.terminar();
+		}
 	}
 
-	private Accion getAccionHablar() {
-		for (int i = 0; i < acciones.size; i++) {
-			Accion accion = acciones.get(i);
-			if (accion.getObjetivo().equals("hablar")) {
-				return accion;
-			}
+	private Array<Accion> getAccionesHablar() {
+		Array<Accion> acciones = new Array<Accion>();
+		for (Accion accion : this.acciones) {
+			if(accion.getObjetivo().equals("hablar"))
+				acciones.add(accion);
 		}
-		return null;
+		return acciones;
 	}
 }

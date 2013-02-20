@@ -19,30 +19,34 @@ public class CuadroTexto {
 	
 	public Boolean dibujar = true;
 
-	public float posicionX;
+	private float posicionX;
 	private float posicionY = 400.0f;
 	private float anchoCuadro = 300.0f;
 	private float altoCuadro = 60.0f;
-	private float paddingX = 10.0f;
+	private float paddingX = 7.0f;
 	private float paddingY = 5.0f;
+	private float posicionTextoX;
 	private float posicionRetratoX;
 
-	public boolean terminado = false;
-	public boolean continuar = false;
+	private boolean terminado = false;
+	private boolean continuar = false;
 
-
-	public int index = 0;
+	private int index = 0;
 	
-	public String texto;
-	public String newstr = "";
+	private String texto;
+	private String textoNuevo = "";
+	
 
 	public CuadroTexto(String posicion) {
-		if(posicion == "der") {
+		if(posicion.equals("der")) {
 			this.posicionX = Gdx.graphics.getWidth() - this.anchoCuadro - 10.0f;
-			this.posicionRetratoX = (posicionX - paddingX);
+			this.posicionRetratoX = (posicionX + paddingX);
+			this.posicionTextoX = posicionX + (paddingX * 2) + retrato.getWidth(); 
+			
 		} else {
 			this.posicionX = 10.0f;
 			this.posicionRetratoX = (posicionX + (anchoCuadro - retrato.getWidth() - paddingX));
+			this.posicionTextoX = posicionX + paddingX;
 		}
 	}
 
@@ -73,14 +77,36 @@ public class CuadroTexto {
 	public void setPaddingY(float paddingY) {
 		this.paddingY = paddingY;
 	}
+	
+	private String iterarTexto() {
+		if (index < texto.length() && !terminado) {
+			textoNuevo += texto.substring(index, ++index);
+		} else if (!terminado && index >= texto.length() && !continuar) {
+			terminado = true;
+			index = 0;
+		} else if (terminado && index == 0 && continuar) {
+			textoNuevo = "";
+			continuar = false;
+			terminado = false;
+		}
+		return textoNuevo;
+	}
 
 	public void draw() {
 		batch.begin();
 		np.draw(batch, posicionX, posicionY, anchoCuadro, altoCuadro);
 		bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		bmf.setScale(0.50f);
-		bmf.drawWrapped(batch, texto, (posicionX + paddingX), (posicionY + altoCuadro - paddingY), (anchoCuadro - paddingX - retrato.getWidth()));
+		bmf.drawWrapped(batch, iterarTexto(), posicionTextoX, (posicionY + altoCuadro - paddingY), (anchoCuadro - (paddingX * 2) - retrato.getWidth()));
 		batch.draw(retrato, posicionRetratoX, (posicionY + (altoCuadro - retrato.getHeight() - paddingY)), retrato.getWidth(), retrato.getHeight());
 		batch.end();
+	}
+	
+	public boolean terminado() {
+		return terminado;
+	}
+	
+	public void continuar() {
+		continuar = true;
 	}
 }
