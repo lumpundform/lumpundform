@@ -636,3 +636,4 @@ public class EscenarioBase extends Stage {
 	public void setInterfazBloqueada(boolean bloquear) {
 		this.interfazBloqueada = bloquear;
 	}
+}
