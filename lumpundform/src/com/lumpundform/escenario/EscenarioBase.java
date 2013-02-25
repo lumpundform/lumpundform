@@ -154,11 +154,13 @@ public class EscenarioBase extends Stage {
 		for (Ataque ataque : getActores(Ataque.class)) {
 			for (Personaje personaje : getActores(Personaje.class)) {
 				if (personaje.isEnemigo() != ataque.getPersonaje().isEnemigo()
-						&& personaje.getHitbox().estaColisionando(ataque.getHitbox())) {
+						&& ataque.getHitbox().estaColisionando(personaje.getHitbox())) {
 					if (ataque.isHaceDano()) {
 						personaje.quitarVida(ataque.getDano());
 					}
-					ataque.destruir();
+					if (!ataque.getHabilidad().isSostenido()) {
+						ataque.destruir();
+					}
 				}
 			}
 			for (Ataque at : getActores(Ataque.class)) {

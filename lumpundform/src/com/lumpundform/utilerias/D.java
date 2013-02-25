@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lumpundform.escenario.DatosEscenario;
+import com.lumpundform.excepciones.SpriteSheetInvalidoException;
 
 public class D {
 	private static String nombreArchivo = "data/datos.xml";
@@ -28,16 +29,16 @@ public class D {
 
 			String ruta = spriteSheetElement.getChildByName("ruta").getText();
 			int columnas = Integer.parseInt(spriteSheetElement.getChildByName("columnas").getText());
-			int columnasOffset = Integer.parseInt(spriteSheetElement.getChildByName("columnasOffset").getText());
+			int columnasOffset = Integer.parseInt(getChildOpcional(spriteSheetElement, "columnasOffset", "0"));
 			int renglones = Integer.parseInt(spriteSheetElement.getChildByName("renglones").getText());
-			int renglonesOffset = Integer.parseInt(spriteSheetElement.getChildByName("renglonesOffset").getText());
-			Element cuadrosInicioElement = spriteSheetElement.getChildByName("cuadrosInicio");
-			int cuadrosInicio = cuadrosInicioElement == null ? 0 : Integer.parseInt(cuadrosInicioElement.getText());
-			Element cuadrosFinElement = spriteSheetElement.getChildByName("cuadrosFin");
-			int cuadrosFin = cuadrosFinElement == null ? 0 : Integer.parseInt(cuadrosFinElement.getText());
+			int renglonesOffset = Integer.parseInt(getChildOpcional(spriteSheetElement, "renglonesOffset", "0"));
+			int cuadrosInicio = Integer.parseInt(getChildOpcional(spriteSheetElement, "cuadrosInicio", "0"));
+			int cuadrosFin = Integer.parseInt(getChildOpcional(spriteSheetElement, "cuadrosFin", "0"));
+			int columnasUltimoRenglon = Integer.parseInt(getChildOpcional(spriteSheetElement, "columnasUltimoRenglon",
+					"0"));
 
 			spriteSheet = new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset, cuadrosInicio,
-					cuadrosFin);
+					cuadrosFin, columnasUltimoRenglon);
 			spriteSheets.put(key, spriteSheet);
 		}
 		return spriteSheet;
@@ -70,7 +71,8 @@ public class D {
 				return spriteSheet;
 			}
 		}
-		return null;
+		throw new SpriteSheetInvalidoException("No existe un SpriteSheet en el grupo "
+				+ spriteSheetGrupo.getIntAttribute("nombre") + " de tipo " + tipo);
 	}
 
 	private static Element getSpriteGrupo(String nombre) {
@@ -80,7 +82,12 @@ public class D {
 				return grupo;
 			}
 		}
-		return null;
+		throw new SpriteSheetInvalidoException("No existe un SpriteSheetGrupo con nombre " + nombre);
+	}
+
+	private static String getChildOpcional(Element spriteSheetElement, String string, String omision) {
+		Element valor = spriteSheetElement.getChildByName(string);
+		return (valor == null) ? omision : valor.getText();
 	}
 
 	private static Element getDatos() {

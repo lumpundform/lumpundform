@@ -2,6 +2,7 @@ package com.lumpundform.ataques;
 
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.habilidades.Habilidad;
 
 /**
  * El {@link Ataque} tipo misil.
@@ -18,9 +19,11 @@ public class AtaqueMisil extends Ataque {
 	 * 
 	 * @param personaje
 	 *            El {@link Personaje} al que pertenece el {@link Ataque}.
+	 * @param habilidad
+	 *            La {@link Habilidad} a la que pertenece el {@link Ataque}.
 	 */
-	public AtaqueMisil(Personaje personaje) {
-		super("ataque_misil", personaje);
+	public AtaqueMisil(Personaje personaje, Habilidad habilidad) {
+		super("ataque_misil", personaje, habilidad);
 
 		movimiento = true;
 

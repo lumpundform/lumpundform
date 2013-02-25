@@ -7,8 +7,8 @@ import com.lumpundform.ataques.AtaqueMisil;
 
 public class HabilidadDisparar extends Habilidad {
 
-	public HabilidadDisparar(Personaje actor, String nombre) {
-		super(actor, nombre, 2.0f, 4.0f);
+	public HabilidadDisparar(Personaje actor) {
+		super(actor, "disparar", 2.0f, 4.0f);
 
 		if (Heroe.class.isInstance(actor)) {
 			setCooldownDefault(0.1f);
@@ -21,7 +21,7 @@ public class HabilidadDisparar extends Habilidad {
 	@Override
 	public void ejecutar(Vector2 pos) {
 		if (sePuedeEjecutar()) {
-			crearAtaque(new AtaqueMisil(getActor()));
+			crearAtaque(new AtaqueMisil(getActor(), this));
 		}
 	}
 

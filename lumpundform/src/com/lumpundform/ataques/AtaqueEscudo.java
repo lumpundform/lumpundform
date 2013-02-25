@@ -12,11 +12,10 @@ import com.lumpundform.habilidades.Habilidad;
  * @author Sergio Valencia
  * 
  */
-public class AtaqueEscudo extends Ataque {
-	private Habilidad habilidad;
+public class AtaqueEscudo extends AtaqueSostenido {
 
 	public AtaqueEscudo(Personaje personaje, Habilidad habilidad) {
-		super("ataque_escudo", personaje);
+		super("ataque_escudo", personaje, habilidad);
 
 		setWidth(240.0f);
 		setWidthTextura(120.0f);
@@ -25,13 +24,7 @@ public class AtaqueEscudo extends Ataque {
 
 		setHitbox(new Rectangulo(getHeight(), getWidth() * 0.65f));
 
-		setHabilidad(habilidad);
-
-		getPersonaje().setRegenerarMana(false);
-
 		actualizarPosicion();
-
-		setQuitarConAnimacion(true);
 
 		cargarAnimaciones("normal");
 	}
@@ -40,16 +33,6 @@ public class AtaqueEscudo extends Ataque {
 	public void act(float delta) {
 		super.act(delta);
 		actualizarPosicion();
-		getPersonaje().quitarMana(getHabilidad().getMana(), getHabilidad().isSostenido());
-		if (getPersonaje().getMana() <= 0) {
-			getHabilidad().detener();
-		}
-	}
-
-	@Override
-	public void quitar() {
-		getPersonaje().setRegenerarMana(true);
-		super.quitar();
 	}
 
 	/**
@@ -61,14 +44,6 @@ public class AtaqueEscudo extends Ataque {
 		float mitadAtaque = getHitbox().getAncho() / 2;
 		setY(getPersonaje().getY());
 		setX(getPersonaje().getX() + mitadPersonaje - mitadAtaque);
-	}
-
-	public Habilidad getHabilidad() {
-		return habilidad;
-	}
-
-	public void setHabilidad(Habilidad habilidad) {
-		this.habilidad = habilidad;
 	}
 
 }

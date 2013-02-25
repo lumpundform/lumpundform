@@ -9,8 +9,8 @@ import com.lumpundform.escenario.EscenarioBase;
 
 public class HabilidadTeletransportar extends Habilidad {
 
-	public HabilidadTeletransportar(Personaje actor, String nombre) {
-		super(actor, nombre, 1.5f);
+	public HabilidadTeletransportar(Personaje actor) {
+		super(actor, "teletransportar", 1.5f);
 	}
 
 	@Override

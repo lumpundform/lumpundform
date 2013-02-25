@@ -2,6 +2,7 @@ package com.lumpundform.ataques;
 
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
+import com.lumpundform.habilidades.Habilidad;
 
 /**
  * La base para todos los ataques. Todos los {@link Ataque}s inicializados
@@ -21,6 +22,9 @@ public class Ataque extends ObjetoActor {
 	// Personaje
 	private Personaje personaje;
 
+	// Habilidad
+	private Habilidad habilidad;
+
 	// Daño
 	private float dano;
 
@@ -36,8 +40,10 @@ public class Ataque extends ObjetoActor {
 	 * @param personaje
 	 *            El {@link Personaje} al que pertenece el {@link Ataque}.
 	 */
-	protected Ataque(String nombre, Personaje personaje) {
+	protected Ataque(String nombre, Personaje personaje, Habilidad habilidad) {
 		super(nombre);
+
+		setHabilidad(habilidad);
 
 		setEstadoDefault(Estado.DEFAULT);
 
@@ -83,6 +89,14 @@ public class Ataque extends ObjetoActor {
 
 	public void setPersonaje(Personaje personaje) {
 		this.personaje = personaje;
+	}
+
+	public Habilidad getHabilidad() {
+		return habilidad;
+	}
+
+	public void setHabilidad(Habilidad habilidad) {
+		this.habilidad = habilidad;
 	}
 
 }

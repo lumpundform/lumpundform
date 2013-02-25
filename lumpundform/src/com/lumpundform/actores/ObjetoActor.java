@@ -51,6 +51,7 @@ public abstract class ObjetoActor extends Actor {
 	private float destinoX;
 	private Direccion direccionDestinoX;
 	private float velocidad;
+	private float velocidadVertical;
 	private boolean teletransportar = false;
 	private boolean caer = false;
 
@@ -149,11 +150,11 @@ public abstract class ObjetoActor extends Actor {
 	 *            La posicion <code>y</code> del punto.
 	 */
 	public void setEsquinaY(String nombre, float y) {
-		getHitbox().setCentrado(false);
-		getHitbox().posicionar(getEsquina(nombre).x, y);
+		hitbox.setCentrado(false);
+		hitbox.posicionar(getEsquina(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		setY(getHitbox().getCentro().y - getHeight() / 2);
-		getHitbox().setCentrado(true);
+		setY(hitbox.getCentro().y - (getHeight() / 2));
+		hitbox.setCentrado(true);
 	}
 
 	/**
@@ -188,6 +189,18 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	public float velDelta(float delta) {
 		return delta * velocidad;
+	}
+
+	/**
+	 * Calcula la velocidad vertical del {@link ObjetoActor} conforme al delta
+	 * transcurrido.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 * @return La velocidad vertical calculada.
+	 */
+	public float calcVelocidadVertical(float delta) {
+		return delta * velocidadVertical;
 	}
 
 	/**
@@ -234,6 +247,17 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	protected void moverDerecha(float delta) {
 		setX(getX() + velDelta(delta));
+	}
+
+	/**
+	 * Mueve al {@link ObjetoActor} hacia abajo conforme a su velocidad
+	 * vertical.
+	 * 
+	 * @param delta
+	 *            El delta de {@link Screen#render(float)}.
+	 */
+	protected void moverAbajo(float delta) {
+		setY(getY() - calcVelocidadVertical(delta));
 	}
 
 	/**
@@ -517,6 +541,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setQuitarConAnimacion(boolean quitarConAnimacion) {
 		this.quitarConAnimacion = quitarConAnimacion;
+	}
+
+	public float getVelocidadVertical() {
+		return velocidadVertical;
+	}
+
+	public void setVelocidadVertical(float velocidadVertical) {
+		this.velocidadVertical = velocidadVertical;
 	}
 
 }

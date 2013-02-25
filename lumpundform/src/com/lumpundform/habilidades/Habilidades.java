@@ -25,11 +25,13 @@ public class Habilidades {
 	 */
 	public static Habilidad nueva(Personaje personaje, String nombre) {
 		if (nombre.equals("teletransportar")) {
-			return new HabilidadTeletransportar(personaje, nombre);
+			return new HabilidadTeletransportar(personaje);
 		} else if (nombre.equals("disparar")) {
-			return new HabilidadDisparar(personaje, nombre);
+			return new HabilidadDisparar(personaje);
 		} else if (nombre.equals("escudo")) {
-			return new HabilidadEscudo(personaje, nombre);
+			return new HabilidadEscudo(personaje);
+		} else if (nombre.equals("blizzard")) {
+			return new HabilidadBlizzard(personaje);
 		} else {
 			throw new HabilidadInexistenteException(personaje.getClass().getSimpleName(), nombre);
 		}
