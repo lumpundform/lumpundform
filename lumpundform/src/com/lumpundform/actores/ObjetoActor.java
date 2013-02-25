@@ -149,11 +149,11 @@ public abstract class ObjetoActor extends Actor {
 	 *            La posicion <code>y</code> del punto.
 	 */
 	public void setEsquinaY(String nombre, float y) {
-		getHitbox().setCentrado(false);
-		getHitbox().posicionar(getEsquina(nombre).x, y);
+		hitbox.setCentrado(false);
+		hitbox.posicionar(getEsquina(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		setY(getHitbox().getCentro().y - getHeight() / 2);
-		getHitbox().setCentrado(true);
+		setY(hitbox.getCentro().y - (getHeight() / 2));
+		hitbox.setCentrado(true);
 	}
 
 	/**

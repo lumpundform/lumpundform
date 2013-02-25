@@ -14,6 +14,12 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 
 		setHitbox(new Rectangulo(getHeight(), getWidth()));
 
+		float offset = 120.0f;
+		float offsetPos = getPersonaje().derecha() ? getPersonaje().getHitbox().getAncho() + offset : -offset
+				- getHitbox().getAncho();
+		setEsquinaX("inf-izq", getPersonaje().getEsquina("inf-izq").x + offsetPos);
+		setEsquinaY("inf-izq", getPersonaje().getEsquina("inf-izq").y);
+
 		cargarAnimaciones("normal");
 	}
 
