@@ -9,26 +9,12 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 	public AtaqueBlizzard(Personaje personaje, Habilidad habilidad) {
 		super("ataque_blizzard", personaje, habilidad);
 
-		setWidth(28.0f);
-		setHeight(28.0f);
+		setWidth(300.0f);
+		setHeight(201.0f);
 
-		setHitbox(new Rectangulo(getWidth(), getHeight()));
-
-		setVelocidad(35.0f);
-		setVelocidadVertical(85.0f);
+		setHitbox(new Rectangulo(getHeight(), getWidth()));
 
 		cargarAnimaciones("normal");
-	}
-
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		if (isColisionPiso()) {
-			getHabilidad().detener();
-		} else {
-			moverDerecha(delta);
-			moverAbajo(delta);
-		}
 	}
 
 }
