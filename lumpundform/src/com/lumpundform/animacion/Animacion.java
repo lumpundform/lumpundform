@@ -60,7 +60,10 @@ public class Animacion {
 		cuadrosLoop = new Array<TextureRegion>();
 		for (int i = 0; i < ss.getRenglones(); i++) {
 			for (int j = ss.getColumnasOffset(); j < ss.getColumnas() + ss.getColumnasOffset(); j++) {
-				cuadrosLoop.add(tmp[i][j]);
+				if (!((i == ss.getRenglones() - 1) && ss.getColumnasUltimoRenglon() > 0 && (j + 1 > ss
+						.getColumnasUltimoRenglon()))) {
+					cuadrosLoop.add(tmp[i][j]);
+				}
 			}
 		}
 

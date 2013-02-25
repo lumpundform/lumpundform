@@ -34,9 +34,11 @@ public class D {
 			int renglonesOffset = Integer.parseInt(getChildOpcional(spriteSheetElement, "renglonesOffset", "0"));
 			int cuadrosInicio = Integer.parseInt(getChildOpcional(spriteSheetElement, "cuadrosInicio", "0"));
 			int cuadrosFin = Integer.parseInt(getChildOpcional(spriteSheetElement, "cuadrosFin", "0"));
+			int columnasUltimoRenglon = Integer.parseInt(getChildOpcional(spriteSheetElement, "columnasUltimoRenglon",
+					"0"));
 
 			spriteSheet = new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset, cuadrosInicio,
-					cuadrosFin);
+					cuadrosFin, columnasUltimoRenglon);
 			spriteSheets.put(key, spriteSheet);
 		}
 		return spriteSheet;

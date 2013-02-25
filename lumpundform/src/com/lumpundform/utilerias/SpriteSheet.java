@@ -8,9 +8,10 @@ public class SpriteSheet {
 	private int renglonesOffset;
 	private int cuadrosInicio;
 	private int cuadrosFin;
+	private int columnasUltimoRenglon;
 
 	public SpriteSheet(String ruta, int columnas, int columnasOffset, int renglones, int renglonesOffset,
-			int cuadrosInicio, int cuadrosFin) {
+			int cuadrosInicio, int cuadrosFin, int columnasUltimoRenglon) {
 		setRuta(ruta);
 		setColumnas(columnas);
 		setColumnasOffset(columnasOffset);
@@ -18,6 +19,7 @@ public class SpriteSheet {
 		setRenglonesOffset(renglonesOffset);
 		setCuadrosInicio(cuadrosInicio);
 		setCuadrosFin(cuadrosFin);
+		setColumnasUltimoRenglon(columnasUltimoRenglon);
 	}
 
 	public String getRuta() {
@@ -74,6 +76,14 @@ public class SpriteSheet {
 
 	public void setCuadrosFin(int cuadrosFin) {
 		this.cuadrosFin = cuadrosFin;
+	}
+
+	public int getColumnasUltimoRenglon() {
+		return columnasUltimoRenglon;
+	}
+
+	public void setColumnasUltimoRenglon(int columnasUltimoRenglon) {
+		this.columnasUltimoRenglon = columnasUltimoRenglon;
 	}
 
 }
