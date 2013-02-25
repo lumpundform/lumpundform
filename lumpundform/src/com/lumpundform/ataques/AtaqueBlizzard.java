@@ -22,6 +22,8 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 
 		setDireccionX(getPersonaje().getDireccionX());
 
+		setDano(3.0f);
+
 		cargarAnimaciones("normal");
 	}
 

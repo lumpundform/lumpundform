@@ -14,7 +14,7 @@ public class HabilidadBlizzard extends HabilidadSostenida {
 
 	protected HabilidadBlizzard(Personaje actor) {
 		super(actor, "blizzard", 0.0f, 15.0f);
-		setMana(10.0f);
+		setMana(35.0f);
 	}
 
 	@Override
