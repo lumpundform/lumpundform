@@ -20,6 +20,8 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 		setEsquinaX("inf-izq", getPersonaje().getEsquina("inf-izq").x + offsetPos);
 		setEsquinaY("inf-izq", getPersonaje().getEsquina("inf-izq").y);
 
+		setDireccionX(getPersonaje().getDireccionX());
+
 		cargarAnimaciones("normal");
 	}
 
