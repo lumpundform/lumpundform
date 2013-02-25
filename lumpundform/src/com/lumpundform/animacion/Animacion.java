@@ -50,9 +50,9 @@ public class Animacion {
 	public Animacion(ObjetoActor actor, String tipo) {
 		this.actor = actor;
 
-		tiempoPorCuadro = 0.05f;
-
 		SpriteSheet ss = D.ss(actor.getName(), tipo);
+
+		tiempoPorCuadro = ss.getTiempoPorCuadro();
 
 		Texture texturaAnimacion = Texturas.get(ss.getRuta());
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion, (int) actor.getWidthTextura(),

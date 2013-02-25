@@ -9,9 +9,10 @@ public class SpriteSheet {
 	private int cuadrosInicio;
 	private int cuadrosFin;
 	private int columnasUltimoRenglon;
+	private float tiempoPorCuadro;
 
 	public SpriteSheet(String ruta, int columnas, int columnasOffset, int renglones, int renglonesOffset,
-			int cuadrosInicio, int cuadrosFin, int columnasUltimoRenglon) {
+			int cuadrosInicio, int cuadrosFin, int columnasUltimoRenglon, float tiempoPorCuadro) {
 		setRuta(ruta);
 		setColumnas(columnas);
 		setColumnasOffset(columnasOffset);
@@ -20,6 +21,7 @@ public class SpriteSheet {
 		setCuadrosInicio(cuadrosInicio);
 		setCuadrosFin(cuadrosFin);
 		setColumnasUltimoRenglon(columnasUltimoRenglon);
+		setTiempoPorCuadro(tiempoPorCuadro);
 	}
 
 	public String getRuta() {
@@ -84,6 +86,14 @@ public class SpriteSheet {
 
 	public void setColumnasUltimoRenglon(int columnasUltimoRenglon) {
 		this.columnasUltimoRenglon = columnasUltimoRenglon;
+	}
+
+	public float getTiempoPorCuadro() {
+		return tiempoPorCuadro;
+	}
+
+	public void setTiempoPorCuadro(float tiempoPorCuadro) {
+		this.tiempoPorCuadro = tiempoPorCuadro;
 	}
 
 }

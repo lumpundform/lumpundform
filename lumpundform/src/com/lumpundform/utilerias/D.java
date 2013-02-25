@@ -36,9 +36,10 @@ public class D {
 			int cuadrosFin = Integer.parseInt(getChildOpcional(spriteSheetElement, "cuadrosFin", "0"));
 			int columnasUltimoRenglon = Integer.parseInt(getChildOpcional(spriteSheetElement, "columnasUltimoRenglon",
 					"0"));
+			float tiempoPorCuadro = Float.parseFloat(getChildOpcional(spriteSheetElement, "tiempoPorCuadro", "0.05"));
 
 			spriteSheet = new SpriteSheet(ruta, columnas, columnasOffset, renglones, renglonesOffset, cuadrosInicio,
-					cuadrosFin, columnasUltimoRenglon);
+					cuadrosFin, columnasUltimoRenglon, tiempoPorCuadro);
 			spriteSheets.put(key, spriteSheet);
 		}
 		return spriteSheet;

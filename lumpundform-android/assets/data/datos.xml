@@ -76,6 +76,7 @@
                 <cuadrosInicio>0</cuadrosInicio>
                 <cuadrosFin>0</cuadrosFin>
                 <columnasUltimoRenglon>2</columnasUltimoRenglon>
+                <tiempoPorCuadro>0.02</tiempoPorCuadro>
             </SpriteSheet>
         </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="pocion_vida">
