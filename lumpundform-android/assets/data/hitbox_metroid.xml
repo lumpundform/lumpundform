@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animacion nombre="saltar">
+	<hitbox tipo="variable">
+		<cuadro id="0">
+				<x>52</x>
+				<y>43</y>
+				<alto>87</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="1">
+				<x>52</x>
+				<y>35</y>
+				<alto>95</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="2">
+				<x>52</x>
+				<y>10</y>
+				<alto>116</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="3">
+				<x>52</x>
+				<y>43</y>
+				<alto>35</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="4">
+				<x>52</x>
+				<y>43</y>
+				<alto>87</alto>
+				<ancho>90</ancho>
+		</cuadro>
+	</hitbox>
+</animacion>
+<animacion nombre="rugir">
+	<hitbox tipo="estatico">
+		<x>50</x>
+		<y>36</y>
+		<alto>94</alto>
+		<ancho>90</ancho>
+	</hitbox>
+</animacion>
+<animacion nombre="de_pie">
+	<hitbox tipo="estatico">
+		<x>50</x>
+		<y>28</y>
+		<alto>102</alto>
+		<ancho>90</ancho>
+	</hitbox>
+</animacion>
+<animacion nombre="dano">
+	<hitbox tipo="variable">
+		<cuadro id="0">
+				<x>50</x>
+				<y>33</y>
+				<alto>97</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="1">
+				<x>50</x>
+				<y>21</y>
+				<alto>109</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="2">
+				<x>50</x>
+				<y>19</y>
+				<alto>111</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="3">
+				<x>50</x>
+				<y>21</y>
+				<alto>109</alto>
+				<ancho>90</ancho>
+		</cuadro>
+		<cuadro id="4">
+				<x>50</x>
+				<y>33</y>
+				<alto>97</alto>
+				<ancho>90</ancho>
+		</cuadro>
+	</hitbox>
+</animacion>
+<animacion nombre="de_pie_2">
+	<hitbox tipo="estatico">
+		<x>50</x>
+		<y>30</y>
+		<alto>100</alto>
+		<ancho>90</ancho>
+	</hitbox>
+</animacion>
+<animacion nombre="caminar">
+	<hitbox tipo="estatico">
+		<x>50</x>
+		<y>29</y>
+		<alto>101</alto>
+		<ancho>90</ancho>
+	</hitbox>
+</animacion>
+<animacion nombre="ataque">
+	<hitbox tipo="variable">
+		<cuadro id="0">
+				<x>53</x>
+				<y>32</y>
+				<alto>98</alto>
+				<ancho>85</ancho>
+		</cuadro>
+		<cuadro id="1">
+				<x>53</x>
+				<y>38</y>
+				<alto>92</alto>
+				<ancho>85</ancho>
+		</cuadro>
+		<cuadro id="2">
+				<x>53</x>
+				<y>38</y>
+				<alto>92</alto>
+				<ancho>85</ancho>
+		</cuadro>
+		<cuadro id="3">
+				<x>53</x>
+				<y>38</y>
+				<alto>92</alto>
+				<ancho>85</ancho>
+		</cuadro>
+		<cuadro id="4">
+				<x>53</x>
+				<y>38</y>
+				<alto>92</alto>
+				<ancho>85</ancho>
+		</cuadro>
+		<cuadro id="5">
+				<x>53</x>
+				<y>42</y>
+				<alto>88</alto>
+				<ancho>85</ancho>
+		</cuadro>
+		<cuadro id="6">
+				<x>53</x>
+				<y>38</y>
+				<alto>92</alto>
+				<ancho>85</ancho>
+		</cuadro>
+		<cuadro id="7">
+				<x>53</x>
+				<y>26</y>
+				<alto>104</alto>
+				<ancho>85</ancho>
+		</cuadro>
+	</hitbox>
+</animacion>
