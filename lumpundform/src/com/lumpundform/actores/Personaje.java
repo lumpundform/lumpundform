@@ -329,22 +329,16 @@ public class Personaje extends ObjetoActor {
 	/**
 	 * Calcula si el enemigo está colisionando con otros enemigos.
 	 * 
-	 * @param delta
-	 *            El delta de {@link Screen#render(float)}.
-	 * @return <code>true</code> si sí colisionaría, <code>false</code> si no.
+	 * @return Si está colisionando o no.
 	 */
-	public boolean colisionConEnemigos(float delta) {
-		boolean colision = false;
-
-		EscenarioBase escenario = (EscenarioBase) getStage();
-
-		for (Personaje p : escenario.getActores(Personaje.class)) {
+	public boolean colisionConEnemigos() {
+		for (Personaje p : getActoresEscenario(Personaje.class)) {
 			if (p.isEnemigo() && (p.getId() < getId()) && getHitbox().estaColisionando(p.getHitbox())) {
-				colision = true;
+				return true;
 			}
 		}
 
-		return colision;
+		return false;
 	}
 
 	public float getVida() {
