@@ -6,8 +6,10 @@ lumpundform-android/.settings/
 lumpundform-desktop/bin/
 lumpundform-desktop/*.log
 lumpundform-desktop/.settings/
+lumpundform-desktop/.classpath
 lumpundform/bin/
 lumpundform/.settings/
+lumpundform/.classpath
 lumpundform-html/.gwt/
 lumpundform-html/war/
 lumpundform-html/gwt-unitCache/
