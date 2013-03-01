@@ -59,6 +59,11 @@ public class Poligono {
 				return true;
 			}
 		}
+		for (Vector2 vertice : getVertices()) {
+			if (poligono.estaColisionando(vertice)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
