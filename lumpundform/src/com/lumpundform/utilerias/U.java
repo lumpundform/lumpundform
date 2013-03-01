@@ -49,7 +49,7 @@ public class U {
 	 *            La posición de la cual se quieren voltear las coordenadas
 	 * @return La posición con las coordenadas volteadas
 	 */
-	static private Vector2 voltearCoordenadas(Vector2 pos) {
+	public static Vector2 voltearCoordenadas(Vector2 pos) {
 		return getCamara().unproject(pos);
 	}
 
@@ -68,15 +68,17 @@ public class U {
 	}
 
 	/**
-	 * Dibuja las líneas de colisión del {@link Poligono} dado
+	 * Dibuja las líneas de colisión del {@link Poligono} dado.
 	 * 
 	 * @param poligono
 	 *            El {@link Poligono} del cuál se van a dibujar las líneas de
-	 *            colisón
+	 *            colisón.
+	 * @param camara
+	 *            La {@link CamaraJuego} actual.
 	 * @param color
-	 *            El color con el que se van a dibujar las líneas
+	 *            El color con el que se van a dibujar las líneas.
 	 */
-	static private void dibujarLineasColision(Poligono poligono, CamaraJuego camara, Color color) {
+	public static void dibujarLineasColision(Poligono poligono, CamaraJuego camara, Color color) {
 		Vector2[] vertices = poligono.getVertices();
 
 		sr.begin(ShapeType.Line);
