@@ -2,6 +2,7 @@ package com.lumpundform.acciones;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.lumpundform.actores.Heroe;
+import com.lumpundform.actores.Personaje.Estado;
 
 /**
  * Las acciones que realiza el {@link Heroe} cada vez que se manda llamar
@@ -26,6 +27,12 @@ public class HeroeAction extends Action {
 			} else if (h.getMovimiento() == -1) {
 				h.moverHeroe(delta, "izquierda");
 			}
+
+			if (h.colisionActores()) {
+				h.setEstado(Estado.COLISIONANDO);
+			}
+			
+			h.agarrarPociones();
 		}
 
 		return false;

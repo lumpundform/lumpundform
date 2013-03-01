@@ -23,8 +23,6 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.Humanoide;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
-import com.lumpundform.ataques.Ataque;
-import com.lumpundform.ataques.AtaqueEscudo;
 import com.lumpundform.colision.Linea;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
@@ -104,73 +102,6 @@ public class EscenarioBase extends Stage {
 		}
 
 		U.dibujarLineasColision(getPiso(), camara);
-	}
-
-	/**
-	 * Revisa si el {@link Heroe} está colisionando con algún otro
-	 * {@link Personaje} en el escenario. Marca al {@link Heroe} como
-	 * colisionando.
-	 */
-	void colisionActores() {
-		try {
-			Heroe heroe = getHeroe();
-			heroe.setColisionActores(false);
-
-			for (Personaje personaje : getActores(Personaje.class)) {
-				if (personaje.getName() != "heroe" && heroe.getHitbox().estaColisionando(personaje.getHitbox())) {
-					heroe.setColisionActores(true);
-					break;
-				}
-			}
-		} catch (EscenarioSinHeroeException e) {
-		}
-	}
-
-	/**
-	 * Revisa si el {@link Heroe} está tocando una {@link PocionBase} para ver
-	 * si la agarra.
-	 */
-	void colisionPociones() {
-		try {
-			Heroe heroe = getHeroe();
-
-			for (PocionBase pocion : getActores(PocionBase.class)) {
-				if (heroe.getHitbox().estaColisionando(pocion.getHitbox())) {
-					if (heroe.agarrarPocion(pocion.getTipo())) {
-						pocion.remove();
-					}
-				}
-			}
-		} catch (EscenarioSinHeroeException e) {
-		}
-	}
-
-	/**
-	 * Revisa le colisión de los {@link Ataque}s del escenario con los
-	 * {@link Personaje}s del mismo para hacer daño. Si un ataque choca con un
-	 * escudo, se destruye sin hacer daño.
-	 */
-	void colisionAtaques() {
-		for (Ataque ataque : getActores(Ataque.class)) {
-			for (Personaje personaje : getActores(Personaje.class)) {
-				if (personaje.isEnemigo() != ataque.getPersonaje().isEnemigo()
-						&& ataque.getHitbox().estaColisionando(personaje.getHitbox())) {
-					if (ataque.isHaceDano()) {
-						personaje.quitarVida(ataque.getDano());
-					}
-					if (!ataque.getHabilidad().isSostenido()) {
-						ataque.destruir();
-					}
-				}
-			}
-			for (Ataque at : getActores(Ataque.class)) {
-				if (AtaqueEscudo.class.isInstance(at)
-						&& at.getPersonaje().isEnemigo() != ataque.getPersonaje().isEnemigo()
-						&& at.getHitbox().estaColisionando(ataque.getHitbox())) {
-					ataque.destruir();
-				}
-			}
-		}
 	}
 
 	/**
@@ -452,20 +383,6 @@ public class EscenarioBase extends Stage {
 			}
 		}
 		return actores;
-	}
-
-	/**
-	 * Quita todos los ataques que no están dentro de la vista de la
-	 * {@link CamaraJuego}.
-	 */
-	void destruirAtaques() {
-		CamaraJuego camara = U.getCamara();
-		for (Ataque ataque : getActores(Ataque.class)) {
-			if ((ataque.getX() + ataque.getWidth()) < camara.getPosicionOrigen().x
-					|| ataque.getX() > (camara.getPosicionOrigen().x + camara.viewportWidth)) {
-				ataque.quitar();
-			}
-		}
 	}
 
 	/**

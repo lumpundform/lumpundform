@@ -15,6 +15,7 @@ import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.TipoInvalidoException;
 import com.lumpundform.habilidades.Habilidad;
 import com.lumpundform.indicadores.EtiquetaCantidad;
+import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.pociones.PocionMana;
 import com.lumpundform.pociones.PocionVida;
 
@@ -201,6 +202,35 @@ public class Heroe extends Mago {
 		getStage().addActor(new EtiquetaCantidad("+" + cantidad, getEsquina("sup-izq"), colorEtiqueta));
 		if (getValor(tipo) > getValor(tipo, true)) {
 			setValor(tipo, getValor(tipo, true));
+		}
+	}
+
+	/**
+	 * Revisa si el {@link Heroe} está colisionando con algún otro
+	 * {@link Personaje} en el escenario.
+	 * 
+	 * @return <code>true</code> si está colisionando. <code>false</code> si no.
+	 */
+	public boolean colisionActores() {
+		for (Personaje personaje : getActoresEscenario(Personaje.class)) {
+			if (personaje.getName() != "heroe" && getHitbox().estaColisionando(personaje.getHitbox())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Revisa si el {@link Heroe} está tocando una {@link PocionBase} y la
+	 * agarra si es el caso.
+	 */
+	public void agarrarPociones() {
+		for (PocionBase pocion : getActoresEscenario(PocionBase.class)) {
+			if (getHitbox().estaColisionando(pocion.getHitbox())) {
+				if (agarrarPocion(pocion.getTipo())) {
+					pocion.remove();
+				}
+			}
 		}
 	}
 

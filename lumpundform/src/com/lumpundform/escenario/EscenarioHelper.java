@@ -76,9 +76,6 @@ public class EscenarioHelper {
 		mh.renderMapa(camara);
 
 		// Colisión
-		escenario.colisionActores();
-		escenario.colisionAtaques();
-		escenario.colisionPociones();
 		escenario.colisionPiso();
 
 		// Actuar de todos los actores del escenario
@@ -87,7 +84,6 @@ public class EscenarioHelper {
 		// Eventos
 		escenario.revisarEventos();
 		// escenario.revisarEscena();
-		escenario.destruirAtaques();
 
 		escenario.acomodarActores(mh.getWidth());
 		escenario.acomodarHeroe();

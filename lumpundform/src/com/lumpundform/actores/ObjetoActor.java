@@ -1,6 +1,7 @@
 package com.lumpundform.actores;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.acciones.ObjetoActorAction;
 import com.lumpundform.animacion.Animacion;
 import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.AnimacionInexistenteException;
 
 /**
@@ -58,7 +60,6 @@ public abstract class ObjetoActor extends Actor {
 	// Colisión
 	private Rectangulo hitbox;
 	private Map<String, Vector2> esquinas;
-	private boolean colisionActores = false;
 	private boolean colisionPiso = false;
 
 	// Pertenece a evento
@@ -93,7 +94,6 @@ public abstract class ObjetoActor extends Actor {
 	 */
 	public void quitar() {
 		remove();
-		clearActions();
 	}
 
 	/**
@@ -333,20 +333,17 @@ public abstract class ObjetoActor extends Actor {
 		return getAnimacionActual().getKeyFrame(getTiempoTranscurrido(), isLoopAnimacion());
 	}
 
+	protected <T extends Actor> List<T> getActoresEscenario(Class<T> clase) {
+		EscenarioBase escenario = (EscenarioBase) getStage();
+		return escenario.getActores(clase);
+	}
+
 	public boolean isColisionPiso() {
 		return colisionPiso;
 	}
 
 	public void setColisionPiso(boolean colisionPiso) {
 		this.colisionPiso = colisionPiso;
-	}
-
-	public boolean isColisionActores() {
-		return colisionActores;
-	}
-
-	public void setColisionActores(boolean colisionActores) {
-		this.colisionActores = colisionActores;
 	}
 
 	public Map<String, Animacion> getAnimaciones() {
