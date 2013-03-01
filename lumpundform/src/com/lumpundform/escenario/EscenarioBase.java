@@ -59,21 +59,32 @@ public class EscenarioBase extends Stage {
 	 * Inicializa un nuevo escenario con los datos dados. Se inicializa un nuevo
 	 * contador aleatorio para las pociones.
 	 * 
-	 * @param width
-	 *            El ancho del escenario.
-	 * @param height
-	 *            El alto del escenario.
+	 * @param mh
+	 *            El {@link MapaHelper} del escenario.
+	 * @param camara
+	 *            La {@link CamaraJuego} actual.
 	 * @param stretch
 	 *            Si se debe estirar.
 	 * @param batch
 	 *            El {@link SpriteBatch} con el que se van a dibujar los
 	 *            {@link Actor}es.
 	 */
-	EscenarioBase(float width, float height, boolean stretch, SpriteBatch batch) {
-		super(width, height, stretch, batch);
+	public EscenarioBase(MapaHelper mh, CamaraJuego camara, boolean stretch, SpriteBatch batch) {
+		super(mh.getWidth(), mh.getHeight(), stretch, batch);
 		eventos = new Array<Evento>();
+
 		random = new Random();
 		setPorcentajePociones(new Porcentaje());
+
+		cargarEscenas("1");
+		cargarEventos(mh.eventosMapa());
+
+		setCamera(camara);
+
+		// Agregar las colisiones del piso
+		setPiso(new Poligono(mh.getVerticesPlataforma("piso")));
+
+		agregarActor("heroe", mh.getOrigenHeroe());
 	}
 
 	/**

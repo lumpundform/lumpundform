@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
-import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.interfaz.InterfazHelper;
@@ -42,19 +41,9 @@ public class EscenarioHelper {
 
 		mh = new MapaHelper(nombre);
 
-		escenario = new EscenarioBase(mh.getWidth(), mh.getHeight(), true, batch);
+		escenario = new EscenarioBase(mh, camara, true, batch);
 
 		interfazHelper = new InterfazHelper(escenario);
-
-		escenario.cargarEscenas("1");
-		escenario.cargarEventos(mh.eventosMapa());
-
-		escenario.setCamera(camara);
-
-		// Agregar las colisiones del piso
-		escenario.setPiso(new Poligono(mh.getVerticesPlataforma("piso")));
-
-		escenario.agregarActor("heroe", mh.getOrigenHeroe());
 
 		interfazHelper.agregarElementos();
 	}

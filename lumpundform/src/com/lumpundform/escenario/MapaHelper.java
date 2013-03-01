@@ -22,7 +22,7 @@ import com.lumpundform.utilerias.U;
  * @author Sergio Valencia & Luis Gutiérrez
  * 
  */
-class MapaHelper {
+public class MapaHelper {
 	TiledMap mapa;
 	TileAtlas atlas;
 	TileMapRenderer renderer;
