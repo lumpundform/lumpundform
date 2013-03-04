@@ -1,5 +1,7 @@
 package com.lumpundform.ataques;
 
+import java.util.List;
+
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.habilidades.Habilidad;
@@ -63,24 +65,28 @@ public class Ataque extends ObjetoActor {
 	 * @return Si se destruyo el ataque.
 	 */
 	public boolean calcularColision() {
-		for (Personaje personaje : getActoresEscenario(Personaje.class)) {
-			if (personaje.isEnemigo() != getPersonaje().isEnemigo()
-					&& getHitbox().estaColisionando(personaje.getHitbox())) {
-				if (isHaceDano()) {
-					personaje.quitarVida(getDano());
+		List<Personaje> personajes = getActoresEscenario(Personaje.class);
+		List<Ataque> ataques = getActoresEscenario(Ataque.class);
+		if (personajes != null) {
+			for (Personaje personaje : personajes) {
+				if (personaje.isEnemigo() != getPersonaje().isEnemigo()
+						&& getHitbox().estaColisionando(personaje.getHitbox())) {
+					if (isHaceDano()) {
+						personaje.quitarVida(getDano());
+					}
+					if (!getHabilidad().isSostenido()) {
+						destruir();
+						return true;
+					}
 				}
-				if (!getHabilidad().isSostenido()) {
+			}
+			for (Ataque ataque : ataques) {
+				if (AtaqueEscudo.class.isInstance(ataque)
+						&& ataque.getPersonaje().isEnemigo() != getPersonaje().isEnemigo()
+						&& ataque.getHitbox().estaColisionando(getHitbox())) {
 					destruir();
 					return true;
 				}
-			}
-		}
-		for (Ataque ataque : getActoresEscenario(Ataque.class)) {
-			if (AtaqueEscudo.class.isInstance(ataque)
-					&& ataque.getPersonaje().isEnemigo() != getPersonaje().isEnemigo()
-					&& ataque.getHitbox().estaColisionando(getHitbox())) {
-				destruir();
-				return true;
 			}
 		}
 		return false;

@@ -8,8 +8,10 @@ public class AtaqueAction extends Action {
 	public boolean act(float delta) {
 		Ataque a = (Ataque) getActor();
 
-		if (!a.destruirSiFueraDeCamara()) {
-			return a.calcularColision();
+		if (a != null) {
+			if (!a.destruirSiFueraDeCamara()) {
+				return a.calcularColision();
+			}
 		}
 
 		return true;

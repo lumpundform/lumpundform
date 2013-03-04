@@ -335,7 +335,7 @@ public abstract class ObjetoActor extends Actor {
 
 	protected <T extends Actor> List<T> getActoresEscenario(Class<T> clase) {
 		EscenarioBase escenario = (EscenarioBase) getStage();
-		return escenario.getActores(clase);
+		return (escenario == null) ? null : escenario.getActores(clase);
 	}
 
 	public boolean isColisionPiso() {
