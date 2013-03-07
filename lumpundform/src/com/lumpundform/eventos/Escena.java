@@ -132,6 +132,8 @@ public class Escena {
 			if (accionHablarTermino()) {
 				siguienteCuadroTexto();
 				pasoActual.terminarAccionHablar();
+			} else if(!accionHablarTermino()) {
+				completarTexto();
 			}
 		}
 	}
@@ -159,5 +161,11 @@ public class Escena {
 	private void dibujarTexto(String nombrePersonaje) {
 		CuadroTexto cuadroTexto = cuadrosTexto.get(nombrePersonaje);
 		cuadroTexto.draw();
+	}
+	
+	private void completarTexto() {
+		for (CuadroTexto cuadroTexto : cuadrosTexto.values()) {
+			cuadroTexto.completar();
+		}
 	}
 }

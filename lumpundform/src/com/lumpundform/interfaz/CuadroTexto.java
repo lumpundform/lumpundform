@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.utilerias.Fuentes;
+import com.lumpundform.utilerias.U;
 
 public class CuadroTexto {
 	private NinePatch np = new NinePatch(new Texture(Gdx.files.internal("texturas/ct.png")), 3,
@@ -31,8 +32,6 @@ public class CuadroTexto {
 	private boolean terminado = false;
 	private boolean continuar = false;
 
-	private int index = 0;
-	
 	private String texto;
 	private String textoNuevo = "";
 	
@@ -79,15 +78,16 @@ public class CuadroTexto {
 	}
 	
 	private String iterarTexto() {
-		if (index < texto.length() && !terminado) {
-			textoNuevo += texto.substring(index, ++index);
-		} else if (!terminado && index >= texto.length() && !continuar) {
+		if (textoNuevo.length() < texto.length() && !terminado) {
+			textoNuevo += texto.substring(textoNuevo.length(), textoNuevo.length() + 1);
+		} else if (!terminado && textoNuevo.length() >= texto.length() && !continuar) {
 			terminado = true;
-			index = 0;
-		} else if (terminado && index == 0 && continuar) {
+			U.l("length", textoNuevo.length());
+		} else if (terminado && continuar) {
 			textoNuevo = "";
 			continuar = false;
 			terminado = false;
+			U.l("length terminado", textoNuevo.length());
 		}
 		return textoNuevo;
 	}
@@ -108,5 +108,9 @@ public class CuadroTexto {
 	
 	public void continuar() {
 		continuar = true;
+	}
+
+	public void completar() {
+		textoNuevo = texto;
 	}
 }
