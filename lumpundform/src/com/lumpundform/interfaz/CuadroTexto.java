@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lumpundform.utilerias.Fuentes;
-import com.lumpundform.utilerias.U;
 
 public class CuadroTexto {
 	private NinePatch np = new NinePatch(new Texture(Gdx.files.internal("texturas/ct.png")), 3,
@@ -82,12 +81,10 @@ public class CuadroTexto {
 			textoNuevo += texto.substring(textoNuevo.length(), textoNuevo.length() + 1);
 		} else if (!terminado && textoNuevo.length() >= texto.length() && !continuar) {
 			terminado = true;
-			U.l("length", textoNuevo.length());
 		} else if (terminado && continuar) {
 			textoNuevo = "";
 			continuar = false;
 			terminado = false;
-			U.l("length terminado", textoNuevo.length());
 		}
 		return textoNuevo;
 	}

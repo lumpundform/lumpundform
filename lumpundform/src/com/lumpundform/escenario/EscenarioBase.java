@@ -29,6 +29,7 @@ import com.lumpundform.eventos.Escena;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.excepciones.EscenarioSinHeroeException;
+import com.lumpundform.interfaz.BotonBase;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.pociones.PocionMana;
@@ -456,12 +457,20 @@ public class EscenarioBase extends Stage {
 					SequenceAction sequence = new SequenceAction();
 					sequence.addAction(Actions.fadeOut(0.30f));
 					sequence.addAction(Actions.delay(0.30f));
+					if (actor.getClass().getSimpleName().equals("BotonMenu")
+							|| actor.getClass().getSimpleName().contains("Pocion")) {
+						((BotonBase) actor).setFadeOut();
+					}
 					sequence.addAction(Actions.hide());
 					actor.addAction(sequence);
 				} else {
 					SequenceAction sequence = new SequenceAction();
 					sequence.addAction(Actions.show());
 					sequence.addAction(Actions.fadeIn(0.30f));
+					if (actor.getClass().getSimpleName().equals("BotonMenu")
+							|| actor.getClass().getSimpleName().contains("Pocion")) {
+						((BotonBase) actor).setFadeIn();
+					}
 					actor.addAction(sequence);
 				}
 			}
@@ -479,16 +488,16 @@ public class EscenarioBase extends Stage {
 			if (actor.getClass().getSimpleName().contains("Boton")
 					|| actor.getClass().getSimpleName().contains("Barra")) {
 				if (!setVisible) {
-					SequenceAction sequence = new SequenceAction();
-					sequence.addAction(Actions.fadeOut(0.30f));
-					sequence.addAction(Actions.delay(0.30f));
-					sequence.addAction(Actions.hide());
-					actor.addAction(sequence);
+					SequenceAction sequencia = new SequenceAction();
+					sequencia.addAction(Actions.fadeOut(0.30f));
+					sequencia.addAction(Actions.delay(0.30f));
+					sequencia.addAction(Actions.hide());
+					actor.addAction(sequencia);
 				} else {
-					SequenceAction sequence = new SequenceAction();
-					sequence.addAction(Actions.show());
-					sequence.addAction(Actions.fadeIn(0.30f));
-					actor.addAction(sequence);
+					SequenceAction sequencia = new SequenceAction();
+					sequencia.addAction(Actions.show());
+					sequencia.addAction(Actions.fadeIn(0.30f));
+					actor.addAction(sequencia);
 				}
 			}
 		}
