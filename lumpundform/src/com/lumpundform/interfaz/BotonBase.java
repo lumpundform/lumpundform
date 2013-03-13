@@ -3,20 +3,17 @@ package com.lumpundform.interfaz;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.Fuentes;
 
-public class BotonBase extends Button {
+public class BotonBase extends ElementoInterfaz {
 	private CamaraJuego camara;
 	private float xBase;
 	private float yBase;
 	BitmapFont bmf = Fuentes.regular();
-
-	protected boolean fadeIn = false;
-	protected boolean fadeOut = false;
+	
 	private float alfa = 1.0f;
 	private float velocidadFade = 3.5f;
 
@@ -56,16 +53,6 @@ public class BotonBase extends Button {
 
 	public void setxBase(float xBase) {
 		this.xBase = xBase;
-	}
-
-	public void setFadeIn() {
-		fadeIn = true;
-		fadeOut = false;
-	}
-
-	public void setFadeOut() {
-		fadeOut = true;
-		fadeIn = false;
 	}
 
 	private void fadeIn() {

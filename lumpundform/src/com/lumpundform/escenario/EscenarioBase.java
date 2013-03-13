@@ -29,7 +29,7 @@ import com.lumpundform.eventos.Escena;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.ActorNoDefinidoException;
 import com.lumpundform.excepciones.EscenarioSinHeroeException;
-import com.lumpundform.interfaz.BotonBase;
+import com.lumpundform.interfaz.ElementoInterfaz;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.pociones.PocionBase;
 import com.lumpundform.pociones.PocionMana;
@@ -450,29 +450,20 @@ public class EscenarioBase extends Stage {
 	 * Hace un toggle del UI. Si está visible, la esconde, si no, la muestra.
 	 */
 	public void toggleUI() {
-		for (Actor actor : getActors()) {
-			if (actor.getClass().getSimpleName().contains("Boton")
-					|| actor.getClass().getSimpleName().contains("Barra")) {
-				if (actor.isVisible()) {
-					SequenceAction sequence = new SequenceAction();
-					sequence.addAction(Actions.fadeOut(0.30f));
-					sequence.addAction(Actions.delay(0.30f));
-					if (actor.getClass().getSimpleName().equals("BotonMenu")
-							|| actor.getClass().getSimpleName().contains("Pocion")) {
-						((BotonBase) actor).setFadeOut();
-					}
-					sequence.addAction(Actions.hide());
-					actor.addAction(sequence);
-				} else {
-					SequenceAction sequence = new SequenceAction();
-					sequence.addAction(Actions.show());
-					sequence.addAction(Actions.fadeIn(0.30f));
-					if (actor.getClass().getSimpleName().equals("BotonMenu")
-							|| actor.getClass().getSimpleName().contains("Pocion")) {
-						((BotonBase) actor).setFadeIn();
-					}
-					actor.addAction(sequence);
-				}
+		for (ElementoInterfaz elemento : getActores(ElementoInterfaz.class)) {
+			if (elemento.isVisible()) {
+				SequenceAction sequence = new SequenceAction();
+				sequence.addAction(Actions.fadeOut(0.30f));
+				sequence.addAction(Actions.delay(0.30f));
+				elemento.setFadeOut();
+				sequence.addAction(Actions.hide());
+				elemento.addAction(sequence);
+			} else {
+				SequenceAction sequence = new SequenceAction();
+				sequence.addAction(Actions.show());
+				sequence.addAction(Actions.fadeIn(0.30f));
+				elemento.setFadeIn();
+				elemento.addAction(sequence);
 			}
 		}
 	}
