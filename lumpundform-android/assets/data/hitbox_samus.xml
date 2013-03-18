@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animacion nombre="saltar">
+	<hitbox tipo="variable">
+		<cuadro id="0">
+				<x>31</x>
+				<y>5</y>
+				<alto>108</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="1">
+				<x>31</x>
+				<y>0</y>
+				<alto>113</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="2">
+				<x>31</x>
+				<y>18</y>
+				<alto>95</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="3">
+				<x>31</x>
+				<y>20</y>
+				<alto>93</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="4">
+				<x>31</x>
+				<y>13</y>
+				<alto>100</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="5">
+				<x>31</x>
+				<y>0</y>
+				<alto>113</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="6">
+				<x>31</x>
+				<y>113</y>
+				<alto>100</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="7">
+				<x>31</x>
+				<y>5</y>
+				<alto>108</alto>
+				<ancho>35</ancho>
+		</cuadro>
+		<cuadro id="8">
+				<x>31</x>
+				<y>5</y>
+				<alto>108</alto>
+				<ancho>35</ancho>
+		</cuadro>
+	</hitbox>
+</animacion>
+<animacion nombre="correr">
+	<hitbox tipo="estatico">
+		<x>33</x>
+		<y>8</y>
+		<alto>105</alto>
+		<ancho>30</ancho>
+	</hitbox>
+</animacion>
+<animacion nombre="correr_con_arma">
+	<hitbox tipo="estatico">
+		<x>33</x>
+		<y>8</y>
+		<alto>105</alto>
+		<ancho>30</ancho>
+	</hitbox>
+</animacion>
+<animacion nombre="de_pie">
+	<hitbox tipo="estatico">
+		<x>35</x>
+		<y>5</y>
+		<alto>108</alto>
+		<ancho>30</ancho>
+	</hitbox>
+</animacion>
+<animacion nombre="colision">
+	<hitbox tipo="estatico">
+		<x>8</x>
+		<y>5</y>
+		<alto>78</alto>
+		<ancho>78</ancho>
+	</hitbox>
+</animacion>

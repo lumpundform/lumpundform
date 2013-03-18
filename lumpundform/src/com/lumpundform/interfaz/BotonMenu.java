@@ -23,10 +23,10 @@ class BotonMenu extends BotonSuperior {
 
 		CharSequence msg = "Menú";
 		TextBounds tb = bmf.getBounds(msg);
-		fade();
 		float xMenu = getX() + (anchoBoton() / 2) - (tb.width / 2);
 		float yMenu = getY() + (UI.altoBoton / 2) + (tb.height / 2);
 
 		bmf.draw(batch, msg, xMenu, yMenu);
+		fade();
 	}
 }

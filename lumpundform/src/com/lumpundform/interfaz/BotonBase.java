@@ -60,7 +60,7 @@ public class BotonBase extends ElementoInterfaz {
 			alfa = alfa + (Gdx.graphics.getDeltaTime() * velocidadFade);
 		else if (alfa > 0.0f && alfa < 1.0f)
 			alfa = alfa + (Gdx.graphics.getDeltaTime() * velocidadFade);
-		else if (alfa >= 1.0f) {
+		if (alfa >= 1.0f) {
 			alfa = 1.0f;
 			fadeIn = false;
 			fadeOut = false;
@@ -73,7 +73,7 @@ public class BotonBase extends ElementoInterfaz {
 			alfa = alfa - (Gdx.graphics.getDeltaTime() * velocidadFade);
 		else if (alfa < 1.0f && alfa > 0.0f)
 			alfa = alfa - (Gdx.graphics.getDeltaTime() * velocidadFade);
-		else if (alfa <= 0.0f) {
+		if (alfa <= 0.0f) {
 			alfa = 0.0f;
 			fadeIn = false;
 			fadeOut = false;

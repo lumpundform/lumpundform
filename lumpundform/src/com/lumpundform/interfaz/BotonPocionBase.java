@@ -29,10 +29,10 @@ public class BotonPocionBase extends BotonBase {
 		super.draw(batch, parentAlpha);
 
 		bmf.setScale(0.5f);
-		fade();
 		float xCant = getX() + UI.anchoPocion + UI.margenChico;
 		float yCant = getY() + bmf.getCapHeight();
 		bmf.draw(batch, getCantidad() + "", xCant, yCant);
+		fade();
 	}
 
 	public String getTipo() {
