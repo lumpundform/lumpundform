@@ -9,8 +9,10 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 	public AtaqueBlizzard(Personaje personaje, Habilidad habilidad) {
 		super("ataque_blizzard", personaje, habilidad);
 
-		setWidth(300.0f);
-		setHeight(201.0f);
+		setWidth(40.0f);
+		setWidthTextura(121.0f);
+		setHeight(36.0f);
+		setHeightTextura(109.0f);
 
 		setHitbox(new Rectangulo(getHeight(), getWidth()));
 
@@ -18,7 +20,7 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 		float offsetPos = getPersonaje().derecha() ? getPersonaje().getHitbox().getAncho() + offset : -offset
 				- getHitbox().getAncho();
 		setEsquinaX("inf-izq", getPersonaje().getEsquina("inf-izq").x + offsetPos);
-		setEsquinaY("inf-izq", getPersonaje().getEsquina("inf-izq").y);
+		setEsquinaY("sup-izq", getPersonaje().getEsquina("sup-izq").y);
 
 		setDireccionX(getPersonaje().getDireccionX());
 

@@ -70,13 +70,13 @@
         </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="ataque_blizzard">
             <SpriteSheet tipo="normal">
-                <ruta>ataques/blizzard.png</ruta>
-                <columnas>5</columnas>
-                <renglones>6</renglones>
-                <cuadrosInicio>0</cuadrosInicio>
-                <cuadrosFin>0</cuadrosFin>
-                <columnasUltimoRenglon>2</columnasUltimoRenglon>
-                <tiempoPorCuadro>0.02</tiempoPorCuadro>
+                <ruta>ataques/blizzard-2.png</ruta>
+                <columnas>4</columnas>
+                <renglones>5</renglones>
+                <cuadrosInicio>4</cuadrosInicio>
+                <cuadrosFin>14</cuadrosFin>
+                <columnasUltimoRenglon>3</columnasUltimoRenglon>
+                <tiempoPorCuadro>0.04</tiempoPorCuadro>
             </SpriteSheet>
         </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="pocion_vida">
