@@ -17,13 +17,14 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 		setHitbox(new Rectangulo(getHeight(), getWidth()));
 
 		float offset = 120.0f;
-		float offsetPos = getPersonaje().derecha() ? getPersonaje().getHitbox().getAncho() + offset : -offset
-				- getHitbox().getAncho();
-		setEsquinaX("inf-izq", getPersonaje().getEsquina("inf-izq").x + offsetPos);
+		float offsetPos = getPersonaje().derecha() ? getPersonaje().getHitbox()
+				.getAncho() + offset : -offset - getHitbox().getAncho();
+		setEsquinaX("inf-izq", getPersonaje().getEsquina("inf-izq").x
+				+ offsetPos);
 		setEsquinaY("sup-izq", getPersonaje().getEsquina("sup-izq").y);
 
 		setDireccionX(getPersonaje().getDireccionX());
-		
+
 		setVelocidad(50.0f);
 		setVelocidadVertical(350.0f);
 
@@ -31,11 +32,15 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 
 		cargarAnimaciones("normal");
 	}
-	
+
 	@Override
 	public void act(float delta) {
-		moverAbajo(delta);
-		moverEnDireccion();
+		if (isColisionPiso()) {
+			getAnimacion().terminar();
+		} else {
+			moverAbajo(delta);
+			moverEnDireccion();
+		}
 		super.act(delta);
 	}
 
