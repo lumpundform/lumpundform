@@ -23,10 +23,20 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 		setEsquinaY("sup-izq", getPersonaje().getEsquina("sup-izq").y);
 
 		setDireccionX(getPersonaje().getDireccionX());
+		
+		setVelocidad(50.0f);
+		setVelocidadVertical(350.0f);
 
 		setDano(3.0f);
 
 		cargarAnimaciones("normal");
+	}
+	
+	@Override
+	public void act(float delta) {
+		moverAbajo(delta);
+		moverEnDireccion();
+		super.act(delta);
 	}
 
 }
