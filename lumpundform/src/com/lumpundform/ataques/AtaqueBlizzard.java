@@ -6,7 +6,8 @@ import com.lumpundform.habilidades.Habilidad;
 
 public class AtaqueBlizzard extends AtaqueSostenido {
 
-	public AtaqueBlizzard(Personaje personaje, Habilidad habilidad) {
+	public AtaqueBlizzard(Personaje personaje, Habilidad habilidad,
+			float xAtaque) {
 		super("ataque_blizzard", personaje, habilidad);
 
 		setWidth(40.0f);
@@ -19,8 +20,9 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 		float offset = 120.0f;
 		float offsetPos = getPersonaje().derecha() ? getPersonaje().getHitbox()
 				.getAncho() + offset : -offset - getHitbox().getAncho();
+		float xAtaqueDireccion = getPersonaje().derecha() ? xAtaque : -xAtaque;
 		setEsquinaX("inf-izq", getPersonaje().getEsquina("inf-izq").x
-				+ offsetPos);
+				+ offsetPos + xAtaqueDireccion);
 		setEsquinaY("sup-izq", getPersonaje().getEsquina("sup-izq").y);
 
 		setDireccionX(getPersonaje().getDireccionX());
