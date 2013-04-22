@@ -22,7 +22,8 @@ public abstract class Habilidad {
 		this(actor, nombre, 0.0f, cooldownDefault);
 	}
 
-	protected Habilidad(Personaje actor, String nombre, float coolDown, float cooldownDefault) {
+	protected Habilidad(Personaje actor, String nombre, float coolDown,
+			float cooldownDefault) {
 		setActor(actor);
 		setNombre(nombre);
 		setCooldown(coolDown);
@@ -41,14 +42,26 @@ public abstract class Habilidad {
 	}
 
 	/**
+	 * ver {@link #crearAtaque(Ataque, boolean)}
+	 */
+	protected void crearAtaque(Ataque ataque) {
+		crearAtaque(ataque, true);
+	}
+
+	/**
 	 * Quita el mana que usa la {@link Habilidad} y agrega el ataque al
 	 * escenario del {@link Personaje}.
 	 * 
 	 * @param ataque
 	 *            El ataque que se va a agregar al {@link EscenarioBase}.
+	 * @param ataqueInicial
+	 *            Si es el ataque inicial o uno que le sigue. Se usa para las
+	 *            habilidades con varios ataques.
 	 */
-	protected void crearAtaque(Ataque ataque) {
-		getActor().quitarMana(getMana(), isSostenido());
+	protected void crearAtaque(Ataque ataque, boolean ataqueInicial) {
+		if (ataqueInicial) {
+			getActor().quitarMana(getMana(), isSostenido());
+		}
 		getActor().getStage().addActor(ataque);
 
 		setCooldown(getCooldownDefault());

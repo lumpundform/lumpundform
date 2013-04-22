@@ -193,4 +193,13 @@ public class U {
 			return 0;
 		}
 	}
+	
+	public static boolean implementaInterface(Object object, Class interf){
+	    for (Class c : object.getClass().getInterfaces()) {
+	        if (c.equals(interf)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 }

@@ -1,9 +1,14 @@
 package com.lumpundform.acciones;
 
+import java.util.Map;
+
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.actores.Personaje.Estado;
+import com.lumpundform.habilidades.Habilidad;
+import com.lumpundform.habilidades.HabilidadBlizzard;
 import com.lumpundform.indicadores.BarraVida;
+import com.lumpundform.utilerias.U;
 
 /**
  * Las acciones que realizan los {@link Personaje}s al llamar su función
@@ -30,6 +35,15 @@ public class PersonajeAction extends Action {
 				p.voltearHaciaHeroe();
 				if (p.lejosDeHeroe() && !p.colisionConEnemigos()) {
 					p.moverEnDireccion();
+				}
+			}
+
+			for (Map.Entry<String, Habilidad> habilidad : p.getHabilidades()
+					.entrySet()) {
+				Habilidad hab = habilidad.getValue();
+				if ((hab instanceof HabilidadBlizzard) && hab.isEjecutandose()) {
+					U.l("asdf", hab.isEjecutandose());
+					((HabilidadBlizzard) hab).aumentarTiempoTranscurrido(delta);
 				}
 			}
 		}
