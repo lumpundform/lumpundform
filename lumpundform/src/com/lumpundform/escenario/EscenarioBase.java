@@ -23,6 +23,8 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.Humanoide;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
+import com.lumpundform.audio.MusicManager;
+import com.lumpundform.audio.MusicManager.MusicaDisponible;
 import com.lumpundform.colision.Linea;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
@@ -55,6 +57,8 @@ public class EscenarioBase extends Stage {
 	private Array<Escena> escenas;
 
 	private boolean interfazBloqueada = false;
+	
+	public MusicManager mm = new MusicManager();
 
 	/**
 	 * Inicializa un nuevo escenario con los datos dados. Se inicializa un nuevo
@@ -80,6 +84,9 @@ public class EscenarioBase extends Stage {
 		cargarEscenas("1");
 		cargarEventos(mh.eventosMapa());
 
+		// cargar música
+		mm.play(MusicaDisponible.CASTLEVANIA);
+		
 		setCamera(camara);
 
 		// Agregar las colisiones del piso
