@@ -8,63 +8,73 @@ import com.badlogic.gdx.utils.Disposable;
 public class MusicManager implements Disposable {
 
 	public enum MusicaDisponible {
-		CASTLEVANIA("musica/castlevania.mp3");
-		
+		CASTLEVANIA("musica/castlevania.mp3"), DT("musica/dt.mp3");
+
 		private final String nombreArchivo;
-		
+
 		private MusicaDisponible(String nombreArchivo) {
 			this.nombreArchivo = nombreArchivo;
 		}
-		
+
 		public String getNombreArchivo() {
 			return nombreArchivo;
 		}
 	}
-	
+
 	private Music musicaEnCurso;
 	private float volumen = 1f;
 	private boolean habilitado = true;
-	
-	public MusicManager(){
-		
+
+	public MusicManager() {
+
 	}
-	
+
 	public void play(MusicaDisponible musica) {
-		if (!habilitado) return;
-		
+		if (!habilitado)
+			return;
+
 		stop();
-		
+
 		FileHandle archivoMusica = Gdx.files.internal(musica.getNombreArchivo());
 		musicaEnCurso = Gdx.audio.newMusic(archivoMusica);
 		musicaEnCurso.setVolume(volumen);
 		musicaEnCurso.setLooping(true);
 		musicaEnCurso.play();
 	}
-	
+
 	public void stop() {
 		if (musicaEnCurso != null) {
 			musicaEnCurso.stop();
 			musicaEnCurso.dispose();
 		}
 	}
-	
+
+	public void cambiarMusica() {
+		musicaEnCurso.stop();
+
+	}
+
 	public void acomodarVolumen(float volumen) {
 		this.volumen = volumen;
-		
-		if(musicaEnCurso != null)
+
+		if (musicaEnCurso != null)
 			musicaEnCurso.setVolume(volumen);
 	}
-	
+
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
-		
-		if (!habilitado) 
+
+		if (!habilitado)
 			stop();
 	}
-	
+
 	@Override
 	public void dispose() {
-		stop();		
+		stop();
 	}
-	
+
+	public void siguiente() {
+		play(MusicaDisponible.DT);
+	}
+
 }

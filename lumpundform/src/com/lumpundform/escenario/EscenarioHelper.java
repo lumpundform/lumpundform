@@ -187,4 +187,8 @@ public class EscenarioHelper {
 	public void setInterfazBloqueada(boolean estado) {
 		this.escenario.setInterfazBloqueada(estado);
 	}
+
+	public void siguienteCancion() {
+		this.escenario.mm.siguiente();
+	}
 }

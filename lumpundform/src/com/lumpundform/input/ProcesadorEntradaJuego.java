@@ -118,6 +118,10 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				escenario.siguienteCuadroTexto();
 				return true;
 			}
+			if (keycode == Keys.P) {
+				escenario.siguienteCancion();
+				return true;
+			}
 			/* Usar habilidades de interfaz */
 			if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) {
 				escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
