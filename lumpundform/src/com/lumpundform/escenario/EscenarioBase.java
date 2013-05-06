@@ -23,8 +23,10 @@ import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.Humanoide;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
-import com.lumpundform.audio.MusicManager;
-import com.lumpundform.audio.MusicManager.MusicaDisponible;
+import com.lumpundform.audio.ManejadorDeMusica;
+import com.lumpundform.audio.ManejadorDeSonido;
+import com.lumpundform.audio.MusicaDisponible;
+import com.lumpundform.audio.SonidosDisponibles;
 import com.lumpundform.colision.Linea;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
@@ -58,7 +60,9 @@ public class EscenarioBase extends Stage {
 
 	private boolean interfazBloqueada = false;
 	
-	public MusicManager mm = new MusicManager();
+	public ManejadorDeMusica mm = new ManejadorDeMusica();
+	
+	public ManejadorDeSonido ms = new ManejadorDeSonido();
 
 	/**
 	 * Inicializa un nuevo escenario con los datos dados. Se inicializa un nuevo
@@ -85,7 +89,8 @@ public class EscenarioBase extends Stage {
 		cargarEventos(mh.eventosMapa());
 
 		// cargar música
-		mm.play(MusicaDisponible.CASTLEVANIA);
+		// mm.play(MusicaDisponible.CASTLEVANIA);
+		// ms.play(SonidosDisponibles.ATAQUE);
 		
 		setCamera(camara);
 

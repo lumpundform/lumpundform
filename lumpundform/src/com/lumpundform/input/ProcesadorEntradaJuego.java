@@ -63,7 +63,8 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	}
 
 	@Override
-	public boolean pinch(Vector2 initialFirstPointer, Vector2 initialSecondPointer, Vector2 firstPointer,
+	public boolean pinch(Vector2 initialFirstPointer,
+			Vector2 initialSecondPointer, Vector2 firstPointer,
 			Vector2 secondPointer) {
 		return false;
 	}
@@ -78,6 +79,7 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				/* Disparar */
 				if (keycode == Keys.SPACE) {
 					heroe.habilidad("disparar");
+					escenario.sonidoAtacar();
 					return true;
 				}
 				/* Usar escudo */
@@ -124,7 +126,8 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 			}
 			/* Usar habilidades de interfaz */
 			if (keycode >= Keys.NUM_1 && keycode <= Keys.NUM_6) {
-				escenario.getInterfazHelper().ejecutarHabilidad(U.numeroConKeycode(keycode));
+				escenario.getInterfazHelper().ejecutarHabilidad(
+						U.numeroConKeycode(keycode));
 			}
 			/* Toggle líneas de colisión */
 			if (keycode == Keys.BACKSPACE) {
@@ -142,7 +145,8 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 	public boolean keyUp(int keycode) {
 		try {
 			Heroe heroe = escenario.getHeroe();
-			if ((keycode == Keys.A && heroe.getMovimiento() == -1) || (keycode == Keys.D && heroe.getMovimiento() == 1)) {
+			if ((keycode == Keys.A && heroe.getMovimiento() == -1)
+					|| (keycode == Keys.D && heroe.getMovimiento() == 1)) {
 				heroe.setMovimiento(0);
 				return true;
 			}

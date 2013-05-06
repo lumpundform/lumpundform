@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.ObjetoActor;
+import com.lumpundform.audio.SonidosDisponibles;
 import com.lumpundform.eventos.Evento;
 import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.interfaz.InterfazHelper;
@@ -99,17 +100,23 @@ public class EscenarioHelper {
 			float destinoCamara;
 
 			if (heroe.derecha()) {
-				destinoCamara = heroe.getX() + heroe.getWidth() / 2 + camara.viewportWidth / 6;
+				destinoCamara = heroe.getX() + heroe.getWidth() / 2
+						+ camara.viewportWidth / 6;
 				if (camara.position.x < destinoCamara) {
-					camara.setPosicion((float) (camara.position.x + heroe.velDelta() * factor), camara.position.y);
+					camara.setPosicion(
+							(float) (camara.position.x + heroe.velDelta()
+									* factor), camara.position.y);
 				}
 				if (camara.position.x >= destinoCamara) {
 					camara.setPosicion(destinoCamara, camara.position.y);
 				}
 			} else {
-				destinoCamara = heroe.getX() + heroe.getWidth() / 2 - camara.viewportWidth / 6;
+				destinoCamara = heroe.getX() + heroe.getWidth() / 2
+						- camara.viewportWidth / 6;
 				if (camara.position.x > destinoCamara) {
-					camara.setPosicion((float) (camara.position.x - heroe.velDelta() * factor), camara.position.y);
+					camara.setPosicion(
+							(float) (camara.position.x - heroe.velDelta()
+									* factor), camara.position.y);
 				}
 				if (camara.position.x <= destinoCamara) {
 					camara.setPosicion(destinoCamara, camara.position.y);
@@ -118,8 +125,10 @@ public class EscenarioHelper {
 
 			if (camara.getPosicionOrigen().x < 0)
 				camara.setPosicionOrigen(0, camara.getPosicionOrigen().y);
-			if (camara.getPosicionOrigen().x + camara.viewportWidth > mh.getWidth())
-				camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth, camara.getPosicionOrigen().y);
+			if (camara.getPosicionOrigen().x + camara.viewportWidth > mh
+					.getWidth())
+				camara.setPosicionOrigen(mh.getWidth() - camara.viewportWidth,
+						camara.getPosicionOrigen().y);
 		} catch (EscenarioSinHeroeException e) {
 		}
 	}
@@ -190,5 +199,9 @@ public class EscenarioHelper {
 
 	public void siguienteCancion() {
 		this.escenario.mm.siguiente();
+	}
+
+	public void sonidoAtacar() {
+		escenario.ms.play(SonidosDisponibles.ATAQUE);
 	}
 }
