@@ -24,15 +24,14 @@ public class ManejadorDeSonido implements
 	public void play(SonidosDisponibles sonido) {
 		if (!habilitado)
 			return;
-
 		Sound sonidoParaReproducir = cacheSonido.get(sonido);
 		if (sonidoParaReproducir == null) {
 			FileHandle archivoDeSonido = Gdx.files.internal(sonido
 					.getNombreArchivo());
 			sonidoParaReproducir = Gdx.audio.newSound(archivoDeSonido);
 			cacheSonido.add(sonido, sonidoParaReproducir);
-			sonidoParaReproducir.play(volumen);
 		}
+		sonidoParaReproducir.play(volumen);
 	}
 
 	public void ajustarVolumen(float volumen) {
