@@ -19,5 +19,11 @@ public class AtaqueSostenido extends Ataque {
 			getHabilidad().detener();
 		}
 	}
+	
+	@Override
+	public void destruir() {
+		super.destruir();
+		getAnimacion().terminar();
+	}
 
 }

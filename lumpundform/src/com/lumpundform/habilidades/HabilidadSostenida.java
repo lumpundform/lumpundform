@@ -10,6 +10,7 @@ public class HabilidadSostenida extends Habilidad {
 	protected HabilidadSostenida(Personaje actor, String nombre, float cooldownDefault, float manaMinimo) {
 		super(actor, nombre, cooldownDefault);
 		setSostenido(true);
+		setDestruirSostenido(true);
 		setManaMinimo(manaMinimo);
 	}
 

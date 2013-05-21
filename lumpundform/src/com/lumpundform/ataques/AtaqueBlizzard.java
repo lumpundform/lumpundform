@@ -30,7 +30,7 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 		setVelocidad(50.0f);
 		setVelocidadVertical(350.0f);
 
-		setDano(3.0f);
+		setDano(30.0f);
 
 		cargarAnimaciones("normal");
 	}
@@ -39,7 +39,7 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 	public void act(float delta) {
 		if (isColisionPiso()) {
 			getAnimacion().terminar();
-		} else {
+		} else if (!isDestruir()) {
 			moverAbajo(delta);
 			moverEnDireccion();
 		}

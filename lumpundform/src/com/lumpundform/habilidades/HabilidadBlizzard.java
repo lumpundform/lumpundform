@@ -22,6 +22,7 @@ public class HabilidadBlizzard extends HabilidadSostenida implements
 	protected HabilidadBlizzard(Personaje actor) {
 		super(actor, "blizzard", 0.0f, 15.0f);
 		setMana(3.0f);
+		setDestruirSostenido(false);
 
 		tiempoTranscurrido = 0.0f;
 		tiempoEntreAtaques = 0.1f;

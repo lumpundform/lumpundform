@@ -25,8 +25,6 @@ import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.audio.ManejadorDeMusica;
 import com.lumpundform.audio.ManejadorDeSonido;
-import com.lumpundform.audio.MusicaDisponible;
-import com.lumpundform.audio.SonidosDisponibles;
 import com.lumpundform.colision.Linea;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
@@ -59,9 +57,9 @@ public class EscenarioBase extends Stage {
 	private Array<Escena> escenas;
 
 	private boolean interfazBloqueada = false;
-	
+
 	public ManejadorDeMusica mm = new ManejadorDeMusica();
-	
+
 	public ManejadorDeSonido ms = new ManejadorDeSonido();
 
 	/**
@@ -78,7 +76,8 @@ public class EscenarioBase extends Stage {
 	 *            El {@link SpriteBatch} con el que se van a dibujar los
 	 *            {@link Actor}es.
 	 */
-	public EscenarioBase(MapaHelper mh, CamaraJuego camara, boolean stretch, SpriteBatch batch) {
+	public EscenarioBase(MapaHelper mh, CamaraJuego camara, boolean stretch,
+			SpriteBatch batch) {
 		super(mh.getWidth(), mh.getHeight(), stretch, batch);
 		eventos = new Array<Evento>();
 
@@ -91,7 +90,7 @@ public class EscenarioBase extends Stage {
 		// cargar música
 		// mm.play(MusicaDisponible.CASTLEVANIA);
 		// ms.play(SonidosDisponibles.ATAQUE);
-		
+
 		setCamera(camara);
 
 		// Agregar las colisiones del piso
@@ -167,7 +166,8 @@ public class EscenarioBase extends Stage {
 				p = new Vector2(puntoTemp.x, puntoTemp.y - 25);
 				altura = actor.getY();
 				direccionDiagonal = direccionDiagonalDer;
-			} else if (getPiso().estaColisionando(actor.getEsquina(puntoColision))) {
+			} else if (getPiso().estaColisionando(
+					actor.getEsquina(puntoColision))) {
 				p = actor.getEsquina(puntoColision);
 				altura = actor.getY() + 25;
 				direccionDiagonal = direccionDiagonalIzq;
@@ -180,8 +180,12 @@ public class EscenarioBase extends Stage {
 
 				// Posiciona al actor sobre la línea si la linea tiene una
 				// pendiente menor a 1
-				if (l != null && l.pendiente() != null && l.pendiente() <= 1.0001d && l.yEnX(p) <= altura
-						&& (l.direccionDiagonal() == direccionDiagonal || l.direccionLinea() == direccionLinea)) {
+				if (l != null
+						&& l.pendiente() != null
+						&& l.pendiente() <= 1.0001d
+						&& l.yEnX(p) <= altura
+						&& (l.direccionDiagonal() == direccionDiagonal || l
+								.direccionLinea() == direccionLinea)) {
 					caidaLibre.put(actor.getName(), false);
 					actor.setY(l.yEnX(p));
 				}
@@ -216,7 +220,8 @@ public class EscenarioBase extends Stage {
 			if (personaje.getEsquina("inf-izq").x < 0)
 				personaje.setEsquinaX("inf-izq", 0.0f);
 			if (personaje.getEsquina("inf-der").x > width)
-				personaje.setEsquinaX("inf-izq", (width - personaje.getHitbox().getAncho()));
+				personaje.setEsquinaX("inf-izq", (width - personaje.getHitbox()
+						.getAncho()));
 
 			// Detecta colisión con paredes
 			Vector2 pc = null;
@@ -232,14 +237,17 @@ public class EscenarioBase extends Stage {
 				yPunto = Math.floor(pc.y) + 10.0f;
 			}
 
-			if (getPiso().estaColisionando(pc) && getPiso().linea("arriba", pc).esHorizontal()
+			if (getPiso().estaColisionando(pc)
+					&& getPiso().linea("arriba", pc).esHorizontal()
 					&& getPiso().linea(lineaLateral, pc).esVertical()
-					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(pc))) {
+					&& yPunto < Math.floor(getPiso().linea("arriba", pc).yEnX(
+							pc))) {
 				Linea linea = getPiso().linea(lineaLateral, pc);
 				if (linea != null) {
 					Float xLinea = null;
 					if (lineaLateral == "izquierda") {
-						xLinea = linea.xEnY(pc) - personaje.getHitbox().getAncho() - 1;
+						xLinea = linea.xEnY(pc)
+								- personaje.getHitbox().getAncho() - 1;
 					} else {
 						xLinea = linea.xEnY(pc) + 1;
 					}
@@ -261,7 +269,8 @@ public class EscenarioBase extends Stage {
 			if (heroe.getEsquina("inf-izq").x < min)
 				heroe.setEsquinaX("inf-izq", min);
 			if (heroe.getEsquina("inf-der").x > max)
-				heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox().getAncho()));
+				heroe.setEsquinaX("inf-izq", (max - heroe.getHitbox()
+						.getAncho()));
 		} catch (EscenarioSinHeroeException e) {
 		}
 	}
@@ -307,7 +316,8 @@ public class EscenarioBase extends Stage {
 		Element xmlE;
 
 		xmlF = new XmlReader();
-		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml").readString();
+		xmlS = Gdx.files.internal("escenas/escenario_" + escenario + ".xml")
+				.readString();
 		xmlE = xmlF.parse(xmlS);
 
 		Array<Element> escena = xmlE.getChildrenByNameRecursively("escena");
@@ -365,7 +375,8 @@ public class EscenarioBase extends Stage {
 			actor = new Humanoide("amigo", posicion);
 			actor.setEnemigo(true);
 		} else {
-			throw new ActorNoDefinidoException("El Actor " + tipo + " no esta definido");
+			throw new ActorNoDefinidoException("El Actor " + tipo
+					+ " no esta definido");
 		}
 		actor.setPerteneceAEvento(evento);
 		addActor(actor);
@@ -381,7 +392,8 @@ public class EscenarioBase extends Stage {
 	public Heroe getHeroe() throws EscenarioSinHeroeException {
 		List<Heroe> actores = getActores(Heroe.class);
 		if (actores.size() == 0) {
-			throw new EscenarioSinHeroeException("No hay héroe en el escenario.");
+			throw new EscenarioSinHeroeException(
+					"No hay héroe en el escenario.");
 		} else {
 			return actores.get(0);
 		}

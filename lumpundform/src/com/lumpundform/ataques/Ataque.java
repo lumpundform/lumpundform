@@ -74,7 +74,7 @@ public class Ataque extends ObjetoActor {
 					if (isHaceDano()) {
 						personaje.quitarVida(getDano());
 					}
-					if (!getHabilidad().isSostenido()) {
+					if (!getHabilidad().isDestruirSostenido()) {
 						destruir();
 						return true;
 					}

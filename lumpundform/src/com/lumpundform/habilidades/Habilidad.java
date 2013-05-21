@@ -16,6 +16,7 @@ public abstract class Habilidad {
 	private float manaMinimo;
 
 	private boolean sostenido;
+	private boolean destruirSostenido;
 	private boolean ejecutandose;
 
 	protected Habilidad(Personaje actor, String nombre, float cooldownDefault) {
@@ -139,6 +140,14 @@ public abstract class Habilidad {
 
 	public void setSostenido(boolean sostenido) {
 		this.sostenido = sostenido;
+	}
+
+	public boolean isDestruirSostenido() {
+		return destruirSostenido;
+	}
+
+	public void setDestruirSostenido(boolean destruirSostenido) {
+		this.destruirSostenido = destruirSostenido;
 	}
 
 	public float getManaMinimo() {
