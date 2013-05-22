@@ -1,5 +1,8 @@
 package com.lumpundform.input;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -78,6 +81,8 @@ public class ProcesadorEntradaJuego implements GestureListener, InputProcessor {
 				Heroe heroe = escenario.getHeroe();
 				/* Disparar */
 				if (keycode == Keys.SPACE) {
+					long timeStamp = System.currentTimeMillis();
+					escenario.setTimeStamp(timeStamp);
 					heroe.habilidad("disparar");
 					escenario.sonidoAtacar();
 					return true;

@@ -1,5 +1,8 @@
 package com.lumpundform.escenario;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -11,6 +14,7 @@ import com.lumpundform.excepciones.EscenarioSinHeroeException;
 import com.lumpundform.interfaz.InterfazHelper;
 import com.lumpundform.lumpundform.CamaraJuego;
 import com.lumpundform.utilerias.D;
+import com.lumpundform.utilerias.U;
 
 /**
  * Clase que ayuda con las funciones de los escenarios, como cargar el mapa, los
@@ -25,6 +29,8 @@ public class EscenarioHelper {
 	private InterfazHelper interfazHelper;
 	private EscenarioBase escenario;
 	private boolean dibujarColision;
+	private long timeStamp;
+	private long soundStamp;
 
 	/**
 	 * Inicializa el escenario, el mapa, las colisiones y el {@link Heroe} para
@@ -203,5 +209,11 @@ public class EscenarioHelper {
 
 	public void sonidoAtacar() {
 		escenario.ms.play(SonidosDisponibles.ATAQUE);
+		soundStamp = System.currentTimeMillis();
+		U.l("dif", soundStamp - timeStamp);
+	}
+
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 }
