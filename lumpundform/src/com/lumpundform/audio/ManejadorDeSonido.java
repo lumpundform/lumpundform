@@ -33,6 +33,15 @@ public class ManejadorDeSonido implements
 		}
 		sonidoParaReproducir.play(volumen);
 	}
+	
+	public void load(SonidosDisponibles sonido) {
+		Sound sonidoParaReproducir = cacheSonido.get(sonido);
+		if (sonidoParaReproducir == null) {
+			FileHandle archivoDeSonido = Gdx.files.internal(sonido.getNombreArchivo());
+			sonidoParaReproducir = Gdx.audio.newSound(archivoDeSonido);
+			cacheSonido.add(sonido, sonidoParaReproducir);
+		}
+	}
 
 	public void ajustarVolumen(float volumen) {
 		if (volumen < 0 || volumen > 1f)
