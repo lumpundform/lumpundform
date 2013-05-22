@@ -25,7 +25,7 @@ import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.audio.ManejadorDeMusica;
 import com.lumpundform.audio.ManejadorDeSonido;
-import com.lumpundform.audio.MusicaDisponible;
+import com.lumpundform.audio.SonidosDisponibles;
 import com.lumpundform.colision.Linea;
 import com.lumpundform.colision.Poligono;
 import com.lumpundform.eventos.Escena;
@@ -90,7 +90,7 @@ public class EscenarioBase extends Stage {
 
 		// cargar música
 		// mm.play(MusicaDisponible.CASTLEVANIA);
-		// ms.play(SonidosDisponibles.ATAQUE);
+		ms.play(SonidosDisponibles.ATAQUE);
 
 		setCamera(camara);
 

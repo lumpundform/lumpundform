@@ -1,8 +1,5 @@
 package com.lumpundform.escenario;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -210,7 +207,7 @@ public class EscenarioHelper {
 	public void sonidoAtacar() {
 		escenario.ms.play(SonidosDisponibles.ATAQUE);
 		soundStamp = System.currentTimeMillis();
-		U.l("dif", soundStamp - timeStamp);
+		U.lg.debug(soundStamp - timeStamp);
 	}
 
 	public void setTimeStamp(long timeStamp) {

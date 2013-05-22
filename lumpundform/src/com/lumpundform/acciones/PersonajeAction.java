@@ -42,7 +42,6 @@ public class PersonajeAction extends Action {
 					.entrySet()) {
 				Habilidad hab = habilidad.getValue();
 				if ((hab instanceof HabilidadBlizzard) && hab.isEjecutandose()) {
-					U.l("asdf", hab.isEjecutandose());
 					((HabilidadBlizzard) hab).aumentarTiempoTranscurrido(delta);
 				}
 			}

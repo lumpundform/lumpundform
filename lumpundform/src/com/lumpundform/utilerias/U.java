@@ -1,5 +1,8 @@
 package com.lumpundform.utilerias;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -24,9 +27,11 @@ public class U {
 	private static ShapeRenderer sr = new ShapeRenderer();
 	private static SpriteBatch sb = new SpriteBatch();
 	private static BitmapFont bmf = Fuentes.regular();
+	public static Logger lg;
 
 	public static void init(CamaraJuego camara) {
 		setCamara(camara);
+		lg = Logger.getLogger(U.class);
 	}
 
 	private static void setCamara(CamaraJuego camara) {
@@ -114,8 +119,9 @@ public class U {
 	 * @param mensaje
 	 *            El mensaje
 	 */
-	public static void l(String tag, Object mensaje) {
-		Gdx.app.log(tag, mensaje + "");
+	public static void l(String tag, Object mensaje, Class<? extends Object> klass) {
+		Logger lg = Logger.getLogger(klass);
+		lg.debug(mensaje);
 	}
 
 	/**
