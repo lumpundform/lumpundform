@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Todos los sprites tienen el mismo alto y ancho
+	Las posiciones 'x' y 'y' son a partir del origen del sprite
+	El alto y ancho del hitbox son a partir del origen del sprite
+-->
+<sprite>
+	<alto>132</alto>
+	<ancho>171</ancho>
+</sprite>
 <animacion nombre="saltar">
 	<hitbox tipo="variable">
 		<cuadro id="0">
