@@ -88,6 +88,14 @@ public class MapaHelper {
 		TiledObject objeto = tiledObject("origenes", "heroe");
 		return U.voltearCoordenadas(objeto.x, objeto.y);
 	}
+	
+	/**
+	 * @return El punto de origen del {@link Jefe}.
+	 */
+	Vector2 getOrigenJefe() {
+		TiledObject objeto = tiledObject("origenes", "jefe");
+		return U.voltearCoordenadas(objeto.x, objeto.y);
+	}
 
 	/**
 	 * @return Regresa los eventos del mapa.

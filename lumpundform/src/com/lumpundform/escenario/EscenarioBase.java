@@ -21,11 +21,11 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lumpundform.actores.Heroe;
 import com.lumpundform.actores.Humanoide;
+import com.lumpundform.actores.Jefe;
 import com.lumpundform.actores.ObjetoActor;
 import com.lumpundform.actores.Personaje;
 import com.lumpundform.audio.ManejadorDeMusica;
 import com.lumpundform.audio.ManejadorDeSonido;
-import com.lumpundform.audio.MusicaDisponible;
 import com.lumpundform.audio.SonidosDisponibles;
 import com.lumpundform.colision.Linea;
 import com.lumpundform.colision.Poligono;
@@ -99,6 +99,9 @@ public class EscenarioBase extends Stage {
 		setPiso(new Poligono(mh.getVerticesPlataforma("piso")));
 
 		agregarActor("heroe", mh.getOrigenHeroe());
+		
+		// Jefe
+		agregarActor("jefe", mh.getOrigenJefe());
 	}
 
 	/**
@@ -376,6 +379,8 @@ public class EscenarioBase extends Stage {
 		} else if (tipo == "enemigo") {
 			actor = new Humanoide("amigo", posicion);
 			actor.setEnemigo(true);
+		} else if (tipo == "jefe") {
+			actor = new Jefe("jefe", posicion);
 		} else {
 			throw new ActorNoDefinidoException("El Actor " + tipo
 					+ " no esta definido");

@@ -7,7 +7,7 @@
 	            <columnas>1</columnas>
 	            <columnasOffset>0</columnasOffset>
 	            <renglones>1</renglones>
-	            <renglonesOffset>1</renglonesOffset>
+	            <renglonesOffset>0</renglonesOffset>
             </SpriteSheet>
             <SpriteSheet tipo="corriendo">
                 <ruta>personajes/heroe_corriendo.png</ruta>
@@ -45,6 +45,16 @@
                 <columnasOffset>0</columnasOffset>
                 <renglones>1</renglones>
                 <renglonesOffset>0</renglonesOffset>
+            </SpriteSheet>
+        </SpriteSheetGrupo>
+        <SpriteSheetGrupo nombre="jefe">
+            <SpriteSheet tipo="detenido">
+                <ruta>personajes/metroid_spritesheet.png</ruta>
+                <columnas>4</columnas>
+                <columnasOffset>0</columnasOffset>
+                <renglones>1</renglones>
+                <renglonesOffset>2</renglonesOffset>
+                <tiempoPorCuadro>0.15</tiempoPorCuadro>
             </SpriteSheet>
         </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="ataque_misil">

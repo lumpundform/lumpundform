@@ -10,13 +10,14 @@
  </layer>
  <objectgroup name="origenes" width="34" height="9">
   <object name="heroe" type="vector" gid="14" x="192" y="384"/>
+  <object name="jefe" type="vector" x="768" y="384"/>
  </objectgroup>
  <objectgroup name="plataformas" width="34" height="9">
   <object name="piso" x="0" y="576">
    <polyline points="0,0 0,-192 320,-192 384,-128 512,-128 576,-192 640,-192 1024,-192 1344,-192 1387,-192 1536,-192 1536,-64 1664,-64 1664,-384 1920,-384 1920,0 2048,0 2048,-128 2176,-128 2176,0 0,0"/>
   </object>
  </objectgroup>
- <objectgroup name="eventos" width="34" height="9">
+ <objectgroup name="eventos" width="34" height="9" visible="0">
   <object name="evento1" type="spawn" x="1600" y="512">
    <properties>
     <property name="limite" value="5"/>
@@ -41,16 +42,16 @@
    </properties>
   </object>
   <object name="evento5" type="escena" x="600" y="512">
-  	<properties>
-  		<property name="escena" value="101"/>
-    	<property name="rango" value="80.0"/>
-  	</properties>
+   <properties>
+    <property name="escena" value="101"/>
+    <property name="rango" value="80.0"/>
+   </properties>
   </object>
   <object name="evento6" type="escena" x="1700" y="512">
-  	<properties>
-  		<property name="escena" value="102"/>
-    	<property name="rango" value="80.0"/>
-  	</properties>
+   <properties>
+    <property name="escena" value="102"/>
+    <property name="rango" value="80.0"/>
+   </properties>
   </object>
  </objectgroup>
 </map>
