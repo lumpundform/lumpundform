@@ -58,9 +58,9 @@ public class Animacion {
 		TextureRegion[][] tmp = TextureRegion.split(texturaAnimacion, (int) actor.getWidthTextura(),
 				(int) actor.getHeightTextura());
 		cuadrosLoop = new Array<TextureRegion>();
-		for (int i = 0; i < ss.getRenglones(); i++) {
+		for (int i = ss.getRenglonesOffset(); i < ss.getRenglones() + ss.getRenglonesOffset(); i++) {
 			for (int j = ss.getColumnasOffset(); j < ss.getColumnas() + ss.getColumnasOffset(); j++) {
-				if (!((i == ss.getRenglones() - 1) && ss.getColumnasUltimoRenglon() > 0 && (j + 1 > ss
+				if (!((i == (ss.getRenglones() + ss.getRenglonesOffset()) - 1) && ss.getColumnasUltimoRenglon() > 0 && (j + 1 > ss
 						.getColumnasUltimoRenglon()))) {
 					cuadrosLoop.add(tmp[i][j]);
 				}
