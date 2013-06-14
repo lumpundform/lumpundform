@@ -50,7 +50,7 @@
 		<ancho>90</ancho>
 	</hitbox>
 </animacion>
-<animacion nombre="de_pie">
+<animacion nombre="detenido">
 	<hitbox tipo="estatico">
 		<x>31</x>
 		<y>28</y>

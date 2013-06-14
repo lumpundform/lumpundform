@@ -2,7 +2,7 @@ package com.lumpundform.pociones;
 
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.actores.ObjetoActor;
-import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.colision.Hitbox;
 
 public class PocionBase extends ObjetoActor {
 	public class Estado {
@@ -25,7 +25,7 @@ public class PocionBase extends ObjetoActor {
 		setWidth(15.0f);
 		setHeight(20.0f);
 
-		setHitbox(new Rectangulo(getHeight(), getWidth()));
+		setHitboxDefault(new Hitbox(this, getHeight(), getWidth()));
 
 		setCaer(true);
 

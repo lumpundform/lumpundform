@@ -1,7 +1,7 @@
 package com.lumpundform.ataques;
 
 import com.lumpundform.actores.Personaje;
-import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.colision.Hitbox;
 import com.lumpundform.habilidades.Habilidad;
 
 /**
@@ -30,7 +30,7 @@ public class AtaqueMisil extends Ataque {
 		setWidth(100.0f);
 		setHeight(100.0f);
 
-		setHitbox(new Rectangulo(getHeight() * 0.2f, getWidth() * 0.55f));
+		setHitboxDefault(new Hitbox(this, getHeight() * 0.2f, getWidth() * 0.55f));
 
 		setEstado(Estado.NORMAL);
 		setVelocidad(800.0f);

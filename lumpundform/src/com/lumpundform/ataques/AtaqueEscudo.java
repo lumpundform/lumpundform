@@ -1,7 +1,7 @@
 package com.lumpundform.ataques;
 
 import com.lumpundform.actores.Personaje;
-import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.colision.Hitbox;
 import com.lumpundform.habilidades.Habilidad;
 
 /**
@@ -22,7 +22,7 @@ public class AtaqueEscudo extends AtaqueSostenido {
 		setHeight(150.0f);
 		setHeightTextura(71.0f);
 
-		setHitbox(new Rectangulo(getHeight(), getWidth() * 0.65f));
+		setHitboxDefault(new Hitbox(this, getHeight(), getWidth() * 0.65f));
 
 		actualizarPosicion();
 

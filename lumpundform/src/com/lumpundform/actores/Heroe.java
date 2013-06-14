@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.HeroeAction;
-import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.colision.Hitbox;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.TipoInvalidoException;
 import com.lumpundform.habilidades.Habilidad;
@@ -48,7 +48,7 @@ public class Heroe extends Mago {
 		setWidth(125.0f);
 		setHeight(150.0f);
 
-		setHitbox(new Rectangulo(getHeight(), getWidth() / 3));
+		setHitboxDefault(new Hitbox(this, getHeight(), getWidth() / 3));
 
 		setEstado(Estado.DETENIDO);
 		setDestinoX(getX());

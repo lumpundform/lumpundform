@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lumpundform.acciones.ObjetoActorAction;
 import com.lumpundform.animacion.Animacion;
+import com.lumpundform.colision.Hitbox;
 import com.lumpundform.colision.Rectangulo;
 import com.lumpundform.escenario.EscenarioBase;
 import com.lumpundform.excepciones.AnimacionInexistenteException;
@@ -58,7 +59,8 @@ public abstract class ObjetoActor extends Actor {
 	private boolean caer = false;
 
 	// Colisión
-	private Rectangulo hitbox;
+	private Hitbox hitboxDefault;
+	private Map<String, Hitbox> hitboxes;
 	private Map<String, Vector2> esquinas;
 	private boolean colisionPiso = false;
 
@@ -77,6 +79,7 @@ public abstract class ObjetoActor extends Actor {
 
 		setName(nombre);
 
+		setHitboxes(new HashMap<String, Hitbox>());
 		esquinas = new HashMap<String, Vector2>();
 		setAnimaciones(new HashMap<String, Animacion>());
 		setLoopAnimacion(true);
@@ -133,11 +136,11 @@ public abstract class ObjetoActor extends Actor {
 	 *            La posicion <code>x</code> del punto.
 	 */
 	public void setEsquinaX(String nombre, float x) {
-		hitbox.setCentrado(false);
-		hitbox.posicionar(x, getEsquina(nombre).y);
+		getHitboxAnimacion().setCentrado(false);
+		getHitboxAnimacion().posicionar(x, getEsquina(nombre).y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		setX(hitbox.getCentro().x - getWidth() / 2);
-		hitbox.setCentrado(true);
+		setX(getHitboxAnimacion().getCentro().x - getWidth() / 2);
+		getHitboxAnimacion().setCentrado(true);
 	}
 
 	/**
@@ -150,11 +153,11 @@ public abstract class ObjetoActor extends Actor {
 	 *            La posicion <code>y</code> del punto.
 	 */
 	public void setEsquinaY(String nombre, float y) {
-		hitbox.setCentrado(false);
-		hitbox.posicionar(getEsquina(nombre).x, y);
+		getHitboxAnimacion().setCentrado(false);
+		getHitboxAnimacion().posicionar(getEsquina(nombre).x, y);
 		// TODO: Hacer que reste o sume dependiendo si es sup o inf
-		setY(hitbox.getCentro().y - (getHeight() / 2));
-		hitbox.setCentrado(true);
+		setY(getHitboxAnimacion().getCentro().y - (getHeight() / 2));
+		getHitboxAnimacion().setCentrado(true);
 	}
 
 	/**
@@ -296,7 +299,20 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El hitbox.
 	 */
 	public Rectangulo getHitbox() {
-		return hitbox.posicionar(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+		return getHitboxAnimacion().posicion();
+	}
+
+	/**
+	 * Regresa el hitbox adecuado para la animación en efecto.
+	 * 
+	 * @return El hitbox.
+	 */
+	public Hitbox getHitboxAnimacion() {
+		if (getHitboxes().containsKey(getEstado())) {
+			return getHitboxes().get(getEstado());
+		} else {
+			return hitboxDefault;
+		}
 	}
 
 	/**
@@ -330,7 +346,8 @@ public abstract class ObjetoActor extends Actor {
 	 * @return El cuadro actual.
 	 */
 	protected TextureRegion getCuadroActual() {
-		return getAnimacionActual().getKeyFrame(getTiempoTranscurrido(), isLoopAnimacion());
+		return getAnimacionActual().getKeyFrame(getTiempoTranscurrido(),
+				isLoopAnimacion());
 	}
 
 	protected <T extends Actor> List<T> getActoresEscenario(Class<T> clase) {
@@ -424,8 +441,8 @@ public abstract class ObjetoActor extends Actor {
 		this.perteneceAEvento = perteneceAEvento;
 	}
 
-	public void setHitbox(Rectangulo hitbox) {
-		this.hitbox = hitbox;
+	public void setHitboxDefault(Hitbox hitbox) {
+		this.hitboxDefault = hitbox;
 	}
 
 	public float getDestinoX() {
@@ -546,6 +563,14 @@ public abstract class ObjetoActor extends Actor {
 
 	public void setVelocidadVertical(float velocidadVertical) {
 		this.velocidadVertical = velocidadVertical;
+	}
+
+	public Map<String, Hitbox> getHitboxes() {
+		return hitboxes;
+	}
+
+	public void setHitboxes(Map<String, Hitbox> hitboxes) {
+		this.hitboxes = hitboxes;
 	}
 
 }

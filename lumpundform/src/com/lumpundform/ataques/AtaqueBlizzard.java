@@ -1,7 +1,7 @@
 package com.lumpundform.ataques;
 
 import com.lumpundform.actores.Personaje;
-import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.colision.Hitbox;
 import com.lumpundform.habilidades.Habilidad;
 
 public class AtaqueBlizzard extends AtaqueSostenido {
@@ -15,7 +15,7 @@ public class AtaqueBlizzard extends AtaqueSostenido {
 		setHeight(36.0f);
 		setHeightTextura(109.0f);
 
-		setHitbox(new Rectangulo(getHeight(), getWidth()));
+		setHitboxDefault(new Hitbox(this, getHeight(), getWidth()));
 
 		float offset = 120.0f;
 		float offsetPos = getPersonaje().derecha() ? getPersonaje().getHitbox()

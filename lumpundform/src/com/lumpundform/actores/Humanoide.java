@@ -2,7 +2,7 @@ package com.lumpundform.actores;
 
 import com.badlogic.gdx.math.Vector2;
 import com.lumpundform.acciones.HumanoideAction;
-import com.lumpundform.colision.Rectangulo;
+import com.lumpundform.colision.Hitbox;
 
 /**
  * Humanoides del juego. Pueden tener o no tener magia.
@@ -26,7 +26,7 @@ public class Humanoide extends Personaje {
 		setWidth(125.0f);
 		setHeight(150.0f);
 
-		setHitbox(new Rectangulo(getHeight(), getWidth() / 2));
+		setHitboxDefault(new Hitbox(this, getHeight(), getWidth() / 2));
 
 		setEstado(Estado.DETENIDO);
 		setDestinoX(getX());

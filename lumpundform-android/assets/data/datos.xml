@@ -54,7 +54,7 @@
                 <columnasOffset>0</columnasOffset>
                 <renglones>1</renglones>
                 <renglonesOffset>2</renglonesOffset>
-                <tiempoPorCuadro>0.15</tiempoPorCuadro>
+                <tiempoPorCuadro>0.2</tiempoPorCuadro>
             </SpriteSheet>
         </SpriteSheetGrupo>
         <SpriteSheetGrupo nombre="ataque_misil">
